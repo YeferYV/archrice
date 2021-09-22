@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# SUDO_ASKPASS prompt.
+dmenu -fn Monospace-11 -P -p "$1" <&- && echo

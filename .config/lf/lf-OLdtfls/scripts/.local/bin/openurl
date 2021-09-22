@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Helper script to show urls in dmenu from piped content i.e.
+#   cat urls | this script -> show urls in dmenu
+
+# Url supported: http, ftp, mailto, magnet link, local file
+grep -aEo "((https?|ftp|file)://|(mailto|magnet):|www.)[^[:space:],;'\">\\)]*[^][:space:],.;:'\">\\)}]" \
+| uniq | dmenu -i -p 'Select url to open:' -l 10 | xargs -r xdg-open

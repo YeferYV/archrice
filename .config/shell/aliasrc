@@ -1,0 +1,75 @@
+#!/bin/sh
+
+## Use neovim for vim if present.
+#[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+## Verbosity and settings that you pretty much just always are going to want.
+alias \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" \
+	mkd="mkdir -pv" \
+	youtubeaudiowebm="youtube-dl --add-metadata --ignore-errors --write-thumbnail --format bestaudio " \
+	youtubeaudioopus="youtube-dl --add-metadata --ignore-errors --write-thumbnail --extract-audio --format bestaudio/best " \
+	youtubevidaudiosub="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --keep-video --format 'bestvideo+bestaudio' " \
+	youtubevidsub720="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 'bestvideo[height<=720]+bestaudio' " \
+	youtubevidsub480="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 'bestvideo[height<=480]+bestaudio' " \
+	youtubevidsub360="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 'bestvideo[height<=360]+bestaudio' " \
+	youtubearia2c="youtube-dl --external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M'" \
+  ffmpeg360="	ffmpeg=' for File in *; { [ -f '$File' ] || continue; ffmpeg -i '$File' -s 640x360 -c:a copy '../path/to/folder/${File}' ; }'"\
+	pythondocs="python -m pydoc -p 8989" \
+  makedwm="sudo make clean install && make clean && rm -f config.h" \
+	resetdwm="git reset --hard" \
+	stowdotfiles="cd /home/dtfls/Dotfiles && stow --verbose --simulate --target=$HOME/.config .config" \
+	gitshow="git show --all" \
+	gitloghelp="git log --help" \
+	gitlog="git log --oneline --graph" \
+	gitlodag="git log --oneline --decorate --all --graph" \
+	# gitlogcompletion="git log --<TAB>" \
+	# ffmpeg="ffmpeg -hide_banner" \
+
+
+## Colorize commands when possible.
+alias \
+	ll="ls -lAhN --color=auto --group-directories-first" \
+	ls="ls -a --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi" \
+	cht="cht.sh" \
+	# cht="cheat-sh" \
+	# cht.sh="cheat-sh" \
+
+
+## These common commands are just too long! Abbreviate them.
+alias \
+	ka="killall" \
+	trem="transmission-remote" \
+	sdn="sudo shutdown -h now" \
+	pacman="sudo pacman --noconfirm" \
+	YTFZF="alacritty -e ytfzf" \
+	YTFZFTHUMB="ytfzf -t" \
+	# YT="youtube-viewer" \
+	# f="$FILE" \
+	# e="$EDITOR" \
+	# p="sudo pacman" \
+	# z="zathura" \
+	# lf="$HOME/.config/lf/lf-wiki-previewer/lf_previewer.sh" \
+
+
+alias \
+	magit="nvim -c MagitOnly" \
+	nvimterminal="nvim -c 'set nonumber | terminal zsh'" \
+	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
+	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+	tmuxconf="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
+	tmuxattach="tmux attach" \
+	tmuxlist="tmux ls" \
+	tmuxkillall="tmux kill-session -a" \
+	tmuxmpvdmenu="tmux new -d mpv --loop-playlist --no-video $1" \
+	volumebar="echo '♪: $(pamixer --get-volume-human)'" \
+	batterybar="acpi | sed 's/Battery [0-9]: //;s/[Dd]ischarging, /🔋/;s/[Nn]ot charging, /🛑/;s/[Cc]harging, /🔌/;s/[Uu]nknown, /♻️/;s/[Ff]ull, /⚡/;s/,.*//'" \
+	freebar="free -h | awk '/^Mem:/ {printf "%s/%s",$3,$7}'" \
+	datebar="date +'%F %T'" \
+	#refbar="kill '$(pstree -lp | grep -- -dwmbar\([0-9] | sed "s/.*sleep(\([0-9]\+\)).*/\1/")'" \
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# ID=$(bspc query -N -n)
+# RECID=$(bspc query -N -n .leaf.\!window)
+# [ -z "$RECID" ] && exit 1
+# [ -z "$RECID" ] && echo 1 || echo 2
+# [ -n "$RECID" ] && echo 1 || echo 2
+
+bspc subscribe node_add | while read line
+do
+  # bspc node $(echo "$line" | awk '{print $5}') -t fullscreen
+  # bspc node $ID -n $(bspc query -N -n .leaf.\!window)
+  bspc node $(echo "$line" | awk '{print $5}') -n $(bspc query -N -n .leaf.\!window)
+  # bspc node $(echo "$line" | awk '{print $5}') -n $(bspc query -N -n .leaf.\!window) && break;
+done

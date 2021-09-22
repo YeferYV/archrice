@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Pdfpc
+Comment=A presenter console for pdf files
+Exec=pdfpc %f
+Terminal=false
+Type=Application
+Icon=document-viewer
+Categories=Office;Viewer;
+MimeType=application/pdf;

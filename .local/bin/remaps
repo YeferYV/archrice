@@ -1,0 +1,139 @@
+#!/bin/sh
+
+## to avoid multiple instances at restart bspwm
+#killall sxhkd xcape && setxkbmap
+killall xcape && setxkbmap
+
+## Increase key speed via a rate change
+xset r rate 300 50
+
+## international english layout?/add ISO_Level3_Shift support
+# setxkbmap -layout 'us(intl)'
+
+## Map the Shift_L+Shift_R keys to caps(conflict)
+#setxkbmap -option shift:both_capslock
+
+## Map the caps lock key to super...
+#setxkbmap -option caps:super
+
+## Map the super key to meta key
+#setxkbmap -option altwin:meta_win
+
+## Map the super key to shift key
+# setxkbmap -option altwin:shift
+
+## Map the caps lock key to control...
+#setxkbmap -option caps:ctrl_modifier
+#setxkbmap -option ctrl:swapcaps
+#setxkbmap -option ctrl:nocaps
+
+#########################################################
+xmodmap -e 'clear shift'
+xmodmap -e 'clear lock'
+xmodmap -e 'clear control'
+xmodmap -e 'clear mod1'
+# xmodmap -e 'clear mod2'
+# xmodmap -e 'clear mod3'
+# xmodmap -e 'clear mod4'
+# xmodmap -e 'clear mod5'
+
+## To use Caps_Lock as Control_L
+xmodmap -e 'keycode 66 = Control_L'
+
+## to use space as Mode_switch
+# xmodmap -e "keycode 65 = Mode_switch NoSymbol"
+# xmodmap -e "keycode any = space NoSymbol"
+
+## To use Alt_R as Shift_R
+xmodmap -e 'keycode 108 = Shift_R'
+
+## To use Menu as mod5
+#xmodmap -e 'keycode 135 = ISO_Level3_Shift'
+xmodmap -e 'keycode 135 = Control_R'
+
+xmodmap -e 'add shift   = Shift_L Shift_R'
+# xmodmap -e 'add lock    = Caps_Lock'
+xmodmap -e 'add control = Control_L Control_R'
+xmodmap -e 'add mod1    = Alt_L Meta_L'
+# xmodmap -e 'add mod2    = Num_Lock'
+# xmodmap -e 'add mod3    = Mode_switch'
+# xmodmap -e 'add mod4    = Super_L Super_R Hyper_L'
+# xmodmap -e 'add mod5    = ISO_Level3_Shift'
+
+#########################################################
+## to use Control_L as Escape
+xcape -e 'Control_L=Escape'
+## to use Super_L as left click
+xcape -e 'Super_L=XF86Finance'
+## to use Alt_L as middle click
+xcape -e 'Alt_L=XF86Game'
+## to use Alt_R key as BackSpace
+xcape -e 'Shift_R=BackSpace'
+## to use Menu as Task-Switcher
+xcape -e 'Control_R=XF86Shop'
+## to use Menu as Task-Switcher
+# xcape -e 'ISO_Level3_Shift=XF86Shop'
+## to use Mode_switch as space
+# xcape -e 'Mode_switch=space'
+## to stop Escape from repeating
+#xset -r 9
+## to stop Tab from repeating
+#xset -r 23
+## to stop Caps_Lock from repeating
+#xset -r 66
+## To start binding keys
+#sxhkd -c ~/.config/sxhkd/sxhkdrc &
+
+#####################################################
+## to use Mode_switch+hjkl as vim keys
+# xmodmap -e "keycode 39 = s S space space"
+# xmodmap -e "keycode 40 = d D BackSpace BackSpace"
+# xmodmap -e "keycode 43 = h H Left Left Left Left"
+# xmodmap -e "keycode 44 = j J Down Down Down Down"
+# xmodmap -e "keycode 45 = k K Up Up Up Up"
+# xmodmap -e "keycode 46 = l L Right Right Right Right"
+
+## to use Mode_switch+123456789 as signs
+# xmodmap -e "keycode 10 = 1 exclam exclam"
+# xmodmap -e "keycode 11 = 2 at at"
+# xmodmap -e "keycode 12 = 3 numbersign numbersign"
+# xmodmap -e "keycode 13 = 4 dollar dollar"
+# xmodmap -e "keycode 14 = 5 percent percent"
+# xmodmap -e "keycode 15 = 6 asciicircum asciicircum"
+# xmodmap -e "keycode 16 = 7 ampersand ampersand"
+# xmodmap -e "keycode 17 = 8 asterisk asterisk"
+# xmodmap -e "keycode 18 = 9 parenleft parenleft"
+# xmodmap -e "keycode 19 = 0 parenright parenright"
+
+## to use spanish keys (archwiki xmodmap)
+# xmodmap -e "keycode  38 = a A aacute Aacute ae AE ae"
+# xmodmap -e "keycode  26 = e E eacute Eacute EuroSign cent EuroSign"
+# xmodmap -e "keycode  30 = u U uacute Uacute downarrow uparrow downarrow"
+# xmodmap -e "keycode  31 = i I iacute Iacute rightarrow idotless rightarrow"
+# xmodmap -e "keycode  32 = o O oacute Oacute oslash Oslash oslash"
+# xmodmap -e "keycode  57 = n N ntilde Ntilde n N n"
+# xmodmap -e "keycode  59 = comma less questiondown dead_acute dead_doubleacute dead_acute"
+# xmodmap -e "keycode  61 = slash question exclamdown dead_belowdot dead_abovedot dead_belowdot"
+
+######################################################
+## To remap Alt_R as Shift_R
+# xmodmap -e 'remove mod1 = Alt_R'
+# xmodmap -e 'add shift = Alt_R'
+
+## To remap Hyper_L key to mod3
+# xmodmap -e 'remove mod4 = Hyper_L'
+# xmodmap -e 'add mod3 = Hyper_L'
+
+######################################################
+# ## remap space key as mod3
+# spare_modifier="Hyper_L"
+# xmodmap -e "keycode 65 = $spare_modifier"
+# ## hyper_l is mod4 by default
+# xmodmap -e "remove mod4 = $spare_modifier"
+# xmodmap -e "add mod3 = $spare_modifier"
+# ## Next, map space to an unused keycode (to keep it around for xcape to use).
+# xmodmap -e "keycode any = space"
+# ## Finally use xcape to cause the space bar to generate a space when tapped.
+# xcape -e "$spare_modifier=space"
+
+

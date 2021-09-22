@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Screenshot taker
+menu() {
+	printf "a selected area\\ncurrent window\\nfullscreen\\na selected area (copy)\\ncurrent window (copy)\\nfullscreen (copy)" | dmenu -l 6 -i -p "Screenshot which area?"
+}
+
+if [ "$1" == "fullscreen" ]; then
+		maim ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png"
+else
+	option="$(menu)"
+	# echo $option
+	case "$option" in
+		"a selected area") maim -s ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" || exit ;;
+		"current window") maim -i "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
+		"fullscreen") maim ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
+		"a selected area (copy)") maim -s | xclip -selection clipboard -t image/png ;;
+		"current window (copy)") maim -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png ;;
+		"fullscreen (copy)") maim | xclip -selection clipboard -t image/png ;;
+		*) notify-send "Nothing selected" && exit ;;
+	esac
+fi
+
+sleep 0.5s && notify-send "Maim" "screenshot done"
+

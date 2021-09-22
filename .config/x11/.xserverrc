@@ -1,0 +1,5 @@
+#!/bin/sh
+
+## To start xinit (e.g xinit /usr/bin/cool-retro-term -- :XDG_VTNR)
+## alternative without .xserverrc use $xinit /usr/bin/cool-retro-term -- :$XDG_VTNR vt$XDG_VTNR
+exec /usr/bin/Xorg -nolisten tcp "$@" vt$XDG_VTNR

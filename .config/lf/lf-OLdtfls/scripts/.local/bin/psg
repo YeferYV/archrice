@@ -1,0 +1,3 @@
+#!/bin/sh
+# ps and pgrep
+pgrep -if "$@" | grep -v "$$" | xargs -r ps -fp

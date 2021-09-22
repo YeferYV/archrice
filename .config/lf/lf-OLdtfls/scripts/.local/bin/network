@@ -1,0 +1,143 @@
+#!/bin/sh
+# Script to show status, name and speed of network interfaces
+
+usage() {
+    cat << EOF
+Usage: $(basename "$0") [ -h ] [ -ew -i <interface> ] [ -cns ]
+
+Options:
+    Devices:
+        -e: show stats about all ethernet devices
+        -w: show stats about all wireless devices
+        -i <interface>: show stats about <interface>
+
+    Output:
+        -c: show basic connection infomation: name and signal strength if available
+        -s: show device RX/TX (a.k.a. DL/UL) speed
+        default: print device status, 1 for up, 0 for down
+
+    Format:
+        -h: format speed with human readable units (B/s, KB/s, MB/s, etc)
+
+Note: the options can be put together, e.g. show network speed for eth0
+    $(basename "$0") -hs -i eth0
+EOF
+}
+
+while getopts "i:webcnsh-:" arg; do
+    case "$arg" in
+        i) interface="$OPTARG";;
+        w) flag_wireless=1;;
+        e) flag_ethernet=1;;
+        c) flag_connection=1;;
+        s) flag_speed=1;;
+        h) flag_human_readable=1;;
+        -) [ "$OPTARG" = "help" ] && usage; exit;;
+        *) usage; exit 1;;
+    esac
+done
+shift "$((OPTIND - 1))"
+if [ "$#" != 0 ]; then usage; exit 1; fi
+
+folder="/sys/class/net"
+
+if [ -n "$interface" ]; then
+    devices="$folder/$interface"
+elif [ "$flag_ethernet" = 1 ]; then
+    devices=$(find "$folder" -name "e*")
+elif [ "$flag_wireless" = 1 ]; then
+    devices=$(find "$folder" -name "w*")
+else
+    usage
+    exit
+fi
+
+human_readable()
+{
+    while read -r speed; do
+        for unit in B/s KB/s MB/s GB/s TB/s PB/s; do
+            if [ "$speed" -lt 1000 ]; then
+                echo "$speed.${decimal:-0} $unit"
+                break
+            else
+                # TODO: wrong: zeros (I forgot what this means ...)
+                decimal="$((speed % 1000))"
+                speed="$((speed / 1000))"
+            fi
+        done
+    done
+}
+
+show_speed()
+{
+    NANO_PER_SEC=1000000000
+    device=$1
+    tmpfile=/tmp/status/$(basename "$device")_old
+    mkdir -p /tmp/status
+    timens=$(date +"%s%N")
+    read -r rx_bytes < "$device"/statistics/rx_bytes
+    read -r tx_bytes < "$device"/statistics/tx_bytes
+
+    if [ -f "$tmpfile" ]; then
+        read -r timens_old rx_bytes_old tx_bytes_old < "$tmpfile"
+        timens_span=$((timens - timens_old))
+        receive_total=$((rx_bytes - rx_bytes_old))
+        transmit_total=$((tx_bytes - tx_bytes_old))
+    fi
+
+    if [ -z "$timens_span" ] || [ "$timens_span" -gt $((NANO_PER_SEC * 3)) ]; then
+        echo "$timens $rx_bytes $tx_bytes" > "$tmpfile"
+    fi
+    # TODO: possible inaccuracy
+    if [ -n "$timens_span" ] \
+        && [ "$timens_span" -gt $((NANO_PER_SEC * 1 / 10)) ] \
+        && [ "$timens_span" -lt $((NANO_PER_SEC * 10)) ]; then
+        echo $((receive_total * NANO_PER_SEC / timens_span))
+        echo $((transmit_total * NANO_PER_SEC / timens_span))
+    else
+        sleep 1
+        show_speed "$device"
+    fi
+}
+
+if [ -z "$devices" ]; then
+    if [ "$flag_speed" = 1 ]; then
+        printf -- "0\n0\n"
+    elif [ "$flag_connection" = 1 ]; then
+        printf -- "--\n0\n"
+    else
+        printf -- "0\n"
+    fi
+fi
+
+for device in $devices; do
+    if [ -n "$flag_speed" ]; then
+        if [ -n "$flag_human_readable" ]; then
+            show_speed "$device" | human_readable
+        else
+            show_speed "$device"
+        fi
+    elif [ -n "$flag_connection" ]; then
+        case "${device##*/}" in
+            wl*)
+                iwctl station "${device##*/}" get-networks rssi-dbms |
+                sed 's/\x1b\[[0-9;]*m//g' |
+                sed -n 's/\s*>\s*\(.*\)\(psk\|wep\|open\)\s*\([-0-9]*\)/\1|\3/p' | {
+                    IFS='|' read -r name rssi
+                    if [ -z "$name" ]; then
+                        printf "%s\n%s\n" "Not connected" "0"
+                    else
+                        rssi=$((rssi / 100))
+                        # a quadratic model
+                        signal=$((rssi > -20 ? 100 : 100 - (rssi + 20) * (rssi + 20) / 50))
+                        printf "%s\n%s\n" "$name" "$signal"
+                    fi
+                } ;;
+            en*) printf "Ethernet\n100\n" ;;
+            *) printf "%s\n0\n" "--" ;;
+        esac
+    else
+        read -r state < "$device"/operstate
+        [ "$state" = "up" ] && echo 1 || echo 0
+    fi
+done

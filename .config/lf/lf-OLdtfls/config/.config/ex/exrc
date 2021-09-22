@@ -1,0 +1,80 @@
+" vim: ft=vim
+" file: exrc
+"
+" Some rules for vi init file:
+" - Starting a comment line with \", apparently :)
+" - No empty lines
+"
+" Options
+" Automatically indent on the next line
+set autoindent
+" Put buffer files in /tmp
+set directory=/tmp
+" Ignore case when searching
+set ignorecase
+" Vi will show tab as ^I, literally. It's not good looking.
+set nolist
+" Do not show line number
+" In my case, the cursor position is buggy with the line number colomns in normal mode.
+set nonumber
+" No repeat mapping
+set noremap
+" Show messsage for edits exceeds this number of lines
+set report=1
+" Use bash for shell
+set shell=/bin/bash
+" Indent 4 spaces with autoindent, >> or <<
+set shiftwidth=4
+" Highlight the matching () {} when closing it.
+set showmatch
+" Don't show mode change, it's also buggy when you 'j' in the last line
+set noshowmode
+" Tab 4 spaces
+set tabstop=4
+" Instant escape, other wise keymapping will timeout after 1 second
+set notimeout
+"
+"
+" Mappings with , as <leader>. Quit, edit(reload), save and more.
+" These need 'timeout' set
+" map ,q :q
+" map ,z :q!
+" map ,e :e
+" map ,w :w
+" map ,x :wq
+" map ,r :source ~/.config/ex/exrc
+map  :source ~/.config/ex/exrc
+"
+"
+" Delete and navigate in normal mode instead
+" Make backspace delete as expected
+" map  h
+" map!  sa
+" map!  sa
+" Bad hacks for arrow heys, lag when pressing escape
+" map! OA ka
+" map! OB ja
+" map! OC la
+" map! OD ha
+"
+"
+" Complete words, famous vi macros
+map!  a. hbmmi?\<2h"zdt.@zywmx`mP xi
+map!  a. hbmmi/\<2h"zdt.@zywmx`mP xi
+"
+" Do fmt command, the commented version does not work for me
+" from https://hea-www.harvard.edu/~fine/Tech/vi.html
+" map v 0ma}b:'a,.j070 ?  *dwi
+map v 0ma}b:'a,.j}j
+"
+" Execute current line (it's not working)
+" map  "ayy:@a
+"
+"
+" Abbreviations
+ab #i #include
+ab #d #define
+ab cio #include <stdio.h>
+ab cstr #include <string.h>
+ab clib #include <stdlib.h>
+ab cmain int main(int argc, char **argv){}O

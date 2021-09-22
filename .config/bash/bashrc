@@ -1,0 +1,292 @@
+# Abort if not running interactively
+[[ $- == *i* ]] || return 0
+
+#PS1='[\u@\h \W]\$ '
+#PS1='[\w]\$ '
+#PSO='     '
+#PS2='     '
+#PS3='     '
+#PS4='     '
+
+#se() { du -a ~/.config/* | awk '{print $2}' | fzf | xargs -r $EDITOR ;}
+se() { du -a ~/.local/bin ~/.config/* | awk '{print $2}' | fzf | xargs -r nvim ;}
+img2() { echo -e "\n\n\n\n\n" && echo "            $(img2sixel $1)"; }
+## todo:fix send second command "xset r off" or slow key pressed "xset r rate 300 50"
+#x2xalarm() { sudo systemctl start avahi-daemon && ssh -YC drksl@4l4rm.local x2x -north -to :0.0; xset r off;}
+#x2xalarm() { sudo systemctl start avahi-daemon && ssh -YC drksl@4l4rm.local x2x -north -to :0.0; }
+#x2xalarm() { ssh -YC drksl@4l4rm.home x2x -north -to :0.0; }
+x2xalarm() { ssh -YC drksl@4l4rm x2x -north -to :0.0; }
+sshfsalarm() { sudo sshfs drksl@4l4rm:/home/drksl/ /mnt/osarmgpt; }
+fuseralarm() { sudo fusermount -u /mnt/osarmgpt; }
+#sshx11alarm() { ssh -XCc blowfish drksl@4l4rm; }
+sshx11alarm() { ssh -XC drksl@4l4rm; }
+nmapscan() { sudo nmap -sP 192.168.1.1/24; }
+nmapvuln() { read -p "Enter the ip to be scanned: " VAR_IP; sudo -E nmap --script vuln $VAR_IP; }
+quien() { if [ $1 == "soy" ]; then figlet "hackerman"; fi; }
+v() { vim $1; xdotool set_window --name $(TMP=$1;echo ${TMP##*/}) $WINDOWID; }
+n() { xdotool set_window --name $(TMP=$1;echo ${TMP##*/}) $WINDOWID; nvim $1; }
+pipshow() { pip show $1 | grep -E 'Location|Name' | cut -d ' ' -f 2 | paste -d ' ' - - | awk '{print $2 "/" tolower($1)}' | xargs du -sh 2> /dev/null; }
+piplist() { pip list --format freeze|awk -F = {'print $1'}| xargs pip show | grep -E 'Location:|Name:' | cut -d ' ' -f 2 | paste -d ' ' - - | awk '{print $2 "/" tolower($1)}' | xargs du -sh 2> /dev/null|sort -h; }
+
+## to vi mode in bash
+set -o vi
+
+## to autocd in bash
+shopt -s autocd
+
+## to automatic cd
+#cd "$AUTOCD"
+
+##save vim file as root
+#:w !sudo tee % filename
+
+# colors
+darkgrey="$(tput bold ; tput setaf 0)"
+red="$(tput bold ; tput setaf 88)"
+green="$(tput bold ; tput setaf 2)"
+white="$(tput bold ; tput setaf 250)"
+blue="$(tput bold; tput setaf 4)"
+cyan="$(tput bold; tput setaf 6)"
+nc="$(tput sgr0)"
+
+## exports
+#export PATH="${HOME}/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:"
+#export PATH="${PATH}/usr/local/sbin:/opt/bin:/usr/bin/core_perl:/usr/games/bin:"
+#export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
+export PATH="$HOME/.local/appimage:$HOME/.local/bin:$PATH"
+export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+#export PS1="\[$white\][\[$white\]\w\[$white\]\[$white\]]\\[$white\]\$ \[$nc\]"
+export PS1="\[$green\][\
+\[$green\]\w\
+\[$green\]]\
+\[$green\]\$ \
+\[$nc\]"
+#export PS1="\[$green\]\[$green\] \w\[$green\]\[$green\]\\[$green\] > \[$nc\]"
+blue='\033[01;35m'
+clear='\033[0m'
+#title='\e]0;Alacritty - \w\a'
+title='\e]0; \W\a'
+# export PS1="\[$blue\]\W \[$clear\]\$ \[$(echo -e "$title")\]"
+# export PS1="\[$blue\]\W \[$clear\]\$ \[$(echo -e "\e]2;$(pwd)\e\\")"
+# export PS1="[\W] \$ \[$(echo -e "$title")\]"
+# export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/\~}\007"'
+# export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
+export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007"'
+
+
+
+export LD_PRELOAD=""
+export EDITOR="vim"
+export VISUAL="vim"
+export TERMINAL="urxvt"
+export BROWSER="chromium"
+export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+#export HISTSIZE=1000
+#export RANGER_LOAD_DEFAULT_RC="FALSE"
+#export GDK_SCALE=0.5
+#export GDK_DPI_SCALE=0.5
+
+
+
+# aliases
+alias youtubeaudio="youtube-dl --add-metadata --ignore-errors --extract-audio --format bestaudio/best "
+alias youtubevidsub="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 22/45/120/best "
+alias youtubesub="youtube-dl --write-auto-sub --write-sub --skip-download"
+# alias n='nvim'
+# alias v='vim'
+alias r='ranger_cd'
+alias re='redshift -O'
+alias dx='devour xdg-open'
+alias urxvte='urxvt -e'
+alias scrt='startx /usr/bin/cool-retro-term'
+alias sxterm='startx /usr/bin/xterm -geometry 227x59 -bg black -fg green -ti vt340'
+alias smlterm='startx /usr/bin/mlterm'
+alias sttya='stty --all'
+alias ll='ls -lha'
+alias ls="ls --color=auto"
+alias apt="pacman"
+alias pacmanupdate="sudo pacman -Syyu --needed blackarch --overwrite='*'"
+alias xdgfiletype="xdg-mime query filetype bgs/bgi/redmoon.jpg"
+alias xdgget="xdg-mime query default image/jpeg"
+alias xdgset="xdg-mime default sxiv.desktop image/jpeg"
+alias xdgopen="xdg-open bgs/bgi/redmoon.jpg"
+alias alttabjk="alttab -pk k -kk j"
+alias xdomovetocorner="xdo move -x 1 -y 1"
+alias xdoresizewindow="xdo resize -w 750 -h 500"
+alias wmctrlmoveresize="wmctrl -r alacritty -e '0,0,0,400,400'"
+alias wmctrlmakeurgent="wmctrl -r alacritty -b add,demands_attention"
+alias grepwinr="grep --color=auto -winr"
+alias grep="grep --color=auto"
+alias fancytext="showfigfonts"
+alias shred="shred -zf"
+alias plz='sudo \!-1'
+alias please='sudo $(fc -ln -1)'
+alias p5gen="p5 generate --bundle"
+alias presentation-monitor="xrandr --output HDMI-1 --mode 1360x768 --same-as eDP-1"
+alias multi-monitor="xrandr --output HDMI-1 --mode 1360x768 --right-of eDP-1"
+alias colabssh="ssh hckr@4.tcp.ngrok.iO -p 11543"
+alias wpahashsample="hashcat -m 2500 --example-hashes"
+alias sambaconnection="smb://yeff@192.168.x.y/linuxshare"
+alias restartdunstandcontextkey="pkill dunst ; dunst -context_key ctrl+t &"
+alias testnotifysend="notify-send 'Test' 'Example Websites\n\nhttps://github.com\nhttps://google.com'"
+alias speedometer="speedometer -r wlp2s0 -t wlp2s0"
+alias wifi-menu-dhcpcd="sudo dhcpcd wlp2s0"
+alias timerestart="systemctl restart systemd-timesyncd"
+alias errortonull="2> /dev/null"
+alias outputtonull="> /dev/null 2>&1"
+alias bgm="youtube-viewer -n -A https://www.youtube.com/playlist?list=PL8teA7EzEWxc8zc1fCrCpkTUuLttJtWCR"
+alias sxl="/usr/local/bin/Xsixel :1 -exec 'vimb naruto' 2>/dev/null"
+alias sxl2="/usr/local/bin/Xsixel :1 -exec 'vimb naruto' -screen 1024x720"
+alias sxl3="/usr/local/bin/Xsixel :1 -exec 'vimb google.com' -screen 1024x720"
+alias sxl4="/usr/local/bin/Xsixel :1 -exec 'vimb https://www.youtube.com/watch?v=oHg5SJYRHA0' -screen 1024x720"
+alias ffmpegsixel="youtube-dl -q https://www.youtube.com/watch?v=oHg5SJYRHA0 -o - | ffmpeg -v 0 -i - -vn -acodec pcm_s16le -f wav - | paplay & youtube-dl -q https://www.youtube.com/watch?v=oHg5SJYRHA0 -o - | ffmpeg -v 0 -i - -f sixel -r 3 -pix_fmt rgb24 -s 480x200 -"
+alias ffmpegsixel0="nohup youtube-dl -q https://www.youtube.com/watch?v=oHg5SJYRHA0 -o - | ffmpeg -v 0 -i - -vn -acodec pcm_s16le -f wav - | paplay & youtube-dl -q https://www.youtube.com/watch?v=oHg5SJYRHA0 -o - | ffmpeg -v 0 -i - -f sixel -r 3 -pix_fmt rgb24 -s 480x200 -"
+alias ffmpegsixel1="youtube-dl -q https://www.youtube.com/watch?v=oHg5SJYRHA0 -o - | ffmpeg -v 0 -i - -f sixel -r 3 -pix_fmt rgb24 -s 480x200 -"
+alias ffmpegsixel2="youtube-dl -q https://www.youtube.com/watch?v=dQw4w9WgXcQ -o - | ffmpeg -v 0 -i - -vn -acodec pcm_s16le -f wav - | paplay & youtube-dl -q https://www.youtube.com/watch?v=dQw4w9WgXcQ -o - | ffmpeg -v 0 -i - -f sixel -r 3 -pix_fmt rgb24 -s 480x200 -"
+alias ffmpegsixel3="ffmpeg -i ~/bgs/bgv/Prayer.mp4 -pix_fmt rgb24 -f sixel -"
+alias ffmpegsixel4="ffmpeg -v 0 -i ~/bgs/bgv/Prayer.mp4 -vn -acodec pcm_s16le -f wav - | paplay"
+alias ffmpegsixel5="nohup ffmpeg -v 0 -i ~/bgs/bgv/Prayer.mp4 -vn -acodec pcm_s16le -f wav - | paplay & ffmpeg -i ~/bgs/bgv/Prayer.mp4 -pix_fmt rgb24 -f sixel -"
+alias ffmpegsixel6="nohup ffmpeg -i ~/bgs/bgv/Prayer.mp4 -pix_fmt rgb24 -f sixel - & ffmpeg -v 0 -i ~/bgs/bgv/Prayer.mp4 -vn -acodec pcm_s16le -f wav - | paplay"
+alias rroll="curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash"
+alias helperrg="rg mod -g .config/**"
+alias findlibrariesinstalled="find /usr/lib/ -name '$1*'"
+alias curlifconfig="curl ifconfig.me"
+alias createdocker="docker run -it --name bnt -p 9090:9090 -v /home/drknss/docs:/root/dox ubuntu:18.04"
+alias	tmuxmpvdmenu2="tmux new -d mpv --loop-playlist --no-video $1"
+alias	YTFZFTHUMB2="ytfzf -t"
+#alias curl="curl --user-agent 'noleak'"
+#alias wget="wget -U 'noleak'"
+
+# Pipe Highlight to less
+export LESSOPEN="| $(which highlight) %s --out-format xterm256 -l --force -s pablo --no-trailing-nl"
+export LESS=" -R"
+alias hiless='less -m -N -g -i -J --line-numbers --underline-special'
+alias himore='less'
+
+# to use "highlight" colored
+alias highlight="highlight $1 --out-format xterm256 -l --force -s pablo --no-trailing-nl"
+alias ccat="highlight $1 --out-format xterm256 -l --force -s pablo --no-trailing-nl"
+
+# cheat.sh -> cht.sh cheat tldr bro
+alias cht="cheat-sh"
+
+# cheat-sh :bash-completions
+#. ~/.local/bin/cht_completion.sh
+
+# cheat.sh :bash_completion
+. ~/.config/bash/cht.sh
+
+# bash line editor
+#source ~/.config/bash/ble.sh/out/ble.sh
+
+# xterm transparency
+[ -n "$XTERM_VERSION" ] && transset-df --id "$WINDOWID" >/dev/null
+
+# source files
+[ -r /usr/share/bash-completion/completions ] &&
+  . /usr/share/bash-completion/completions/*
+
+## to enable stpvimg
+lfstpvimg () {
+    ID=$$
+    stpvimg --listen $ID &
+    stpvimg --add $ID 1.png
+    stpvimg --add $ID 2.png $X $Y $W $H
+    stpvimg --clear $ID
+    stpvimg --end $ID
+}
+
+
+## to lf image preview with stpv
+lfstpv () {
+    fid="$(mktemp)"
+    lf -command '&printf $id > '"$fid"'
+    &stpvimg --listen $id' -last-dir-path="$tmp" "$@"
+    stpvimg --end "$(cat $fid)"
+    rm $fid
+}
+
+
+ranger_cd() {
+    temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+    ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+    if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+        cd -- "$chosen_dir"
+    fi
+    rm -f -- "$temp_file"
+}
+bind '"\C-r":"ranger_cd\C-m"'
+
+# This will launch ranger_cd only if the RANGERCD variable is set.
+# It is important to unset this variable again, otherwise launching a
+# subshell from this terminal will automatically relaunch ranger.
+#$RANGERCD && unset RANGERCD && ranger_cd
+#[ -z "$RANGERCD" ] &&  echo "String is empty"; [ -n "$RANGERCD" ] && echo "String is not empty"
+[ -n "$RANGERCD" ] && unset RANGERCD && ranger_cd
+
+## To use lf to switch directories and bind it to ctrl-o
+lfcd () {
+    tmp="$(mktemp)"
+    #stty -echo
+    lf-ueberzug -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp" >/dev/null
+        #[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+        #cd "$dir" && clear
+        cd "$dir"
+    fi
+}
+
+stty -ixon #disable ctrl-s and ctrl-q
+bind '"\C-o":"lfcd\C-m"'
+bind '"\C-e":"exit\C-m"'
+## todo:fix bin \C-i
+#bind '"\C-i":"rr\C-m"'
+
+#bindkey -s '^o' 'lfcd\n'
+#bindkey -s '^q' 'exit'
+#bindkey -s '^a' 'bc -lq\n'
+#bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+#bindkey '^[[P' delete-char
+## Edit line in vim with ctrl-e:
+#autoload edit-command-line; zle -N edit-command-line
+#bindkey '^e' edit-command-line
+
+
+
+## search for the "command not found" stdout
+# source /usr/share/doc/pkgfile/command-not-found.bash
+
+# Start blinking
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 6) # blue
+# Start bold
+export LESS_TERMCAP_md=$(tput bold; tput setaf 2) # green
+# Start stand out
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3) # yellow
+# End standout
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+# Start underline
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 1) # red
+# End Underline
+export LESS_TERMCAP_ue=$(tput sgr0)
+# End bold, blinking, standout, underline
+export LESS_TERMCAP_me=$(tput sgr0)
+
+#export LESS_TERMCAP_mb=$'\e[1;32m'
+#export LESS_TERMCAP_md=$'\e[1;32m'
+#export LESS_TERMCAP_me=$'\e[0m'
+#export LESS_TERMCAP_se=$'\e[0m'
+#export LESS_TERMCAP_so=$'\e[01;33m'
+#export LESS_TERMCAP_ue=$'\e[0m'
+#export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+#export LESS_TERMCAP_mb=$'\e[01;31m'
+#export LESS_TERMCAP_md=$'\e[01;31m'
+#export LESS_TERMCAP_me=$'\e[0m'
+#export LESS_TERMCAP_se=$'\e[0m'
+#export LESS_TERMCAP_so=$'\e[01;44;33m'
+#export LESS_TERMCAP_ue=$'\e[0m'
+#export LESS_TERMCAP_us=$'\e[01;32m'
+
+#export PULSE_SERVER=tcp:localhost

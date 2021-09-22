@@ -1,0 +1,89 @@
+#!/bin/sh
+
+usage() {
+    cat << EOF
+Usage: $(basename "$0") -h [host[:port]] -n username:password [-a] [-d] -T <tracker_sub> -L <loc_sub> -N <name_sub> <destination>
+
+A script to move resume file and cached torrent file between transmission config dirs.
+The script might be buggy, it's recommended to run with -d the first time.
+
+Match patterns are one or more of match patterns combined with AND logical operation
+that will be used to match the information in \`transmission-remote -t<id> -i.\`
+There must be at list one <*_sub> argument. The <destination> must be at the end.
+
+<destination>:
+    The destination dir (normally another transmission config dir)
+
+Optional arguments:
+    -a:             print more infomation
+    -d:             dry run, do not move any files
+    -h host:port    host and port
+    -n username:password
+        username and password for transmission session
+    -l <loc>:       the regex to match the Location line
+    -n <name>:      the regex to match the Name line
+    -t <tracker>:   the regex to match the Magnet line
+EOF
+}
+
+while getopts "hdaT:L:N:h:n:" arg; do
+    case "$arg" in
+        a) a_flag=1;;
+        d) dry_run=1;;
+        h) host="${OPTARG%:*}"; port="${OPTARG#*:}";;
+        n) username="${OPTARG%:*}"; password="${OPTARG#*:}";;
+        N) name_sub="$OPTARG";;
+        L) loc_sub="$OPTARG";;
+        T) tracker_sub="$OPTARG";;
+        h|*) usage; exit;;
+    esac
+done
+
+host_args="${host:-localhost}:${port:-9091}"
+[ -n "$username" ] && [ -n "$password" ] && pass_args="-n $username:$password"
+remote_args="$host_args $pass_args"
+
+shift $((OPTIND - 1))
+[ "$#" != 1 ] && usage && exit || dest="$1"
+[ -d "$dest" ] || { echo "Destination folder $dest does not exist"; exit; }
+[ -z "$dry_run" ] && mkdir -p "$dest/torrents" "$dest/resume"
+
+config_dir=$(transmission-remote "$remote_args" -si | sed -n 's/ *Configuration directory: //p')
+torrent_dir="$config_dir"/torrents
+resume_dir="$config_dir"/resume
+
+transmission-remote "$remote_args" -tall -i |
+grep "Id\|Name\|Hash\|Location\|Magnet" |
+while IFS=': ' read key value; do
+    case "$key" in
+    Id)
+        id=$value
+        resume_file="$resume_dir/$info_hash.resume"
+        torrent_file="$torrent_dir/$info_hash.torrent"
+        if [ -z "$name" ] || [ -z "$info_hash" ] || [ -z "$location" ] || [ -z "$trackers" ]; then
+            continue
+        fi
+
+        if ! { { [ -n "$loc_sub" ] && [ "${location%$loc_sub*}" = "$location" ]; } ||
+        { [ -n "$tracker_sub" ] && [ "${trackers%$tracker_sub*}" = "$trackers" ]; } ||
+        { [ -n "$name_sub" ] && [ "${name%$name_sub*}" = "$name" ]; } ||
+        [ ! -f "$resume_file" ] || [ ! -f "$torrent_file" ]; }; then
+            if [ -n "$dry_run" ]; then
+                printf "# (dryrun): %s\n" "$id"
+            else
+                cp "$torrent_file" "$dest/torrents/"
+                cp "$resume_file" "$dest/resume/"
+            fi
+            if [ "$a_flag" = 1 ]; then
+                printf "%-10s: %s\n%-10s: %s\n%-10s: %s\n\n" "NAME" "$name" "File dir" "$location" "Trackers" "$trackers"
+            fi
+        fi
+        unset id name info_hash location trackers
+        ;;
+    Name) name=$value ;;
+    Hash) info_hash=$value ;;
+    Location) location=$value ;;
+    Magnet) trackers=${value#*tr=} ;;
+    *) ;;
+    esac
+done

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+## lspci display drivers information
+## acpi display battery infomation
+acpi -b | awk -F'[,:%]' '{print $2, $3}' | {
+	read -r status capacity
+
+	if [ "$status" = Discharging -a "$capacity" -lt 25 ]; then
+		#notify-send -u critical "batery status" "$status $capacity"
+		notify-send -u critical "$capacity% $status"
+	fi
+  if [ "$status" = Discharging -a "$capacity" -lt 5 ]; then
+		logger "Critical battery threshold"
+    notify-send -u critical "hibernating"
+		systemctl hibernate
+	fi
+}

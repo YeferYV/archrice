@@ -1,0 +1,148 @@
+#!/bin/sh
+
+TOGGLE="$HOME/.config/lf/lf-stpv/noimgpv"
+CONFIG="$HOME/.config/lf/lf-stpv/config.sh"
+#TOGGLE="$HOME/.config/stpv/noimgpv"
+#CONFIG="$HOME/.config/stpv/config.sh"
+
+PV_IMAGE_ENABLED=1
+PV_TYPE=text
+. "$CONFIG" 2>/dev/null
+
+CMD=; ID=; FIFO=; FPID=
+
+toggle() {
+    if [ -f "$TOGGLE" ]; then
+        rm -f "$TOGGLE"
+    else
+        d=$(dirname "$TOGGLE")
+        mkdir -p "$d"
+        touch "$TOGGLE"
+    fi
+}
+
+isenabled() {
+    [ "$PV_IMAGE_ENABLED" = 1 ] || [ ! -f "$TOGGLE" ]
+}
+
+isalive() {
+    [ -e "$FIFO" ]
+}
+
+listen() {
+    [ "$PV_TYPE" = text ] && return 0
+
+    # if already listening, ignore
+    [ -e "$FIFO" ] && return 0
+
+    mkfifo "$FIFO"
+    echo $$ > "$FPID"
+
+    # echo "FIFO='$FIFO'"
+    # echo "PID=$$"
+
+    trap end EXIT
+    tail -f "$FIFO" | ueberzug layer
+}
+
+add() {
+    F="$1"; X="$2"; Y="$3"; W="$4"; H="$5"
+    if [ ! "$X" ] || [ ! "$Y" ] || [ ! "$W" ] || [ ! "$H" ]; then
+        X=0; Y=0
+        W=$(tput cols)
+        H=$(tput lines)
+    else
+        # sometimes to goes a bit beyond the line below
+        H=$((H - 1))
+    fi
+
+    if [ "$PV_TYPE" = text ]; then
+        chafa \
+            --fill=block \
+            --symbols=block \
+            -c 256 \
+            --size "$W"x"$H" \
+            "$F" 2>/dev/null
+    else
+        [ ! -e "$FIFO" ] && return 1
+        path="$(printf '%s' "$F" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        printf '{ "action": "add", "identifier": "preview", "x": %d, "y": %d, "width": %d, "height": %d, "scaler": "contain", "scaling_position_x": 0.5, "scaling_position_y": 0.5, "path": "%s"}\n' "$X" "$Y" "$W" "$H" "$path" > "$FIFO"
+    fi
+}
+
+clear() {
+    [ "$PV_TYPE" = text ] && return 0
+    [ ! -e "$FIFO" ] && return 1
+    printf '{"action": "remove", "identifier": "preview"}\n' > "$FIFO"
+}
+
+end() {
+    [ "$PV_TYPE" = text ] && return 0
+    clear
+    [ -f "$FPID" ] &&
+        PID=$(cat "$FPID") &&
+        rm -f "$FPID" &&
+        pkill -TERM -P "$PID"
+    rm -f "$FIFO"
+}
+
+usage() {
+    BIN=$(basename "$0")
+    echo "usage: $BIN [--listen id] [--add id picture [x y w h]] [--clear id] [--end id] [--alive id] [--toggle] [--enabled]"
+    echo
+    echo "Example usage:"
+    echo "$ stpvimg --listen 0 &"
+    echo "$ stpvimg --add 0 $HOME/1.png"
+    echo "$ stpvimg --add 0 $HOME/2.png 0 10 20 20"
+    echo "$ stpvimg --clear 0"
+    echo "$ stpvimg --end 0"
+    return 1
+}
+
+main() {
+    [ "$PV_IMAGE_ENABLED" = 0 ] || [ -f "$TOGGLE" ] &&
+        return 1
+
+    # if no display server
+    [ -n "$DISPLAY" ] || PV_TYPE=text
+
+    # ueberzug not supported for wayland
+    [ -n "$WAYLAND_DISPLAY" ] ||
+        [ "$XDG_SESSION_TYPE" = 'wayland' ] &&
+            PV_TYPE=text
+
+    if [ "$PV_TYPE" = text ]; then
+        command -v chafa >/dev/null || {
+            >&2 echo 'chafa must be installed'
+            return 1
+        }
+    else
+        command -v ueberzug >/dev/null || {
+            >&2 echo 'ueberzug must be installed'
+            return 1
+        }
+    fi
+
+    CMD="$1"
+    ID="$2"
+    shift 2 2>/dev/null
+
+    # the fifo
+    FIFO="/tmp/stpvimgfifo$ID"
+
+    # pid of this listener
+    FPID="$FIFO-pid"
+
+    case "$CMD" in
+        --listen)  listen "$@" ;;
+        --add)     add    "$@" ;;
+        --clear)   clear       ;;
+        --end)     end         ;;
+        --alive)   isalive     ;;
+        --toggle)  toggle      ;;
+        --enabled) isenabled   ;;
+        *)         usage       ;;
+    esac
+}
+
+main "$@"

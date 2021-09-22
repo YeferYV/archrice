@@ -1,0 +1,5 @@
+#* * * * * echo 'hello' >> /tmp/test.txt
+#* * * * * env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send 'asd'
+#* * * * * eval "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus"; notify-send "qwe"
+* * * * * env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /home/drknss/.local/bin/lowbatnotification
+

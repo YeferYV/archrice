@@ -1,0 +1,31 @@
+" The standard ncurses colors are:
+" Default = -1 = None, can be used for transparency or default color
+" Black = 0 Red = 1 Green = 2 Yellow = 3 Blue = 4 Magenta = 5 Cyan = 6 White = 7
+" Light versions of colors are also available (set bold attribute)
+
+" Available attributes (some of them can be combined):
+" bold underline reverse or inverse standout italic none
+
+highlight clear
+highlight Win         cterm=none         ctermfg=white   ctermbg=none
+highlight Directory   cterm=bold         ctermfg=cyan    ctermbg=none
+highlight Link        cterm=none         ctermfg=yellow  ctermbg=none
+highlight BrokenLink  cterm=bold         ctermfg=red     ctermbg=none
+highlight Socket      cterm=none         ctermfg=magenta ctermbg=none
+highlight Device      cterm=bold         ctermfg=red     ctermbg=none
+highlight Fifo        cterm=bold         ctermfg=cyan    ctermbg=none
+highlight Executable  cterm=bold         ctermfg=green   ctermbg=none
+highlight Selected    cterm=bold         ctermfg=magenta ctermbg=none
+highlight CurrLine    cterm=bold,reverse ctermfg=none    ctermbg=none
+highlight TopLine     cterm=none         ctermfg=white   ctermbg=none
+highlight TopLineSel  cterm=bold         ctermfg=none    ctermbg=none
+highlight StatusLine  cterm=bold         ctermfg=white   ctermbg=none
+highlight WildMenu    cterm=bold,reverse ctermfg=white   ctermbg=none
+highlight CmdLine     cterm=none         ctermfg=white   ctermbg=none
+highlight ErrorMsg    cterm=none         ctermfg=red     ctermbg=none
+highlight Border      cterm=none         ctermfg=white   ctermbg=none
+highlight JobLine     cterm=bold,reverse ctermfg=none    ctermbg=white
+highlight SuggestBox  cterm=bold         ctermfg=none    ctermbg=none
+highlight CmpMismatch cterm=bold         ctermfg=white   ctermbg=red
+highlight TabLine     cterm=none         ctermfg=white   ctermbg=none
+highlight TabLineSel  cterm=bold,reverse ctermfg=none    ctermbg=none

@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+set -e
+
+export LF_SCROLLINGPREVIEW_TEMPFILE="${TMPDIR:-/tmp}/lf-scrollingpreview-$$"
+
+cleanup() {
+  exec 4>&-
+	rm -rf "$LF_SCROLLINGPREVIEW_TEMPFILE"
+}
+
+mkfifo "$LF_SCROLLINGPREVIEW_TEMPFILE"
+exec 4<>"$LF_SCROLLINGPREVIEW_TEMPFILE"
+echo "1" >&4 &
+trap cleanup INT HUP EXIT
+
+lf -command "source '${XDG_CONFIG_HOME:-$HOME/.config}/lf-scrollingpreview/lfrc-scrollingpreview'" "$@" 4>&-
+

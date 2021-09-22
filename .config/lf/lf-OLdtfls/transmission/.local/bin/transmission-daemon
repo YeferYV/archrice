@@ -1,0 +1,5 @@
+#!/bin/sh
+# start transmission daemon with specified logfile
+logdir="$HOME/.cache/transmission-daemon"
+logfile="$logdir/$(date +%s).log"
+mkdir -p "$logdir" && /usr/bin/transmission-daemon "$@" --logfile "$logfile"

@@ -1,0 +1,44 @@
+/* rofi config for launcher, need my main config.rasi file */
+
+configuration {
+    modi                : "drun";
+    columns             : 6;
+    lines               : 5;
+    drun-display-format : "{name}";
+}
+
+* {
+    background-color    : #212121;
+    color               : #EEFFFF;
+    /* color for highlighted things */
+    selected-background : #484848;
+}
+
+window { width: 80%; }
+
+mainbox { margin: 4%; }
+
+inputbar { children: [dummy, entry, dummy]; }
+
+dummy { expand: true; }
+
+entry {
+    background-color : @selected-background;
+    border-radius    : 16px;
+    padding          : 1%;
+    expand           : false;
+    width            : 20%;
+}
+
+element {
+    border-radius    : 16px;
+    orientation      : vertical;
+    padding          : 3%;
+    color            : @text-color;
+}
+
+element-icon { size: 6%; }
+
+element-text { horizontal-align: 0.5; }
+
+element selected { background-color: @selected-background; }

@@ -1,0 +1,4 @@
+#!/bin/sh
+ID=$(bspc query -N -n)
+# ID=$(bspc query -N -n focused)
+bspc node $ID -n $(bspc query -N -n .leaf.\!window)

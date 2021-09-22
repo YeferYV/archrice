@@ -1,0 +1,320 @@
+# interpreter for shell commands (needs to be POSIX compatible)
+#set shell sh
+set shell /bin/bash
+
+# set '-eu' options for shell commands
+# These options are used to have safer shell commands. Option '-e' is used to
+# exit on error and option '-u' is used to give error for unset variables.
+# Option '-f' disables pathname expansion which can be useful when $f, $fs, and
+# $fx variables contain names with '*' or '?' characters. However, this option
+# is used selectively within individual commands as it can be limiting at
+# times.
+set shellopts '-eu'
+
+# set internal field separator (IFS) to "\n" for shell commands
+# This is useful to automatically split file names in $fs and $fx properly
+# since default file separator used in these variables (i.e. 'filesep' option)
+# is newline. You need to consider the values of these options and create your
+# commands accordingly.
+set ifs "\n"
+
+##################FIXNEEDED############################
+# leave some space at the top and the bottom of the screen
+set scrolloff 50
+
+# basic settings
+#set color256
+set icons
+set period 1
+set preview true
+# set previewer ~/.config/lf/howto-lf-image-previews/lf-previewer
+# set cleaner ~/.config/lf/howto-lf-image-previews/lf-cleaner
+set previewer ~/.config/lf/lf-wiki-previewer/previewer.sh
+set cleaner ~/.config/lf/lf-wiki-previewer/clear_img.sh
+#set previewer ~/.config/lf/pv.sh
+# set previewer ~/.config/lf/preview
+# set previewer ~/.config/lf/scope.sh
+# set previewer ~/.config/lf/lf-wiki-previewer/previewer.sh
+# set cleaner ~/.config/lf/lf-wiki-previewer/clear_img.sh
+# set previewer ~/.config/lf/lf-stpv/stpv
+# set cleaner ~/.config/lf/lf-stpv/stpvimgclr
+# &stpvimg --listen $id
+set hidden true
+#set nopreview
+set ratios 1:2
+#set promptfmt "\033[34;1m[%w]$ \033[0m\033[1m%f"
+#set promptfmt "\033[0;1m%w "
+#set promptfmt "$(tput setaf 88 %w) "
+set promptfmt "[1;90m%w "
+#set timefmt ""
+#set info ""
+#set wrapscan "off"
+#set truncatechar "-"
+
+#######################
+##  Global_keymaps  ##
+#####################
+
+############TESTINGNEEDED####################
+##(guess <a-c> need to be unmapped first
+##but <a-x> its working)
+# execute current file (must be executable)
+#map <a-x> $$f
+#map <c-x> !$f
+
+## Ranger's open_with
+#cmd open-with %"$@" $fx
+cmd open-with $$@ $fx
+
+## define a custom 'rename' command without prompt for overwrite
+#cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+
+cmd draganddrop &dragon-drag-and-drop -a -x $fx
+cmd duplicatelf &nohup $TERMINAL -e "lf"
+cmd openterm &nohup alacritty
+cmd bulkrename $vidir
+# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
+# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+cmd touch $touch "$(echo $* | tr ' ' '\ ')"
+
+# To change numbers of colums
+map <a-4> $lf -command "set nopreview; set ratios 1"
+map <a-5> $lf -command "set preview; set ratios 1:2"
+map <a-6> $lf -command "set preview; set ratios 1:2:3"
+
+# To refresh numbers of colums
+cmd onecol ${{
+  lf -remote "send $id set nopreview"
+  lf -remote "send $id set ratios 1"
+  #printf $load
+}}
+map <a-1> onecol
+
+cmd onemorecol ${{
+  lf -remote "send $id set ratios 1:2"
+  lf -remote "send $id set preview"
+  #printf $id
+}}
+map <a-2> onemorecol
+
+cmd morecol ${{
+  lf -remote "send $id set ratios 1:2:3"
+  lf -remote "send $id set preview"
+  #printf $id
+}}
+map <a-3> morecol
+
+# cmd toggleonecol ${{
+#     if [ "$LF_NUMCOL" == "two" ]; then
+#       lf -remote "send $id set preview"
+#       lf -remote "send $id set ratios 1:2"
+#       lf -remote "send $id $(export LF_NUMCOL='one')"
+#     else
+#       lf -remote "send $id set nopreview"
+#       lf -remote "send $id set ratios 1"
+#       lf -remote "send $id $(export LF_NUMCOL='two')"
+#     fi
+# }}
+# # map <c-o> toggleonecol $LF_NUMCOL
+# map <c-o> $lf -remote "send $id toggleonecol $LF_NUMCOL"
+
+# cmd toggleonemorecol ${{
+#     if [ "$1" = "one" ]; then
+#       lf -remote "send $id set nopreview"
+#       lf -remote "send $id set ratios 1"
+#       export LF_NUMCOL='two'
+#     else
+#       lf -remote "send $id set ratios 1:2"
+#       lf -remote "send $id set preview"
+#       export LF_NUMCOL='one'
+#     fi
+# }}
+# # map <a-o> toggleonemorecol $LF_NUMCOL
+# map <a-o> $lf -remote "send $id toggleonemorecol $LF_NUMCOL"
+
+
+# to quit and clear (fix clear not executing)
+cmd clearandquit :{{
+  $clear
+  quit
+  }}
+map <c-q> clearandquit
+
+cmd codeandclose :{{
+  $mimeopen $f >/dev/null 2>&1
+  $xdo close
+  }}
+map <c-c> codeandclose
+
+
+cmd on-cd &{{
+    # '&' commands run silently in background (which is what we want here),
+    # but are not connected to stdout.
+    # To make sure our escape sequence still reaches stdout we pipe it to /dev/tty
+    # Show current directory in window title.
+    # printf "\033]0; $PWD\007" > /dev/tty
+    # Show current directory in window title with ~ instead of /home/username
+    # printf "\033]0; $(pwd | sed "s|$HOME|~|")\007" > /dev/tty
+    # Show current directory in window title with last path instead of full path
+    printf "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007" > /dev/tty
+    # Show current directory in window title and show a program name.
+    # printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty
+}}
+# also run at startup
+#on-cd
+
+# define a custom 'open' command
+# This command is called when current file is not a directory. You may want to
+# use either file extensions and/or mime types here. Below uses an editor for
+# text files and a file opener for the rest.
+cmd open ${{
+    ##"sudo -E lf" if running as sudo
+    current=$(xdotool getactivewindow)
+    case $(file --dereference --brief --mime-type $f) in
+        #text/*) xdotool set_window --name $f  $WINDOWID; $EDITOR $fx ;;
+        text/*|application/json) xdotool set_window --name ${f##*/}  $current; stty echo ;$EDITOR $fx ;;
+	      # image/*) basename -a $PWD/* | devour sxiv -aio ;;
+	      # image/*) devour sxiv -aio $PWD/* ;;
+	      # image/*) devour sxiv -b $fx ;; #not working after 1024 characters needs this patch https://github.com/salman-abedin/devour/pull/28
+	      image/*) basename -a $fx | devour sxiv -baio ;; #workaround to 1024 character limits so far so good
+	      # audio/*) mpv --audio-display=no $fs ;;
+	      # audio/*) devour mpv --geometry=800x600 --force-window $fx ;; #buggy
+	      audio/*) basename -a $fx | devour mpv --geometry=800x600 --force-window --playlist=- ;;
+        # video/*) mpv $fx ;;
+	      # video/*) setsid -f mpv $fs -quiet >/dev/null 2>&1 ;;
+	      # video/*) basename -a $fx | xargs -0I__ devour mpv --geometry=800x600 __ ;; #not working after 1024 characters
+	      # video/*) basename -a $fx | sed ':a;N;$!ba;s/\n/\~/g' | xargs -tI__ sh -c "devour mpv --geometry=800x600 __" ;; #only works in nonspaced names
+        # video/*) basename -a $fx | sed 's/\ /\\ /g' | sed ':a;N;$!ba;s/\n/ /g' | xargs -d'\n' -tI__ sh -c 'devour mpv __' ;; #only works in nonspecial character like () &
+	      video/*) basename -a $fx | devour mpv --geometry=800x600 --playlist=- ;;
+        #*) for f in $fx; do setsid -f xdg-open $f ;;
+        *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+    esac
+}}
+
+#cmd setbg "$1"
+#cmd setbg $ln -sf $fx ~/.local/share/bg && xwallpaper --zoom ~/.local/share/bg
+cmd setbg $cp -f $f ~/.local/share/bg && wal -i $f
+# cmd setbg ${{
+#   cp -f $fx ~/.local/share/bg
+#   wal -i $fx -o ~/.config/wal/postrun
+# }}
+
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+  stty echo
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "delete?[y/N]"
+	read ans
+	[ $ans = "y" ] && rm -rf -- $fx
+}}
+
+cmd tmuxtty ${{
+  # stty echo
+  # stty -a
+  # tput sgr0
+  # tput reset
+  # ( exec </dev/tty; exec <&1; TMUX= tmux )
+  ( exec </dev/tty; exec <&1; TMUX= tmux new $1 )
+}}
+
+cmd moveto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Move to where?"
+	#dest="$(cut -d'	' -f2- ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|' )" &&
+  dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
+	for x in $fx; do
+		eval mv -iv \"$x\" \"$dest\"
+	done &&
+	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
+}}
+
+cmd copyto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Copy to where?"
+	#dest="$(cut -d'	' -f2- ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|' )" &&
+  dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
+	for x in $fx; do
+		eval cp -ivr \"$x\" \"$dest\"
+	done &&
+	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+}}
+
+# extract the current file with the right command
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+    set -f
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+        *.tar.gz|*.tgz) tar xzvf $f;;
+        *.tar.xz|*.txz) tar xJvf $f;;
+        *.zip) unzip $f;;
+        *.rar) unrar x $f;;
+        *.7z) 7z x $f;;
+    esac
+}}
+
+# compress current file or selected files with zip
+cmd zip ${{
+    set -f
+    mkdir $1
+    cp -r $fx $1
+    zip -rv $1.zip $1
+    rm -rf $1
+}}
+
+# Bindings
+map <a-d> draganddrop
+map <a-n> openterm
+map <c-n> duplicatelf
+map <c-f> $lf -remote "send $id select '$(fzf)'"
+# map <c-j> $lf -remote "send $id cd $(cut -d' ' -f2 ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
+map <c-j> $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
+# map D     trash
+map D     $trash --trash-dir ~/.cache/Trash $fx
+map C     copyto
+map M     moveto
+map <a-m> push :mkdir<space>
+map <a-t> push :touch<space>
+map <c-r> reload
+#map i     $less -R --use-color --LINE-NUMBERS --color=Nk $f
+map <a-i> $~/.config/lf/pv.sh $f | less -R
+map i     $bat --paging always --wrap never $f
+map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/previewer.sh %s' less -R $f
+#map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/previewer.sh %s' bat --pager "less -R" --paging always --wrap never $f
+map <c-y> !mediainfo $f | less && xdotool key KP_Enter
+map <c-o> !mpv -vo sixel $f && xdotool key KP_Enter
+map <c-t> !termpdf -sixel $f && xdotool key KP_Enter
+map o     &devour mimeopen $fx
+map O     $mimeopen --ask $fx
+map r     push :open-with<space>
+#map R    push :rename<space> # new rename
+map a     rename # at the very end
+map A     push a<c-u> # new rename
+#map I    push A<c-a> # at the very beginning
+#map i    push A<a-b><a-b><a-f> # before extention
+#map a    push A<a-b> # after extention
+map S     $zsh
+map J     half-down
+map K     half-up
+# map     J push 10j
+# map     K push 10k
+map Z     push :zip<space>
+map X     extract
+map <a-x> $$f
+map <c-x> !$f
+map V     push :!nvim<space>
+map Y     push :$ytfzf<space>-t<space>
+map t     tmuxtty lf
+map T     tmuxtty zsh
+#map T     $tmux new "zsh -c lf"
+#map t     $tmux new "w3m google.com"
+map W     push :$sr<space>google<space>
+map B     $vimv $fx
+#map B     bulkrename
+#map b    $setbg $f
+map b     setbg $f
+map <enter> shell

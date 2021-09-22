@@ -1,0 +1,55 @@
+# directories
+mpd_music_dir = ~/Music/
+lyrics_directory = ~/.local/share/lyrics
+ncmpcpp_directory = ~/.cache/ncmpcpp
+
+
+## music visualizer
+# Available values: spectrum, wave, wave_filled, ellipse.
+visualizer_type = spectrum
+visualizer_data_source = /tmp/mpd.fifo
+visualizer_output_name = Visualizer feed
+# If you set format to 44100:16:2, make it 'yes'.
+visualizer_in_stereo = yes
+visualizer_color = 5, 13, 7, 15, 3, 11, 12, 4, 10, 2, 14, 6
+
+
+# editor
+external_editor = vim
+use_console_editor = yes
+
+
+# interface
+user_interface = alternative
+colors_enabled = yes
+
+playlist_display_mode = columns
+browser_display_mode = columns
+search_engine_display_mode = columns
+playlist_editor_display_mode = classic
+
+autocenter_mode = yes
+centered_cursor = yes
+progressbar_look = =>-
+display_bitrate = yes
+display_remaining_time = no
+
+startup_screen = playlist
+screen_switcher_mode = playlist, browser, search_engine, media_library, playlist_editor, tag_editor, outputs, visualizer
+
+#song_list_format
+#song_status_format
+#song_library_format
+
+seek_time = 10
+lines_scrolled = 1
+mouse_list_scroll_whole_page = no
+
+# lyrics
+#lyrics_fetchers = lyricwiki, azlyrics, genius, sing365, lyricsmania, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, internet
+follow_now_playing_lyrics = no
+fetch_lyrics_for_current_song_in_background = no
+store_lyrics_in_song_dir = no
+
+generate_win32_compatible_filenames = yes
+allow_for_physical_item_deletion = no
