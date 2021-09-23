@@ -25,6 +25,7 @@ alias \
 	gitloghelp="git log --help" \
 	gitlog="git log --oneline --graph" \
 	gitlodag="git log --oneline --decorate --all --graph" \
+  vncstart="vncpasswd && vncserver :1 #to connect use vncviewer (view vncserver log for 'server:port')"
 	# gitlogcompletion="git log --<TAB>" \
 	# ffmpeg="ffmpeg -hide_banner" \
 
