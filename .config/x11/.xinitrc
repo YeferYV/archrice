@@ -39,6 +39,9 @@ unclutter --timeout 1 &
 ## Load a resource file, and merge with the current settings (for urxvt)
 xrdb -merge ~/.config/x11/xresources &
 
+## To Load pointer
+xsetroot -cursor_name left_ptr &
+
 ## bsp-layout flags
 # bsp-layout set rtall I --master-size 0.8 &
 

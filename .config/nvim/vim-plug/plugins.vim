@@ -36,6 +36,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'neovim/nvim-lspconfig'
     Plug 'kabouzeid/nvim-lspinstall'
     Plug 'hrsh7th/nvim-compe'
+    Plug 'hrsh7th/vim-vsnip'
 
     "" Better Syntax Support
     "Plug 'sheerun/vim-polyglot'
