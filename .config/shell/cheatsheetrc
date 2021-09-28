@@ -19,26 +19,33 @@ alias \
                          \n                                                                                              \'" \
   how-to-manjaro-arm-grub="echo                                                                                         '\
                          \n  #============================ conflicts files ==========================================#   \
-                         \n  mv /boot/efilinux /boot/efilinux.bak                                                        \
-                         \n  mv /boot/config.txt /boot/config.txt.bak                                                    \
-                         \n  pacman -S linux uboot-raspberrpi grub efibootmgr os-prober                                  \
+                         \n  mv /boot/cmdline.txt /boot/cmdline.txt.bak                                                        \
+                         \n  pacman -Sw uboot-raspberrypi                                                                \
+                         \n  mkdir /opt/uboot-raspberrypi                                                                \
+                         \n  cd /opt/uboot-raspberrypi                                                                   \
+                         \n  cp /var/cache/pacman/pkg/uboot-raspberrypi*.zst /opt/uboot-raspberrypi/                     \
+                         \n  zstd -d uboot-raspberrypi*.zst                                                              \
+                         \n  tar -xf uboot-raspberrypi*.tar                                                              \
+                         \n  cp ./boot/kernel8.img /boot/u-boot.bin                                                      \
+                         \n  sed -i 's|kernel8.img|u-boot.bin|g' /boot/config.txt                                        \
                          \n                                                                                              \
                          \n  #======================== generating booting script ====================================#   \
                          \n  cp /ArchlinuxARM/boot/{boot.txt,mkscr} /boot                                                \
                          \n  cd /boot && ./mkscr                                                                         \
                          \n                                                                                              \
                          \n  #============================ installing grub ==========================================#   \
-                         \n  cp /boot/Image /boot/vmlinuz-linux                                                          \
-                         \n  mkdir /boot/efi                                                                             \
-                         \n  grub-install --target=arm64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable  \                                                 \
-                         \n  grub-mkconfig -o /boot/grub/grub.cfg                                                        \
+                         \n  pacman -S uboot-tools grub efibootmgr os-prober                                             \
+                         \n  cp /boot/kernel8.img /boot/vmlinuz-linux                                                    \
+                         \n  grub-install --target=arm64-efi --efi-directory=/boot --bootloader-id=GRUB --removable      \
+                         \n  grub-install --target=arm64-efi --efi-directory=/boot --bootloader-id=GRUB --no-nvram       \
                          \n  echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub                                    \
+                         \n  grub-mkconfig -o /boot/grub/grub.cfg                                                        \
                          \n                                                                                              \'" \
   how-to-manjaro-arm-grub-efi="echo                                                                                     '\
                          \n  #============================ conflicts files ==========================================#   \
                          \n  mv /boot/efilinux /boot/efilinux.bak                                                        \
                          \n  mv /boot/config.txt /boot/config.txt.bak                                                    \
-                         \n  pacman -S linux uboot-raspberrpi grub efibootmgr os-prober                                  \
+                         \n  pacman -S linux uboot-raspberrpi uboot-tools grub efibootmgr os-prober                      \
                          \n                                                                                              \
                          \n  #============================ mounting efi =============================================#   \
                          \n  mkdir /boot/efi                                                                             \
@@ -47,14 +54,14 @@ alias \
                          \n                                                                                              \
                          \n  #============================ installing grub ==========================================#   \
                          \n  cp /boot/efi/Image /boot/efi/vmlinuz-linux                                                  \
-                         \n  grub-install --no-nvram                                                                     \                                                 \
-                         \n  grub-mkconfig -o /boot/grub/grub.cfg                                                        \
+                         \n  grub-install --no-nvram                                                                     \
                          \n  echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub                                    \
+                         \n  grub-mkconfig -o /boot/grub/grub.cfg                                                        \
                          \n                                                                                              \'" \
   how-to-arch-arm-grub="echo                                                                                            '\
                          \n  #========================= creating booting script =====================================#   \
                          \n  # replace/add to boot.txt                                                                   \
-                         \n  if load ${devtype} ${devnum}:${bootpart} ${kernel_addr_r} /EFI/GRUB/grubaa64.efi; then \
+                         \n  if load ${devtype} ${devnum}:${bootpart} ${kernel_addr_r} /EFI/GRUB/grubaa64.efi; then      \
                          \n    if load ${devtype} ${devnum}:${bootpart} ${fdt_addr_r} /dtbs/${fdtfile}; then             \
                          \n      bootefi ${kernel_addr_r} ${fdt_addr_r};                                                 \
                          \n    fi;                                                                                       \
@@ -71,9 +78,9 @@ alias \
                          \n  pacman -S uboot-tools grub efibootmgr os-prober                                             \
                          \n  cp /boot/Image /boot/vmlinuz-linux                                                          \
                          \n  # to create /boot/efi/BOOT/bootaa64.efi                                                     \
-                         \n  grub-install --target=arm64-efi --efi-directory=/boot --bootloader-id=BOOT --removable      \                                                 \
+                         \n  grub-install --target=arm64-efi --efi-directory=/boot --bootloader-id=BOOT --removable      \
                          \n  # to create /boot/efi/GRUB/grubaa64.efi                                                     \
-                         \n  grub-install --target=arm64-efi --efi-directory=/boot --bootloader-id=GRUB --no-nvram       \                                                 \
+                         \n  grub-install --target=arm64-efi --efi-directory=/boot --bootloader-id=GRUB --no-nvram       \
                          \n  echo 'GRUB_DISABLE_OS_PROBER=false' >> /etc/default/grub                                    \
                          \n  grub-mkconfig -o /boot/grub/grub.cfg                                                        \
                          \n                                                                                              \'" \
