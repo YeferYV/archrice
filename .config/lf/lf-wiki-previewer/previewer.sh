@@ -44,7 +44,7 @@ if [ -n "$FIFO_UEBERZUG" ]; then
         draw "$file" "$@"
       fi
       ;;
-    video/*) 
+    video/*)
       cache="$(hash "$file").jpg"
       cache "$cache" "$@"
       ffmpegthumbnailer -i "$file" -o "$cache" -s 0
@@ -69,7 +69,7 @@ case "$(file -Lb --mime-type -- "$file")" in
     #chafa -c 256 --size=320x100 "$file" || echo "no chafa :(";;
     chafa --size=480x150 "$file" || echo "no chafa :(";;
 
-  video/*) 
+  video/*)
     cache="$(hash "$file").jpg"
     cache "$cache" "$@"
     ffmpegthumbnailer -i "$file" -o "$cache" -s 0
@@ -88,6 +88,8 @@ case "$(file -Lb --mime-type -- "$file")" in
   *zip) unzip -l "$file" || echo "no unzip :(" ;;
   *rar) unrar l "$file" || echo "no unrar :(" ;;
   *7z) 7z l "$file" || echo "no 7z :(" ;;
+  # *json) python -m json.tool < "$file"  || echo "no python :(" ;;
+  *json) jq . "$file" | bat -l json --style plain --color always || echo "no jq :(" ;;
   #*) highlight --out-format xterm256 -s pablo "$file" || echo "no highlight :(";;
   *) bat --style plain --color always "$file" || echo "no bat :(" ;;
 esac

@@ -1,2 +1,4 @@
-.config/nvim/autoload
 .vim/bundle
+.config/nvim/autoload
+.config/zsh/.zcompdump
+
