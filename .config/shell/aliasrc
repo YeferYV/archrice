@@ -25,6 +25,7 @@ alias \
 	gitloghelp="git log --help" \
 	gitlog="git log --oneline --graph" \
 	gitlodag="git log --oneline --decorate --all --graph" \
+	gitrestorepatch="git restore --staged --patch" \
   vncstart="vncpasswd && vncserver :1 #to connect use vncviewer (view vncserver log for 'server:port')" \
 	gnome-keyring-vscodium="gnome-keyring-daemon --start --foreground --components=secrets" \
 	# gitlogcompletion="git log --<TAB>" \
@@ -66,6 +67,7 @@ alias \
 	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
 	tmuxconf="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
 	tmuxattach="tmux attach" \
+	tmuxssh="ssh -t <user@host> tmux" \
 	tmuxlist="tmux ls" \
 	tmuxkillall="tmux kill-session -a" \
 	tmuxmpvdmenu="tmux new -d mpv --loop-playlist --no-video $1" \

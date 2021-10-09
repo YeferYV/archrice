@@ -37,9 +37,6 @@ shopt -s autocd
 ## to automatic cd
 #cd "$AUTOCD"
 
-##save vim file as root
-#:w !sudo tee % filename
-
 # colors
 darkgrey="$(tput bold ; tput setaf 0)"
 red="$(tput bold ; tput setaf 88)"
@@ -73,9 +70,6 @@ title='\e]0; \W\a'
 # export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
 export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007"'
 
-
-
-export LD_PRELOAD=""
 export EDITOR="vim"
 export VISUAL="vim"
 export TERMINAL="urxvt"
@@ -85,8 +79,6 @@ export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 #export RANGER_LOAD_DEFAULT_RC="FALSE"
 #export GDK_SCALE=0.5
 #export GDK_DPI_SCALE=0.5
-
-
 
 # aliases
 alias youtubeaudio="youtube-dl --add-metadata --ignore-errors --extract-audio --format bestaudio/best "

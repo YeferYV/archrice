@@ -1,4 +1,4 @@
-.vim/bundle
 .config/nvim/autoload
 .config/zsh/.zcompdump
-
+.local/bin/wpm
+.vim/bundle
