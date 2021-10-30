@@ -1,9 +1,7 @@
 [Default Applications]
-application/gzip=VSCodium.desktop
 application/pdf=org.pwmt.zathura.desktop
 application/vnd.rar=userapp-unrar-QF0YP0.desktop
 application/x-bittorrent=freedownloadmanager_torrent.desktop
-application/x-object=VSCodium.desktop
 audio/mp3=mpv.desktop
 image/png=sxiv.desktop
 image/jpeg=sxiv.desktop
@@ -22,17 +20,14 @@ x-scheme-handler/https=google-chrome.desktop
 x-scheme-handler/magnet=freedownloadmanager_magnet_up.desktop
 x-scheme-handler/unknown=google-chrome.desktop
 x-scheme-handler/webcal=google-chrome.desktop
-application/json=vim.desktop
 
 [Added Associations]
-application/json=vim.desktop;
-application/gzip=VSCodium.desktop;
+application/json=visual-studio-code.desktop;
 application/vnd.oasis.opendocument.presentation=libreoffice-writer.desktop;
 application/vnd.rar=userapp-unrar-QF0YP0.desktop;
-application/x-object=VSCodium.desktop;
 application/x-raw-disk-image=img.desktop;
 application/zip=xarchiver.desktop;
-inode/directory=VSCodium.desktop
+inode/directory=visual-studio-code.desktop;
 text/plain=nvim.desktop;
 text/x-shellscript=nvim.desktop;
 video/mp4=xfce-display-settings.desktop;mpv.desktop;

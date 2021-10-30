@@ -47,8 +47,8 @@ if exists('g:vscode')
   nmap <S-Tab> :Tabprev<CR>
 else
   "" TAB for next/previous buffer neovim
-  nnoremap <silent> <TAB> :bnext<CR>
-  nnoremap <silent> <S-TAB> :bprevious<CR>
+  nnoremap <silent> <C-TAB> :bnext<CR>
+  nnoremap <silent> <C-S-TAB> :bprevious<CR>
   nnoremap <A-q> :bdelete<CR>
 endif
 

@@ -34,9 +34,27 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     "" LSP
     Plug 'neovim/nvim-lspconfig'
-    Plug 'kabouzeid/nvim-lspinstall'
-    Plug 'hrsh7th/nvim-compe'
+    Plug 'williamboman/nvim-lsp-installer'
+    " Plug 'kabouzeid/nvim-lspinstall'
+    " Plug 'hrsh7th/nvim-compe'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/nvim-cmp'
+
+    " For vsnip users.
+    Plug 'hrsh7th/cmp-vsnip'
     Plug 'hrsh7th/vim-vsnip'
+
+    " autocompletion (main one)
+    " Plug 'ms-jpq/coq_nvim', {'branch': 'dev'}
+    " 9000+ Snippets
+    " Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+    " lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
+    " Need to **configure separately**
+    " Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 
     "" Better Syntax Support
     "Plug 'sheerun/vim-polyglot'
@@ -65,5 +83,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     "" Quickhightlighting
     " Plug 'unblevable/quick-scope'
+
+    "" intellisense
+    Plug 'github/copilot.vim'
+    Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+    " Plug 'tzachar/compe-tabnine', { 'do': './install.sh' }
 
 call plug#end()

@@ -39,6 +39,8 @@ set sidescroll=5                        " The minimal number of columns to scrol
 set scrolloff=4                         " Minimal number of screen lines to keep above and below the cursor
 set ignorecase		                      " Do case insensitive matching
 set smartcase		                        " Do smart case matching
+" set completeopt=menu,menuone,noselect   " required by nvim-cmp
+set completeopt=menu,noselect   " required by nvim-cmp
 
 " whitespaces
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
@@ -55,6 +57,9 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " You can't stop me (save file as sudo)
 cmap w!! w !sudo tee %
+
+" to autoformat eslint(javascript) on save
+" autocmd BufWritePre <buffer> <cmd>EslintFixAll<CR>
 
 " Save file as sudo on files that require root permission
 " cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
@@ -92,4 +97,5 @@ autocmd TermEnter * setlocal noruler laststatus=0 noshowcmd nonumber | startinse
 " autocmd TermOpen * call feedkeys("i")
 " autocmd TermOpen * startinsert
 autocmd TermClose * quit
+
 
