@@ -3,12 +3,24 @@
 #
 
 # terminal emulator
-super + Return
-	alacritty
+super + {_,shift +}Return
+  {alacritty, bspc rule -a \* -o state=floating && alacritty}
+
+# terminal emulator
+mod1 + Return
+	urxvt
 
 # dmenu launcher
 super + {_,shift + }d
 	{dmenu_run, alacritty -e $(dmenu_path | dmenu)}
+
+# dunst reopen notification
+ctrl + Escape
+	dunstctl history-pop
+
+# dunst close notification
+ctrl + space
+	dunstctl close
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -143,16 +155,20 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+#super + alt + {h,j,k,l}
+#  bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+#super + alt + shift + {h,j,k,l}
+#  bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # contract a window by moving one of its side inward
 #super + shift + {Left,Down,Up,Right}
 #	 bspc node -z {right -10 0,top 0 10,bottom 0 -10,left 10 0}
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+  hover {left,down,up,right}
 
 # move a floating window
 super + alt + {Left,Down,Up,Right}
@@ -194,7 +210,7 @@ super + alt + control + {h,j,k,l} ; {0-9}
 	bspc node @{west,south,north,east} -r 0.{0-9}
 
 # toggle focus_follows_pointer
-super + alt + p
+super + mod1 + p
 	bspc config focus_follows_pointer {true,false}
 
 # Smart resize, will grow or shrink depending on location.
@@ -276,6 +292,30 @@ super + KP_Down
 super + KP_{Right,Begin,Left}
   playerctl --player=mpv {next,play-pause,previous}
 
+# mpv next-toggle-prev
+#Katakana
+alt + space
+  playerctl --player=chromium play-pause
+
+#{Hiragana,Henkan_Mode}
+alt + {a,s}
+  YTID="$(wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1')"; \
+  CUID="$(xdo id)"; \
+  xdo activate $YTID && sleep 0.2 && xdotool key --clearmodifiers {w,e} && xdo activate $CUID
+  #wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1' | xargs -I_ xdo activate _ && sleep 1 && xdotool key --clearmodifiers w
+
+# spotify vol-up
+mod1 + KP_Up
+  [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=spotify volume 0.1+
+
+# spotify vol-down
+mod1 + KP_Down
+  playerctl --player=spotify volume 0.1-
+
+# spotify next-toggle-prev
+mod1 + KP_{Right,Begin,Left}
+  playerctl --player=spotify {next,play-pause,previous}
+
 # mpc next-toggle-prev
 KP_{Right,Begin,Left}
   mpc {next,toggle,prev}
@@ -332,8 +372,8 @@ mod1 + BackSpace
    skippy-xd-runner --activate {--prev,--next}
 
 # skippy
-mod1 + {~Tab,space}
-   skippy-xd-runner {--activate --next,--toggle}
+#mod1 + {~Tab,space}
+#   skippy-xd-runner {--activate --next,--toggle}
 
 # skippy
 XF86Shop

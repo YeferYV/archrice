@@ -64,9 +64,9 @@ xmodmap -e 'add mod1    = Alt_L Meta_L'
 ## to use Control_L as Escape
 xcape -e 'Control_L=Escape'
 ## to use Super_L as left click
-xcape -e 'Super_L=XF86Finance'
+xcape -t 200 -e 'Super_L=XF86Finance'
 ## to use Alt_L as middle click
-xcape -e 'Alt_L=XF86Game'
+xcape -t 200 -e 'Alt_L=XF86Game'
 ## to use Alt_R key as BackSpace
 xcape -e 'Shift_R=BackSpace'
 ## to use Menu as Task-Switcher

@@ -126,6 +126,7 @@ blackarch-keyring
 playerctl
 pavucontrol
 gvim
+sgtk-menu
 
 ####optional####
 cdrtools
