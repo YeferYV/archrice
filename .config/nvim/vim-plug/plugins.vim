@@ -37,7 +37,6 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'williamboman/nvim-lsp-installer'
     " Plug 'kabouzeid/nvim-lspinstall'
     " Plug 'hrsh7th/nvim-compe'
-    Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'

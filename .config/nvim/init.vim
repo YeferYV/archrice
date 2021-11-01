@@ -42,6 +42,7 @@ else
   luafile $HOME/.config/nvim/lua/lunarvimline.lua
   luafile $HOME/.config/nvim/lua/treesitter.lua
   luafile $HOME/.config/nvim/lua/tree.lua
+  luafile $HOME/.config/nvim/lua/nvimtree.lua
 
   "" Plugins
   " source $HOME/.config/nvim/plug-config/fzf.vim
