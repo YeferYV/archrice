@@ -1,4 +1,5 @@
 #!/bin/bash
+# Move new node to receptacle automatically
 
 # ID=$(bspc query -N -n)
 # RECID=$(bspc query -N -n .leaf.\!window)
