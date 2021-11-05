@@ -67,8 +67,12 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}
+
+# Swap focused window with the one in the given direction
+mod4 + shift + {h,j,k,l}
+  $HOME/.config/bspwm/bspwm_smart_move {west,south,north,east}
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
