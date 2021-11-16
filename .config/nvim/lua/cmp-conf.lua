@@ -14,11 +14,37 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
-    ['<C-e>'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
+    -- ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
+    -- ['<C-y>'] = cmp.mapping({
+    --   i = cmp.mapping.complete(),
+    --   c = cmp.mapping.abort(),
+    --   -- c = cmp.mapping.complete(),
+    -- }),
+    -- ['<C-e>'] = cmp.mapping({
+    --   -- i = cmp.mapping.close(),
+    --   i = cmp.mapping.abort(),
+    --   c = cmp.mapping.close(),
+    -- }),
+      ["<C-k>"] = cmp.mapping({
+        i = function()
+          if cmp.visible() then
+            -- require("notify")("visible")
+            cmp.abort()
+          else
+            -- require("notify")("not visible")
+            cmp.complete()
+          end
+        end,
+        c = function()
+          if cmp.visible() then
+            -- require("notify")("visible")
+            cmp.close()
+          else
+            -- require("notify")("not visible")
+            cmp.complete()
+          end
+        end,
+      }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
