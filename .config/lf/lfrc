@@ -69,14 +69,16 @@ cmd open-with $$@ $fx
 ## define a custom 'rename' command without prompt for overwrite
 #cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
 
-cmd draganddrop &dragon-drag-and-drop -a -x $fx
-cmd duplicatelf &nohup $TERMINAL -e "lf"
-cmd openterm &nohup alacritty
 cmd bulkrename $vidir
-# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
-# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/
+cmd draganddrop &dragon-drag-and-drop -a -x $fx
+# cmd duplicatelf &nohup $TERMINAL -e "lf"
+# cmd duplicatelf &nohup sh -c "export LF_CD=true && $TERMINAL"
+cmd duplicatelf &setsid -f env LF_CD=true $TERMINAL
+cmd openterm &nohup alacritty
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
 cmd touch $touch "$(echo $* | tr ' ' '\ ')"
+# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
+# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/
 
 # To change numbers of colums
 map <a-4> $lf -command "set nopreview; set ratios 1"
@@ -306,7 +308,7 @@ map Z     push :zip<space>
 map X     extract
 map <a-x> $$f
 map <c-x> !$f
-map V     push :!nvim<space>
+map V     push :$nvim<space>
 map Y     push :$ytfzf<space>-t<space>
 map t     tmuxtty lf
 map T     tmuxtty zsh

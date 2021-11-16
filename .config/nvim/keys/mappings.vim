@@ -116,7 +116,12 @@ vnoremap <leader>p "*p
 vnoremap <leader>P "*P
 
 "" File tree
-noremap <silent> <leader>t :lua require'tree'.toggle()<CR>
+" nnoremap <silent> <leader>t :lua require'tree'.open()<CR>
+" nnoremap <silent> <leader>T :lua require'tree'.close()<CR>
+" nnoremap <silent> <leader>t :lua require'tree'.toggle()<CR>
+nnoremap <silent> <leader>t :NvimTreeToggle<CR>
+nnoremap <silent> <leader>z :NvimTreeRefresh<CR>
+nnoremap <silent> <leader>Z :NvimTreeFindFile<CR>
 
 "" File explorer
 " nnoremap <C-l> :!ranger<CR> "mapped to clear
@@ -130,9 +135,12 @@ nnoremap <silent> <leader>r :FloatermNew lf<CR>
 nnoremap <silent> <leader>f :FloatermToggle <CR>
 tnoremap <silent> <leader>f <C-\><C-n>:FloatermNew <CR>
 
+"" To toggle highlight search
+nnoremap <silent> <leader>h :set hlsearch! <CR>
+
 "" To run a vsplit/split terminal
+nnoremap <silent> <leader>v :FloatermNew --wintype=vsplit --width=60 <CR>
 nnoremap <silent> <leader>V :FloatermNew --wintype=split --height=20 <CR>
-nnoremap <silent> <leader>v :FloatermNew --wintype=vsplit --width=80 <CR>
 tnoremap <silent> <leader>v <C-\><C-n>:FloatermNew --wintype=vsplit <CR>
 
 "" To run lazygit
@@ -145,8 +153,6 @@ nnoremap <leader>B :!python %<CR>
 "" To compile/open file
 nnoremap <leader>c :w! \| !compiler "<c-r>%"<CR>
 nnoremap <leader>C :!opout <c-r>%<CR><CR>
-
-
 
 
 

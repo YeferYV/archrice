@@ -1,33 +1,34 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-  },
+    -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
+    ensure_installed = {"python", "bash", "javascript", "lua", "go"},
+
+    highlight = { -- enable highlighting for all file types
+      enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
+    },
+    incremental_selection = {
+      enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
+      disable = { "cpp", "lua" },
+      keymaps = {                       -- mappings for incremental selection (visual mappings)
+        init_selection = "gnn",         -- maps in normal mode to init the node/scope selection
+        node_incremental = "grn",       -- increment to the upper named parent
+        scope_incremental = "grc",      -- increment to the upper scope (as defined in locals.scm)
+        node_decremental = "grm",       -- decrement to the previous node
+      }
+    },
+    textobjects = {
+      -- These are provided by
+      select = {
+        enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
+        keymaps = {
+          -- You can use the capture groups defined here:
+	  -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/queries/c/textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ab"] = "@block.outer",
+          ["ib"] = "@block.inner",
+          ["as"] = "@statement.outer",
+          ["is"] = "@statement.inner",
+        },
+      },
+    },
 }
-
-require "nvim-treesitter.configs".setup {
-  playground = {
-    enable = true,
-    disable = {},
-    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-    persist_queries = false -- Whether the query persists across vim sessions
-  }
-}
-
--- require'nvim-treesitter.configs'.setup {
---   refactor = {
---     highlight_current_scope = { enable = false },
---   },
--- }
-
--- require'nvim-treesitter.configs'.setup {
---   refactor = {
---     smart_rename = {
---       enable = true,
---       keymaps = {
---         smart_rename = "grr",
---       },
---     },
---   },
--- }
-

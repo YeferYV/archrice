@@ -205,8 +205,8 @@ lfcd () {
 }
 zle -N lfcd
 bindkey '\eo' 'lfcd'
-[ -n "$LF_CD" ] && unset LF_CD && lfcd $HOME
-# [ -n "$LF_CD" ] && unset LF_CD && lfcd
+[ -n "$LF_CD" ] && unset LF_CD && lfcd $PWD
+# [ -n "$LF_CD" ] && unset LF_CD && lfcd #lfcd:zle:14: widgets can only be called when ZLE is active
 
 
 ## my-script_widget() { cd $BUFFER ; zle reset-prompt; zle kill-whole-line;}

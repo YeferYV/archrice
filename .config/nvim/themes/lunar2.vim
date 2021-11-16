@@ -1,20 +1,18 @@
-" configure treesitter
-" lua << EOF
-" require'nvim-treesitter.configs'.setup {
-"   ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-"   highlight = {
-"     enable = true,              -- false will disable the whole extension
-"     disable = { "c", "rust" },  -- list of language that will be disabled
-"   },
-" }
-" EOF
+" only if there's more than one tab on barbar.nvim/plugin/bufferline.vim
+set showtabline=1
+
+" checks if your terminal has 24-bit color support
+if (has("termguicolors"))
+    set termguicolors
+    hi LineNr ctermbg=NONE guibg=NONE
+endif
 
 " configure nvcode-color-schemes
 let g:nvcode_termcolors=256
 
 syntax on
-"colorscheme nvcode " Or whatever colorscheme you make
-colorscheme lunar2
+"colorscheme nvcode
+"colorscheme lunar2
 "colorscheme aurora
 
 "transparent background
@@ -50,12 +48,35 @@ highlight BufferInactiveTarget      guibg=None guifg=None
 highlight BufferTabpages            guibg=None guifg=None
 highlight BufferTabpageFill         guibg=None guifg=None
 
-" hide tab coded in autoload/plugged/barbar.nvim/plugin/buffeline.vim
-" set showtabline=1 " 0: never 1: only if there are at least two tab pages
+" Menu colors
+hi Pmenu guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi PmenuSel guifg=#d8dee9 ctermfg=238 guibg=#3b4048 ctermbg=238 gui=NONE cterm=NONE
+hi PmenuSbar guifg=NONE ctermfg=NONE guibg=#3b4048 ctermbg=238 gui=NONE cterm=NONE
+hi PmenuThumb guifg=NONE ctermfg=NONE guibg=#d8dee9 ctermbg=254 gui=NONE cterm=NONE
+hi WildMenu guifg=#3b4252 ctermfg=238 guibg=#5e81ac ctermbg=67 gui=NONE cterm=NONE
 
-" checks if your terminal has 24-bit color support
-if (has("termguicolors"))
-    set termguicolors
-    hi LineNr ctermbg=NONE guibg=NONE
-endif
+" Comments/LineNr colors
+" hi Comment guifg=#5f5f5f ctermfg=240 guibg=NONE ctermbg=NONE gui=italic cterm=italic
+" hi SpecialComment guifg=#5f5f5f ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+" hi TSComment guifg=#5f5f5f ctermfg=240 guibg=NONE ctermbg=NONE gui=italic cterm=italic
+" hi LineNr guifg=#6a6e7e ctermfg=243 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+" hi CursorLine guifg=NONE ctermfg=NONE guibg=#2c323c ctermbg=236 gui=NONE cterm=NONE
 
+" Search/visual colors
+hi Search guifg=NONE ctermfg=NONE guibg=#282828 ctermbg=241 gui=NONE cterm=NONE
+hi IncSearch guifg=NONE ctermfg=NONE guibg=#282828 ctermbg=241 gui=NONE cterm=NONE
+hi Visual guifg=NONE ctermfg=NONE guibg=#282828 ctermbg=235 gui=NONE cterm=NONE
+
+" Matching colors
+hi MatchWord guifg=#ffff00 ctermfg=NONE guibg=NONE ctermbg=NONE gui=bold,underline cterm=bold,underline
+hi MatchParen guifg=#ffff00 ctermfg=NONE guibg=NONE ctermbg=NONE gui=bold,underline cterm=bold,underline
+hi MatchWordCur guifg=#ffff00 ctermfg=NONE guibg=NONE ctermbg=NONE gui=bold,underline cterm=bold,underline
+hi MatchParenCur guifg=#ffff00 ctermfg=NONE guibg=NONE ctermbg=NONE gui=bold,underline cterm=bold,underline
+
+" Statusline colors
+" hi StatusLine guifg=#d8dee9 ctermfg=254 guibg=#2c323c ctermbg=236 gui=NONE cterm=NONE
+" hi StatusLineNC guifg=#5c6370 ctermfg=241 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi StatusLineTerm guifg=#ff0000 ctermfg=NONE guibg=#ffff00 ctermbg=NONE gui=NONE cterm=NONE
+hi StatusLineTermNC guifg=#ff0000 ctermfg=NONE guibg=#ffff00 ctermbg=NONE gui=NONE cterm=NONE
+hi NvimTreeStatusLineNC guifg=#000000 ctermfg=NONE guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE
+hi NvimTreeStatusLine guifg=#000000 ctermfg=NONE guibg=#000000 ctermbg=NONE gui=NONE cterm=NONE

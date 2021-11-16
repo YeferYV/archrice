@@ -21,5 +21,6 @@ else
 	esac
 fi
 
-sleep 0.5s && notify-send "Maim" "screenshot done"
+# sleep 0.5s && \
+notify-send "Maim" "screenshot done"
 

@@ -1,17 +1,3 @@
--- -- if not package.loaded['galaxyline'] then
--- --   return
--- -- end
--- local status_ok, gl = pcall(require, "galaxyline")
--- if not status_ok then
---   return
--- end
-
--- -- NOTE: if someone defines colors but doesn't have them then this will break
--- local palette_status_ok, colors = pcall(require, O.colorscheme .. ".palette")
--- if not palette_status_ok then
---   colors = O.plugin.galaxyline.colors
--- end
-
 local gl = require('galaxyline')
 
 local colors = {
@@ -345,21 +331,21 @@ table.insert(gls.right, {
   },
 })
 
-table.insert(gls.short_line_left, {
-  BufferType = {
-    provider = "FileTypeName",
-    separator = " ",
-    separator_highlight = { "NONE", colors.alt_bg },
-    highlight = { colors.grey, colors.alt_bg },
-  },
-})
+-- table.insert(gls.short_line_left, {
+--   BufferType = {
+--     provider = "FileTypeName",
+--     separator = " ",
+--     separator_highlight = { "NONE", colors.alt_bg },
+--     highlight = { colors.grey, colors.alt_bg },
+--   },
+-- })
 
-table.insert(gls.short_line_left, {
-  SFileName = {
-    provider = "SFileName",
-    condition = condition.buffer_not_empty,
-    highlight = { colors.grey, colors.alt_bg },
-  },
-})
+-- table.insert(gls.short_line_left, {
+--   SFileName = {
+--     provider = "SFileName",
+--     condition = condition.buffer_not_empty,
+--     highlight = { colors.grey, colors.alt_bg },
+--   },
+-- })
 
---table.insert(gls.short_line_right[1] = {BufferIcon = {provider = 'BufferIcon', highlight = {colors.grey, colors.alt_bg}}})
+-- table.insert(gls.short_line_right[1] = {BufferIcon = {provider = 'BufferIcon', highlight = {colors.grey, colors.alt_bg}}})

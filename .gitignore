@@ -1,5 +1,6 @@
 .config/ncmpcpp/lyrics/
 .config/nvim/autoload
+.config/nvim/plugin
 .config/zsh/.zcompdump
 .local/bin/lvim-nvim
 .local/bin/wpm

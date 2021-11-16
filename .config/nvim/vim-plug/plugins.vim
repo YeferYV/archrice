@@ -1,20 +1,25 @@
 call plug#begin('~/.config/nvim/autoload/plugged')
 
     "" Themes
-    "Plug 'rafi/awesome-vim-colorschemes'
-    "Plug 'flazz/vim-colorschemes'
-    "Plug 'joshdick/onedark.vim'
-    "Plug 'morhetz/gruvbox'
-    "Plug 'dylanaraps/wal.vim'
-    Plug 'christianchiarulli/nvcode-color-schemes.vim'
-    Plug 'nvim-treesitter/nvim-treesitter'
+    " Plug 'flazz/vim-colorschemes'
+    " Plug 'morhetz/gruvbox'
+    " Plug 'joshdick/onedark.vim'
+    Plug 'NLKNguyen/papercolor-theme'
+    " Plug 'dylanaraps/wal.vim'
     Plug 'nvim-treesitter/playground'
+    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'christianchiarulli/nvcode-color-schemes.vim'
     Plug 'LunarVim/Colorschemes'
 
+    "" Sxhkd sixtax highlighting
+    Plug 'kovetskiy/sxhkd-vim'
+
     "" Status line
-    " Plug 'vim-airline/vim-airline'
-    " Plug 'vim-airline/vim-airline-themes'
     Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+
+    "" Git plugins
+    " Plug 'mhinz/vim-signify'
 
     "" Better tabline
     Plug 'romgrk/barbar.nvim'
@@ -23,17 +28,24 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'norcalli/nvim-colorizer.lua'
 
     "" File Explorer
-    "Plug 'scrooloose/NERDTree'
+    " Plug 'scrooloose/NERDTree'
     Plug 'kyazdani42/nvim-tree.lua'
 
-    "" File icons
+    "" File Icons
     Plug 'kyazdani42/nvim-web-devicons'
 
-    "" vim terminal
+    "" Vim Terminal
     Plug 'voldikss/vim-floaterm'
+
+    "" Intellisense
+    " Plug 'tzachar/compe-tabnine', { 'do': './install.sh' }
+    Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+    Plug 'github/copilot.vim'
 
     "" LSP
     Plug 'neovim/nvim-lspconfig'
+    Plug 'tami5/lspsaga.nvim'
+    Plug 'onsails/lspkind-nvim'
     Plug 'williamboman/nvim-lsp-installer'
     " Plug 'kabouzeid/nvim-lspinstall'
     " Plug 'hrsh7th/nvim-compe'
@@ -44,19 +56,21 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'hrsh7th/nvim-cmp'
 
     " For vsnip users.
-    Plug 'hrsh7th/cmp-vsnip'
-    Plug 'hrsh7th/vim-vsnip'
+    " Plug 'hrsh7th/cmp-vsnip'
+    " Plug 'hrsh7th/vim-vsnip'
 
-    " autocompletion (main one)
-    " Plug 'ms-jpq/coq_nvim', {'branch': 'dev'}
-    " 9000+ Snippets
-    " Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-    " lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
-    " Need to **configure separately**
-    " Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+    " For luasnip users.
+    " Plug 'L3MON4D3/LuaSnip'
+    " Plug 'saadparwaiz1/cmp_luasnip'
 
-    "" Better Syntax Support
-    "Plug 'sheerun/vim-polyglot'
+    " For ultisnips users.
+    " Plug 'SirVer/ultisnips'
+    " Plug 'honza/vim-snippets'
+    " Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+    " For snippy users.
+    " Plug 'dcampos/nvim-snippy'
+    " Plug 'dcampos/cmp-snippy'
 
     "" Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
@@ -64,28 +78,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     "" To comment block of codes
     Plug 'tpope/vim-commentary'
 
-    "" sxhkd sixtax highlighting
-    Plug 'kovetskiy/sxhkd-vim'
-
-    "" FZF ripgrep ctags the_silver_search fd
-    " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    " Plug 'junegunn/fzf.vim'
-    " Plug 'yuki-ycino/fzf-preview.vim'
-
-    " Have the file system follow you around
-    "Plug 'airblade/vim-rooter'
-
     "" Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
-
-    "" Quickhightlighting
-    " Plug 'unblevable/quick-scope'
-
-    "" intellisense
-    Plug 'github/copilot.vim'
-    Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
-    " Plug 'tzachar/compe-tabnine', { 'do': './install.sh' }
 
 call plug#end()

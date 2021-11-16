@@ -28,3 +28,13 @@ let g:floaterm_autoclose=1
 "" Floaterm highlights
 hi FloatermBorder guibg=black guifg=gray
 
+
+"" Terminal mode keymapping
+" noremap  <silent> <expr><F12>     &buftype =='terminal' ?
+"                                   \ "\<C-\><C-n>:call util#toggleWindows('terminal')\<CR>" :
+"                                   \ "\<Esc>:call util#toggleWindows('terminal')\<CR>i<C-u>"
+" noremap! <silent> <F12>           <Esc>:call util#toggleWindows('terminal')<CR>i
+" tnoremap <silent> <F12>           <C-\><C-n>:call util#toggleWindows('terminal')<CR>
+" noremap <silent> <F12>            <Esc>:ToggleTerminal<CR>i
+" tnoremap <silent> <F12>           <C-\><C-n>:ToggleTerminal<CR>
+

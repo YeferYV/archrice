@@ -2,6 +2,7 @@ information:
   name: lunar
   background: dark
   author: "Christian Chiarulli <chrisatmachine@gmail.com>"
+  howto: "https://github.com/ChristianChiarulli/nvcode-color-schemes.vim"
 
 palette:
   fg: "#ABB2BF"
@@ -143,7 +144,7 @@ highlights:
   WarningMsg: "yellow"
   WildMenu: "black blue"
   EndOfBuffer: "bg"
-  
+
 
   # -- Start Treesitter --
   # Misc
@@ -356,7 +357,7 @@ highlights:
   NvimTreeRootFolder: "fg - b"
   NvimTreeExecFile: "executable"
   NvimTreeSpecialFile: "info_yellow"
-  NvimTreeLspDiagnostics: "warning_orange" 
+  NvimTreeLspDiagnostics: "warning_orange"
 
   BufferCurrent: "fg bg"
   BufferCurrentIndex: "blue bg"
@@ -380,7 +381,7 @@ highlights:
   # BufferTabpageFill: "gutter_fg_grey bg_inactive"
 
   CodiVirtualText: "#6395EC"
-  IndentBlanklineContextChar: "indentlinehighlight"                     
+  IndentBlanklineContextChar: "indentlinehighlight"
   DashboardHeader: "#88C0D0"
   DashboardCenter: "orange"
   DashboardFooter: "light_blue"
