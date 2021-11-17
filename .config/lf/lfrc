@@ -179,16 +179,21 @@ cmd open ${{
 	      # image/*) basename -a $PWD/* | devour sxiv -aio ;;
 	      # image/*) devour sxiv -aio $PWD/* ;;
 	      # image/*) devour sxiv -b $fx ;; #not working after 1024 characters needs this patch https://github.com/salman-abedin/devour/pull/28
-	      image/*) basename -a $fx | devour sxiv -baio ;; #workaround to 1024 character limits so far so good
+	      # image/*) basename -a $fx | devour sxiv -baio ;; #workaround to 1024 character limits so far so good
+	      # image/*) bspswap sxiv "$fx";; #it just works for just one file
+	      image/*) basename -a $fx | bspswap sxiv -baio ;;
 	      # audio/*) mpv --audio-display=no $fs ;;
 	      # audio/*) devour mpv --geometry=800x600 --force-window $fx ;; #buggy
-	      audio/*) basename -a $fx | devour mpv --geometry=800x600 --force-window --playlist=- ;;
-        # video/*) mpv $fx ;;
+	      # audio/*) basename -a $fx | devour mpv --geometry=800x600 --force-window --playlist=- ;;
+	      # audio/*) bspswap mpv --geometry=800x600 --force-window "$fx" ;; #it just works for just one file
+	      audio/*) basename -a $fx | bspswap mpv --geometry=800x600 --force-window --playlist=- ;;
 	      # video/*) setsid -f mpv $fs -quiet >/dev/null 2>&1 ;;
 	      # video/*) basename -a $fx | xargs -0I__ devour mpv --geometry=800x600 __ ;; #not working after 1024 characters
 	      # video/*) basename -a $fx | sed ':a;N;$!ba;s/\n/\~/g' | xargs -tI__ sh -c "devour mpv --geometry=800x600 __" ;; #only works in nonspaced names
         # video/*) basename -a $fx | sed 's/\ /\\ /g' | sed ':a;N;$!ba;s/\n/ /g' | xargs -d'\n' -tI__ sh -c 'devour mpv __' ;; #only works in nonspecial character like () &
-	      video/*) basename -a $fx | devour mpv --geometry=800x600 --playlist=- ;;
+	      # video/*) basename -a $fx | devour mpv --geometry=800x600 --playlist=- ;;
+	      # video/*) bspswap mpv --geometry=800x600 "$fx" ;; #it just works for just one file
+	      video/*) basename -a $fx | bspswap mpv --geometry=800x600 --playlist=- ;;
         #*) for f in $fx; do setsid -f xdg-open $f ;;
         *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
@@ -290,7 +295,8 @@ map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/previewer.sh %s' less -R $
 map <c-y> !mediainfo $f | less && xdotool key KP_Enter
 map <c-o> !mpv -vo sixel $f && xdotool key KP_Enter
 map <c-t> !termpdf -sixel $f && xdotool key KP_Enter
-map o     &devour mimeopen $fx
+# map o     &devour mimeopen $fx
+map o     &bspswap mimeopen $fx
 map O     $mimeopen --ask $fx
 map r     push :open-with<space>
 #map R    push :rename<space> # new rename

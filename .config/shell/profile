@@ -2,7 +2,7 @@
 
 #export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 #export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
-export PATH="$PATH:$HOME/.local/share/npm/bin:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
+export PATH="$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':'):$HOME/.local/share/npm/bin:$PATH"
 #export PATH="$HOME/.local/appimage:$HOME/.local/bin:$PATH"
 
 #unsetopt PROMPT_SP

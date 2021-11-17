@@ -2,7 +2,9 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 $HOME/.config/polybar/launch.sh &
+# pgrep bspswallow || $HOME/.config/bspwm/bspswallow &
 # remaps &
+
 # bsp-layout set rtall I --master-size 0.8 &
 # bsp-layout set rtall II --master-size 0.8 &
 # bsp-layout set rtall III --master-size 0.8 &
