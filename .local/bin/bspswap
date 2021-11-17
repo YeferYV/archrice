@@ -5,10 +5,8 @@
 
 ## version 1
 NODE_CURRENT=$(bspc query -N -n focused)
-# $@ &
-# $SHELL -i -c "$* > /dev/null 2>&1; exit"
-# $("$@") > /dev/null 2>&1 &
-$("$@") &
+# $SHELL -i -c "$("$@" > /dev/null 2>&1)" &
+$("$@") > /dev/null 2>&1 &
 PID_COMMAND=$!
 WATCH=$(bspc subscribe -c 1 node_add)
 NODE_NEW=${WATCH%% *}
