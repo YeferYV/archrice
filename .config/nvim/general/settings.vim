@@ -45,7 +45,7 @@ set formatoptions-=cro                  " Stop newline continution of comments
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 set autochdir                           " Your working directory will always be the same as your working directory
 " set sidescroll=5                        " The minimal number of columns to scroll horizontally
-set sidescrolloff=10                     " Minimal number of screen lines to keep at the left and right side of the cursor
+set sidescrolloff=10                    " Minimal number of screen lines to keep at the left and right side of the cursor
 set scrolloff=4                         " Minimal number of screen lines to keep above and below the cursor
 set ignorecase		                      " Do case insensitive matching
 set smartcase	 	                        " Do smart case matching

@@ -18,7 +18,6 @@ set shellopts '-eu'
 # commands accordingly.
 set ifs "\n"
 
-##################FIXNEEDED############################
 # leave some space at the top and the bottom of the screen
 set scrolloff 50
 
@@ -55,21 +54,13 @@ set promptfmt "[1;90m%w "
 ##  Global_keymaps  ##
 #####################
 
-############TESTINGNEEDED####################
-##(guess <a-c> need to be unmapped first
-##but <a-x> its working)
-# execute current file (must be executable)
-#map <a-x> $$f
-#map <c-x> !$f
+## define a custom 'rename' command without prompt for overwrite
+#cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
 
 ## Ranger's open_with
 #cmd open-with %"$@" $fx
 cmd open-with $$@ $fx
 
-## define a custom 'rename' command without prompt for overwrite
-#cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
-
-cmd bulkrename $vidir
 cmd draganddrop &dragon-drag-and-drop -a -x $fx
 # cmd duplicatelf &nohup $TERMINAL -e "lf"
 # cmd duplicatelf &nohup sh -c "export LF_CD=true && $TERMINAL"
@@ -79,6 +70,10 @@ cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
 cmd touch $touch "$(echo $* | tr ' ' '\ ')"
 # cmd trash %set -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
 # cmd trash %set -f; mv -f $fx $HOME/.cache/trash/
+
+# execute current file (must be executable)
+map <a-x> $$f
+map <c-x> !$f
 
 # To change numbers of colums
 map <a-4> $lf -command "set nopreview; set ratios 1"
@@ -135,21 +130,6 @@ map <a-3> morecol
 # # map <a-o> toggleonemorecol $LF_NUMCOL
 # map <a-o> $lf -remote "send $id toggleonemorecol $LF_NUMCOL"
 
-
-# to quit and clear (fix clear not executing)
-cmd clearandquit :{{
-  $clear
-  quit
-  }}
-map <c-q> clearandquit
-
-cmd codeandclose :{{
-  $nohup mimeopen $f >/dev/null 2>&1
-  $xdo close
-  }}
-map <c-c> codeandclose
-
-
 cmd on-cd &{{
     # '&' commands run silently in background (which is what we want here),
     # but are not connected to stdout.
@@ -199,22 +179,23 @@ cmd open ${{
     esac
 }}
 
-#cmd setbg "$1"
-#cmd setbg $ln -sf $fx ~/.local/share/bg && xwallpaper --zoom ~/.local/share/bg
-cmd setbg $cp -f $f ~/.local/share/bg && wal -i $f
-# cmd setbg ${{
-#   cp -f $fx ~/.local/share/bg
-#   wal -i $fx -o ~/.config/wal/postrun
-# }}
+# to quit and clear
+cmd clearandquit :{{
+  $clear
+  quit
+  }}
 
-cmd delete ${{
-	clear; tput cup $(($(tput lines)/3)); tput bold
-  stty echo
-	set -f
-	printf "%s\n\t" "$fx"
-	printf "delete?[y/N]"
-	read ans
-	[ $ans = "y" ] && rm -rf -- $fx
+# to mimeopen and close
+cmd mimeopenandclose :{{
+  $setsid -f mimeopen $f >/dev/null 2>&1
+  $xdo close
+  }}
+
+cmd setbg ${{
+  # ln -sf $fx ~/.local/share/bg
+  cp -f $fx ~/.local/share/bg
+  wal -i $fx #-o ~/.config/wal/postrun
+  xwallpaper --zoom ~/.local/share/bg
 }}
 
 cmd tmuxtty ${{
@@ -224,6 +205,16 @@ cmd tmuxtty ${{
   # tput reset
   # ( exec </dev/tty; exec <&1; TMUX= tmux )
   ( exec </dev/tty; exec <&1; TMUX= tmux new $1 )
+}}
+
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+  stty echo
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "delete?[y/N]"
+	read ans
+	[ $ans = "y" ] && rm -rf -- $fx
 }}
 
 cmd moveto ${{
@@ -278,9 +269,11 @@ map <a-d> draganddrop
 map <a-n> openterm
 map <c-n> duplicatelf
 map <c-f> $lf -remote "send $id select '$(fzf)'"
-# map <c-j> $lf -remote "send $id cd $(cut -d' ' -f2 ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
 map <c-j> $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
-# map D     trash
+map <c-q> clearandquit
+map <c-c> mimeopenandclose
+map <c-v> $bspswap code $fx
+map <c-l> $bspswap libreoffice --nologo $fx
 map D     $trash --trash-dir ~/.cache/Trash $fx
 map C     copyto
 map M     moveto
@@ -295,16 +288,15 @@ map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/previewer.sh %s' less -R $
 map <c-y> !mediainfo $f | less && xdotool key KP_Enter
 map <c-o> !mpv -vo sixel $f && xdotool key KP_Enter
 map <c-t> !termpdf -sixel $f && xdotool key KP_Enter
-# map o     &devour mimeopen $fx
 map o     &bspswap mimeopen $fx
 map O     $mimeopen --ask $fx
 map r     push :open-with<space>
 #map R    push :rename<space> # new rename
 map a     rename # at the very end
 map A     push a<c-u> # new rename
+#map a    push A<a-b> # after extention
 #map I    push A<c-a> # at the very beginning
 #map i    push A<a-b><a-b><a-f> # before extention
-#map a    push A<a-b> # after extention
 map S     $zsh
 map J     half-down
 map K     half-up
@@ -312,8 +304,6 @@ map K     half-up
 # map     K push 10k
 map Z     push :zip<space>
 map X     extract
-map <a-x> $$f
-map <c-x> !$f
 map V     push :$nvim<space>
 map Y     push :$ytfzf<space>-t<space>
 map t     tmuxtty lf
@@ -322,7 +312,5 @@ map T     tmuxtty zsh
 #map t     $tmux new "w3m google.com"
 map W     push :$sr<space>google<space>
 map B     $vimv $fx
-#map B     bulkrename
-#map b    $setbg $f
 map b     setbg $f
 map <enter> shell
