@@ -14,10 +14,13 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <silent> <C-v> :call SwitchWindow2()<CR>
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <silent> <C-v> <C-\><C-n>:call WinBufSwap()<CR><Esc>
+
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
 nnoremap <M-k> <C-w>k
@@ -77,16 +80,16 @@ nnoremap Y yg_
 " nnoremap <Leader>O O<Esc>^Da
 
 " Alternate way to quit
-nnoremap <C-q> :q<CR>
+" nnoremap <C-q> :q<CR>
 nnoremap <S-q> :q<CR>
-nnoremap <Leader>q :q<CR>
-nnoremap <Leader>; :q<CR>
+" nnoremap <Leader>q :q<CR>
+" nnoremap <Leader>; :q<CR>
 
 "" Alternate way to write
-nnoremap <C-w> :w<CR>
+" nnoremap <C-w> :w<CR>
 nnoremap <S-w> :w<CR>
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>' :w<CR>
+" nnoremap <Leader>w :w<CR>
+" nnoremap <Leader>' :w<CR>
 
 "" HoriZontal split
 " nnoremap <leader>z :split | resize 20 | term <CR>

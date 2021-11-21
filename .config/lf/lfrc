@@ -144,7 +144,7 @@ cmd clearandquit :{{
 map <c-q> clearandquit
 
 cmd codeandclose :{{
-  $mimeopen $f >/dev/null 2>&1
+  $nohup mimeopen $f >/dev/null 2>&1
   $xdo close
   }}
 map <c-c> codeandclose

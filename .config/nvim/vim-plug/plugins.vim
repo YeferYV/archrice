@@ -37,6 +37,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     "" Vim Terminal
     Plug 'voldikss/vim-floaterm'
 
+    "" Window swap
+    Plug 'wesQ3/vim-windowswap'
+
     "" Intellisense
     " Plug 'tzachar/compe-tabnine', { 'do': './install.sh' }
     Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
@@ -64,9 +67,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Plug 'saadparwaiz1/cmp_luasnip'
 
     " For ultisnips users.
-    " Plug 'SirVer/ultisnips'
-    " Plug 'honza/vim-snippets'
-    " Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+    Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
     " For snippy users.
     " Plug 'dcampos/nvim-snippy'

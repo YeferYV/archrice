@@ -83,7 +83,7 @@ super + {_,shift + }c
 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + {minus,equal}
+super + alt + {minus,equal}
 	bspc desktop -f {prev,next}.local
 
 # no/reset gaps size
@@ -192,8 +192,12 @@ super + alt + {h,j,k,l}
   xdo move -x $x -y $y; xdo resize -w $w -h $h
 
 # resize small/medium
-super + alt + {n,shift + n}
+super + alt + {_,shift + } n
   xdo resize {-w 681 -h 382,-w 800 -h 600}
+
+# xdo fixedscreen 1366x768 no visible borders
+super + ctrl + {_,shift + } n
+  xdo move -x 0 -y 0; xdo move {-x -1 -y -1, -x -2 -y -2}; xdo resize -w 1366 -h 768
 
 # xdo fixedscreen 1366x768
 super + {_,shift + }n
@@ -379,18 +383,23 @@ mod1 + ctrl + {1,2,3,4,5}
   redshift {-x, -O 2222, -O 3333, -O 4444, -O 5555}
 
 # compositor start
-super + shift + minus
+super + minus
   picom --glx-no-rebind-pixmap \
         --use-damage \
         --xrender-sync-fence \
         --backend glx \
         --experimental-backends \
         --transparent-clipping \
+        # --active-opacity=0.90 \
+        # --inactive-opacity=0.90 \
         # --refresh-rate 30
 
 # compositor close
-super + shift + equal
+super + equal
   killall picom
+
+super + shift + {minus,equal}
+  picom-trans -c {-- -2,+2}
 
 # dmenu launcher alias
 super + ctrl + d

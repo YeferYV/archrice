@@ -12,6 +12,7 @@ map R rotate
 #map J zoom out
 map f zoom in
 map F zoom out
+map I quit
 map i zoom in
 map o zoom out
 map c recolor

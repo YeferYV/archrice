@@ -89,12 +89,14 @@ function! ToggleHiddenAll()
         let s:hidden_all = 1
         set noruler
         set laststatus=0
+        set cmdheight=3
         set noshowcmd
         " set nonumber
     else
         let s:hidden_all = 0
         set ruler
         set laststatus=2
+        set cmdheight=2
         set showcmd
         " set number
     endif
@@ -109,3 +111,62 @@ autocmd TermClose * set ruler laststatus=2 cmdheight=2 showcmd
 " autocmd TermClose * quit
 " autocmd TermOpen * call feedkeys("i")
 
+" WindowSwap
+function! WinBufSwap()
+  let thiswin = winnr()
+  let thisbuf = bufnr("%")
+  let lastwin = winnr("#")
+  let lastbuf = winbufnr(lastwin)
+
+  exec  lastwin . " wincmd w" ."|".
+      \ "buffer ". thisbuf ."|".
+      \ thiswin ." wincmd w" ."|".
+      \ "buffer ". lastbuf
+endfunction
+
+command! Wswap :call WinBufSwap()
+" map <C-v> :call WinBufSwap()<CR>
+
+function! SwitchWindow(count) abort
+    let l:current_buf = winbufnr(0)
+    exe "buffer" . winbufnr(a:count)
+    exe a:count . "wincmd w"
+    exe "buffer" . l:current_buf
+    wincmd p
+endfunction
+" nnoremap <C-x> :call SwitchWindow(v:count1)<CR>
+" tnoremap <C-x> <C-\><C-n>:call SwitchWindow(v:count1)<CR><Esc>
+
+function! SwitchWindow2()
+    let thiswin = winnr()
+    let thisbuf = bufnr("%")
+    let lastwin = winnr("#")
+    let lastbuf = winbufnr(lastwin)
+    exe "buffer" . lastbuf
+    wincmd p
+    exe "buffer" . thisbuf
+    wincmd p
+endfunction
+" nnoremap <C-x> :call SwitchWindow2()<CR>
+" tnoremap <C-x> <C-\><C-n>:call WinBufSwap()<CR><Esc>
+
+function! MarkWindowSwap()
+    let g:markedWinNum = winnr()
+endfunction
+
+function! DoWindowSwap()
+    "Mark destination
+    let curNum = winnr()
+    let curBuf = bufnr( "%" )
+    exe g:markedWinNum . "wincmd w"
+    "Switch to source and shuffle dest->source
+    let markedBuf = bufnr( "%" )
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' curBuf
+    "Switch to dest and shuffle source->dest
+    exe curNum . "wincmd w"
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' markedBuf
+endfunction
+" nmap <silent> <C-m> :call MarkWindowSwap()<CR>
+" nmap <silent> <C-x> :call DoWindowSwap()<CR>

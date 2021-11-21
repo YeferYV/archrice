@@ -39,7 +39,7 @@ else
   " luafile $HOME/.config/nvim/lua/cmp-ultisnip.lua
   luafile $HOME/.config/nvim/lua/cmptabnine.lua
   " luafile $HOME/.config/nvim/lua/completion.lua
-  luafile $HOME/.config/nvim/lua/lsp.lua
+  " luafile $HOME/.config/nvim/lua/lsp.lua
   luafile $HOME/.config/nvim/lua/lspinstaller.lua
   luafile $HOME/.config/nvim/lua/lspkind-conf.lua
   luafile $HOME/.config/nvim/lua/lspsaga-conf.lua
