@@ -333,12 +333,10 @@ super + KP_{Right,Begin,Left}
   playerctl --player=mpv {next,play-pause,previous}
 
 # chromium play-pause
-#Katakana
 alt + space
   playerctl --player=chromium play-pause
 
 # chromium rewind-forward
-#{Hiragana,Henkan_Mode}
 alt + {a,s}
   YTID="$(wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1')"; \
   CUID="$(xdo id)"; \
@@ -358,8 +356,8 @@ mod1 + KP_{Right,Begin,Left}
   playerctl --player=spotify {next,play-pause,previous}
 
 # mpc next-toggle-prev
-KP_{Right,Begin,Left}
-  mpc {next,toggle,prev}
+KP_{Right,Begin,Left,Down,Up}
+  mpc {next,toggle,prev,volume -2,volume +2}
 
 # mpc next-toggle-prev
 mod1 + {XF86AudioRaiseVolume,XF86AudioMute,XF86AudioLowerVolume}
@@ -440,7 +438,6 @@ super + shift + e
 
 # browser
 super + {_,shift +} w
-  {google-chrome-stable,killall chrome}
+  { google-chrome-stable --process-per-site, killall chrome}
   # google-chrome-stable && xdo move -x 200 -y 15; xdo resize -w 1151 -h 738
-  # google-chrome-stable --process-per-site
 
