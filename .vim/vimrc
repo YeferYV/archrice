@@ -80,6 +80,7 @@ set softtabstop=2         " Number of spaces that a <Tab> counts for while perfo
 set showtabline=1         " 0: never 1: only if there are at least two tab pages 2: always
 set sidescroll=5          " The minimal number of columns to scroll horizontally
 set scrolloff=4           " Minimal number of screen lines to keep above and below the cursor
+set virtualedit=all       " allow cursor bypass end of line
 set hlsearch              " When there is a previous search pattern, highlight all its matches
 set incsearch             " While typing a search command, show where the pattern
 set ignorecase            " to search ignoring the case

@@ -25,19 +25,31 @@
         },
         {
         "before": ["<S-j>"],
-        "after": ["1","0","j"]
+        "after": ["1","0"],
+        "commands": [
+            "fakeVirtualSpace.cursorDown"
+            ]
         },
         {
         "before": ["<S-k>"],
-        "after": ["1","0","k"]
+        "after": ["1","0"],
+        "commands": [
+            "fakeVirtualSpace.cursorUp"
+            ]
         },
         {
         "before": ["<S-h>"],
-        "after": ["g","<S-t>"]
+        "after": ["1","0"],
+        "commands": [
+            "fakeVirtualSpace.cursorLeft"
+            ]
         },
         {
         "before": ["<S-l>"],
-        "after": ["g","t"]
+        "after": ["1","0"],
+        "commands": [
+            "fakeVirtualSpace.cursorRight"
+            ]
         },
         {
         "before": ["g","<S-d>"],
@@ -46,7 +58,7 @@
             ]
         },
         {
-        "before": ["g","<y>"],
+        "before": ["g","y"],
         "commands": [
             "editor.action.goToTypeDefinition"
             ]
@@ -67,6 +79,30 @@
         "before": ["g","a"],
         "commands": [
             "editor.action.quickFix"
+            ]
+        },
+        {
+        "before": ["h"],
+        "commands": [
+            "fakeVirtualSpace.cursorLeft"
+            ]
+        },
+        {
+        "before": ["j"],
+        "commands": [
+            "fakeVirtualSpace.cursorDown"
+            ]
+        },
+        {
+        "before": ["k"],
+        "commands": [
+            "fakeVirtualSpace.cursorUp"
+            ]
+        },
+        {
+        "before": ["l"],
+        "commands": [
+            "fakeVirtualSpace.cursorRight"
             ]
         },
     ],
@@ -93,4 +129,11 @@
     "editor.bracketPairColorization.enabled": true,
     "editor.inlineSuggest.enabled": true,
     "editor.minimap.enabled": false,
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false,
+        "plaintext": false,
+        "markdown": true
+    },
+    "files.trimTrailingWhitespace": true,
 }

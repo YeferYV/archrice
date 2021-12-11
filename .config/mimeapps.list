@@ -37,3 +37,4 @@ x-content/audio-player=vlc.desktop;
 x-content/video-dvd=vlc.desktop;
 video/x-matroska=mpv.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+image/svg+xml=gimp.desktop;

@@ -14,12 +14,12 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <silent> <C-v> :call SwitchWindow2()<CR>
+nnoremap <silent> <C-M> :call SwitchWindow2()<CR>
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
-tnoremap <silent> <C-v> <C-\><C-n>:call WinBufSwap()<CR><Esc>
+tnoremap <silent> <C-M> <C-\><C-n>:call WinBufSwap()<CR><Esc>
 
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j

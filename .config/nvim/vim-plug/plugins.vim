@@ -78,6 +78,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     "" Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
 
+    "" To surround block of codes
+    Plug 'tpope/vim-surround'
+
     "" To comment block of codes
     Plug 'tpope/vim-commentary'
 
