@@ -112,13 +112,6 @@
         "<C-f>": false,
     },
 
-    "workbench.colorCustomizations": {
-    "statusBar.background" : "#1A1A1A",
-    // "statusBar.noFolderBackground" : "#212121",
-    // "statusBar.debuggingBackground": "#263238"
-    },
-
-    "window.zoomLevel": -1,
     "tabnine.experimentalAutoImports": true,
     "editor.cursorBlinking": "solid",
     "editor.suggest.preview": true,
@@ -136,4 +129,50 @@
         "markdown": true
     },
     "files.trimTrailingWhitespace": true,
+    "workbench.colorTheme": "Material Theme Darker High Contrast",
+    "workbench.colorCustomizations": {
+    "statusBar.foreground" : "#A1A1A1",
+    // "statusBar.background" : "#1A1A1A",
+    // "statusBar.noFolderBackground" : "#212121",
+    // "statusBar.debuggingBackground": "#263238"
+    },
+    // "editor.fontFamily": "Hack,'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.cursorSurroundingLines": 4,
+    "editor.renderLineHighlight": "none",
+    "window.zoomLevel": -1,
+    "editor.fontWeight": 500,
+    "editor.tokenColorCustomizations": {
+    "textMateRules": [
+        {
+            "scope": "keyword",
+            "settings": {
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "scope": "entity.name.type",
+            "settings": {
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "scope": "storage",
+            "settings": {
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "scope": "constant.language",
+            "settings": {
+                "fontStyle": "bold"
+            }
+        },
+        {
+            "scope": "support.class.builtin",
+            "settings": {
+                "fontStyle": "bold"
+            }
+        }
+    ]
+    },
 }
