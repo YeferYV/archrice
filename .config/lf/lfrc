@@ -73,7 +73,9 @@ cmd touch $touch "$(echo $* | tr ' ' '\ ')"
 
 # execute current file (must be executable)
 map <a-x> $$f
+map <a-X> %$f
 map <c-x> !$f
+map <c-X> :$f
 
 # To change numbers of colums
 map <a-4> $lf -command "set nopreview; set ratios 1"

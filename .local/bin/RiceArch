@@ -1,8 +1,57 @@
 #!/bin/bash
 
+#
+## Before chroot
+#
+# cfdisk
+# mkfs.vat /dev/sdX
+# mkfs.btrfs /dev/sdX
+# mount /dev/sdX /mnt
+# btrfs su cr /mnt/@root
+# btrfs su cr /mnt/@home
+# btrfs su cr /mnt/@var
+# btrfs su cr /mnt/@swap
+# btrfs su cr /mnt/@.snapshots
+# mount -o noatime,compress=lzo,subvol=@root /dev/sdX /mnt
+# mkdir -p /mnt/{boot/efi,home,var,swap,.snapshots}
+# mount -o noatime,compress=lzo,subvol=@home /dev/sdX /mnt/home
+# mount -o noatime,compress=lzo,subvol=@.snapshots /dev/sdX /mnt/.snapshots
+# mount -o nodatacow,subvol=@swap /dev/sdX /mnt/swap
+# mount -o nodatacow,subvol=@var /dev/sdX /mnt/var
+# mount /dev/sdX /mnt/boot/efi
+#
+# pacstrap /mnt base base-devel broadcom-wl btrfs-progs efibootmgr grub linux linux-firmware neovim networkmanager snapper git cronie
+#
+# genfstab U /mnt >> /mnt/etc/fstab
+
+#
+##  After chroot
+#
+# arch-chroot /mnt
+# truncate -s 0 /swap/swapfile
+# chattr +C /swap/swapfile
+# btrfs property set /swap/swapfile compression none
+# dd if=/dev/zero of=/swap/swapfile bs=1G count=8 status=progress
+# chmod 600 /swap/swapfile
+# mkswap /swap/swapfile
+# swapon /swap/swapfile
+# echo "/swap/swapfile none defaults 0 0" >> /etc/fstab
+#
+# sed -i "s/MODULE=()/MODULE=(btrfs)/" /etc/mkinitcpio.conf
+# mkinitcpio -p linux
+#
+# umount /.snapshots
+# rm -rf /.snapshots
+# snapper -c rootsnap create-config /
+# reboot
+
+#
+## After reboot
+#
+
 timedatectl set-ntp true
 hwclock --systohc
-ln -sf /usr/share/zoneinfo/Canada/Eastern /etc/localtime
+ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
 
 sed -i '177s/.//' /etc/locale.gen
 locale-gen
@@ -12,37 +61,73 @@ echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "4rch" >> /etc/hostname
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
-echo "127.0.1.1 arch.localdomain arch" >> /etc/hosts
+echo "127.0.1.1 4rch.localdomain 4rch" >> /etc/hosts
 echo root:toor | chpasswd
-
-# You can add xorg to the installation packages, I usually add it at the DE or WM install script
-# You can remove the tlp package if you are installing on a desktop or vm
-
-pacman -S --noconfirm grub efibootmgr networkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools reflector base-devel linux-headers avahi xdg-user-dirs xdg-utils gvfs gvfs-smb nfs-utils inetutils dnsutils bluez bluez-utils cups hplip alsa-utils pulseaudio bash-completion openssh rsync reflector acpi acpi_call tlp virt-manager qemu qemu-arch-extra edk2-ovmf bridge-utils dnsmasq vde2 openbsd-netcat iptables-nft ipset firewalld flatpak sof-firmware nss-mdns acpid os-prober ntfs-3g terminus-font
-
-# pacman -S --noconfirm xf86-video-amdgpu
-# pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable NetworkManager
-# systemctl enable bluetooth
-# systemctl enable cups.service
-# systemctl enable sshd
-# systemctl enable avahi-daemon
-# systemctl enable tlp # You can comment this command out if you didn't install tlp, see above
-# systemctl enable reflector.timer
-# systemctl enable fstrim.timer
+systemctl enable cronie
 # systemctl enable libvirtd
 # systemctl enable firewalld
-# systemctl enable acpid
+# systemctl enable avahi-daemon
 
 useradd -m drknss
-echo drknss:toor | chpasswd
 usermod -aG libvirt drknss
-echo "drknss ALL=(ALL) ALL" >> /etc/sudoers.d/ermanno
+echo drknss:toor | chpasswd
+echo "drknss ALL=(ALL) ALL" >> /etc/sudoers.d/drknss
 
+#
+## Backup
+#
+# rm -rf /.snapshots
+# snapper -c rootsnap create-config /
+# reboot
+btrfs su snapshot / /.snapshots/backup-$(date +%y-%m-%d)
+snapper -c rootsnap create -d "base-install"
 
-printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
+rm -rf /home
+snapper -c homesnap create-config /home
+btrfs su snapshot /home /home/.snapshots/backup-$(date +%y-%m-%d)
+snapper -c homesnap create -d "base-install"
+
+rm -rf /var
+snapper -c varsnap create-config /var
+btrfs su snapshot /var /var/.snapshots/backup-$(date +%y-%m-%d)
+snapper -c varsnap create -d "base-install"
+
+mkdir /home/drknss/.config
+btrfs su cr /home/drknss/.config/google-chrome
+btrfs su cr /root/.cache
+btrfs su cr /var/log
+btrfs su cr /var/tmp
+btrfs su cr /var/cache/pacman/pkg
+
+#
+## Post-Install
+#
+
+mkdir -p /home/dtfls/yydtfls
+git clone https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
+cd /home/dtfls/yydtfls/dotfiles
+./.local/bin/ResetArch
+systemctl --user start touchcursor
+systemctl --user start pulseaudion-x11
+stow --restow --verbose --target=/home/drknss/.config .config
+stow --restow --verbose --target=/home/drknss/.local .local
+ls -s ~/.config/shell/profile ~/.profile
+ls -s ~/.config/x11/.xinitrc ~/.xinitrc
+
+snapper -c rootsnap create -d "after-resetarch"
+snapper -c homesnap create -d "after-resetarch"
+snapper -c varsnap create -d "after-resetarch"
+# snapper -c rootsnap create -d "after-larbs"
+# snapper -c homesnap create -d "after-larbs"
+# snapper -c varsnap create -d "after-larbs"
+snapper -c rootsnap create -c timeline -d "hourly-snapshots"
+snapper -c homesnap create -c timeline -d "hourly-snapshots"
+snapper -c varsnap create -c timeline -d "hourly-snapshots"
+
+printf "\e[1;32mDone!\e[0m"
 

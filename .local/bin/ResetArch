@@ -1,132 +1,209 @@
-linux
-linux-firmware
-8188eu-aircrack-dkms-git
-aircrack-ng
-alacritty-git alttab-git
-binfmt-qemu-static
-bcm43142-firmware
-brave-bin
-cheat-git
-nodejs-how2
-command-not-found
-devour
-docker
-dragon-drag-and-drop
-ffmpeg-git
-google-chrome
-gtk-theme-arc-gruvbox-git
-htop-vim-git
-hashcat
-i3-vim-syntax-git
-i3-gaps
-i3status
-lf
-libsixel
-libxft-bgra
-mlterm
-ngrok
-nmap
-ncmpcpp-vim-git
-neovim-git
-neofetch
-nerd-font-hack
-notcurses
-paru
-python-ueberzug-git
-qemu-user-static
-ranger-git
-redshift
-sc-im
-simple-mtpfs
-st-luke-git
-task-spooler
-termplay
-transmission-cli
-transmission-gtk
-urxvt-resize-font-git
-sxhkd
-vim-sxhkdrc-git
-vscodium-bin
-vscodium-bin-marketplace
-x2x-git
-yay
-zsh-fast-syntax-highlighting
-chromium
-ttf-hack
-intel-ucode
-dwmblocks
-dmenu
-dwm
-mutt-wizard-git
-xorg-server
-xorg-xwininfo
-xorg-xinit
-bc
-picom
-xcompmgr
-xorg-xprop
-dosfstools
-libnotify
-dunst
-exfat-utils
-sxiv
-xwallpaper
-ffmpeg
-gnome-keyring
-mpd
-mpc
-mpv
-man-db
-newsboat
-noto-fonts-emoji
-ntfs-3g
-pulseaudio-alsa
-pulsemixer
-pamixer
-maim
-abook
-unclutter
-unrar
-unzip
-lynx
-xcape
-xclip
-xdo
-xdotool
-xorg-xdpyinfo
-youtube-dl
-zathura
-zathura-pdf-mupdf
-poppler
-mediainfo
-atool
-fzf
-highlight
-grub
-grub-btrfs
-efibootmgr
-os-prober
-networkmanager
-network-manager-applet
-wireless-tools
-wpa-supplicant
-mtools
-base-devel
-linux-headers
-git
-bluez
-bluez-utils
-openssh
-sshfs
-ffmpegthumbnailer
-bradcom-wl
-blueman
-blueman-applet
-blackarch-keyring
-playerctl
-pavucontrol
-gvim
-sgtk-menu
+#!/bin/bash
+
+#curl -LO larbs.xyz/larbs.sh
+#sh larbs.sh
+
+#curl -LO blackarch.sh/strap.sh
+#sh strap.sh
+
+#sed -n '17,129p' ResetArch | sed 's/ \//g' > resetarchpackages
+#comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base-devel|sort) > installedpackages
+
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+yay -Syu \
+acpi \
+alacritty-git \
+atool \
+base \
+base-devel \
+bat \
+bc \
+bcm43142-firmware \
+blueman \
+broadcom-wl \
+bsp-layout \
+bspwm \
+btrfs-progs \
+cht.sh-git \
+cronie \
+curl \
+djvulibre \
+dmenu \
+docker \
+dosfstools \
+dragon-drag-and-drop \
+dunst \
+efibootmgr \
+exfat-utils \
+ffmpegthumbnailer \
+fzf \
+git \
+gnome-keyring \
+google-chrome \
+grub \
+gtk-theme-arc-gruvbox-git \
+htop-vim \
+lazygit \
+lf-git \
+libnotify \
+libsixel \
+light \
+linux \
+linux-firmware \
+maim \
+man-db \
+mediainfo \
+mpc \
+mpd \
+mpv-full \
+mpv-mpris \
+mtools \
+ncmpcpp \
+neofetch \
+neovim \
+nerd-fonts-hack \
+networkmanager \
+network-manager-applet \
+nodejs-how2 \
+ntfs-3g \
+openssh \
+pamixer \
+paru-bin \
+pavucontrol \
+pcmanfm-gtk3 \
+perl-file-mimeinfo \
+picom \
+playerctl \
+polybar \
+poppler \
+pulseaudio-alsa \
+pulsemixer \
+python-ueberzug-git \
+python-pynvim \
+ranger-sixel \
+redshift \
+rxvt-unicode \
+sgtk-menu \
+siji-git \
+simple-mtpfs \
+snapper \
+spaceship-prompt-git \
+spotify \
+spotify-adblock-git \
+spotify-adkiller-git \
+sshfs \
+stow \
+sxhkd \
+sxiv \
+terminus-font \
+tmux \
+touchcursor-linux-git \
+transmission-gtk \
+trash-cli \
+ttf-hack \
+ttf-unifont \
+unclutter \
+unrar \
+unzip \
+vim-sxhkdrc-git \
+vimv-git \
+wget \
+xcape \
+xclip \
+xdo \
+xdotool \
+xorg-fonts-misc \
+xorg-server \
+xorg-xdpyinfo \
+xorg-xinit \
+xorg-xmodmap \
+xorg-xprop \
+xorg-xset \
+xorg-xsetroot \
+xorg-xwininfo \
+xwallpaper \
+yay-bin \
+youtube-dl \
+zathura \
+zathura-pdf-mupdf \
+zip \
+zsh \
+zsh-autosuggestions \
+zsh-completions \
+zsh-fast-syntax-highlighting \
 
 ####optional####
-cdrtools
+# 8188eu-aircrack-dkms-git
+# abook
+# arandr
+# aircrack-ng
+# alttab-git
+# arandr
+# binfmt-qemu-static
+# brave-bin
+# bashtop
+# blackarch-keyring
+# cdrtools
+# cheat-git
+# cheat-sh
+# chromium
+# command-not-found
+# cool-retro-term
+# devour
+# dmenu
+# dwm
+# dialog
+# dwmblocks
+# ffmpeg
+# ffmpeg-git
+# figlet
+# gimp
+# grub-btrfs
+# gvim
+# hashcat
+# highlight
+# htop-vim-git
+# i3-gaps
+# i3-vim-syntax-git
+# i3status
+# intel-ucode
+# libreoffice
+# libxft-bgra
+# linux-headers
+# linux-wifi-hotspot
+# lunarvim-git
+# mlocate
+# mlterm
+# moreutils
+# mutt-wizard-git
+# ncdu
+# newsboat
+# ngrok
+# nmap
+# novnc
+# notcurses
+# noto-fonts-emoji
+# obs-studio
+# os-prober
+# pywal
+# python-pynvim
+# qemu-user-static
+# ripgrep
+# scrcpy
+# skippy-xd-git
+# sxhkhm-git
+# task-spooler
+# termplay
+# tigervnc
+# tmate
+# transmission-cli
+# urxvt-perls
+# vscodium-bin
+# vscodium-bin-marketplace
+# xcompmgr
+# x2x-git
+# xf86-video-amdgpu
+# ytfzf
