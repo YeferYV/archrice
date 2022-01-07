@@ -306,11 +306,11 @@ XF86AudioMicMute
 
 # backlight
 XF86MonBrightness{Down,Up}
-  sudo light -{U,A} .11
+  light -{U,A} .11
 
 # super backlight
 super + XF86MonBrightness{Down,Up}
-  sudo light -{U,A} 2
+  light -{U,A} 2
 
 # dimmer
 shift + XF86MonBrightness{Down,Up}

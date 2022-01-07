@@ -14,7 +14,6 @@ cd yay
 makepkg -si
 
 yay -Syu \
-acpi \
 alacritty-git \
 atool \
 base \
@@ -137,6 +136,7 @@ zsh-fast-syntax-highlighting \
 
 ####optional####
 # 8188eu-aircrack-dkms-git
+# acpi
 # abook
 # arandr
 # aircrack-ng

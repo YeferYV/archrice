@@ -72,9 +72,8 @@ systemctl enable cronie
 # systemctl enable libvirtd
 # systemctl enable firewalld
 # systemctl enable avahi-daemon
-
 useradd -m drknss
-usermod -aG libvirt drknss
+usermod -aG libvirt video drknss
 echo drknss:toor | chpasswd
 echo "drknss ALL=(ALL) ALL" >> /etc/sudoers.d/drknss
 
@@ -118,6 +117,7 @@ stow --restow --verbose --target=/home/drknss/.config .config
 stow --restow --verbose --target=/home/drknss/.local .local
 ls -s ~/.config/shell/profile ~/.profile
 ls -s ~/.config/x11/.xinitrc ~/.xinitrc
+crontab ~/.local/bin/cron/lowbatnotificationcron
 
 snapper -c rootsnap create -d "after-resetarch"
 snapper -c homesnap create -d "after-resetarch"
