@@ -123,6 +123,7 @@ xorg-xprop \
 xorg-xset \
 xorg-xsetroot \
 xorg-xwininfo \
+xf86-input-synaptics \
 xwallpaper \
 yay-bin \
 youtube-dl \

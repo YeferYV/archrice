@@ -276,7 +276,8 @@ map <c-q> clearandquit
 map <c-c> mimeopenandclose
 map <c-v> $bspswap code $fx
 map <c-l> $bspswap libreoffice --nologo $fx
-map D     $trash --trash-dir ~/.cache/Trash $fx
+#map D     $trash --trash-dir ~/.cache/Trash $fx
+map D     $trash $fx
 map C     copyto
 map M     moveto
 map <a-m> push :mkdir<space>

@@ -1,9 +1,14 @@
 #!/bin/sh
 
-# Notify me with notify-send if my battery is below 15%.
-# You can set this to run via cron.
+# cat /sys/class/power_supply/BAT0/{status,capacity} | {
+# 	read -d "\n" status capacity
+#   [ "$(cat /sys/class/power_supply/BAT0/status )" = "Charging" ] && exit
+#   [ "$(cat /sys/class/power_supply/BAT0/capacity )" -lt 50 ] &&
+#   export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus &&
+#   notify-send -u critical "$capacity% $status"
+# }
 
-[ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ] && exit
-[ "$(cat /sys/class/power_supply/BAT0/capacity)" -lt 15 ] &&
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1001/bus &&
-notify-send -u critical "Battery critically low."
+cat /sys/class/power_supply/BAT0/status | xargs -I_ [ "_" == "Charging" ] && exit
+cat /sys/class/power_supply/BAT0/capacity | awk '{ if ($1 <= 15 ) print $1 }' | xargs -I_ notify-send -u critical "_% discharging"
+
+

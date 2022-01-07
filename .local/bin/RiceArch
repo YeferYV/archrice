@@ -117,6 +117,7 @@ stow --restow --verbose --target=/home/drknss/.config .config
 stow --restow --verbose --target=/home/drknss/.local .local
 ls -s ~/.config/shell/profile ~/.profile
 ls -s ~/.config/x11/.xinitrc ~/.xinitrc
+sudo cp ~/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
 crontab ~/.local/bin/cron/lowbatnotificationcron
 
 snapper -c rootsnap create -d "after-resetarch"

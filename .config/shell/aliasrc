@@ -71,9 +71,9 @@ alias \
 	tmuxlist="tmux ls" \
 	tmuxkillall="tmux kill-session -a" \
 	tmuxmpvdmenu="tmux new -d mpv --loop-playlist --no-video $1" \
-	volumebar="echo '♪: $(pamixer --get-volume-human)'" \
-	batterybar="acpi | sed 's/Battery [0-9]: //;s/[Dd]ischarging, /🔋/;s/[Nn]ot charging, /🛑/;s/[Cc]harging, /🔌/;s/[Uu]nknown, /♻️/;s/[Ff]ull, /⚡/;s/,.*//'" \
-	freebar="free -h | awk '/^Mem:/ {printf "%s/%s",$3,$7}'" \
-	datebar="date +'%F %T'" \
-	#refbar="kill '$(pstree -lp | grep -- -dwmbar\([0-9] | sed "s/.*sleep(\([0-9]\+\)).*/\1/")'" \
+	# volumebar="echo '♪: $(pamixer --get-volume-human)'" \
+	# batterybar="acpi | sed 's/Battery [0-9]: //;s/[Dd]ischarging, /🔋/;s/[Nn]ot charging, /🛑/;s/[Cc]harging, /🔌/;s/[Uu]nknown, /♻️/;s/[Ff]ull, /⚡/;s/,.*//'" \
+	# freebar="free -h | awk '/^Mem:/ {printf "%s/%s",$3,$7}'" \
+	# datebar="date +'%F %T'" \
+	# refbar="kill '$(pstree -lp | grep -- -dwmbar\([0-9] | sed "s/.*sleep(\([0-9]\+\)).*/\1/")'" \
 
