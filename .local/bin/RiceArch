@@ -107,12 +107,17 @@ btrfs su cr /var/cache/pacman/pkg
 ## Post-Install
 #
 
+# pacman-key --init
+# pacman-key --populate
 mkdir -p /home/dtfls/yydtfls
 git clone https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
 cd /home/dtfls/yydtfls/dotfiles
 ./.local/bin/ResetArch
+mkdir ~/.local/share/mpd
+systemctl --user start mpd
+systemctl --user start pulseaudio-x11
 systemctl --user start touchcursor
-systemctl --user start pulseaudion-x11
+mpc --port=6601 update
 stow --restow --verbose --target=/home/drknss/.config .config
 stow --restow --verbose --target=/home/drknss/.local .local
 ls -s ~/.config/shell/profile ~/.profile

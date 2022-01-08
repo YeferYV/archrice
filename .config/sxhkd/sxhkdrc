@@ -357,11 +357,11 @@ mod1 + KP_{Right,Begin,Left}
 
 # mpc next-toggle-prev
 KP_{Right,Begin,Left,Down,Up}
-  mpc {next,toggle,prev,volume -2,volume +2}
+  mpc --port=6601 {next,toggle,prev,volume -2,volume +2}
 
 # mpc next-toggle-prev
 mod1 + {XF86AudioRaiseVolume,XF86AudioMute,XF86AudioLowerVolume}
-  mpc {next,toggle,prev}
+  mpc --port=6601 {next,toggle,prev}
 
 # screenshot fullscreen
 Print
