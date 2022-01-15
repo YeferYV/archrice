@@ -61,28 +61,34 @@ cmp.setup({
     { name = 'tags' },
     { name = 'treesitter' },
   }),
-  -- preselect = cmp.PreselectMode.Item,
+  preselect = cmp.PreselectMode.Item,
   -- completion = {
   --   completeopt = 'menu,menuone,noinsert'
   -- },
   -- documentation = {
   --   border = "rounded",
+  --   border = {'', '', '', ' ', '', '', '', ' '}
   --   winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
   --   max_width = 50,
   --   min_width = 50,
   --   max_height = math.floor(vim.o.lines * 0.4),
   --   min_height = 3,
   -- },
-	completion = { -- rounded border; thin-style scrollbar
-		border = 'rounded',
-		thin_scrollbar = true,
-    completeopt = 'menu,menuone,noinsert',
-	},
-	documentation = { -- no border; native-style scrollbar
-		border = 'rounded',
-		thin_scrollbar = true,
-    -- winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-	},
+
+   window = {
+        completion = { -- rounded border; thin-style scrollbar
+          border = 'rounded',
+          scrollbar = "║",
+          thin_scrollbar = true,
+          completeopt = 'menu,menuone,noinsert',
+        },
+        documentation = { -- rounded border; native-style scrollbar
+          border = 'rounded',
+          scrollbar = "║",
+          -- thin_scrollbar = true,
+          -- winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+        },
+    },
 })
 
 -- Use buffer source for `/`.
