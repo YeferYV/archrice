@@ -14,13 +14,9 @@ mod1 + Return
 super + {_,shift + }d
 	{dmenu_run, alacritty -e $(dmenu_path | dmenu)}
 
-# dunst reopen notification
-ctrl + Escape
-	dunstctl history-pop
-
-# dunst close notification
-ctrl + space
-	dunstctl close
+# dunst close/reopen notification
+ctrl + {_,shift + }space
+	dunstctl {close, history-pop}
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -93,6 +89,14 @@ super + bracket{left,right}
 # Increase/descrease gap size
 mod4 + shift + bracket{left,right}
 	bspc config window_gap $(($(bspc config window_gap) {+,-} 2))
+
+# toggle node border
+super + {apostrophe,backslash}
+	bspc config -n focused border_width {0,2}
+
+# toggle desktop border
+mod4 + shift + {apostrophe,backslash}
+  bspc config -d focused border_width {0,2}
 
 # focus the last node/desktop
 super + {grave,Tab}
@@ -397,7 +401,14 @@ super + equal
   killall picom
 
 super + shift + {minus,equal}
-  picom-trans -c {-- -2,+2}
+  xdo id -d -c | xargs -I id -n 1 picom-trans -w id {-2,+4}
+  # bspc query -N -d | xargs -I wmid xprop -id wmid _NET_WM_PID WM_CLASS 2>/dev/null | awk '/Alacritty/ {print $3}'
+  # xprop -id $(xdo id) | awk 'NR==14 || NR==15 {print $3}'
+  #
+  # bspc query -N -d | xargs -I id -n 1 picom-trans -w id {-2,+4}
+  # picom-trans -c {-- -2,+2}
+  # xdo pid $ID
+  # xdo id -p $PID
 
 # dmenu launcher alias
 super + ctrl + d

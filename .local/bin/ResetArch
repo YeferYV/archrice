@@ -110,6 +110,7 @@ unzip \
 vim-sxhkdrc-git \
 vimv-git \
 wget \
+wmctrl \
 xcape \
 xclip \
 xdo \
@@ -189,6 +190,7 @@ zsh-fast-syntax-highlighting \
 # noto-fonts-emoji
 # obs-studio
 # os-prober
+# pfetch
 # pywal
 # python-pynvim
 # qemu-user-static

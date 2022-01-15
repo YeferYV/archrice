@@ -89,7 +89,7 @@ case "$(file -Lb --mime-type -- "$file")" in
   *rar) unrar l "$file" || echo "no unrar :(" ;;
   *7z) 7z l "$file" || echo "no 7z :(" ;;
   # *json) python -m json.tool < "$file"  || echo "no python :(" ;;
-  *json) jq . "$file" | bat -l json --style plain --color always || echo "no jq :(" ;;
+  *json) bat -l json --style plain --color always "$file" || echo "no bat :(" ;;
   #*) highlight --out-format xterm256 -s pablo "$file" || echo "no highlight :(";;
   *) bat --style plain --color always "$file" || echo "no bat :(" ;;
 esac

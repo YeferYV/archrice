@@ -11,11 +11,11 @@ else
 	option="$(menu)"
 	# echo $option
 	case "$option" in
-		"a selected area") maim -s ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" || exit ;;
-		"current window") maim -i "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
+		"a selected area") maim --hidecursor -s ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" || exit ;;
+		"current window") maim --hidecursor -i "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
 		"fullscreen") maim --hidecursor ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
-		"a selected area (copy)") maim -s | xclip -selection clipboard -t image/png ;;
-		"current window (copy)") maim -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png ;;
+		"a selected area (copy)") maim --hidecursor -s | xclip -selection clipboard -t image/png ;;
+		"current window (copy)") maim --hidecursor -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png ;;
 		"fullscreen (copy)") maim --hidecursor | xclip -selection clipboard -t image/png ;;
 		*) notify-send "Nothing selected" && exit ;;
 	esac

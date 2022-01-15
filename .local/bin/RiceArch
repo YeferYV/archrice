@@ -109,7 +109,8 @@ btrfs su cr /var/cache/pacman/pkg
 
 # pacman-key --init
 # pacman-key --populate
-mkdir -p /home/dtfls/yydtfls
+sudo mkdir -p /home/dtfls/yydtfls
+sudo chown -R drknss:drknss /home/dtfls
 git clone https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
 cd /home/dtfls/yydtfls/dotfiles
 ./.local/bin/ResetArch
