@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-## Before chroot
+## Before-Chroot
 #
 # cfdisk
 # mkfs.vat /dev/sdX
@@ -19,13 +19,11 @@
 # mount -o nodatacow,subvol=@swap /dev/sdX /mnt/swap
 # mount -o nodatacow,subvol=@var /dev/sdX /mnt/var
 # mount /dev/sdX /mnt/boot/efi
-#
 # pacstrap /mnt base base-devel broadcom-wl btrfs-progs efibootmgr grub linux linux-firmware neovim networkmanager snapper git cronie
-#
 # genfstab U /mnt >> /mnt/etc/fstab
 
 #
-##  After chroot
+##  After-Chroot
 #
 # arch-chroot /mnt
 # truncate -s 0 /swap/swapfile
@@ -46,19 +44,21 @@
 # reboot
 
 #
-## After reboot
+## After-Reboot
 #
 
+[ $(id -u) != 0 ] && echo "Run it as root user at root's folder" >&2 && exit 1
+printf "\e[1;33mAfter-Reboot\e[0m\n"
 timedatectl set-ntp true
 hwclock --systohc
 ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
 
-sed -i '177s/.//' /etc/locale.gen
+sed -i '177s/#//' /etc/locale.gen
 locale-gen
-echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
 # echo "KEYMAP=en_US.UTF-8" >> /etc/vconsole.conf
 
-echo "4rch" >> /etc/hostname
+echo "4rch" > /etc/hostname
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 4rch.localdomain 4rch" >> /etc/hosts
@@ -75,33 +75,37 @@ systemctl enable cronie
 useradd -m drknss
 usermod -aG libvirt video drknss
 echo drknss:toor | chpasswd
-echo "drknss ALL=(ALL) ALL" >> /etc/sudoers.d/drknss
+echo "drknss ALL=(ALL) ALL" > /etc/sudoers.d/drknss
 
 #
-## Backup
+## Backups
 #
-# rm -rf /.snapshots
-# snapper -c rootsnap create-config /
-# reboot
-btrfs su snapshot / /.snapshots/backup-$(date +%y-%m-%d)
-snapper -c rootsnap create -d "base-install"
 
-rm -rf /home
+printf "\e[1;33mBackups\e[0m\n"
+mv /home /home.bak
+mv /var /var.bak
+btrfs su cr /home
+btrfs su cr /var
+mv /home.bak/* /home
+mv /var.bak/* /var
+rm -rf /.snapshots /home.bak /var/bak /home/drknss/.cache /root/.cache /var/cache /var/log /var/tmp
+snapper -c rootsnap create-config /
 snapper -c homesnap create-config /home
-btrfs su snapshot /home /home/.snapshots/backup-$(date +%y-%m-%d)
-snapper -c homesnap create -d "base-install"
-
-rm -rf /var
 snapper -c varsnap create-config /var
-btrfs su snapshot /var /var/.snapshots/backup-$(date +%y-%m-%d)
+snapper -c rootsnap create -d "base-install"
+snapper -c homesnap create -d "base-install"
 snapper -c varsnap create -d "base-install"
 
 mkdir /home/drknss/.config
+btrfs su snapshot / /.snapshots/backup-$(date +%y-%m-%d)
+btrfs su snapshot /home /home/.snapshots/backup-$(date +%y-%m-%d)
+btrfs su snapshot /var /var/.snapshots/backup-$(date +%y-%m-%d)
+btrfs su cr /home/drknss/.cache
 btrfs su cr /home/drknss/.config/google-chrome
 btrfs su cr /root/.cache
+btrfs su cr /var/cache
 btrfs su cr /var/log
 btrfs su cr /var/tmp
-btrfs su cr /var/cache/pacman/pkg
 
 #
 ## Post-Install
@@ -109,32 +113,38 @@ btrfs su cr /var/cache/pacman/pkg
 
 # pacman-key --init
 # pacman-key --populate
-sudo mkdir -p /home/dtfls/yydtfls
-sudo chown -R drknss:drknss /home/dtfls
+# ./ResetArch
+printf "\e[1;33mPost-Install\e[0m\n"
+mkdir -p /home/dtfls/yydtfls
+mkdir -p /home/drknss/.local
 git clone https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
 cd /home/dtfls/yydtfls/dotfiles
-./.local/bin/ResetArch
-mkdir ~/.local/share/mpd
-systemctl --user start mpd
-systemctl --user start pulseaudio-x11
-systemctl --user start touchcursor
-mpc --port=6601 update
 stow --restow --verbose --target=/home/drknss/.config .config
 stow --restow --verbose --target=/home/drknss/.local .local
-ls -s ~/.config/shell/profile ~/.profile
-ls -s ~/.config/x11/.xinitrc ~/.xinitrc
-sudo cp ~/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
-crontab ~/.local/bin/cron/lowbatnotificationcron
+mkdir -p /home/drknss/.local/share/mpd
+# sudo -u drknss systemctl --user enable mpd
+# sudo -u drknss systemctl --user enable pulseaudio-x11
+# sudo -u drknss systemctl --user enable touchcursor
+# sudo -u drknss mpc --port=6601 update
+ln -s /home/drknss/.config/shell/profile /home/drknss/.profile
+ln -s /home/drknss/.config/x11/.xinitrc /home/drknss/.xinitrc
+cp /home/drknss/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
+cp /home/drknss/.config/wallhaven-4lokdp.jpg /home/drknss/.local/share/bg
+rm /home/drknss/.bash_logout
+rm /home/drknss/.bash_profile
+crontab /home/drknss/.local/bin/cron/lowbatnotificationcron
+chown -R drknss:drknss /home/drknss
+chown -R drknss:drknss /home/dtfls
 
-snapper -c rootsnap create -d "after-resetarch"
-snapper -c homesnap create -d "after-resetarch"
-snapper -c varsnap create -d "after-resetarch"
+snapper -c rootsnap create -d "after-RiceArch"
+snapper -c homesnap create -d "after-RiceArch"
+snapper -c varsnap create -d "after-RiceArch"
 # snapper -c rootsnap create -d "after-larbs"
 # snapper -c homesnap create -d "after-larbs"
 # snapper -c varsnap create -d "after-larbs"
-snapper -c rootsnap create -c timeline -d "hourly-snapshots"
-snapper -c homesnap create -c timeline -d "hourly-snapshots"
-snapper -c varsnap create -c timeline -d "hourly-snapshots"
+# snapper -c rootsnap create -c timeline -d "hourly-snapshots"
+# snapper -c homesnap create -c timeline -d "hourly-snapshots"
+# snapper -c varsnap create -c timeline -d "hourly-snapshots"
 
-printf "\e[1;32mDone!\e[0m"
+printf "\e[1;32mDone!\e[0m\n"
 
