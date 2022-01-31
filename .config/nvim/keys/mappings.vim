@@ -14,12 +14,12 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <silent> <C-m> :call SwitchWindow2()<CR>
+nnoremap <silent> <A-m> :call SwitchWindow2()<CR>
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
-tnoremap <silent> <C-m> <C-\><C-n>:call WinBufSwap()<CR><Esc>
+tnoremap <silent> <A-m> <C-\><C-n>:call WinBufSwap()<CR><Esc>
 
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
@@ -156,6 +156,15 @@ nnoremap <leader>B :!python %<CR>
 "" To compile/open file
 nnoremap <leader>c :w! \| !compiler "<c-r>%"<CR>
 nnoremap <leader>C :!opout <c-r>%<CR><CR>
+
+"" Copilot disable/enable
+" nnoremap <silent><C-i> :Copilot enable<CR>
+" nnoremap <silent><C-o> :Copilot disable<CR>
+
+
+
+
+
 
 
 

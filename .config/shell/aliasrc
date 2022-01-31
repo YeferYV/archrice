@@ -8,7 +8,7 @@ alias \
 	cp="cp -iv" \
 	mv="mv -iv" \
 	rm="rm -vI" \
-	mkd="mkdir -pv" \
+	mkdir="mkdir -pv" \
 	youtubeaudiowebm="youtube-dl --add-metadata --ignore-errors --write-thumbnail --format bestaudio " \
 	youtubeaudioopus="youtube-dl --add-metadata --ignore-errors --write-thumbnail --extract-audio --format bestaudio/best " \
 	youtubevidaudiosub="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --keep-video --format 'bestvideo+bestaudio' " \
@@ -34,11 +34,11 @@ alias \
 
 ## Colorize commands when possible.
 alias \
-	ll="ls -lAhN --color=auto --group-directories-first" \
-	ls="ls -a --color=auto --group-directories-first" \
+	ll="ls -lAhN --hyperlink=auto --color=auto --group-directories-first" \
+	ls="ls -a --hyperlink=auto --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
-	ccat="highlight --out-format=ansi" \
+	cat-hl="highlight --out-format=ansi" \
 	cht="cht.sh" \
 	# cht="cheat-sh" \
 	# cht.sh="cheat-sh" \
@@ -46,18 +46,17 @@ alias \
 
 ## These common commands are just too long! Abbreviate them.
 alias \
-	ka="killall" \
+	k="killall" \
 	trem="transmission-remote" \
 	sdn="sudo shutdown -h now" \
 	pacman="sudo pacman --noconfirm" \
-	YTFZF="alacritty -e ytfzf" \
-	YTFZFTHUMB="ytfzf -t" \
+	ytfzf-term="alacritty -e ytfzf" \
+	ytfzf-thumb="ytfzf -t" \
+	e="$EDITOR" \
+	z="zathura" \
+	l="$HOME/.config/lf/lf-wiki-previewer/lf_previewer.sh" \
 	# YT="youtube-viewer" \
 	# f="$FILE" \
-	# e="$EDITOR" \
-	# p="sudo pacman" \
-	# z="zathura" \
-	# lf="$HOME/.config/lf/lf-wiki-previewer/lf_previewer.sh" \
 
 
 alias \
