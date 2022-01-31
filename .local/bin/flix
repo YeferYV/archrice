@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# query="matrix+720p"
+query=$(printf '%s' "$*" | tr ' ' '+' )
+movie=$(curl -s https://1337x.wtf/search/$query/1/ | grep -Eo "torrent\/[0-9]{7}\/[a-zA-Z0-9?%-]*/" | head -n 1)
+magnet=$(curl -s https://1337x.wtf/$movie | grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" | head -n 1)
+# peerflix -k $magnet
+# setsid -f peerflix -p 8888 $magnet >/dev/pts/2
+setsid -f peerflix -p 8888 $magnet >/dev/null && \
+myip1=$(ip a | awk '/192/ {print $2}' | head -n 1) && \
+myip2=$(ip a | awk '/192/ {print $2}' | tail -n 1) && \
+mpv --vo=sixel http://${myip1%/24}:8888/ || \
+mpv --vo=sixel http://${myip2%/24}:8888/
