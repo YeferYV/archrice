@@ -4,11 +4,11 @@
 
 # terminal emulator
 super + {_,shift + }Return
-  {alacritty, bspc rule -a \* -o state=floating && alacritty}
+  {kitty, bspc rule -a \* -o state=floating && kitty}
 
 # terminal emulator
-mod1 + Return
-	urxvt
+mod1 + {_,shift + }Return
+  {alacritty,urxvt}
 
 # dmenu launcher
 super + {_,shift + }d

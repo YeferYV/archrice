@@ -20,7 +20,7 @@ alias \
 	pythondocs="python -m pydoc -p 8989" \
   makedwm="sudo make clean install && make clean && rm -f config.h" \
 	resetdwm="git reset --hard" \
-	stowdotfiles="cd /home/dtfls/Dotfiles && stow --verbose --simulate --target=$HOME/.config .config" \
+	stowdotfiles="cd /home/dtfls/Dotfiles && stow --restow --verbose --simulate --target=$HOME/.config .config" \
 	gitshow="git show --all" \
 	gitloghelp="git log --help" \
 	gitlog="git log --oneline --graph" \
