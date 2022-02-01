@@ -164,8 +164,8 @@ cdParentKey() {
 
 zle -N                 cdParentKey
 zle -N                 cdUndoKey
-bindkey '^[[1;3A'      cdParentKey
-bindkey '^[[1;3D'      cdUndoKey
+bindkey '^[[1;3D'      cdParentKey
+bindkey '^[[1;3C'      cdUndoKey
 
 ranger_cd() {
     temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
