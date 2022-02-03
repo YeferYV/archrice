@@ -5,8 +5,8 @@ $HOME/.config/polybar/launch.sh &
 # pgrep bspswallow || $HOME/.config/bspwm/bspswallow &
 # remaps &
 
-bsp-layout set rtall VII --master-size 0.8 &
-bsp-layout set rtall VIII --master-size 0.8 &
+# bsp-layout set rtall VII --master-size 0.8 &
+# bsp-layout set rtall VIII --master-size 0.8 &
 $HOME/.config/bspwm/bspfloatdesk &
 
 bspc monitor -d I II III IV V VI VII VIII IX X

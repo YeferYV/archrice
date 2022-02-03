@@ -1,4 +1,7 @@
 #!/bin/sh
+
+# see https://github.com/gokcehan/lf/wiki/Previews
+
 set -e
 
 if [ -n "$DISPLAY" ]; then
