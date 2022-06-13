@@ -303,8 +303,8 @@
     #background = "#222222"
     #foreground = "#888888"
     #timeout = 10
-    background = "#2b2b2b"
-    foreground = "#ffffff"
+    background = "#ffff00"
+    foreground = "#888888"
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon

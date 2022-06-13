@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# window_size=$(kitty +icat --print-window-size)
+# window_width=$(echo $window_size | cut -d 'x' -f 1)
+# window_height=$(echo $window_size | cut -d 'x' -f 2)
+# imageW3=$((window_width/17))       #same-as-imageH
+# imageH3=$((window_height/17))      #same-as-imageW
+# imageW4=$((window_width/2 - 25))   #same-as-imageH2
+# imageH4=$((window_height/2 - 25))  #same-as-imageW2
+
+imageW=$(($COLUMNS))
+imageH=$(($LINES))
+imageW2=$((${COLUMNS}*17/2-25))
+imageH2=$((${LINES}*17/2-25))
+PADDING=2
+imageX=$(($(</dev/tty stty size | cut -d ' ' -f 2) - ${imageW} - $PADDING))
+imageY=$(($(</dev/tty stty size | cut -d ' ' -f 1) - ${imageH})) # imageY=2
+
+case "$1" in
+    *.tar*) tar tf "$1";;
+    *.zip) unzip -l "$1";;
+    *.rar) unrar l "$1";;
+    *.7z) 7z l "$1";;
+    *.pdf) pdftotext "$1" -;;
+    *.jpg|*.png)
+      kitty +icat --transfer-mode file --place "${imageW}x${imageH}@${imageX}x2" "$1" && sleep 60
+      (echo "$LINES $COLUMNS"&& stty size&& tput lines&& tput cols&& kitty +icat --print-window-size) </dev/tty | tr "\n" " " ;;
+
+    # *.jpg|*.png)  tput sc && (tput cup 2 ${imageX};    img2sixel -w ${imageW2} $1)             >/dev/tty && tput rc;;
+    # *.jpg|*.png)  tput cup 2 ${imageX} >/dev/tty &&    img2sixel -w ${imageW2} $1              >/dev/tty;;
+    # *.jpg|*.png)  tput cup 2 ${imageX} </dev/tty &&    img2sixel -w ${imageW2} $1              >/dev/tty;;
+    # *.jpg|*.png) (tput cup 2 ${imageX} ;               wezterm imgcat --width ${imageW} $1)    >/dev/tty;;
+    # *.jpg|*.png)                                       wezterm cli split-pane --horizontal     -- bash -c "wezterm imgcat '$1' && read ";;
+
+    *json) bat -l json --style plain --color=always "$1" || echo "no bat :(" ;;
+    *) bat --style plain --color=always "$1" || echo "no bat :(" ;;
+esac

@@ -1,9 +1,9 @@
-####!/bin/zsh
+#!/bin/env zsh
 
+#export PATH="$PATH:$HOME/.local/appimage:$HOME/.local/bin"
 #export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 #export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
 export PATH="$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':'):$HOME/.local/share/npm/bin:$PATH"
-#export PATH="$HOME/.local/appimage:$HOME/.local/bin:$PATH"
 
 #unsetopt PROMPT_SP
 #export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
@@ -11,12 +11,13 @@ export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\
 export PS1="[\w]\$ "
 
 # Default programs:
+# export SHELL="$(which zsh)"
+# export TERM="xterm-256color"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export OPENER="xdg-open"
 export PAGER="less"
-#export PAGER="bat"
-export TERMINAL="alacritty"
+export TERMINAL="wezterm"
 export BROWSER="google-chrome-stable"
 export SURFRAW_text_browser='w3m -sixel'
 export SURFRAW_graphical=no
@@ -35,7 +36,7 @@ export LESSHISTFILE="-"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-#export ZSH_COMPDUMP="${XDG_CONFIG_HOME:-$HOME/.cache}/zsh"
+export ZSH_COMPDUMP="${XDG_CONFIG_HOME:-$HOME/.cache}/zsh"
 #export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
 #export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
 #export DRI_PRIME=1 #Dedicated GPU as default
@@ -65,30 +66,28 @@ export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 #export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 #export LESS="-R --use-color --LINE-NUMBERS --color=Nk" #causes manpages badformatting
 export LESS='-RS'
-# export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"             # red
-# export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"             # blue
-# export LESS_TERMCAP_me="$(printf '%b' '[0m')"                #
-# #export LESS_TERMCAP_so="$(printf '%b' '[01;33m')"           # yellow
-# export LESS_TERMCAP_so="$(printf '%b' '[01;43;30m')"         # yellow reverted
-# export LESS_TERMCAP_se="$(printf '%b' '[0m')"                #
-# export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"             # green
-# export LESS_TERMCAP_ue="$(printf '%b' '[0m')"                #
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)                # green           # Start blinking
-export LESS_TERMCAP_md=$(tput bold; tput setaf 2)                # green           # Start bold
-#export LESS_TERMCAP_so=$(tput bold; tput setaf 0; tput setab 3) # yellow reverted # Start stand out
-# export LESS_TERMCAP_so=$(tput bold; tput rev ; tput setaf 3)   # yellow reverted # Start stand out
-export LESS_TERMCAP_so=$(tput bold; tput setaf 3)                # yellow          # Start stand out
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)                                     # End standout
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 1)     # red             # Start underline
-export LESS_TERMCAP_ue=$(tput sgr0)                                                # End Underline
-export LESS_TERMCAP_me=$(tput sgr0)                                                # End bold, blinking, standout, underline
+# # export LESS_TERMCAP_so="$(printf '%b' '[01;43;30m')"                                # f: black b: yellow  # start standout (reversed)       
+# export LESS_TERMCAP_mb="$(printf '%b' '[1;34m')"                                      # f: blue             # start blinking                  
+# export LESS_TERMCAP_md="$(printf '%b' '[1;32m')"                                      # f: green            # start bold                      
+# export LESS_TERMCAP_me="$(printf '%b' '[0m')"                                         #                     # stop bold, blink and underline  
+# export LESS_TERMCAP_so="$(printf '%b' '[01;33m')"                                     # f: yellow           # start standout (reversed)       
+# export LESS_TERMCAP_se="$(printf '%b' '[0m')"                                         #                     # stop standout                   
+# export LESS_TERMCAP_us="$(printf '%b' '[1;31m')"                                      # f: red              # start underline                 
+# export LESS_TERMCAP_ue="$(printf '%b' '[0m')"                                         #                     # stop underline                  
+# # export LESS_TERMCAP_so=$(tput -T ansi smso; tput -T ansi rev ; tput -T ansi setaf 3)  # f: black b: yellow  # start standout (reversed)
+export LESS_TERMCAP_mb=$(tput -T ansi blink)                                              #                     # start blinking
+export LESS_TERMCAP_md=$(tput -T ansi bold; tput -T ansi setaf 2)                         # f: green            # start bold     
+export LESS_TERMCAP_me=$(tput -T ansi sgr0)                                               #                     # stop bold, blink and underline
+export LESS_TERMCAP_so=$(tput -T ansi smso; tput -T ansi setaf 0; tput -T ansi setab 3)   # f: black b: yellow  # start standout (reversed)
+export LESS_TERMCAP_se=$(tput -T ansi rmso)                                               #                     # stop standout
+export LESS_TERMCAP_us=$(tput -T ansi smul; tput -T ansi setaf 1)                         # f: red              # start underline 
+export LESS_TERMCAP_ue=$(tput -T ansi rmul)                                               #                     # stop underline
 export LESSOPEN="| /usr/bin/bat --style full --color always --paging always --wrap never %s"
-#export LESSOPEN="| /usr/bin/highlight --line-numbers --wrap --line-length 100 --out-format xterm256 -s pablo %s 2>/dev/null"
 export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
 export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
 export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
 export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
-
+export DEBIAN_FRONTEND=noninteractive
 
 export SPACESHIP_EXEC_TIME_SHOW="false"
 export SPACESHIP_PROMPT_ADD_NEWLINE="false"
@@ -148,9 +147,13 @@ ex="
 # or=:\
 # ex="
 
+# #-- Switch escape and caps if tty and no passwd required:
+# sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
+# [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
 
-# Switch escape and caps if tty and no passwd required:
-#sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
-#[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /home/linuxbrew/.linuxbrew/bin/brew ]; then eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"; fi # added by brew.sh installer
 
+# Start graphical server on user's current tty if not already running.
+[ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
 

@@ -54,6 +54,12 @@
         "command": "explorer.newFolder",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
+    {
+        "key": "ctrl+alt+w",
+        "command": "wolf.touchBarStart"
+    },
+    {
+        "key": "ctrl+alt+e",
+        "command": "wolf.barkAtCurrentFile"
+    },
 ]
-
-

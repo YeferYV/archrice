@@ -1,7 +1,9 @@
 .config/ncmpcpp/lyrics/
-.config/nvim/autoload
+.config/ncmpcpp/error.log
+.config/ipython/profile_default/db/
+.config/ipython/profile_default/log/
+.config/ipython/profile_default/pid/
+.config/ipython/profile_default/security/
+.config/ipython/profile_default/startup/
+.config/ipython/profile_default/history.sqlite
 .config/nvim/plugin
-.config/zsh/.zcompdump
-.local/bin/lvim-nvim
-.local/bin/wpm
-.vim/bundle

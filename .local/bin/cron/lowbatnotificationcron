@@ -1,5 +1,15 @@
+## To enable cronjob run:
+# crontab $HOME/.local/bin/cron/lowbatnotificationcron
+
+## enviroment variables
+DISPLAY=:0.0
+XAUTHORITY=~/.Xauthority
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+XDG_RUNTIME_DIR="/run/user/1000"
+
 #* * * * * echo 'hello' >> /tmp/test.txt
 #* * * * * eval "export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus"; notify-send "hello"
 #* * * * * env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send 'asd'
-#* * * * * env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus $HOME/.local/bin/lowbatnotification
-* * * * * env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus $HOME/.local/bin/cron/cronbat
+#00 23 * * * sudo -i notify-send 'sleeping... health is first' && sleep 60 && systemctl suspend
+* * * * * $HOME/.local/bin/cron/cronbat
+

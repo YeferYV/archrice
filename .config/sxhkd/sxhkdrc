@@ -3,16 +3,16 @@
 #
 
 # terminal emulator
-super + {_,shift + }Return
-  {kitty, bspc rule -a \* -o state=floating && kitty}
+super + {_,shift +,ctrl +}Return
+	{ \
+		$TERMINAL; \
+	, bspc rule -a \* -o state=floating && $TERMINAL; \
+	, bspc rule -a \* -o state=floating && wezterm --config initial_rows=47 --config initial_cols=169; \
+	}
 
 # terminal emulator
-mod1 + {_,shift + }Return
-  {alacritty,urxvt}
-
-# dmenu launcher
-super + {_,shift + }d
-	{dmenu_run, alacritty -e $(dmenu_path | dmenu)}
+mod1 + {_,shift +,ctrl +}Return
+  {kitty,alacritty,cool-retro-term}
 
 # dunst close/reopen notification
 ctrl + {_,shift + }space
@@ -58,6 +58,10 @@ super + {t,shift + t,s,f}
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
+# set virtual monitor
+super + ctrl + {v,b}
+  bspc monitor -g {685x765+685+0, 1366x765+0+0}
+
 #
 # focus/swap
 #
@@ -84,7 +88,10 @@ super + alt + {minus,equal}
 
 # no/reset gaps size
 super + bracket{left,right}
-	{bspc config window_gap -1 & bspc config border_width 1 , bspc config window_gap 12 & bspc config border_width 2}
+	{ \
+		bspc config window_gap -1 & bspc config border_width 1; \
+	, bspc config window_gap 12 & bspc config border_width 2; \
+	}
 
 # Increase/descrease gap size
 mod4 + shift + bracket{left,right}
@@ -119,16 +126,12 @@ super + {o,i}
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+super + {_,shift + }{1-9,0,minus,equal}
+	bspc {desktop -f,node -d} '^{1-9,10,11,12}'
 
-# rotate focused tree CW
-super + r
-	bspc node @focused:/ -C backward
-
-# rotate focused tree CCW
-super + shift + r
-	bspc node @focused:/ -C forward
+# rotate focused tree CCW/CW
+super + {_,shift +}r
+	bspc node @focused:/ -C {forward,backward}
 
 # Rotate the current nodes parent
 super + control + {Right, Left}
@@ -162,32 +165,27 @@ super + ctrl + shift + space
 # move/resize
 #
 
-# expand a window by moving one of its side outward
-#super + alt + {h,j,k,l}
-#  bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-# contract a window by moving one of its side inward
-#super + alt + shift + {h,j,k,l}
-#  bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
-# contract a window by moving one of its side inward
-#super + shift + {Left,Down,Up,Right}
-#	 bspc node -z {right -10 0,top 0 10,bottom 0 -10,left 10 0}
+# # expand a window by moving one of its side outward
+# super + alt + {m,comma,period,slash}
+#   bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+#
+# # contract a window by moving one of its side inward
+# super + alt + shift + {m,comma,period,slash}
+#   bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # balance desktop's nodes
 super + v
   bspc node @/ -B
 
-# move a floating window
-super + alt + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+# increase/decrease window size (zoom in/out)
+super + alt + {i,o}
+	{ \
+	  xdotool getactivewindow windowmove --relative -- -50 -25 ; xdo resize -w +100 -h +50; \
+	, xdotool getactivewindow windowmove --relative -- +50 +25 ; xdo resize -w -100 -h -50; \
+	}
 
-# hover a window to corner
-super + alt + shift + {h,j,k,l}
-  hover {left,down,up,right}
-
-# xdo a window to left/down/up/right
-super + alt + {h,j,k,l}
+# hover window to left/down/up/right
+super + alt + shift + {u,i,o,p}
   { x=0;   y=0;   w=681;  h=764; \
   , x=0;   y=382; w=1362; h=382; \
   , x=0;   y=0;   w=1362; h=382; \
@@ -195,15 +193,23 @@ super + alt + {h,j,k,l}
   } \
   xdo move -x $x -y $y; xdo resize -w $w -h $h
 
-# resize small/medium
-super + alt + {_,shift + } n
-  xdo resize {-w 681 -h 382,-w 800 -h 600}
+# move floating window by 10px
+super + alt + {Left,Down,Up,Right}
+	bspc node -v {-10 0,0 10,0 -10,10 0}
 
-# xdo fixedscreen 1366x768 no visible borders
+# hover window to corner
+super + alt + shift + {Left,Down,Up,Right}
+  hover {left,down,up,right}
+
+# xdo resize (small/medium)
+super + alt + {_,shift + } n
+  xdo resize {-w 800 -h 600, -w 681 -h 382}
+
+# xdo fixedscreen 1366x768 (fullscreen no visible borders)
 super + ctrl + {_,shift + } n
   xdo move -x 0 -y 0; xdo move {-x -1 -y -1, -x -2 -y -2}; xdo resize -w 1366 -h 768
 
-# xdo fixedscreen 1366x768
+# xdo fixedscreen 1366x768 (min-max window)
 super + {_,shift + }n
   { x=250; y=18;  w=1112; h=746; \
   , x=0;   y=0;   w=1362; h=764; \
@@ -221,8 +227,7 @@ super + {_,shift + }n
 
 # toggle polybar
 super + shift + space
-	{polybar-msg cmd toggle; bspc config top_padding 0 ,\
-	 polybar-msg cmd toggle; bspc config top_padding 18 }
+	polybar-msg cmd toggle; bspc config top_padding {0,18}
 
 #
 # receptacles
@@ -249,12 +254,12 @@ super + shift + u
 # sxhkd wiki
 #
 
-# resize west,south,north,east
+# resize west,south,north,east by 0-9 percentage range
 super + alt + control + {h,j,k,l} ; {0-9}
 	bspc node @{west,south,north,east} -r 0.{0-9}
 
 # toggle focus_follows_pointer
-super + mod1 + p
+super + alt + control + p
 	bspc config focus_follows_pointer {true,false}
 
 # Smart resize, will grow or shrink depending on location.
@@ -285,8 +290,8 @@ super + shift + {Left,Down,Up,Right}
 #######################################
 
 # signs
-F{1,2,3,4,5,6,7,8,9,10}
-	xdotool key {exclam,at,numbersign,dollar,percent,asciicircum,ampersand,asterisk,parenleft,parenright}
+#F{1,2,3,4,5,6,7,8,9,10}
+#	xdotool key {exclam,at,numbersign,dollar,percent,asciicircum,ampersand,asterisk,parenleft,parenright}
 
 # super/alt click
 {XF86Finance,XF86Game}
@@ -300,7 +305,7 @@ super + XF86Audio{Raise,Lower}Volume
 XF86Audio{Raise,Lower}Volume
   pactl set-sink-volume @DEFAULT_SINK@ {+,-}2%
 
-# (un)mute
+# (un)mute audio
 XF86AudioMute
   pactl set-sink-mute @DEFAULT_SINK@ toggle
 
@@ -324,20 +329,8 @@ shift + XF86MonBrightness{Down,Up}
 super + {F11,F12}
   {dmenumount,dmenuumount}
 
-# mpv vol-up
-super + KP_Up
-  [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=mpv volume 0.1+
-
-# mpv vol-down
-super + KP_Down
-  playerctl --player=mpv volume 0.1-
-
-# mpv next-toggle-prev
-super + KP_{Right,Begin,Left}
-  playerctl --player=mpv {next,play-pause,previous}
-
 # chromium play-pause
-alt + space
+shift + space
   playerctl --player=chromium play-pause
 
 # chromium rewind-forward
@@ -345,48 +338,50 @@ alt + {a,s}
   YTID="$(wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1')"; \
   CUID="$(xdo id)"; \
   xdo activate $YTID && sleep 0.2 && xdotool key --clearmodifiers {w,e} && xdo activate $CUID
-  #wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1' | xargs -I_ xdo activate _ && sleep 1 && xdotool key --clearmodifiers w
+	# playerctl --player=chromium position {5-,5+}
 
-# spotify vol-up
-mod1 + KP_Up
-  [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=spotify volume 0.1+
+# mpv next-toggle-prev
+super + KP_{Right,Begin,Left}
+  playerctl --player=mpv {next,play-pause,previous}
 
-# spotify vol-down
-mod1 + KP_Down
-  playerctl --player=spotify volume 0.1-
+# mpv vol (down,up)
+super + KP_{Down,Up}
+	{ \
+	  playerctl --player=mpv volume 0.1-; \
+	, [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=mpv volume 0.1+; \
+	}
 
 # spotify next-toggle-prev
 mod1 + KP_{Right,Begin,Left}
   playerctl --player=spotify {next,play-pause,previous}
+
+# spotify vol (down/up)
+mod1 + KP_{Down,Up}
+	{ \
+		playerctl --player=spotify volume 0.1-; \
+	, [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=spotify volume 0.1+; \
+	}
 
 # mpc next-toggle-prev
 KP_{Right,Begin,Left,Down,Up}
   mpc --port=6601 {next,toggle,prev,volume -2,volume +2}
 
 # mpc next-toggle-prev
-mod1 + {XF86AudioRaiseVolume,XF86AudioMute,XF86AudioLowerVolume}
+mod1 + XF86Audio{RaiseVolume,Mute,LowerVolume}
   mpc --port=6601 {next,toggle,prev}
 
-# screenshot fullscreen
-Print
-  maimpick fullscreen
-  # maim ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" && sleep 0.5s && notify-send "screenshot done"
-
-# screenshot dmenu
-shift + Print
-  maimpick
-
-# screenshot close
-ctrl + Print
-  killall notify-send
+# screenshot (fullscreen,_)
+{super,alt} + Print
+	maimpick {fullscreen,_}
 
 # redshift
 mod1 + ctrl + {1,2,3,4,5}
   redshift {-x, -O 2222, -O 3333, -O 4444, -O 5555}
 
-# compositor start
-super + minus
-  picom --glx-no-rebind-pixmap \
+# compositor start/end
+super + BackSpace
+	{\
+		picom --glx-no-rebind-pixmap \
         --use-damage \
         --xrender-sync-fence \
         --backend glx \
@@ -394,61 +389,56 @@ super + minus
         --transparent-clipping \
         # --active-opacity=0.90 \
         # --inactive-opacity=0.90 \
-        # --refresh-rate 30
+        # --refresh-rate 30\
+				,\
+    killall picom\
+	}
 
-# compositor close
-super + equal
-  killall picom
+# compositor keep background
+super + ctrl + BackSpace
+	{picom,killall picom}
 
-super + shift + {minus,equal}
+# compositor decrease/increase transparency
+super + ctrl + {minus,equal}
   xdo id -d -c | xargs -I id -n 1 picom-trans -w id {-2,+4}
-  # bspc query -N -d | xargs -I wmid xprop -id wmid _NET_WM_PID WM_CLASS 2>/dev/null | awk '/Alacritty/ {print $3}'
-  # xprop -id $(xdo id) | awk 'NR==14 || NR==15 {print $3}'
-  #
   # bspc query -N -d | xargs -I id -n 1 picom-trans -w id {-2,+4}
-  # picom-trans -c {-- -2,+2}
-  # xdo pid $ID
-  # xdo id -p $PID
-
-# dmenu launcher alias
-super + ctrl + d
-  source $HOME/.config/shell/aliasrc && \
-  cmd=$(alias | cut -d'=' -f1 | cut -d\  -f2 | dmenu) && \
-  alias | grep $(echo $cmd | cut -d\  -f1 ) | cut -d'=' -f2 | xargs -I __ alacritty -e bash -c "__ $(echo $cmd | awk '\{print $2\}' )"
-  # alias | grep $cmd | cut -d'=' -f2 | xargs -I _ alacritty -e bash -c "_"
-  # alias | grep $cmd | cut -d'=' -f2 | xargs -I _ bash -c "_"
+  # xdo pid $ID  		# xdotool getactivewindow getwindowpid
+  # xdo id -p $PID  # xdotool getactivewindow
 
 # TextToSpeech
 super + {_,shift,ctrl} + Next
-  {xclip -o | picospeaker, xsel -b | festival --tts, killall picospeaker festival}
+  {xclip -o | mimic, xsel -b | festival --tts, killall mimic festival}
+
+# browser media
+super + shift + b
+  wezterm start ncmpcpp
+
+# dmenu launcher
+super + {_,shift +,ctrl +}d
+	{ \
+		dmenu_run; \
+	, wezterm start $(dmenu_path | dmenu); \
+  , source $HOME/.config/shell/aliasrc && \
+		alias | dmenu -i -l 10 | awk -F'=' '\{print $2\}' | xargs -I_ wezterm start -- bash -c "_"; \
+	}
+
+# lf user/root
+super + {_,shift +} e
+	{LF_CD=true wezterm, sudo -i LF_CD=true LS_COLORS="" $TERMINAL}
+
+# browser
+super + {_,shift +} w
+  { google-chrome-stable --process-per-site, killall chrome}
 
 # skippy
-mod1 + BackSpace
-   skippy-xd-runner --activate {--prev,--next}
+#mod1 + BackSpace
+#   skippy-xd-runner --activate {--prev,--next}
 
 # skippy
 #mod1 + {~Tab,space}
 #   skippy-xd-runner {--activate --next,--toggle}
 
 # skippy
-XF86Shop
-  skippy-xd-runner --toggle
-
-# browser media
-super + shift + b
-  urxvt -e ncmpcpp
-
-# lf user
-super + e
-  export LF_CD=true && alacritty
-
-# lf root
-super + shift + e
-  sudo -i LF_CD=true LS_COLORS="" alacritty
-  #sudo -E alacritty -e lf /root
-
-# browser
-super + {_,shift +} w
-  { google-chrome-stable --process-per-site, killall chrome}
-  # google-chrome-stable && xdo move -x 200 -y 15; xdo resize -w 1151 -h 738
+#XF86Shop
+#  skippy-xd-runner --toggle
 

@@ -1,7 +1,0 @@
-[Unit]
-Description=Auto fetch for git repo
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-ExecStart=sh %h/.local/bin/git-autofetch

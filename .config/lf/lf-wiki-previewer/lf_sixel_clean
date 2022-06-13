@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# tput smcup    >/dev/tty
+# tput rmcup    >/dev/tty
+# (tpu el)      >/dev/tty
+# (tput clear)  >/dev/tty
+# tput -x clear >/dev/tty
+# tput -x clear </dev/tty
+# tput -x reset >/dev/tty
+# tput -x reset </dev/tty
+# tput -x init  >/dev/tty
+# tput -x init  </dev/tty
+
+# lf -remote "send $id printf '\e[?1049h'"
+# lf -remote "send $id echo -e '\e[?1049h'"
+# lf -remote "send $id echo -e '\e[?1049l'"
+# lf -remote 'send $id clear'
+# lf -remote "send $id load"
+# lf -remote "send $id reload"
+# lf -remote "send $id draw"
+# lf -remote "send $id redraw"
+# lf -remote "send $id redraw && send $(sleep 3)"
+
+# echo 'send echo hello world' | nc -U ${XDG_RUNTIME_DIR:-/tmp}/lf.${USER}.sock
+# echo 'send redraw'           | nc -U ${XDG_RUNTIME_DIR:-/tmp}/lf.${USER}.sock
+# tput clear                         > ${XDG_RUNTIME_DIR:-/tmp}/lf.${USER}.sock
+
+killall -s SIGWINCH lf
+

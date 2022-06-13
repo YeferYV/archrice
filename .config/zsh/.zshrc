@@ -1,11 +1,12 @@
-# config for the Zoomer Shell
+## config for the Zoomer Shell
 
-# To activate tab completion support for cht.sh
+## To activate tab completion support for cht.sh
 fpath=(~/.config/zsh/ $fpath)
 
-# Enable colors and change prompt:
+## Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-#PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+
+## Bash like prompt
 # PS1="\
 # %B%{$fg[red]%}[\
 # %{$fg[yellow]%}%n\
@@ -15,54 +16,70 @@ autoload -U colors && colors	# Load colors
 # %{$fg[red]%}]\
 # %{$reset_color%}$%b "
 
+## enable command-subsitution in PS1
 # setopt PROMPT_SUBST
-# PROMPT='${PWD/#$HOME/~} ﲵ '
+# PROMPT="${PWD/#$HOME/~} ﲵ "
+# RPROMPT="$GITSTATUS_PROMPT"  # right prompt
 # PS1="%B%~ ﲵ "
 
-#export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
-# precmd() { [[ $TERM == "alacritty" ]] && echo -e "\033]0;hello\007"; }
-# precmd() { [[ $TERM == "alacritty" ]] && print "\033]0; $(pwd)"; }
-# precmd() { [[ $TERM == "alacritty" ]] && print "\033]0; ${pwd##*/}"; }
-# precmd() { [[ $TERM == "alacritty" ]] && print "\033]0; `pwd | awk -F "/" '{print $NF}'` "; }
-# precmd() { [[ $TERM == "alacritty" ]] && print "\033]0; $(pwd | awk -F "/" '{print $NF}' | awk '{if ($1 == "drknss") print "~"; else print $1}') "; }
-# export PROMPT_COMMAND='echo -ne "\033]0;${${PWD/#$HOME/~}##*/}\a"'
-# export PROMPT_COMMAND='echo -ne "\033]0;${${PWD/#$HOME/~}##*/}\007"'
-export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007"'
-precmd() { eval "$PROMPT_COMMAND" }
+customprompt()
+{
+    if [[ $PWD == $HOME ]]; then
+        # echo ''
+        # PS1="%F{green}%Bﲵ "
+        export SPACESHIP_DIR_SHOW="false"
+    else
+        # echo $PWD
+        # PS1="%F{green}%~ ﲵ "
+        export SPACESHIP_DIR_SHOW="true"
+    fi
+}
+# typeset -a precmd_functions
+# precmd_functions+=(customprompt)
+# precmd() { customprompt }
+
+# prompt_command() { echo -ne "\033]0; $(pwd | awk -F '/' '{if ( $NF == ENVIRON["USER"] ) print "~"; else print ENVIRON["PWD"] }') \007"; }
+# precmd() { prompt_command; }
+
+# export PROMPT_COMMAND='echo -ne "\033]0; ${${PWD/#$HOME/~}##*/} \a"'
+# export PROMPT_COMMAND='echo -ne "\033]0; ${${PWD/#$HOME/~}##*/} \007"'
+export PROMPT_COMMAND='echo -ne "\033]0; $(TMP=${PWD/#$HOME/\~}; echo ${TMP##*/}) \007"'
+precmd() { customprompt; eval "$PROMPT_COMMAND" }
 
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
 
-# History in cache directory:
+## History in cache directory:
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE=~/.cache/zsh/history
 
-# Load aliases and shortcuts if existent.
+## Load aliases and shortcuts if existent.
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
-#[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs"
-#[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files"
-#[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
-#[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile"
-#export LC_ALL=en_US.UTF-8
-#export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-export PATH="$HOME/.local/bin:$PATH"
-#export LS_COLORS="ln=94:tw=90:ow=90:st=90:di=90"
+# [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs"
+# [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files"
+# [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
+
+# Tmux get parent tty
+# tty >> /tmp/sixel-$WINDOWID
+# trap "rm /tmp/sixel-$WINDOWID" EXIT
+
+# export LS_COLORS="ln=94:tw=90:ow=90:st=90:di=90"
 export LS_COLORS="ln=94:di=90"
 
-# Basic auto/tab complete:
+## Basic auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-# vi mode
+## vi mode
 bindkey -v
 export KEYTIMEOUT=1
 
-# Use vim keys in tab complete menu:
+## Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
@@ -96,68 +113,53 @@ preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 # n() { xdotool set_window --name $(TMP=$1;echo ${TMP##*/}) $WINDOWID; nvim $1; }
 x2xalarm() { ssh -YC drksl@4l4rm x2x -north -to :0.0; }
 
-## No Show tmux printed(archwiki)
-tmux-attach() {
-  # ncmpcpp <$TTY
-  ( exec </dev/tty; exec <&1; TMUX= tmux attach || tmux new )
-  # zle redisplay
-}
-zle -N tmux-attach
-bindkey '\e1' tmux-attach
+nvim-terminal() nvim -c "terminal zsh"
+zle -N nvim-terminal
+bindkey '^e' nvim-terminal
 
-tmux-choose-tree() {
-  ( exec </dev/tty; exec <&1; TMUX= tmux attach\; choose-tree -s -w )
-}
-zle -N tmux-choose-tree
-bindkey '\e2' tmux-choose-tree
-
-function tmux-new-session() {
+## Tmux not-printed(archwiki)
+tmux-attach() {( exec </dev/tty; exec <&1; TMUX= tmux attach || tmux new )}
+tmux-choose-tree() {( exec </dev/tty; exec <&1; TMUX= tmux attach\; choose-tree -s -w )}
+tmux-new-session() {
     # Launching tmux inside a zle widget is not easy
     # Hence, We delegate the work to the parent zsh
     BUFFER=" { tmux list-sessions >& /dev/null && tmux new-session } || tmux"
     # eval $BUFFER > /dev/null
     zle accept-line
 }
-zle -N tmux-new-session
-bindkey '\e3' tmux-new-session
 
-nvim-terminal() {
-  nvim -c "terminal zsh"
-}
-zle -N nvim-terminal
-bindkey '\e4' nvim-terminal
+zle -N tmux-attach
+zle -N tmux-choose-tree
+zle -N tmux-new-session
+bindkey '^a' tmux-attach
+bindkey '^z' tmux-choose-tree
+bindkey '^s' tmux-new-session
 
 ## Show ncpmcpp printed(archwiki)
 ncmpcppShow() {
   BUFFER="ncmpcpp"
   zle accept-line
 }
-zle -N ncmpcppShow
-bindkey '\e5' ncmpcppShow
 
 ## Show ncpmcpp(archwiki)
 ncmpcppShow() {
   ncmpcpp <$TTY
   zle redisplay
 }
-zle -N ncmpcppShow
-bindkey '\e6' ncmpcppShow
 
+zle -N ncmpcppShow
+zle -N ncmpcppShow
+bindkey '^p' ncmpcppShow
+bindkey '^y' ncmpcppShow
 
 cdUndoKey() {
   popd > /dev/null
-  #zle       reset-prompt
-  #print
-  #ls
   zle       reset-prompt
   eval "$PROMPT_COMMAND"
 }
 
 cdParentKey() {
   pushd .. > /dev/null
-  #zle      reset-prompt
-  #print
-  #ls
   zle       reset-prompt
   eval "$PROMPT_COMMAND"
 }
@@ -175,81 +177,65 @@ ranger_cd() {
     fi
     rm -f -- "$temp_file"
 }
-#bindkey -s '^r' 'ranger\n'
-#$RANGERCD && unset RANGERCD && ranger_cd
-#[ -z $RANGERCD ] && unset RANGERCD && ranger_cd
-#[ -z "$RANGERCD" ] &&  echo "String is empty"; [ -n "$RANGERCD" ] && echo "String is not empty"
-#[ -n "$RANGERCD" ] && unset RANGERCD && ranger_cd
+# bindkey -s '^r' 'ranger\n'
+# [ -n $RANGERCD ] && unset RANGERCD && ranger_cd
+# [ -z "$RANGERCD" ] && echo "Empty string"; [ -n "$RANGERCD" ] && echo "No-empty string"
 
-
-
-# Use lf to switch directories and bind it to ctrl-o
 lfcd () {
-    #zle kill-whole-line
+    # stty echo
+    # zle redisplay
+    # zle kill-whole-line
     tmp="$(mktemp)"
-    #stty echo
-    #lf-ueberzug -last-dir-path="$tmp" "$@" < $TTY
-    ~/.config/lf/lf-wiki-previewer/lf_previewer.sh -last-dir-path="$tmp" "$@" < $TTY
-    #lf -last-dir-path="$tmp" "$@" < $TTY
-    #zle redisplay
+    # ~/.config/lf/lf-wiki-previewer/lf_ueberzug_previewer -last-dir-path="$tmp" "$@" < $TTY      #tty needed by fzf
+    ~/.config/lf/lf-wiki-previewer/lf_scrolling_previewer -last-dir-path="$tmp" "$@" < /dev/tty   #tty needed by fzf 
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
         rm -f "$tmp" >/dev/null
-        #[ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" && xdotool key KP_Enter
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-        #zle reset-prompt 2>/dev/null
+        customprompt
         [[ -d $1 ]] || zle reset-prompt
-        #[ -z "$LF_CD" ] && zle reset-prompt
         eval "$PROMPT_COMMAND"
     fi
 }
+my-script_lfcd() lfcd -command "set nopreview; set ratios 1"
 zle -N lfcd
+zle -N my-script_lfcd
+bindkey '^[o' my-script_lfcd
 bindkey '\eo' 'lfcd'
 [ -n "$LF_CD" ] && unset LF_CD && lfcd $PWD
-# [ -n "$LF_CD" ] && unset LF_CD && lfcd #lfcd:zle:14: widgets can only be called when ZLE is active
 
-
-## my-script_widget() { cd $BUFFER ; zle reset-prompt; zle kill-whole-line;}
-my-script_lfcd() lfcd -command "set nopreview; set ratios 1"
-zle -N my-script_lfcd
-bindkey '^o' my-script_lfcd
-
-
-####################bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-#
-# my-script_cd () {
-#   zle reset-prompt
-#   # zle redisplay
-#   # stty echo
-#   cd "$(dirname "$(fzf)")"
-# }
-# zle -N my-script_cd
-# bindkey '^f' my-script_cd
-#
-
-# my-script_fmz() fmz
-# zle -N my-script_fmz
-# bindkey '^p' my-script_fmz
-
+## fzf scripts
 fmzcd () {
     tmp=$(mktemp)
-    command fmz --cd "$tmp" "$@"
+    command ~/.config/lf/fmz/fmz --cd "$tmp" "$@" <$TTY
     res=$(tail -n 1 "$tmp")
     if [ -d "$res" ] && [ "$res" != "$PWD" ]; then
-        echo cd "$res"
         cd "$res" || return 1
     fi
-    rm "$tmp"
+    customprompt
+    zle reset-prompt
+    rm "$tmp" >/dev/null
 }
+
+## stpv-git(AUR)
+fzfprev() {
+  cd $(dirname "$(fzfp <$TTY )")
+  customprompt
+  zle reset-prompt
+}
+
+fzf_cd () {
+  cd $(dirname "$(fzf <$TTY )")
+  customprompt
+  zle reset-prompt
+}
+
 zle -N fmzcd
+zle -N fzfprev
+zle -N fzf_cd
 bindkey '^f' fmzcd
-
-my-script_fzfp() fzfp
-zle -N my-script_fzfp
-bindkey '^g' my-script_fzfp
-
+bindkey '^g' fzfprev
+bindkey '^k' fzf_cd
 
 #fix supress key in st
 bindkey '^[[P' delete-char
@@ -258,22 +244,31 @@ bindkey '^[[P' delete-char
 bindkey '^[[3~' delete-char
 
 # Edit line in vim with ctrl-v:
-autoload edit-command-line; zle -N edit-command-line
+autoload edit-command-line;
+zle -N edit-command-line
 bindkey '^v' edit-command-line
 
-# Exit with ctrl-e
-bindkey -s '^e' 'exit\n'
-
 # Load zsh plugins; should be last.
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
-# source /usr/share/gitstatus/gitstatus.prompt.zsh
-# PROMPT='%~%# '               # left prompt: directory followed by %/# (normal/root)
-# RPROMPT='$GITSTATUS_PROMPT'  # right prompt: git status
+[ -e $HOME/.nix-profile/share/fzf ]&&{
+  source ~/.nix-profile/share/fzf/completion.zsh
+  source ~/.nix-profile/share/fzf/key-bindings.zsh }||{
+  source /usr/share/fzf/key-bindings.zsh
+  source /usr/share/fzf/completion.zsh }
+
+# [ -e $HOME/.nix-profile/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]&& \
+#   source $HOME/.nix-profile/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ||\
+#   source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+[ -e $HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]&&\
+  source $HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ||\
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+
+[ -e $HOME/.nix-profile/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh ]&&\
+  source $HOME/.nix-profile/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh ||\
+  source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 ## Spaceship Prompt
-autoload -U promptinit; promptinit
-prompt spaceship
-
-
-
+[ -e $HOME/.nix-profile/lib/spaceship-prompt/spaceship.zsh ]&&\
+  source ~/.nix-profile/lib/spaceship-prompt/spaceship.zsh ||{
+  autoload -U promptinit; promptinit
+  prompt spaceship }

@@ -1,2 +1,0 @@
-#!/bin/sh
-xwininfo | sed -n 's/.*Window id: \(0x[0-9a-f]\{6\}\).*/\1/p' | tr -d '\n' | xclip

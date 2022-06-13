@@ -1,27 +1,25 @@
 #!/bin/sh
 
 [ -z "$1" ] && exit 
-current=$(xdotool getwindowfocus)
-screenheight=$(xdotool getdisplaygeometry | awk '{print $1}')
-screenwidth=$(xdotool getdisplaygeometry | awk '{print $2}')
-xposition=$(xdotool getwindowgeometry "$current" | grep Position | sed -e 's/,/ /g' | awk '{print $2}')
-yposition=$(xdotool getwindowgeometry "$current" | grep Position | sed -e 's/,/ /g' | awk '{print $3}')
-windowheight=$(xdotool getwindowgeometry "$current" | grep Geometry | sed -e 's/x/ /g' | awk '{print $3}')
-windowwidth=$(xdotool getwindowgeometry "$current" | grep Geometry | sed -e 's/x/ /g' | awk '{print $2}')
-#windowwidth=$(xdotool getwindowgeometry "$current" | grep Geometry | grep -o " [0-9]*")
+
+W_SCREEN=$(xdotool getdisplaygeometry | awk '{print $1}')
+H_SCREEN=$(xdotool getdisplaygeometry | awk '{print $2}')
+X=$(xdotool getwindowfocus getwindowgeometry | grep Position | sed -e 's/,/ /g' | awk '{print $2}')
+Y=$(xdotool getwindowfocus getwindowgeometry | grep Position | sed -e 's/,/ /g' | awk '{print $3}')
+W=$(xdotool getwindowfocus getwindowgeometry | grep Geometry | sed -e 's/x/ /g' | awk '{print $2}')
+H=$(xdotool getwindowfocus getwindowgeometry | grep Geometry | sed -e 's/x/ /g' | awk '{print $3}')
 
 case "$1" in
-	left) horizontal=1; vertical=$((yposition-1)) ;;
-	right) horizontal=$((screenheight - windowwidth -1)) ; vertical=$((yposition-1)) ;;
-	up) horizontal=$((xposition-1)) ; vertical=1 ;;
-	down) horizontal=$((xposition-1)) ; vertical=$((screenwidth - windowheight -1)) ;;
-	moveleft) horizontal=$((xposition-$2)); vertical=$((yposition-1)) ;;
-	moveright) horizontal=$((xposition+$2)); vertical=$((yposition-1)) ;;
-	moveup) horizontal=$((xposition-1)); vertical=$((yposition-$2)) ;;
-	movedown) horizontal=$((xposition-1)); vertical=$((yposition+$2)) ;;
-	#increase) newwindowheight=$((windowheight+20)); newwindowwidth=$((windowwidth+20)) ;;
-	#decrease) newwindowheight=$((windowheight-20)); newwindowwidth=$((windowwidth-20)) ;;
+  left)      horizontal=0                      ; vertical=$((Y)) ;;
+  right)     horizontal=$((W_SCREEN - W - 4 )) ; vertical=$((Y)) ;; #2px+2px border
+  up)        horizontal=$((X ))                ; vertical=0 ;;
+  down)      horizontal=$((X ))                ; vertical=$((H_SCREEN - H - 4 )) ;; #2px+2px border 
+  moveleft)  horizontal=$((X - $2))            ; vertical=$((Y )) ;;
+  moveright) horizontal=$((X + $2))            ; vertical=$((Y )) ;;
+  moveup)    horizontal=$((X ))                ; vertical=$((Y - $2)) ;;
+  movedown)  horizontal=$((X ))                ; vertical=$((Y + $2)) ;;
+  # increase)  horizontal=$((H+20))              ; vertical=$((W+20)) ;;
+  # decrease)  horizontal=$((H-20))              ; vertical=$((W-20)) ;;
 esac
-xdotool windowmove "$current" $horizontal $vertical
-#xdo move -x $((horizontal-10)) -y $((vertical-70)) #workound for DE's
-#xdotool windowsize "$current" $newwindowwidth $newwindowheight
+# xdotool getwindowfocus windowsize $horizontal $vertical
+xdotool getwindowfocus windowmove $horizontal $vertical

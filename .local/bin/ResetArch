@@ -1,110 +1,103 @@
 #!/bin/bash
 
+# exit on error
+set -eu
+
+#curl -LO blackarch.org/strap.sh
+#sh strap.sh
+
 #curl -LO larbs.xyz/larbs.sh
 #sh larbs.sh
 
-#curl -LO blackarch.sh/strap.sh
-#sh strap.sh
+#curl -LO nixos.org/nix/install
+#sh install
+
+#curl LO raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+#bash install.sh
 
 #sed -n '17,129p' ResetArch | sed 's/ \//g' > resetarchpackages
 #comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base-devel|sort) > installedpackages
 
+[ $(id -u) != 1000 ] && printf "\e[1;31mRun it as unprivileged user(wheel group), sudo command needed\e[0m\n" >&2 && exit 1
 sudo sed -i '33s/#//' /etc/pacman.conf
 sudo sed -i '37s/#//' /etc/pacman.conf
+sudo pacman-key --init
+sudo pacman-key --populate
 sudo pacman -Syu base-devel git
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
 makepkg -si
 
 yay -Syu \
-alacritty \
-atool \
 bat \
+bash-language-server \
 broadcom-wl \
 bspwm \
 btrfs-progs \
 cht.sh-git \
 cronie \
-curl \
-djvulibre \
 dmenu \
-docker \
 dosfstools \
-dragon-drag-and-drop \
+dragon-drop \
 dunst \
-efibootmgr \
 exfat-utils \
 ffmpegthumbnailer \
 fzf \
+festival-us \
 gnome-keyring \
 google-chrome \
-grub \
 gtk-theme-arc-gruvbox-git \
 htop-vim \
-lazygit \
+kitty \
 lf-bin \
 libnotify \
 light \
 maim \
 man-db \
 mediainfo \
+moreutils \
+mupdf-tools \
 mpc \
 mpd \
 mpv \
 mpv-mpris \
-mtools \
 ncmpcpp \
-neofetch \
 neovim \
-nerd-fonts-hack \
-networkmanager \
+nerd-fonts-cascadia-code \
 network-manager-applet \
-nodejs-how2 \
 ntfs-3g \
 openssh \
-pamixer \
 paru-bin \
 pavucontrol \
-pcmanfm-gtk3 \
 perl-file-mimeinfo \
 picom \
 playerctl \
 polybar \
-poppler \
 pulseaudio-alsa \
-pulsemixer \
-ueberzug \
+pyright \
 python-pynvim \
-ranger-sixel \
 redshift \
-rxvt-unicode \
-sgtk-menu \
 siji-git \
+sgtk-menu \
 snapper \
+snapper-rollback \
 spaceship-prompt-git \
 stow \
 sxhkd \
 sxiv \
-terminus-font \
-sixel-tmux-git \
 touchcursor-linux-git \
 trash-cli \
-ttf-hack \
-ttf-unifont \
+unzip \
 unclutter \
 vim-sxhkdrc-git \
-vimv-git \
-wget \
-wmctrl \
+wezterm \
 xcape \
 xclip \
 xdo \
 xdotool \
-xorg-fonts-misc \
 xorg-server \
 xorg-xinit \
 xorg-xmodmap \
-xorg-xprop \
 xorg-xset \
 xorg-xsetroot \
 xf86-input-synaptics \
@@ -113,17 +106,18 @@ zathura \
 zathura-pdf-mupdf \
 zsh \
 zsh-autosuggestions \
-zsh-completions \
 zsh-fast-syntax-highlighting \
 
 ####optional####
 # 8188eu-aircrack-dkms-git
 # acpi
 # abook
-# arandr
 # aircrack-ng
+# alacritty
 # alttab-git
 # arandr
+# arandr
+# atool
 # base
 # bc
 # bcm43142-firmware
@@ -140,10 +134,14 @@ zsh-fast-syntax-highlighting \
 # command-not-found
 # cool-retro-term
 # devour
+# djvulibre
 # dmenu
+# docker
 # dwm
 # dialog
 # dwmblocks
+# efibootmgr
+# grub
 # ffmpeg
 # ffmpeg-git
 # figlet
@@ -157,6 +155,7 @@ zsh-fast-syntax-highlighting \
 # i3-vim-syntax-git
 # i3status
 # intel-ucode
+# lazygit
 # libreoffice
 # libsixel
 # libxft-bgra
@@ -169,46 +168,68 @@ zsh-fast-syntax-highlighting \
 # mlterm
 # moreutils
 # mpv-full
+# mtools
 # mutt-wizard-git
 # ncdu
+# neofetch
+# nerd-fonts-hack
+# networkmanager
 # newsboat
 # ngrok
 # nmap
-# novnc
+# nodejs-how2
 # notcurses
 # noto-fonts-emoji
+# novnc
 # obs-studio
 # os-prober
+# pamixer
+# pcmanfm-gtk3
 # pfetch
+# poppler
+# pulsemixer
 # pywal
 # python-ueberzug-git
 # qemu-user-static
+# ranger-sixel
 # ripgrep
+# rxvt-unicode
 # scrcpy
 # simple-mtpfs
+# sixel-tmux-git
 # skippy-xd-git
 # spotify
 # spotify-adblock-git
 # spotify-adkiller-git
 # sshfs
+# stpv-git
 # sxhkhm-git
 # task-spooler
+# terminus-font \
 # termplay
 # tigervnc
 # tmate
 # transmission-cli
 # transmission-gtk
+# tsserver
+# ttf-hack
+# ttf-unifont
+# ueberzug
 # unrar
 # urxvt-perls
-# unzip
+# vimv-git
 # vscodium-bin
 # vscodium-bin-marketplace
+# wmctrl
 # xcompmgr
 # x2x-git
 # xf86-video-amdgpu
+# xorg-fonts-misc
 # xorg-xwininfo
 # xorg-xdpyinfo
+# xorg-xprop
 # ytfzf
 # youtube-dl
+# zsh-completions
 # zsh-vi-mode
 # zip

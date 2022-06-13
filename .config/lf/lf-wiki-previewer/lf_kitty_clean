@@ -1,0 +1,12 @@
+#!/bin/bash
+#https://github.com/gokcehan/lf/issues/626
+
+# To skip cleanup
+if [ "$1" != "$f" ]; then
+case "$(file -Lb --mime-type -- "$f")" in
+  image/*) exit;;
+esac
+fi
+
+# kitty +icat --clear --silent --transfer-mode file
+kitty +icat --clear --transfer-mode file

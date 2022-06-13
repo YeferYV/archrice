@@ -1,29 +1,29 @@
 #!/bin/bash
 
 #
-## Before-Chroot
+## Before-Chroot (partitioning)
 #
 # cfdisk
 # mkfs.vat /dev/sdX
 # mkfs.btrfs /dev/sdX
 # mount /dev/sdX /mnt
-# btrfs su cr /mnt/@root
+# btrfs su cr /mnt/@
 # btrfs su cr /mnt/@home
-# btrfs su cr /mnt/@var
 # btrfs su cr /mnt/@swap
 # btrfs su cr /mnt/@.snapshots
-# mount -o noatime,compress=lzo,subvol=@root /dev/sdX /mnt
-# mkdir -p /mnt/{boot/efi,home,var,swap,.snapshots}
+# mount -o noatime,compress=lzo,subvol=@ /dev/sdX /mnt
+# mkdir -p /mnt/{boot/efi,home,swap,.snapshots}
 # mount -o noatime,compress=lzo,subvol=@home /dev/sdX /mnt/home
 # mount -o noatime,compress=lzo,subvol=@.snapshots /dev/sdX /mnt/.snapshots
 # mount -o nodatacow,subvol=@swap /dev/sdX /mnt/swap
-# mount -o nodatacow,subvol=@var /dev/sdX /mnt/var
 # mount /dev/sdX /mnt/boot/efi
 # pacstrap /mnt base base-devel broadcom-wl btrfs-progs efibootmgr grub linux linux-firmware neovim networkmanager snapper git cronie
 # genfstab U /mnt >> /mnt/etc/fstab
+# sed -i "s/MODULE=()/MODULE=(btrfs)/" /etc/mkinitcpio.conf
+# mkinitcpio -p linux
 
 #
-##  After-Chroot
+##  After-Chroot (swap)
 #
 # arch-chroot /mnt
 # truncate -s 0 /swap/swapfile
@@ -34,20 +34,13 @@
 # mkswap /swap/swapfile
 # swapon /swap/swapfile
 # echo "/swap/swapfile none defaults 0 0" >> /etc/fstab
-#
-# sed -i "s/MODULE=()/MODULE=(btrfs)/" /etc/mkinitcpio.conf
-# mkinitcpio -p linux
-#
-# umount /.snapshots
-# rm -rf /.snapshots
-# snapper -c rootsnap create-config /
-# reboot
 
 #
-## After-Reboot
+## After-Reboot (configs)
 #
 
-[ $(id -u) != 0 ] && echo "Run it as root user at root's folder" >&2 && exit 1
+set -eu # exit on error
+[ $(id -u) != 0 ] && echo "\e[1;33mRun it as root user at root's folder\e[0m\n" >&2 && exit 1
 printf "\e[1;33mAfter-Reboot\e[0m\n"
 timedatectl set-ntp true
 hwclock --systohc
@@ -73,50 +66,40 @@ systemctl enable cronie
 # systemctl enable firewalld
 # systemctl enable avahi-daemon
 useradd -m drknss
-usermod -aG libvirt video drknss
+usermod -aG video wheel drknss
 echo drknss:toor | chpasswd
 echo "drknss ALL=(ALL) ALL" > /etc/sudoers.d/drknss
 
 #
-## Backups
+## Backups (btrfs)
 #
 
+# mount -o subvolid=5 /mnt
+# mv /mnt/<@root> /mnt/@
+# btrfs su get-default /mnt
+# btrfs su set-default /mnt/@
 printf "\e[1;33mBackups\e[0m\n"
 mv /home /home.bak
-mv /var /var.bak
 btrfs su cr /home
-btrfs su cr /var
 mv /home.bak/* /home
-mv /var.bak/* /var
-rm -rf /.snapshots /home.bak /var/bak /home/drknss/.cache /root/.cache /var/cache /var/log /var/tmp
-snapper -c rootsnap create-config /
-snapper -c homesnap create-config /home
-snapper -c varsnap create-config /var
-snapper -c rootsnap create -d "base-install"
-snapper -c homesnap create -d "base-install"
-snapper -c varsnap create -d "base-install"
+rm -rf /.snapshots /home.bak
+snapper -c root create-config /
+snapper -c home create-config /home
+snapper -c root create -d "base-install"
+snapper -c home create -d "base-install"
 
 mkdir /home/drknss/.config
-btrfs su snapshot / /.snapshots/backup-$(date +%y-%m-%d)
-btrfs su snapshot /home /home/.snapshots/backup-$(date +%y-%m-%d)
-btrfs su snapshot /var /var/.snapshots/backup-$(date +%y-%m-%d)
-btrfs su cr /home/drknss/.cache
+btrfs su snapshot / /.snapshots/backup-$(date +%y-%m-%d)-snapper-base-install
+btrfs su snapshot /home /home/.snapshots/backup-$(date +%y-%m-%d)-snapper-base-install
 btrfs su cr /home/drknss/.config/google-chrome
-btrfs su cr /root/.cache
-btrfs su cr /var/cache
-btrfs su cr /var/log
-btrfs su cr /var/tmp
 
 #
-## Post-Install
+## Post-Install (dotfiles)
 #
 
-# pacman-key --init
-# pacman-key --populate
-# ./ResetArch
 printf "\e[1;33mPost-Install\e[0m\n"
-mkdir -p /home/dtfls/yydtfls
 mkdir -p /home/drknss/.local
+mkdir -p /home/dtfls/yydtfls
 git clone https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
 cd /home/dtfls/yydtfls/dotfiles
 stow --restow --verbose --target=/home/drknss/.config .config
@@ -126,25 +109,23 @@ mkdir -p /home/drknss/.local/share/mpd
 # sudo -u drknss systemctl --user enable pulseaudio-x11
 # sudo -u drknss systemctl --user enable touchcursor
 # sudo -u drknss mpc --port=6601 update
-ln -s /home/drknss/.config/shell/profile /home/drknss/.profile
+ln -s /home/drknss/.config/shell/profile /home/drknss/.zprofile
 ln -s /home/drknss/.config/x11/.xinitrc /home/drknss/.xinitrc
 cp /home/drknss/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
 cp /home/drknss/.config/wallhaven-4lokdp.jpg /home/drknss/.local/share/bg
-rm /home/drknss/.bash_logout
-rm /home/drknss/.bash_profile
 crontab /home/drknss/.local/bin/cron/lowbatnotificationcron
+chsh --shell /usr/bin/zsh drknss
+mkdir -p /home/drknss/.config/nvim/autoload/
+curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > /home/drknss/.config/nvim/autoload/plug.vim
 chown -R drknss:drknss /home/drknss
 chown -R drknss:drknss /home/dtfls
+sudo -u "drknss" -D~ bash -c "nvim --headless +PlugInstall +qall"
 
-snapper -c rootsnap create -d "after-RiceArch"
-snapper -c homesnap create -d "after-RiceArch"
-snapper -c varsnap create -d "after-RiceArch"
-# snapper -c rootsnap create -d "after-larbs"
-# snapper -c homesnap create -d "after-larbs"
-# snapper -c varsnap create -d "after-larbs"
-# snapper -c rootsnap create -c timeline -d "hourly-snapshots"
-# snapper -c homesnap create -c timeline -d "hourly-snapshots"
-# snapper -c varsnap create -c timeline -d "hourly-snapshots"
+snapper -c root create -d "after-RiceArch"
+snapper -c home create -d "after-RiceArch"
+# snapper -c root create -d "after-larbs"
+# snapper -c home create -d "after-larbs"
+# snapper -c root create -c timeline -d "hourly-snapshots"
+# snapper -c home create -c timeline -d "hourly-snapshots"
 
 printf "\e[1;32mDone!\e[0m\n"
-

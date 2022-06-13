@@ -1,5 +1,7 @@
 #!/bin/sh
 
+## execute xev to get the keycodes
+
 ## to avoid multiple instances at restart bspwm
 #killall sxhkd xcape && setxkbmap
 killall xcape && setxkbmap

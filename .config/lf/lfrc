@@ -1,7 +1,4 @@
-# interpreter for shell commands (needs to be POSIX compatible)
-#set shell sh
-set shell /bin/bash
-
+# v1m:ft=cfg
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
 # exit on error and option '-u' is used to give error for unset variables.
@@ -18,176 +15,157 @@ set shellopts '-eu'
 # commands accordingly.
 set ifs "\n"
 
-# leave some space at the top and the bottom of the screen
-set scrolloff 50
-
-# basic settings
-#set color256
 set icons
-set period 1
-set preview true
-# set previewer ~/.config/lf/howto-lf-image-previews/lf-previewer
-# set cleaner ~/.config/lf/howto-lf-image-previews/lf-cleaner
-set previewer ~/.config/lf/lf-wiki-previewer/previewer.sh
-set cleaner ~/.config/lf/lf-wiki-previewer/clear_img.sh
-# set previewer ~/.config/lf/pv.sh
-# set previewer ~/.config/lf/lf-stpv/stpv
-# set cleaner ~/.config/lf/lf-stpv/stpvimgclr
-# &stpvimg --listen $id
 set hidden true
-#set nopreview
-set ratios 1:2
-#set promptfmt "\033[34;1m[%w]$ \033[0m\033[1m%f"
-#set promptfmt "\033[0;1m%w "
-#set promptfmt "$(tput setaf 88 %w) "
+set period 1
+# set previewer ~/.config/lf/lf-wiki-previewer/lf_kitty_preview
+# set cleaner ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
+set previewer ~/.config/lf/lf-wiki-previewer/lf_sixel_preview
+set cleaner ~/.config/lf/lf-wiki-previewer/lf_sixel_clean
+# set previewer ~/.config/lf/lf-wiki-previewer/lf_ueberzug_preview
+# set cleaner ~/.config/lf/lf-wiki-previewer/lf_ueberzug_clean
+# set previewer stpv
+# set cleaner stpvimgclr
+# &stpvimg --listen $id
+# cmd on-quit $stpvimg --end $id
 set promptfmt "[1;90m%w "
-#set timefmt ""
-#set info ""
-#set wrapscan "off"
-#set truncatechar "-"
+set shell /bin/bash
+set scrolloff 50
+set ratios 1:2
 
 #######################
 ##  Global_keymaps  ##
 #####################
 
-## define a custom 'rename' command without prompt for overwrite
-#cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
-
-## Ranger's open_with
-#cmd open-with %"$@" $fx
-cmd open-with $$@ $fx
-
-cmd draganddrop &dragon-drag-and-drop -a -x $fx
-# cmd duplicatelf &nohup $TERMINAL -e "lf"
-# cmd duplicatelf &nohup sh -c "export LF_CD=true && $TERMINAL"
-cmd duplicatelf &setsid -f env LF_CD=true $TERMINAL
-cmd openterm &nohup alacritty
-cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
-cmd touch $touch "$(echo $* | tr ' ' '\ ')"
-# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
-# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/
-
-# execute current file (must be executable)
+#--- execute current file (must be executable)
 map <a-x> $$f
 map <a-X> %$f
 map <c-x> !$f
 map <c-X> :$f
 
-# To change numbers of colums
-map <a-4> $lf -command "set nopreview; set ratios 1"
-map <a-5> $lf -command "set preview; set ratios 1:2"
-map <a-6> $lf -command "set preview; set ratios 1:2:3"
+#--- Ranger's open_with
+cmd shell-open-with $$@ $fx
+cmd shell-pipe-open-with %"$@" $fx
+cmd shell-wait-open-with !$@ $fx
+cmd shell-async-open-with &$@ $fx
 
-# To refresh numbers of colums
+cmd draganddrop &dragon-drag-and-drop -a -x $fx
+# cmd duplicatelf &nohup $TERMINAL -e "lf" >/dev/null 2>&1
+# cmd duplicatelf &nohup sh -c "export LF_CD=true && $TERMINAL" >/dev/null 2>&1
+cmd duplicatelf &setsid -f env LF_CD=true $TERMINAL start --cwd=$PWD
+cmd duplicateterm &setsid -f $TERMINAL start --cwd=$PWD
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+cmd touch $touch "$(echo $* | tr ' ' '\ ')"
+# cmd trash %set -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
+
+#--- To refresh numbers of colums
 cmd onecol ${{
   lf -remote "send $id set nopreview"
   lf -remote "send $id set ratios 1"
-  #printf $load
 }}
-map <a-1> onecol
+map <a-!> onecol
 
 cmd onemorecol ${{
   lf -remote "send $id set ratios 1:2"
   lf -remote "send $id set preview"
-  #printf $id
 }}
-map <a-2> onemorecol
+map <a-@> onemorecol
 
 cmd morecol ${{
   lf -remote "send $id set ratios 1:2:3"
   lf -remote "send $id set preview"
-  #printf $id
 }}
-map <a-3> morecol
+map <a-\#> morecol
 
-# cmd toggleonecol ${{
-#     if [ "$LF_NUMCOL" == "two" ]; then
-#       lf -remote "send $id set preview"
-#       lf -remote "send $id set ratios 1:2"
-#       lf -remote "send $id $(export LF_NUMCOL='one')"
-#     else
-#       lf -remote "send $id set nopreview"
-#       lf -remote "send $id set ratios 1"
-#       lf -remote "send $id $(export LF_NUMCOL='two')"
-#     fi
-# }}
-# # map <c-o> toggleonecol $LF_NUMCOL
-# map <c-o> $lf -remote "send $id toggleonecol $LF_NUMCOL"
-
-# cmd toggleonemorecol ${{
-#     if [ "$1" = "one" ]; then
-#       lf -remote "send $id set nopreview"
-#       lf -remote "send $id set ratios 1"
-#       export LF_NUMCOL='two'
-#     else
-#       lf -remote "send $id set ratios 1:2"
-#       lf -remote "send $id set preview"
-#       export LF_NUMCOL='one'
-#     fi
-# }}
-# # map <a-o> toggleonemorecol $LF_NUMCOL
-# map <a-o> $lf -remote "send $id toggleonemorecol $LF_NUMCOL"
+#--- To change numbers of colums
+map <a-$> $lf -command "set nopreview; set ratios 1"
+map <a-%> $lf -command "set preview; set ratios 1:2"
+map <a-^> $lf -command "set preview; set ratios 1:2:3"
 
 cmd on-cd &{{
     # '&' commands run silently in background (which is what we want here),
     # but are not connected to stdout.
     # To make sure our escape sequence still reaches stdout we pipe it to /dev/tty
-    # Show current directory in window title.
-    # printf "\033]0; $PWD\007" > /dev/tty
-    # Show current directory in window title with ~ instead of /home/username
-    # printf "\033]0; $(pwd | sed "s|$HOME|~|")\007" > /dev/tty
+
     # Show current directory in window title with last path instead of full path
     printf "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007" > /dev/tty
-    # Show current directory in window title and show a program name.
-    # printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty
 }}
 # also run at startup
-#on-cd
+# on-cd
 
-# define a custom 'open' command
-# This command is called when current file is not a directory. You may want to
-# use either file extensions and/or mime types here. Below uses an editor for
-# text files and a file opener for the rest.
 cmd open ${{
-    ##"sudo -E lf" if running as sudo
-    current=$(xdotool getactivewindow)
+    #"sudo -E env "PATH=$PATH" lf" https://unix.stackexchange.com/questions/83191/how-to-make-sudo-preserve-path
     case $(file --dereference --brief --mime-type $f) in
-        #text/*) xdotool set_window --name $f  $WINDOWID; $EDITOR $fx ;;
-        text/*|application/json) xdotool set_window --name ${f##*/}  $current; stty echo ;$EDITOR $fx ;;
-	      # image/*) basename -a $PWD/* | devour sxiv -aio ;;
-	      # image/*) devour sxiv -aio $PWD/* ;;
-	      # image/*) devour sxiv -b $fx ;; #not working after 1024 characters needs this patch https://github.com/salman-abedin/devour/pull/28
-	      # image/*) basename -a $fx | devour sxiv -baio ;; #workaround to 1024 character limits so far so good
-	      # image/*) bspswap sxiv "$fx";; #it just works for just one file
+        text/*|application/json) printf "\033]0; ${f##*/} \007" > /dev/tty; $EDITOR $fx ;;
 	      image/*) basename -a $fx | bspswap sxiv -baio ;;
-	      # audio/*) mpv --audio-display=no $fs ;;
-	      # audio/*) devour mpv --geometry=800x600 --force-window $fx ;; #buggy
-	      # audio/*) basename -a $fx | devour mpv --geometry=800x600 --force-window --playlist=- ;;
-	      # audio/*) bspswap mpv --geometry=800x600 --force-window "$fx" ;; #it just works for just one file
-	      audio/*) basename -a $fx | bspswap mpv --geometry=800x600 --force-window --playlist=- ;;
-	      # video/*) setsid -f mpv $fs -quiet >/dev/null 2>&1 ;;
-	      # video/*) basename -a $fx | xargs -0I__ devour mpv --geometry=800x600 __ ;; #not working after 1024 characters
-	      # video/*) basename -a $fx | sed ':a;N;$!ba;s/\n/\~/g' | xargs -tI__ sh -c "devour mpv --geometry=800x600 __" ;; #only works in nonspaced names
-        # video/*) basename -a $fx | sed 's/\ /\\ /g' | sed ':a;N;$!ba;s/\n/ /g' | xargs -d'\n' -tI__ sh -c 'devour mpv __' ;; #only works in nonspecial character like () &
-	      # video/*) basename -a $fx | devour mpv --geometry=800x600 --playlist=- ;;
-	      # video/*) bspswap mpv --geometry=800x600 "$fx" ;; #it just works for just one file
-	      video/*) basename -a $fx | bspswap mpv --geometry=800x600 --playlist=- ;;
-        #*) for f in $fx; do setsid -f xdg-open $f ;;
+	      audio/*) basename -a $fx | bspswap mpv --force-window --playlist=- ;;
+	      video/*) basename -a $fx | bspswap mpv --playlist=- ;;
+        application/pdf) bspswap zathura $fx ;; 
+        #*) for f in $fx; do xdg-open $f &>/dev/null &;;
         *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
 }}
 
-# to quit and clear
-cmd clearandquit :{{
-  $clear
-  quit
-  }}
+cmd imgcat !{{
+    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && basename -a $fx |{
+        mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) --playlist=-
+        wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x"
+    }||{
+    case $(file --dereference --brief --mime-type $fx) in
+        text/*)   bat --paging always --wrap never $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x" ;;
+        image/*)  wezterm imgcat $fx ;;
+        video/*)  mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x";;
+        application/pdf) spdf $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x";; # termpdf -sixel $fx
+    esac
+    }
+}}
 
-# to mimeopen and close
-cmd mimeopenandclose :{{
-  $setsid -f mimeopen $f >/dev/null 2>&1
-  $xdo close
-  }}
+cmd sixel ${{
+    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && { Xsixel :1 -screen 1024x1024 -exec 'basename -a $fx | sxiv -baio'
+    }||{
+    case $(file --dereference --brief --mime-type $fx) in
+        text/*)   bat --paging always --wrap never $fx;;
+        image/*)  Xsixel :1 -screen 1024x1024 -exec 'sxiv $fx' 2>/dev/null;;
+        video/*)  mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) $fx;;
+        application/pdf) Xsixel :1 -screen 1024x1024 -exec 'zathura $fx' 2>/dev/null;;
+    esac
+    }
+}} 
+
+cmd cmd_scrolldown &{{
+	# Retrieve the current preview offset.
+	offset="$(cat "$LF_SCROLLINGPREVIEW_TEMPDIR/offset")"
+
+	# Increment the offset.
+	echo "$((offset+1))" >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset"
+
+	# Trigger a reload.
+	lf -remote "send $id reload"
+}}
+
+cmd cmd_scrollup &{{
+	offset="$(cat "$LF_SCROLLINGPREVIEW_TEMPDIR/offset")"
+	if [ "$offset" -gt 1 ]; then
+		echo "$((offset-1))" >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset"
+	fi
+	lf -remote "send $id reload"
+}}
+
+cmd cmd_redraw_up :{{
+	$(echo 0 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
+  up
+  redraw
+  $lf -remote "send $id reload"
+  # $lf -remote "send $id up && send $id redraw"
+}}
+
+cmd cmd_redraw_down :{{
+	$(echo 0 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
+  down
+  redraw
+  $lf -remote "send $id reload"
+  # $lf -remote "send $id down && send $id redraw"
+}}
 
 cmd setbg ${{
   # ln -sf $fx ~/.local/share/bg
@@ -198,33 +176,37 @@ cmd setbg ${{
 
 cmd tmuxtty ${{
   # stty echo
-  # stty -a
-  # tput sgr0
-  # tput reset
-  # ( exec </dev/tty; exec <&1; TMUX= tmux )
   ( exec </dev/tty; exec <&1; TMUX= tmux new $1 )
 }}
 
-cmd fzf_search ${{
-    res="$( \
-        RG_PREFIX="rg --column --line-number --no-heading --color=always \
-            --smart-case "
-        FZF_DEFAULT_COMMAND="$RG_PREFIX ''" \
-            fzf --bind "change:reload:$RG_PREFIX {q} || true" \
-            --ansi --layout=reverse --header 'Search in files' \
-            | cut -d':' -f1
-    )"
-    # name="$(echo "$res" | cut -d':' -f1)"
-    # line="$(echo "$res" | cut -d':' -f2)"
-    [ ! -z "$res" ] && lf -remote "send $id select \"$res\""
-    # [ ! -z "$res" ] && lf -remote "send $id echo ${res#*:}"
-    # [ ! -z "$res" ] && lf -remote "send $id echo ${res%%:*}"
-    # [ ! -z "$res" ] && lf -remote "send $id echo $name $line"
-    # [ ! -z "$res" ] && nvim ${res%%:*}
-    # [ ! -z "$res" ] && nvim $name +$line
-}}
+cmd fzf_preview ${{
+        # --bind='alt-i:refresh-preview+down+execute-silent((tput sc; tput cup 2 $(tput cols) ; img2sixel --width $(($(tput cols)*8)) {}; tput rc; read) >/dev/tty)'\
+        # --bind='alt-o:refresh-preview+up+execute-silent((tput sc; tput cup 2 $(tput cols) ; img2sixel --width $(($(tput cols)*8)) {}; tput rc; read) >/dev/tty)'\
+        # --bind='alt-t:execute(notify-send "$TTY - $COLUMNS - $LINES - $imageW $imageX" < /dev/tty)'\
+        # --preview '~/.config/lf/fzf_six {1}'\
+        # --preview='$1 {1}'\
 
-cmd fzf_edit ${{
+    fzf --bind='alt-j:down+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
+        --bind='alt-k:up+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
+        --bind='alt-i:execute(wezterm cli split-pane --horizontal -- bash -c "img2sixel {} && read ")'\
+        --bind='alt-o:execute((img2sixel --width 500 {} </dev/tty && read) >/dev/tty)'\
+        --bind='alt-u:execute(less -f {} < /dev/tty > /dev/tty)'\
+        --bind='ctrl-j:clear-screen+refresh-preview+down'\
+        --bind='ctrl-k:clear-screen+refresh-preview+up'\
+        --bind='ctrl-i:preview-down'\
+        --bind='ctrl-o:preview-up'\
+        --bind='ctrl-u:preview-half-page-up'\
+        --bind='ctrl-d:preview-half-page-down'\
+        --bind='ctrl-t:preview-top'\
+        --bind='ctrl-b:preview-bottom'\
+        --bind='?:toggle-preview'\
+        --preview='~/.config/lf/fzf_kit {1}'\
+    | xargs -I_ lf -remote "send $id select '_'"
+  }}
+
+# https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
+cmd fzf_rg ${{
+    # Switch between Ripgrep launcher mode (CTRL-R) and fzf filtering mode (CTRL-F)
     RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
     INITIAL_QUERY="${*:-}"
     IFS=: read -ra selected < <(
@@ -232,16 +214,24 @@ cmd fzf_edit ${{
       fzf --ansi \
           --color "hl:-1:underline,hl+:-1:underline:reverse" \
           --disabled --query "$INITIAL_QUERY" \
-          --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-          --bind "alt-n:unbind(change,alt-n)+change-prompt(2 > )+enable-search+clear-query" \
-          --prompt '1 > ' \
+          --bind="change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+          --bind="ctrl-f:unbind(change,ctrl-f)+change-prompt(2. fzf> )+enable-search+clear-query+rebind(ctrl-r)" \
+          --bind="ctrl-r:unbind(ctrl-r)+change-prompt(1. ripgrep> )+disable-search+reload($RG_PREFIX {q} || true)+rebind(change,ctrl-f)" \
+          --bind='ctrl-i:preview-down'\
+          --bind='ctrl-o:preview-up'\
+          --bind='ctrl-u:preview-half-page-up'\
+          --bind='ctrl-d:preview-half-page-down'\
+          --bind='ctrl-t:preview-top'\
+          --bind='ctrl-b:preview-bottom'\
+          --prompt '1. Ripgrep> ' \
           --delimiter : \
+          --header '╱ CTRL-R (Ripgrep mode) ╱ CTRL-F (fzf mode) ╱' \
           --preview 'bat --color=always {1} --highlight-line {2}' \
           --preview-window 'up,60%,border-bottom,+{2}+3/3,~3'
     )
     [ -n "${selected[0]}" ] && lf -remote "send $id select \"${selected[0]}\""
     [ -n "${selected[0]}" ] && nvim "${selected[0]}" "+${selected[1]}"
-}}
+  }}
 
 cmd delete ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
@@ -257,7 +247,6 @@ cmd moveto ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	clear; echo "Move to where?"
-	#dest="$(cut -d'	' -f2- ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|' )" &&
   dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf \ )" &&
 	for x in $fx; do
 		eval mv -iv \"$x\" \"$dest\"
@@ -269,7 +258,6 @@ cmd copyto ${{
 	clear; tput cup $(($(tput lines)/3)); tput bold
 	set -f
 	clear; echo "Copy to where?"
-	#dest="$(cut -d'	' -f2- ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed 's|~|$HOME|' )" &&
   dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
 	for x in $fx; do
 		eval cp -ivr \"$x\" \"$dest\"
@@ -301,60 +289,62 @@ cmd zip ${{
 }}
 
 # Bindings
-map <a-d> draganddrop
-map <a-n> openterm
-map <c-n> duplicatelf
-# map <c-f> $lf -remote "send $id select '$(fzf --preview 'bat --color=always {1}')'"
-# map <c-f> $lf -remote "send $id select '$(fzf --preview 'pistol {1}')'"
-# map <c-f> $lf -remote "send $id select '$(fzf --preview '~/.config/lf/pv.sh {1}')'"
-# map <c-f> $lf -remote "send $id select '$(fzfp)'"
-map <c-f> $lf -remote "send $id select '$(fzf)'"
-map <c-g> $lf -remote "send $id select '$(~/.config/lf/fzfimg/fzfimg.sh)'"
-map <c-j> $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
-map <c-q> clearandquit
-map <c-c> mimeopenandclose
-map <c-v> $bspswap code $fx
-map <c-l> $bspswap libreoffice --nologo $fx
-#map D     $trash --trash-dir ~/.cache/Trash $fx
-map D     $trash $fx
-map C     copyto
-map M     moveto
+map <a-j> :down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map <a-k> :up; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map <a-i> imgcat
+map <a-o> sixel
+
 map <a-m> push :mkdir<space>
+map <a-n> duplicateterm
+map <a-p> $~/.config/lf/pv.sh $f | less -R
 map <a-t> push :touch<space>
-map <c-r> reload
-#map i     $less -R --use-color --LINE-NUMBERS --color=Nk $f
-map <a-i> $~/.config/lf/pv.sh $f | less -R
-map i     $bat --paging always --wrap never $f
-map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/previewer.sh %s' less -R $f
-#map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/previewer.sh %s' bat --pager "less -R" --paging always --wrap never $f
+map <a-w> draganddrop
+map <a-y> push :$ytfzf<space>-t<space>
+map <c-f> $lf -remote "send $id select '$(KITTY_PID=1000 fzfp)'" #yay -S stpv-git
+map <c-g> $lf -remote "send $id select '$(~/.config/lf/fzfimg/fzfimg.sh)'" #https://github.com/seebye/ueberzug/blob/master/examples/fzfimg.sh
+
+map <c-j> cmd_redraw_down
+map <c-k> cmd_redraw_up
+map <tab> cmd_scrolldown #<c-i>
+map <c-o> cmd_scrollup
+
+map <c-l> $bspswap libreoffice --nologo $fx
+map <c-n> duplicatelf
+map <c-s> $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
+map <c-t> tmuxtty lf
+map <c-v> $bspswap code $fx
+map <c-w> push :$sr<space>google<space>
 map <c-y> !mediainfo $f | less && xdotool key KP_Enter
-map <c-o> !mpv -vo sixel $f && xdotool key KP_Enter
-map <c-t> !termpdf -sixel $f && xdotool key KP_Enter
-map o     &bspswap mimeopen $fx
-map O     $mimeopen --ask $fx
-map r     push :open-with<space>
-#map R    push :rename<space> # new rename
+map <enter> shell
 map a     rename # at the very end
 map A     push a<c-u> # new rename
-#map a    push A<a-b> # after extention
-#map I    push A<c-a> # at the very beginning
-#map i    push A<a-b><a-b><a-f> # before extention
-map S     $zsh
+map b     setbg $f
+map B     $vidir $fx
+map C     copyto
+map D     $trash --trash-dir ~/.cache/Trash $fx
+map ge    fzf_rg
+map gs    fzf_preview ~/.config/lf/fzf_kit
+map gf    fzf_preview ~/.config/lf/fzf_six
+map gn    $lf -remote "send $id select '$(COLUMNS=$(tput cols) LINES=$(tput lines) fzf --bind='ctrl-t:execute(notify-send "$TTY - $COLUMNS - $LINES" < /dev/tty)' )'"
+map gw    $lf -remote "send $id select '$(COLUMNS=$(tput cols) fzf --bind='alt-j:execute-silent((tput cup 2 $(($COLUMNS/2)) ; wezterm imgcat --width $(($COLUMNS/2)) {} && read) > /dev/tty)')'"
+map gc    $lf -remote "send $id $(COLUMNS=$(tput cols)) cmd_redraw_down "
+map gi    $lf -remote "send $id fzf_preview $(tput cols)"
 map J     half-down
 map K     half-up
-# map     J push 10j
-# map     K push 10k
-map Z     push :zip<space>
-map X     extract
-map V     push :$nvim<space>
-map Y     push :$ytfzf<space>-t<space>
-map t     tmuxtty lf
+
+map i     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' bat --pager "less -R" --paging always --wrap never $f
+map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less -R $f
+map o     $mimeopen $fx >/dev/null 2>&1   #'setsid -f' unneeded
+map O     $mimeopen --ask $fx 2>/dev/null #'setsid -f' unneeded
+
+map M     moveto
+map r     push :shell-open-with<space>
+map R     push :shell-pipe-open-with<space>
+map S     $zsh
+map t     tmuxtty
 map T     tmuxtty zsh
-#map T     $tmux new "zsh -c lf"
-#map t     $tmux new "w3m google.com"
-map W     push :$sr<space>google<space>
-map B     $vimv $fx
-map b     setbg $f
-map gs    :fzf_search
-map ge    :fzf_edit
-map <enter> shell
+map V     push :$nvim<space>
+map W     $nohup $TERMINAL start --cwd=$PWD >/dev/null 2>&1
+map X     extract
+map Y     $printf "%s" "$fx" | xclip -selection clipboard
+map Z     push :zip<space>

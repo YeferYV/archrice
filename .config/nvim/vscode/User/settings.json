@@ -112,15 +112,12 @@
         "<C-f>": false,
     },
 
-    "tabnine.experimentalAutoImports": true,
     "editor.cursorBlinking": "solid",
-    "editor.suggest.preview": true,
     "files.exclude": {
         "node_modules": true
     },
     "window.menuBarVisibility": "toggle",
     "editor.bracketPairColorization.enabled": true,
-    "editor.inlineSuggest.enabled": true,
     "editor.minimap.enabled": false,
     "github.copilot.enable": {
         "*": true,
@@ -139,7 +136,6 @@
     // "editor.fontFamily": "Hack,'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.cursorSurroundingLines": 4,
     "editor.renderLineHighlight": "none",
-    "window.zoomLevel": -1,
     "editor.fontWeight": 500,
     "editor.tokenColorCustomizations": {
     "textMateRules": [
@@ -175,4 +171,21 @@
         }
     ]
     },
+    "python.defaultInterpreterPath": "/bin/python",
+    "workbench.startupEditor": "none",
+    "git.autofetch": true,
+    "editor.fontFamily": "\"CaskaydiaCove Nerd Font\"",
+    "editor.suggest.preview": true,
+    "tabnine.experimentalAutoImports": true,
+    "editor.inlineSuggest.enabled": true,
+    "window.zoomLevel": -1,
+    "debug.inlineValues": true,
+    "quokka.automaticStartRegex": "\\.(ts|js|jsx|tsx)$",
+    "quokka.automaticRestart": true,
+    "wolf.pythonPath": "/usr/bin/python",
+    "wolf.logErrors": true,
+    "scm.alwaysShowActions": true,
+    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "javascript.referencesCodeLens.enabled": true,
+    "javascript.referencesCodeLens.showOnAllFunctions": true,
 }
