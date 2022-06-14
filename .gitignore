@@ -7,3 +7,4 @@
 .config/ipython/profile_default/startup/
 .config/ipython/profile_default/history.sqlite
 .config/nvim/plugin
+.config/zsh/.zcompdump
