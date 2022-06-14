@@ -22,11 +22,12 @@ return {
   tab_bar_at_bottom = true,
   adjust_window_size_when_changing_font_size = false,
   front_end = "OpenGL",
+  -- animation_fps = 60,
   default_prog = { "zsh" },
   font_size = 10.0,
   -- line_height = 1.00,
   bold_brightens_ansi_colors = true,
-  window_close_confirmation = "NeverPrompt",
+  -- window_close_confirmation = "NeverPrompt",
   -- window_padding = {left = 8, right = 8, top = 18, bottom = 8},
   -- window_padding = {left = 8, right = 8, top = 14, bottom = 10},
   -- window_padding = {left = 8, right = 8, top = 12, bottom = 12},
@@ -100,7 +101,7 @@ return {
     {key = "]", mods = "LEADER", action = "QuickSelect"},
     {key = " ", mods = "ALT", action = "ActivateCopyMode"},
     -- {key = " ", mods = "ALT", action = { Multiple = { {action = "ActivateCopyMode"}, {wezterm.action{CopyMode="ToggleSelectionByCell"}}}}},
-    {key="w", mods="CTRL", action=wezterm.action{CloseCurrentPane={confirm=true}}},
+    {key="w", mods="CTRL", action=wezterm.action{CloseCurrentPane={confirm=false}}},
 
     -- {key="i", mods="CTRL", action={SendKey={key="i", mods="CTRL"}}}, --default:tab
     -- {key="[", mods="CTRL", action={SendKey={key="[", mods="CTRL"}}}, --default:esc

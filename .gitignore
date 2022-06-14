@@ -8,3 +8,6 @@
 .config/ipython/profile_default/history.sqlite
 .config/nvim/plugin
 .config/zsh/.zcompdump
+.local/bin/euporie
+.local/bin/kitty
+.local/bin/wezterm
