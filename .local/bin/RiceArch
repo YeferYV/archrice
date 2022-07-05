@@ -121,6 +121,13 @@ chown -R drknss:drknss /home/drknss
 chown -R drknss:drknss /home/dtfls
 sudo -u "drknss" -D~ bash -c "nvim --headless +PlugInstall +qall"
 
+# nerd fonts
+mkdir -p ~/.local/share/fonts
+git clone --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
+cd nerd-fonts
+git sparse-checkout add patched-fonts/3070
+cp -r patched-fonts/3070 ~/.local/share/fonts/
+
 snapper -c root create -d "after-RiceArch"
 snapper -c home create -d "after-RiceArch"
 # snapper -c root create -d "after-larbs"

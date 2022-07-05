@@ -58,19 +58,19 @@ vim.cmd [[
   "   au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
   " augroup end
 
-  " augroup _enable_terminal_insert_by_default
-  "   autocmd!
-  "   au WinEnter * if &buftype == 'terminal' | startinsert | endif
-  " augroup end
+  augroup _enable_terminal_insert_by_default
+    autocmd!
+    au WinEnter * if &buftype == 'terminal' | startinsert | endif
+  augroup end
 
-  " augroup _hightlight_whitespaces
-  "   autocmd!
-  "   autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-  "   highlight ExtraWhitespace ctermbg=cyan guibg=cyan
-  "   autocmd InsertLeave * redraw!
-  "   match ExtraWhitespace /\s\+$\| \+\ze\t/
-  "   autocmd BufWritePre * :%s/\s\+$//e
-  " augroup end
+  augroup _hightlight_whitespaces
+    autocmd!
+    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+    highlight ExtraWhitespace ctermbg=red guibg=red
+    autocmd InsertLeave * redraw!
+    match ExtraWhitespace /\s\+$\| \+\ze\t/
+    autocmd BufWritePre * :%s/\s\+$//e
+  augroup end
 
   augroup _filetype_vimcommentary_support
     autocmd!

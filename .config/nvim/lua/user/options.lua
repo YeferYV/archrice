@@ -16,7 +16,7 @@ local options = {
   smartindent = true,                      -- make indenting smarter again
   splitbelow = true,                       -- force all horizontal splits to go below current window
   splitright = true,                       -- force all vertical splits to go to the right of current window
-  swapfile = true,                        -- creates a swapfile
+  swapfile = true,                         -- creates a swapfile
   termguicolors = true,                    -- set term gui colors (most terminals support this)
   timeoutlen = 500,                        -- time to wait for a mapped sequence to complete (in milliseconds)
   -- undofile = true,                         -- enable persistent undo
@@ -25,7 +25,7 @@ local options = {
   expandtab = true,                        -- convert tabs to spaces
   shiftwidth = 2,                          -- the number of spaces inserted for each indentation
   tabstop = 2,                             -- insert 2 spaces for a tab
-  -- cursorline = true,                       -- highlight the current line
+  cursorline = true,                       -- highlight the current line
   number = true,                           -- set numbered lines
   relativenumber = false,                  -- set relative numbered lines
   numberwidth = 4,                         -- set number column width to 2 {default 4}
@@ -36,6 +36,7 @@ local options = {
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
   virtualedit = "all",                       -- allow cursor bypass end of line
   visualbell = true,                       -- visual bell instead of beeping
+  guicursor = a,
 }
 
 vim.opt.shortmess:append "c"

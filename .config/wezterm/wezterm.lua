@@ -1,4 +1,5 @@
 local wezterm = require 'wezterm'
+local act = wezterm.action
 
 wezterm.on("open_in_vim", function(window, pane)
 	local file = io.open("/tmp/wezterm_buf", "w")
@@ -16,6 +17,7 @@ return {
   -- enable_csi_u_key_encoding = true, --unmap ctrl-(j|i...) same as stty -ixon
   -- initial_rows = 50,
   -- initial_cols = 170,
+  force_reverse_video_cursor = true,
   audible_bell = "Disabled",
   use_fancy_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
@@ -25,9 +27,22 @@ return {
   -- animation_fps = 60,
   default_prog = { "zsh" },
   font_size = 10.0,
-  -- line_height = 1.00,
-  bold_brightens_ansi_colors = true,
-  -- window_close_confirmation = "NeverPrompt",
+
+  -- cell_width = 1.20,
+  -- line_height = 0.90,
+  -- cell_width = 1.9,
+  -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
+  -- custom_block_glyphs = false,
+  -- unicode_version=9 ,
+  -- freetype_load_target = "Light",
+  -- freetype_render_target = "HorizontalLcd",
+  -- font_hinting = "Full",
+  -- font_antialias = "Greyscale",
+  -- font_antialias = "Subpixel",
+  -- freetype_interpreter_version = 40,
+  -- bold_brightens_ansi_colors = false, -- default true
+  window_close_confirmation = "NeverPrompt",
+
   -- window_padding = {left = 8, right = 8, top = 18, bottom = 8},
   -- window_padding = {left = 8, right = 8, top = 14, bottom = 10},
   -- window_padding = {left = 8, right = 8, top = 12, bottom = 12},
@@ -43,48 +58,126 @@ return {
 
   foreground_text_hsb = {
     hue = 1.0,
-    saturation = 1.05,
-    brightness = 1.25,
+    -- saturation = 1.05, --yellow to more yellowish
+    -- brightness = 1.25, --yellow to less yellowish
   },
 
-  font = wezterm.font("CaskaydiaCove Nerd Font", {weight="Bold", stretch="Normal", style=Normal}), -- /usr/share/fonts/TTF/Caskaydia Cove Nerd Font Complete.ttf, FontConfig
-  -- font = wezterm.font("CaskaydiaCove Nerd Font Mono", {weight="Bold", stretch="Normal", style=Normal}), -- /usr/share/fonts/TTF/Caskaydia Cove Nerd Font Complete Mono.ttf, FontConfig
-  -- font = wezterm.font("Cascadia Code", {weight="Bold", stretch="Normal", style=Normal}), -- /usr/share/fonts/TTF/CascadiaCode.ttf index=0 variation=6, FontConfig
-  -- font = wezterm.font("Cascadia Code", {weight="Bold", stretch="Normal", style=Italic}), -- /usr/share/fonts/TTF/CascadiaCodeItalic.ttf index=0 variation=6, FontConfig
+  font_rules= {
+    {
+      intensity = "Bold",
+      -- font = wezterm.font({family="TerminessTTF Nerd Font", scale = 1.05},{stretch="Normal", weight="ExtraBlack", foreground = "#ff8800"}), -- bright palet colors
+      -- font = wezterm.font({family="Bedstead", scale = 1.05},{stretch="Normal", weight="ExtraBlack", foreground = "#ff8800"}), -- bright palet colors
+      font = wezterm.font({family="Bedstead", scale = 1.00},{stretch="Normal", weight="Medium", foreground = "#ff8800"}), -- bright palet colors
+    },
+    {
+      intensity = "Normal",
+      -- font = wezterm.font("CaskaydiaCove Nerd Font", {weight="Bold", stretch="Normal", style=Normal}), -- ansi palet colors
+      font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="UltraExpanded", weight="DemiBold"}), -- ansi palet colors
+    },
+  },
 
-  key_tables = {
+   key_tables = {
     copy_mode = {
-      {key="q", mods="NONE", action=wezterm.action{CopyMode="Close"}},
-      {key="h", mods="NONE", action=wezterm.action{CopyMode="MoveLeft"}},
-      {key="j", mods="NONE", action=wezterm.action{CopyMode="MoveDown"}},
-      {key="k", mods="NONE", action=wezterm.action{CopyMode="MoveUp"}},
-      {key="l", mods="NONE", action=wezterm.action{CopyMode="MoveRight"}},
-      {key="v", mods="NONE", action=wezterm.action{CopyMode="ToggleSelectionByCell"}},
-      -- {key="V", mods="NONE", action=wezterm.action{CopyMode={SetSelectionMode="Block"}}},
-      -- {key="Enter", mods="NONE", action=wezterm.action{CopyMode="ToggleSelectionByCell"}},
-      -- {key=" ", mods="NONE", action=wezterm.action{CopyMode="ToggleSelectionByCell"}},
-      -- Enter search mode to edit the pattern.
-      -- When the search pattern is an empty string the existing pattern is preserved
-      -- {key="/", mods="NONE", action=wezterm.action{Search={Regex="[0-9]"}}},
-      {key="/", mods="NONE", action=wezterm.action{Search={CaseInSensitiveString=""}}},
-      -- navigate any search mode results
-      {key="n", mods="NONE", action=wezterm.action{CopyMode="NextMatch"}},
-      {key="N", mods="SHIFT", action=wezterm.action{CopyMode="PriorMatch"}},
+      {key="q", mods="NONE", action=act.Multiple{
+          act.SendKey{key="u", mods="CTRL"},
+          act.CopyMode("ClearPattern"),
+          act.CopyMode("Close"),
+      }},
+      {key="i", mods="NONE", action=act.Multiple{
+          act.SendKey{key="u", mods="CTRL"},
+          act.CopyMode("ClearPattern"),
+          act.CopyMode("Close"),
+      }},
+      {key="Escape", mods="NONE", action=act.Multiple{
+          act.SendKey{key="u", mods="CTRL"},
+          act.CopyMode("ClearPattern"),
+          act.CopyMode("Close"),
+      }},
+
+      {key="h", mods="NONE", action=act.CopyMode("MoveLeft")},
+      {key="j", mods="NONE", action=act.CopyMode("MoveDown")},
+      {key="k", mods="NONE", action=act.CopyMode("MoveUp")},
+      {key="l", mods="NONE", action=act.CopyMode("MoveRight")},
+
+      {key="LeftArrow",  mods="NONE", action=act.CopyMode("MoveLeft")},
+      {key="DownArrow",  mods="NONE", action=act.CopyMode("MoveDown")},
+      {key="UpArrow",    mods="NONE", action=act.CopyMode("MoveUp")},
+      {key="RightArrow", mods="NONE", action=act.CopyMode("MoveRight")},
+
+      {key="RightArrow", mods="ALT",  action=act.CopyMode("MoveForwardWord")},
+      {key="f",          mods="ALT",  action=act.CopyMode("MoveForwardWord")},
+      {key="Tab",        mods="NONE", action=act.CopyMode("MoveForwardWord")},
+      {key="w",          mods="NONE", action=act.CopyMode("MoveForwardWord")},
+
+      {key="LeftArrow", mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
+      {key="b",         mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
+      {key="Tab",       mods="SHIFT", action=act.CopyMode("MoveBackwardWord")},
+      {key="b",         mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
+
+      {key="0",     mods="NONE",  action=act.CopyMode("MoveToStartOfLine")},
+      {key="Enter", mods="NONE",  action=act.CopyMode("MoveToStartOfNextLine")},
+
+      {key="$",     mods="NONE",  action=act.CopyMode("MoveToEndOfLineContent")},
+      {key="$",     mods="SHIFT", action=act.CopyMode("MoveToEndOfLineContent")},
+      {key="^",     mods="NONE",  action=act.CopyMode("MoveToStartOfLineContent")},
+      {key="^",     mods="SHIFT", action=act.CopyMode("MoveToStartOfLineContent")},
+      {key="m",     mods="ALT",   action=act.CopyMode("MoveToStartOfLineContent")},
+
+      -- {key="v", mods="NONE", action=wezterm.action{CopyMode="ToggleSelectionByCell"}},
+      {key=" ", mods="NONE",  action=act.CopyMode{SetSelectionMode="Cell"}},
+      {key="v", mods="NONE",  action=act.CopyMode{SetSelectionMode="Cell"}},
+      {key="V", mods="NONE",  action=act.CopyMode{SetSelectionMode="Line"}},
+      {key="V", mods="SHIFT", action=act.CopyMode{SetSelectionMode="Line"}},
+      {key="v", mods="CTRL",  action=act.CopyMode{SetSelectionMode="Block"}},
+
+      {key="G", mods="NONE",  action=act.CopyMode("MoveToScrollbackBottom")},
+      {key="G", mods="SHIFT", action=act.CopyMode("MoveToScrollbackBottom")},
+      {key="g", mods="NONE",  action=act.CopyMode("MoveToScrollbackTop")},
+
+      {key="H", mods="NONE",  action=act.CopyMode("MoveToViewportTop")},
+      {key="H", mods="SHIFT", action=act.CopyMode("MoveToViewportTop")},
+      {key="M", mods="NONE",  action=act.CopyMode("MoveToViewportMiddle")},
+      {key="M", mods="SHIFT", action=act.CopyMode("MoveToViewportMiddle")},
+      {key="L", mods="NONE",  action=act.CopyMode("MoveToViewportBottom")},
+      {key="L", mods="SHIFT", action=act.CopyMode("MoveToViewportBottom")},
+
+      {key="o", mods="NONE",  action=act.CopyMode("MoveToSelectionOtherEnd")},
+      {key="O", mods="NONE",  action=act.CopyMode("MoveToSelectionOtherEndHoriz")},
+      {key="O", mods="SHIFT", action=act.CopyMode("MoveToSelectionOtherEndHoriz")},
+
+      {key="PageUp",   mods="NONE", action=act.CopyMode("PageUp")},
+      {key="PageDown", mods="NONE", action=act.CopyMode("PageDown")},
+      {key="b",        mods="NONE", action=act.CopyMode("PageUp")},
+      {key="f",        mods="NONE", action=act.CopyMode("PageDown")},
+      {key="u",        mods="NONE", action=act.CopyMode("PageUp")},
+      {key="d",        mods="NONE", action=act.CopyMode("PageDown")},
+      {key="K",        mods="NONE", action=act.CopyMode("PageUp")},
+      {key="J",        mods="NONE", action=act.CopyMode("PageDown")},
+
       {key="y", mods="NONE", action=wezterm.action{Multiple={
              wezterm.action{CopyTo="ClipboardAndPrimarySelection"},
              wezterm.action{CopyMode="Close"}
-      }}}
+      }}},
+
+      {key="/", mods="NONE", action=wezterm.action{Search={CaseInSensitiveString=""}}},
+      {key="N", mods="NONE", action=act.CopyMode("PriorMatch")},
+      {key="n", mods="NONE", action=act.CopyMode("NextMatch")},
+
     },
     search_mode = {
-      {key="Escape", mods="NONE", action=wezterm.action{CopyMode="Close"}},
-      -- Go back to copy mode when pressing enter, so that we can use unmodified keys like "n"
-      -- to navigate search results without conflicting with typing into the search area.
+      {key="Escape", mods="NONE", action=act.Multiple{
+          act.SendKey{key="u", mods="CTRL"},
+          act.CopyMode("ClearPattern"),
+          act.CopyMode("Close"),
+      }},
       {key="Enter", mods="NONE", action="ActivateCopyMode"},
-      -- {key="Enter", mods="NONE", action=wezterm.action{Multiple={
-             -- action="ActivateCopyMode",
-             -- wezterm.action{CopyMode="ToggleSelectionByCell"}
-    -- }}}
-    },
+      {key="p", mods="CTRL", action=act.CopyMode("PriorMatch")},
+      {key="PageUp", mods="NONE", action=act.CopyMode("PriorMatchPage")},
+      {key="PageDown", mods="NONE", action=act.CopyMode("NextMatchPage")},
+      {key="n", mods="CTRL", action=act.CopyMode("NextMatch")},
+      {key="r", mods="CTRL", action=act.CopyMode("CycleMatchType")},
+      {key="u", mods="CTRL", action=act.CopyMode("ClearPattern")},
+    }
   },
 
   -- timeout_milliseconds defaults to 1000 and can be omitted
@@ -99,9 +192,6 @@ return {
     {key="a", mods="LEADER|CTRL", action=wezterm.action{SendString="\x01"}},
     {key = "[", mods = "LEADER", action = wezterm.action({ EmitEvent = "open_in_vim" }) },
     {key = "]", mods = "LEADER", action = "QuickSelect"},
-    {key = " ", mods = "ALT", action = "ActivateCopyMode"},
-    -- {key = " ", mods = "ALT", action = { Multiple = { {action = "ActivateCopyMode"}, {wezterm.action{CopyMode="ToggleSelectionByCell"}}}}},
-    {key="w", mods="CTRL", action=wezterm.action{CloseCurrentPane={confirm=false}}},
 
     -- {key="i", mods="CTRL", action={SendKey={key="i", mods="CTRL"}}}, --default:tab
     -- {key="[", mods="CTRL", action={SendKey={key="[", mods="CTRL"}}}, --default:esc
@@ -114,9 +204,42 @@ return {
     -- {key="y", mods="ALT", action=wezterm.action{SendString="\x1b[5C"}}, --showkey -a
     -- {key="o", mods="ALT", action=wezterm.action{SendString="\x1b[5D"}}, --showkey -a
 
+    -- Copy Mode
+    {key=" ", mods="ALT", action=act.Multiple{
+        act.CopyMode("ClearPattern"),
+        act.CopyMode("Close"),
+        act.ActivateCopyMode,
+    }},
+
+    -- Search Case Insensitive
+    {key="F", mods="SHIFT|CTRL", action=act.Multiple{
+        act.Search{CaseInSensitiveString=""},
+        act.SendKey{key="u", mods="CTRL"},
+        act.CopyMode("ClearPattern"),
+    }},
+
+    -- quick select
+    { key="o", mods="CTRL|SHIFT", action=wezterm.action.QuickSelect},
+    { key="p", mods="CTRL|SHIFT",
+      action=wezterm.action.QuickSelectArgs{
+        label = "open url",
+        patterns={
+           "https?://\\S+"
+        },
+        action = wezterm.action_callback(function(window, pane)
+           local url = window:get_selection_text_for_pane(pane)
+           wezterm.log_info("opening: " .. url)
+           wezterm.open_with(url)
+        end)
+      }
+    },
+
     -- Clipboard Shortcuts
     {key="c", mods="ALT", action=wezterm.action{CopyTo="Clipboard"}},
     {key="v", mods="ALT", action=wezterm.action{PasteFrom="Clipboard"}},
+
+    -- Panes Shortcuts
+    {key="w", mods="CTRL", action=wezterm.action{CloseCurrentPane={confirm=false}}},
 
     -- Tab shortcut
     {key="t", mods="CTRL|SHIFT", action=wezterm.action{SpawnCommandInNewTab={cwd=""}}},
@@ -153,6 +276,15 @@ return {
 
   -- color_scheme = "Retro",
   colors = {
+    -- SHELL: for i in $(seq 256); do echo $(lua <<<"print('\27[${i}mReadydone${i}')"); done
+    -- cursor_bg = "#0000ff",
+    -- cursor_fg = "#cccccc",
+    -- cursor_border = "#0000ff",
+    -- ansi = {"#111111", "maroon", "green", "olive", "navy", "purple", "teal", "silver"},        -- Intensity Normal font SHELL:{30,37}
+    ansi = {"#222222","#bb0000","#008800","#bbbb00","#5555cc","#8855ff","#7acaca","#ffffff"},     -- Intensity Normal font SHELL:{30,37}
+    -- brights = {"#1c1c1c", "red", "lime", "yellow", "blue", "fuchsia", "aqua", "white"},        -- Intensity Bold font SHELL:{90,97}
+    brights = {"#555555","#ff0000","#00ff00","#ffff00","#1c1cff","#880088","#008888","#ff4400"},  -- Intensity Bold font SHELL:{90,97}
+
     tab_bar = {
       -- The color of the strip that goes along the top of the window
       -- (does not apply when fancy tab bar is in use)

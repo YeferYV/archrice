@@ -4,8 +4,9 @@
 -- nvim +PackerSync
 
 -- colorschemes
-vim.cmd [[ colorscheme lunar2-generated ]]
-vim.cmd [[ colorscheme lunar2 ]]
+-- vim.cmd [[ colorscheme lunar2-generated ]]
+-- vim.cmd [[ colorscheme lunar2 ]]
+vim.cmd [[ colorscheme leet]]
 
 -- Lua
 require "user.autocommands"
@@ -22,3 +23,4 @@ require "user.nvim-tree"
 require "user.telescope"
 require "user.toggleterm"
 require "user.treesitter"
+

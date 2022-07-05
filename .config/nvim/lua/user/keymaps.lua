@@ -67,8 +67,6 @@ keymap("v", "P", '"_dP', opts)
 
 -- Visual Block --
 -- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
@@ -107,20 +105,20 @@ keymap("n","Y","yg_",opts)
 -- keymap("c","w!!","execute 'silent! write !sudo tee % >/dev/null' <bar> edit!",opts)
 keymap("c","w!!","w !sudo tee %",opts)
 
--- Start leader mapping
+-- Start leader mappings --
 -- keymap("n","<leader>","",opts)
 
 -- vertical split
 -- keymap("n","<leader>v",":vsplit | resize 20 | term <CR>",opts)
 -- keymap("t","<leader>v",":vs +te <CR>",opts)
-keymap("n","<leader>t",":vsplit<bar>vertical resize 80<bar>term zsh<cr>",opts)
-keymap("t","<leader>t","<C-\\><C-n>:vsplit<bar>vertical resize 80<bar>term zsh<cr>",opts)
+keymap("n","<leader>s",":vsplit<bar>vertical resize 80<bar>term zsh<cr>",opts)
+-- keymap("t","<leader>s","<C-\\><C-n>:vsplit<bar>vertical resize 80<bar>term zsh<cr>",opts)  --while typing <space>t trigger it
 
 -- horizontal split
 -- keymap("n","<leader>V",":split | resize 20 | term <CR>",opts)
 -- keymap("t","<leader>V",":split +te <CR>",opts)
-keymap("n","<leader>T",":split<bar>resize 20<bar>term zsh<cr> ",opts)
-keymap("t","<leader>T","<C-\\><C-n>:split<bar>resize 20<bar>term zsh<cr>",opts)
+keymap("n","<leader>S",":split<bar>resize 20<bar>term zsh<cr> ",opts)
+-- keymap("t","<leader>S","<C-\\><C-n>:split<bar>resize 20<bar>term zsh<cr>",opts)  --while typing <space>t trigger it
 
 -- Zoom split
 -- noremap Zz <c-w>_ \| <c-w>\|
@@ -152,24 +150,30 @@ keymap("n","<leader>r",":lua _LF_TOGGLE()<CR>",opts)
 keymap("n","<leader>v",":ToggleTerm direction=vertical size=80<CR>",opts)
 keymap("n","<leader>V",":ToggleTerm direction=horizontal size=20<CR>",opts)
 
--- Lazygit
-keymap("n","<leader>g",":lua _LAZYGIT_TOGGLE()<CR>",opts)
+-- Git
+keymap("n","<leader>g",":Gitsigns preview_hunk<CR>",opts)
+keymap("n","<leader><BS>",":Gitsigns reset_hunk<CR>",opts)
+keymap("n","<leader>G",":lua _LAZYGIT_TOGGLE()<CR>",opts)
+keymap("n","<leader>[",":Gitsigns prev_hunk<CR>",opts)
+keymap("n","<leader>]",":Gitsigns next_hunk<CR>",opts)
 
 -- Toggle HighlightSearch/HideAll
 keymap("n","<leader>h",":set hlsearch!<CR>",opts)
 keymap("n","<leader>H",":call ToggleHiddenAll()<CR>",opts)
 
--- Execute python/shell (%=file)
-keymap("n","<leader>b","!bash %",opts)
-keymap("n","<leader>B","!python %",opts)
-
--- Compile/open file
-keymap("n","<leader>c",":w! | !compiler '<c-r>%'<CR>",opts)
-keymap("n","<leader>C","!opout",opts)
+-- Compile/Execute (%=file)
+keymap("n","<leader>cb","!bash %<CR>",opts)
+keymap("n","<leader>cp","!python %<CR>",opts)
+keymap("n","<leader>cc",":w! | !compiler '<c-r>%'<CR>",opts)
+keymap("n","<leader>co","!opout<CR>",opts)
 
 -- Codi enable/disable
-keymap("n","<leader>i",":Codi",opts)
-keymap("n","<leader>o",":Codi!",opts)
+keymap("n","<leader>i",":Codi<CR>",opts)
+keymap("n","<leader>o",":Codi!<CR>",opts)
+
+-- cursorline/linehighlight enable/disable
+keymap("n","<leader>n",":set nocursorline<CR>",opts)
+keymap("n","<leader>N",":set cursorline<CR>",opts)
 
 -- Buffer keymaps
 keymap("n","<leader>1","<Cmd>BufferLineGoToBuffer 1<CR>",opts)
@@ -183,13 +187,14 @@ keymap("n","<leader>8","<Cmd>BufferLineGoToBuffer 8<CR>",opts)
 keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
 
 -- Telescope
-keymap("n","<leader>pp","<cmd>lua require'telescope.builtin'.builtin{}<CR>",opts)
-keymap("n","<leader>m","<cmd>lua require'telescope.builtin'.oldfiles{}<CR>",opts)
-keymap("n","<leader>;","<cmd>lua require'telescope.builtin'.buffers{}<CR>",opts)
-keymap("n","<leader>/","<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>",opts)
-keymap("n","<leader>'","<cmd>lua require'telescope.builtin'.marks{}<CR>",opts)
-keymap("n","<leader>G","<cmd>lua require'telescope.builtin'.git_files{}<CR>",opts)
-keymap("n","<leader>bfs","<cmd>lua require'telescope.builtin'.find_files{}<CR>",opts)
-keymap("n","<leader>rg","cmd>lua require'telescope.builtin'.live_grep{}<CR>",opts)
-keymap("n","<leader>cs","<cmd>lua require'telescope.builtin'.colorscheme{}<CR>",opts)
+keymap("n","<leader>th","<cmd>TSHighlightCapturesUnderCursor<CR>",opts)
+keymap("n","<leader>tp","<cmd>lua require'telescope.builtin'.builtin{}<CR>",opts)
+keymap("n","<leader>to","<cmd>lua require'telescope.builtin'.oldfiles{}<CR>",opts)
+keymap("n","<leader>t;","<cmd>lua require'telescope.builtin'.buffers{}<CR>",opts)
+keymap("n","<leader>t/","<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>",opts)
+keymap("n","<leader>t'","<cmd>lua require'telescope.builtin'.marks{}<CR>",opts)
+keymap("n","<leader>tg","<cmd>lua require'telescope.builtin'.git_files{}<CR>",opts)
+keymap("n","<leader>tf","<cmd>lua require'telescope.builtin'.find_files{}<CR>",opts)
+keymap("n","<leader>tr","cmd>lua require'telescope.builtin'.live_grep{}<CR>",opts)
+keymap("n","<leader>tc","<cmd>lua require'telescope.builtin'.colorscheme{}<CR>",opts)
 

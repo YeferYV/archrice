@@ -8,17 +8,16 @@ local hide_in_width = function()
 end
 
 local colors = {
-  -- bg       = '#202328',
   bg       = '#000000',
-  fg       = '#bbc2cf',
+  fg       = '#555555',
   yellow   = '#ECBE7B',
   cyan     = '#008080',
   darkblue = '#081633',
-  green    = '#98be65',
+  green    = '#008800',
   orange   = '#FF8800',
   violet   = '#a9a1e1',
   magenta  = '#c678dd',
-  blue     = '#51afef',
+  blue     = '#5555ff',
   red      = '#ec5f67',
 }
 
@@ -74,20 +73,33 @@ local treesitterIcon = {
   end,
 }
 
+-- https://github.com/nvim-lualine/lualine.nvim/pull/620
 local lspServer = {
-  -- Lsp server name .
   function()
-    local msg = 'No Active Lsp'
     local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
     local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
-      return msg
+      return 'No Lsp'
     end
+    local clientNames = {}
     for _, client in ipairs(clients) do
       local filetypes = client.config.filetypes
       if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
+        -- return client.name
+        table.insert(clientNames, client.name)
       end
+    end
+    if #clientNames == 0 then
+      return 'No Lsp'
+    end
+    local msg = ''
+    local maxClientsToPrint = 3
+    local separator = '·'
+    for i = 1, math.min(maxClientsToPrint, #clientNames) do
+      msg = msg..(i == 1 and '' or separator)..clientNames[i]
+    end
+    if #clientNames > maxClientsToPrint then
+      msg = msg..separator..'+'..(#clientNames - maxClientsToPrint)
     end
     return msg
   end,
@@ -99,33 +111,37 @@ local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
+-- tooggleterm status
+local function toggleterm_status() return ' ' .. vim.b.toggle_number end
+local my_extension = { sections = { lualine_a = {toggleterm_status} }, filetypes = {'toggleterm'} }
+
 lualine.setup({
 	options = {
 		icons_enabled = true,
 		-- theme = "auto",
+		-- theme = "16color",
+    theme = {
+      -- We are going to use lualine_c an lualine_x as left and
+      -- right section. Both are highlighted by c theme .  So we
+      -- are just setting default looks o statusline
+      -- normal = { c = { fg = colors.fg, bg = colors.bg } },
+      -- inactive = { c = { fg = colors.fg, bg = colors.bg } },
+      normal = {
+        a = { fg = colors.blue, bg = colors.bg, gui = "bold" },
+        b = { fg = colors.fg, bg = colors.bg },
+        c = { fg = colors.fg, bg = colors.bg },
+      },
+      inactive = {
+        a = { fg = colors.green, bg = colors.bg, gui = "bold" },
+        b = { fg = colors.gray1, bg = colors.bg },
+        c = { fg = colors.gray1, bg = colors.bg },
+      },
+    },
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
-		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
+		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline","toggleterm" },
 		always_divide_middle = true,
 	},
-  theme = {
-    -- We are going to use lualine_c an lualine_x as left and
-    -- right section. Both are highlighted by c theme .  So we
-    -- are just setting default looks o statusline
-    -- normal = { c = { fg = colors.fg, bg = colors.bg } },
-    -- inactive = { c = { fg = colors.fg, bg = colors.bg } },
-    normal = {
-      a = { fg = colors.fg, bg = colors.blue, gui = "bold" },
-      b = { fg = colors.fg, bg = colors.bg },
-      c = { fg = colors.fg, bg = colors.bg },
-    },
-    inactive = {
-      a = { fg = colors.gray1, bg = colors.bg, gui = "bold" },
-      b = { fg = colors.gray1, bg = colors.bg },
-      c = { fg = colors.gray1, bg = colors.bg },
-    },
-  },
-
 	sections = {
 		lualine_a = { branch },
 		lualine_b = {},
@@ -144,5 +160,5 @@ lualine.setup({
 		lualine_z = {},
 	},
 	tabline = {},
-	extensions = {},
+	-- extensions = {my_extension},
 })

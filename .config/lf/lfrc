@@ -18,10 +18,10 @@ set ifs "\n"
 set icons
 set hidden true
 set period 1
-# set previewer ~/.config/lf/lf-wiki-previewer/lf_kitty_preview
-# set cleaner ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
-set previewer ~/.config/lf/lf-wiki-previewer/lf_sixel_preview
-set cleaner ~/.config/lf/lf-wiki-previewer/lf_sixel_clean
+set previewer ~/.config/lf/lf-wiki-previewer/lf_kitty_preview
+set cleaner ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
+# set previewer ~/.config/lf/lf-wiki-previewer/lf_sixel_preview
+# set cleaner ~/.config/lf/lf-wiki-previewer/lf_sixel_clean
 # set previewer ~/.config/lf/lf-wiki-previewer/lf_ueberzug_preview
 # set cleaner ~/.config/lf/lf-wiki-previewer/lf_ueberzug_clean
 # set previewer stpv
@@ -100,7 +100,7 @@ cmd open ${{
 	      image/*) basename -a $fx | bspswap sxiv -baio ;;
 	      audio/*) basename -a $fx | bspswap mpv --force-window --playlist=- ;;
 	      video/*) basename -a $fx | bspswap mpv --playlist=- ;;
-        application/pdf) bspswap zathura $fx ;; 
+        application/pdf) bspswap zathura $fx ;;
         #*) for f in $fx; do xdg-open $f &>/dev/null &;;
         *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
@@ -130,7 +130,7 @@ cmd sixel ${{
         application/pdf) Xsixel :1 -screen 1024x1024 -exec 'zathura $fx' 2>/dev/null;;
     esac
     }
-}} 
+}}
 
 cmd cmd_scrolldown &{{
 	# Retrieve the current preview offset.

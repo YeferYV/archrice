@@ -1,12 +1,11 @@
 local M = {}
 
--- TODO: backfill this to template
 M.setup = function()
 	local signs = {
 		{ name = "DiagnosticSignError", text = "" },
 		{ name = "DiagnosticSignWarn", text = "" },
-		{ name = "DiagnosticSignHint", text = "" },
-		{ name = "DiagnosticSignInfo", text = "" },
+		{ name = "DiagnosticSignHint", text = "" },
+		{ name = "DiagnosticSignInfo", text = "" },
 	}
 
 	for _, sign in ipairs(signs) do
@@ -14,9 +13,7 @@ M.setup = function()
 	end
 
 	local config = {
-		-- disable virtual text
 		virtual_text = true,
-		-- show signs
 		signs = {
 			active = signs,
 		},
@@ -93,13 +90,14 @@ M.on_attach = function(client, bufnr)
 	lsp_highlight_document(client)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_ok then
 	return
 end
 
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  M.capabilities = vim.lsp.protocol.make_client_capabilities()
+  M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+  M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
 
 return M

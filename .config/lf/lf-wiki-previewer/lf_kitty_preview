@@ -58,7 +58,7 @@ function make_video {
 function make_pdf {
     if [ "${TMP_FILE}" -ot "$1" ]; then
         # pdftoppm -singlefile -png $1 "${TMP_FILE%.png}"
-        mutool draw -F png -o "${TMP_FILE}" $1 1
+        mutool draw -F png -o "${TMP_FILE}" "$1" 1
     fi
 }
 
