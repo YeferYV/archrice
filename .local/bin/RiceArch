@@ -125,8 +125,13 @@ sudo -u "drknss" -D~ bash -c "nvim --headless +PlugInstall +qall"
 mkdir -p ~/.local/share/fonts
 git clone --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
 cd nerd-fonts
-git sparse-checkout add patched-fonts/3070
-cp -r patched-fonts/3070 ~/.local/share/fonts/
+git sparse-checkout add patched-fonts/3270
+cp -r patched-fonts/3270 ~/.local/share/fonts/
+
+# 3270 font
+mkdir -p ~/.local/share/fonts/3270-github
+wget https://github.com/rbanffy/3270font/releases/download/v3.0.0/3270_fonts_32ca849.zip
+unzip 3270_fonts_3b8f2fb.zip -d ~/.local/share/fonts/3270-github
 
 snapper -c root create -d "after-RiceArch"
 snapper -c home create -d "after-RiceArch"

@@ -72,7 +72,8 @@ return {
     {
       intensity = "Normal",
       -- font = wezterm.font("CaskaydiaCove Nerd Font", {weight="Bold", stretch="Normal", style=Normal}), -- ansi palet colors
-      font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="UltraExpanded", weight="DemiBold"}), -- ansi palet colors
+      -- font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="Normal", weight="DemiBold"}), -- ansi palet colors
+      font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="Normal", weight="Medium"}), -- ansi palet colors
     },
   },
 
