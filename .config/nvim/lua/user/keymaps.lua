@@ -111,13 +111,13 @@ keymap("c","w!!","w !sudo tee %",opts)
 -- vertical split
 -- keymap("n","<leader>v",":vsplit | resize 20 | term <CR>",opts)
 -- keymap("t","<leader>v",":vs +te <CR>",opts)
-keymap("n","<leader>s",":vsplit<bar>vertical resize 80<bar>term zsh<cr>",opts)
+keymap("n","<leader>s",":vsplit<bar>vertical resize 80<bar>term $SHELL<cr>",opts)
 -- keymap("t","<leader>s","<C-\\><C-n>:vsplit<bar>vertical resize 80<bar>term zsh<cr>",opts)  --while typing <space>t trigger it
 
 -- horizontal split
 -- keymap("n","<leader>V",":split | resize 20 | term <CR>",opts)
 -- keymap("t","<leader>V",":split +te <CR>",opts)
-keymap("n","<leader>S",":split<bar>resize 20<bar>term zsh<cr> ",opts)
+keymap("n","<leader>S",":split<bar>resize 20<bar>term $SHELL<cr> ",opts)
 -- keymap("t","<leader>S","<C-\\><C-n>:split<bar>resize 20<bar>term zsh<cr>",opts)  --while typing <space>t trigger it
 
 -- Zoom split
