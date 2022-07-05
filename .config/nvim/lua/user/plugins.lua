@@ -16,6 +16,21 @@ vim.cmd [[
   augroup end
 ]]
 
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+	return
+end
+
+-- packer options
+packer.init({
+  max_jobs = 5,
+  git = {
+      depth = 1,
+      clone_timeout = 60,
+  },
+})
+
 return require('packer').startup(function(use)
   use { 'wbthomason/packer.nvim',
     commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422"
