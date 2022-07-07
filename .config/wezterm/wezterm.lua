@@ -241,6 +241,8 @@ return {
 
     -- Panes Shortcuts
     {key="w", mods="CTRL", action=wezterm.action{CloseCurrentPane={confirm=false}}},
+    {key="b", mods="CTRL|SHIFT", action=act.RotatePanes("CounterClockwise")},
+    {key="n", mods="CTRL|SHIFT", action=act.RotatePanes("Clockwise")},
 
     -- Tab shortcut
     {key="t", mods="CTRL|SHIFT", action=wezterm.action{SpawnCommandInNewTab={cwd=""}}},

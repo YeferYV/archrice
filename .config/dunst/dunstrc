@@ -29,15 +29,18 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    #geometry = "300x5-30+20"
-    geometry = "0x5-30+20"
+    # geometry = "300x5-30+20"
+    # geometry = "0x5-30+20"
+    width = (0,300)
+    height = 300
+
     # Show how many messages are currently hidden (because of geometry).
     #indicate_hidden = yes
     indicate_hidden = false
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
-    shrink = no
+    # shrink = no
 
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
