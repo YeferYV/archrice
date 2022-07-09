@@ -24,10 +24,10 @@ end
 
 -- packer options
 packer.init({
-  max_jobs = 5,
+  -- max_jobs = 5,
   git = {
       depth = 1,
-      clone_timeout = 60,
+      clone_timeout = 100,
   },
 })
 
@@ -45,9 +45,6 @@ return require('packer').startup(function(use)
   -- Better tabline
   use { 'akinsho/bufferline.nvim',
     commit = "c78b3ecf9539a719828bca82fc7ddb9b3ba0c353",
-    requires = { 'kyazdani42/nvim-web-devicons',
-      commit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e",
-    }
   }
 
   -- Colors
@@ -111,11 +108,9 @@ return require('packer').startup(function(use)
   -- use { 'tpope/vim-commentary', commit = "3654775824337f466109f00eaf6759760f65be34" }
   use { "numToStr/Comment.nvim",
     commit = "2c26a00f32b190390b664e56e32fd5347613b9e2",
-    requires = { "JoosepAlviste/nvim-ts-context-commentstring",
-      commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269"
-    },
     config = function() require('Comment').setup() end
   }
+  use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269", opt = true }
 
   -- cmp plugins
   -- use { 'hrsh7th/nvim-cmp', branch = "border-window" } -- The completion plugin
@@ -157,7 +152,7 @@ return require('packer').startup(function(use)
   use { 'nvim-lualine/lualine.nvim',
     commit = "3362b28f917acc37538b1047f187ff1b5645ecdd",
     requires = { 'kyazdani42/nvim-web-devicons',
-      commit = "3362b28f917acc37538b1047f187ff1b5645ecdd",
+      commmit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e",
       opt = true }
   }
 
@@ -174,12 +169,8 @@ return require('packer').startup(function(use)
 
   -- Syntax hightlighting
   -- use { 'nvim-treesitter/playground', commit = "71b00a3c665298e5155ad64a9020135808d4e3e8" }  -----------------------------------------------
-  use { 'nvim-treesitter/nvim-treesitter',
-    commit = "518e27589c0463af15463c9d675c65e464efc2fe",
-    requires = {'nvim-treesitter/nvim-treesitter-textobjects',
-      commit="b1e850b77e57b2720c06d523d6fc4776ad6a5608",
-    },
-  }
+  use { 'nvim-treesitter/nvim-treesitter', commit = "518e27589c0463af15463c9d675c65e464efc2fe" }
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', commit="b1e850b77e57b2720c06d523d6fc4776ad6a5608", opt = true }
 
   -- Git
   use { "lewis6991/gitsigns.nvim",
