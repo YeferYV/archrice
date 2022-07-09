@@ -49,7 +49,7 @@ cmd shell-pipe-open-with %"$@" $fx
 cmd shell-wait-open-with !$@ $fx
 cmd shell-async-open-with &$@ $fx
 
-cmd draganddrop &dragon-drag-and-drop -a -x $fx
+cmd draganddrop &dragon-drop -a -x $fx
 # cmd duplicatelf &nohup $TERMINAL -e "lf" >/dev/null 2>&1
 # cmd duplicatelf &nohup sh -c "export LF_CD=true && $TERMINAL" >/dev/null 2>&1
 cmd duplicatelf &setsid -f env LF_CD=true $TERMINAL start --cwd=$PWD
