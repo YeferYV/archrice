@@ -18,16 +18,29 @@ set -eu
 #sed -n '17,129p' ResetArch | sed 's/ \//g' > resetarchpackages
 #comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base-devel|sort) > installedpackages
 
+#-- pacman configs
 [ $(id -u) != 1000 ] && printf "\e[1;31mRun it as unprivileged user(wheel group), sudo command needed\e[0m\n" >&2 && exit 1
 sudo sed -i '33s/#//' /etc/pacman.conf
 sudo sed -i '37s/#//' /etc/pacman.conf
 sudo pacman-key --init
 sudo pacman-key --populate
-sudo pacman -Syu base-devel git
+sudo pacman -Syu base-devel cmake git unzip
+
+#-- Neovim version 0.7
+git clone --depth=1 https://github.com/neovim/neovim.git
+cd neovim
+git checkout release-0.7
+make CMAKE_BUILD_TYPE=Release
+sudo make install
+cd ..
+rm -rf neovim
+
+#-- yay
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
 makepkg -si
 
+#-- 4rch dependencies
 yay -Syu \
 bat \
 bash-language-server \
@@ -63,7 +76,6 @@ mpd \
 mpv \
 mpv-mpris \
 ncmpcpp \
-neovim \
 nerd-fonts-cascadia-code \
 network-manager-applet \
 ntfs-3g \
@@ -88,7 +100,6 @@ sxhkd \
 sxiv \
 touchcursor-linux-git \
 trash-cli \
-unzip \
 unclutter \
 vim-sxhkdrc-git \
 wezterm \
