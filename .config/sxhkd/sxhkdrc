@@ -333,6 +333,10 @@ super + {F11,F12}
 shift + space
   playerctl --player=chromium play-pause
 
+# chromium next-toggle-prev
+alt + KP_{Right,Begin,Left}
+  playerctl --player=chromium {next,play-pause,previous}
+
 # chromium rewind-forward
 alt + {a,s}
   YTID="$(wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1')"; \

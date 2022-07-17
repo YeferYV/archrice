@@ -24,16 +24,10 @@ sudo sed -i '33s/#//' /etc/pacman.conf
 sudo sed -i '37s/#//' /etc/pacman.conf
 sudo pacman-key --init
 sudo pacman-key --populate
-sudo pacman -Syu base-devel cmake git unzip
+sudo pacman -Syu base-devel git
 
 #-- Neovim version 0.7
-git clone --depth=1 https://github.com/neovim/neovim.git
-cd neovim
-git checkout release-0.7
-make CMAKE_BUILD_TYPE=Release
-sudo make install
-cd ..
-rm -rf neovim
+curl -Lo $HOME/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage && chmod +x $HOME/.local/bin/nvim
 
 #-- yay
 git clone https://aur.archlinux.org/yay-bin.git
@@ -101,6 +95,7 @@ sxiv \
 touchcursor-linux-git \
 trash-cli \
 unclutter \
+unzip \
 vim-sxhkdrc-git \
 wezterm \
 xcape \

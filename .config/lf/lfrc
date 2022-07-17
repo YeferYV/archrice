@@ -333,7 +333,8 @@ map J     half-down
 map K     half-up
 
 map i     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' bat --pager "less -R" --paging always --wrap never $f
-map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less -R $f
+# map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less -R $f
+map I     $bspswap mpv $fx
 map o     $mimeopen $fx >/dev/null 2>&1   #'setsid -f' unneeded
 map O     $mimeopen --ask $fx 2>/dev/null #'setsid -f' unneeded
 
