@@ -17,7 +17,7 @@ hi   ErrorMsg                              guifg=#ff0000  guibg=none      gui=no
 hi   Folded                                guifg=none     guibg=#0000ff   gui=none
 hi   FoldColumn                            guifg=none     guibg=#000000   gui=none
 hi   Function                              guifg=#008800  guibg=none      gui=none
-hi   Identifier                            guifg=#8855ff  guibg=none      gui=none
+hi   Identifier                            guifg=#5e81ac  guibg=none      gui=none
 hi   IncSearch                             guifg=#ffff00  guibg=#5555ff   gui=none
 hi   Keyword                               guifg=#5555ff  guibg=none      gui=none
 hi   LineNr                                guifg=#555555  guibg=none      gui=none
@@ -61,7 +61,7 @@ hi   TSConstBuiltin                        guifg=#880000  guibg=none      gui=no
 hi   TSConstMacro                          guifg=#ff4400  guibg=none      gui=none
 hi   TSError                               guifg=#ff0000  guibg=none      gui=none
 hi   TSException                           guifg=#bb0000  guibg=none      gui=none
-hi   TSField                               guifg=#8855ff  guibg=none      gui=none
+hi   TSField                               guifg=#5e81ac  guibg=none      gui=none
 hi   TSFloat                               guifg=#008888  guibg=none      gui=none
 hi   TSFunction                            guifg=#008800  guibg=none      gui=none
 hi   TSFuncBuiltin                         guifg=#ff0000  guibg=none      gui=none
@@ -69,13 +69,13 @@ hi   TSFuncMacro                           guifg=#1c1cff  guibg=none      gui=no
 hi   TSInclude                             guifg=#bb0000  guibg=none      gui=none
 hi   TSKeyword                             guifg=#5555ff  guibg=none      gui=none
 hi   TSKeywordFunction                     guifg=#5555ff  guibg=none      gui=none
-hi   TSLabel                               guifg=#8855ff  guibg=none      gui=none
+hi   TSLabel                               guifg=#5e81ac  guibg=none      gui=none
 hi   TSMethod                              guifg=#bbbb00  guibg=none      gui=none
 hi   TSNamespace                           guifg=#5555ff  guibg=none      gui=none
 hi   TSNone                                guifg=#ff4400  guibg=none      gui=none
 hi   TSNumber                              guifg=#bbbb00  guibg=none      gui=none
 hi   TSOperator                            guifg=#5555ff  guibg=none      gui=none
-hi   TSParameter                           guifg=#8855ff  guibg=none      gui=none
+hi   TSParameter                           guifg=#5e81ac  guibg=none      gui=none
 hi   TSParameterReference                  guifg=#880088  guibg=none      gui=none
 hi   TSProperty                            guifg=#7acaca  guibg=none      gui=none
 hi   TSPunc                                guifg=#880000  guibg=none      gui=none
@@ -88,7 +88,7 @@ hi   TSStringRegex                         guifg=#008800  guibg=none      gui=no
 hi   TSStringEscape                        guifg=#00ff00  guibg=none      gui=none
 hi   TSSymbol                              guifg=#888888  guibg=none      gui=none
 hi   TSType                                guifg=#880088  guibg=none      gui=none
-hi   TSTypeBuiltin                         guifg=#8855ff  guibg=none      gui=none
+hi   TSTypeBuiltin                         guifg=#5e81ac  guibg=none      gui=none
 hi   TSVariable                            guifg=#cccccc  guibg=none      gui=none
 hi   TSVariableBuiltin                     guifg=#ff0000  guibg=none      gui=none
 hi   TSTag                                 guifg=#1c1cff  guibg=none      gui=none
