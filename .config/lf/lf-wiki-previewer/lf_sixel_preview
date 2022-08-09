@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file=$1
+file="$1"
 w=$2
 h=$3
 x=$4
@@ -11,7 +11,7 @@ cleanup() {
     lf -remote "send $id echo 'trapped' "
     exit 0
 }
-# trap cleanup 0 EXIT 
+# trap cleanup 0 EXIT
 
 case "$1" in
     *.tar*) tar tf "$1";;
@@ -19,17 +19,17 @@ case "$1" in
     *.rar)  unrar l "$1";;
     *.7z)   7z l "$1";;
     *.pdf)  pdftotext "$1" -;;
-    *.six) (tput cup $((y)) $((x)) && cat $1) >/dev/tty ; exit 1 ;;
-    *.jpg|*.png) ( tput cup $((y)) $((x)) && img2sixel -w $((w*8)) $1 | sed 's/#/\n#/g') >/dev/tty && exit 1 ;;
+    *.six) (tput cup $((y)) $((x)) && cat "$1") >/dev/tty ; exit 1 ;;
+    *.jpg|*.png) ( tput cup $((y)) $((x)) && img2sixel -w $((w*8)) "$1" | sed 's/#/\n#/g') >/dev/tty && exit 1 ;;
 
     # # https://github.com/gokcehan/lf/pull/840
     # *.jpg|*.png)  chafa -f sixel "$1" -s "$4"x  | sed 's/#/\n#/g' && exit 1 ;;
     # *.jpg|*.png)  img2sixel -w $((w*15/2)) "$1" | sed 's/#/\n#/g'  && exit 1 ;;
 
-    # *.jpg|*.png) (exec >/dev/tty; exec <&1; tput cup $((y)) $((x));  img2sixel -w $((w*8)) $1 );         cleanup; exit 1;;
-    # *.jpg|*.png) (tput hpa 80 & tput vpa 10 &&                       img2sixel -w 200 $1 && tput civis)  >/dev/tty && lf -remote "send redraw" && exit 1;;
-    # *.jpg|*.png) (tput cup $((y)) $((x)) ;                           img2sixel -w $((w*8)) $1)           >$(cat /tmp/sixel-$WINDOWID | head -n 1); exit 1;;
-    # *.jpg|*.png) (tput cup $((y)) $((x)) ;                           wezterm imgcat --width $((w)) $1)   >/dev/tty; exit 1;;
+    # *.jpg|*.png) (exec >/dev/tty; exec <&1; tput cup $((y)) $((x));  img2sixel -w $((w*8)) "$1" );         cleanup; exit 1;;
+    # *.jpg|*.png) (tput hpa 80 & tput vpa 10 &&                       img2sixel -w 200 "$1" && tput civis)  >/dev/tty && lf -remote "send redraw" && exit 1;;
+    # *.jpg|*.png) (tput cup $((y)) $((x)) ;                           img2sixel -w $((w*8)) "$1")           >$(head -n1 /tmp/sixel-$WEZTERM_PANE ); exit 1;;
+    # *.jpg|*.png) (tput cup $((y)) $((x)) ;                           wezterm imgcat --width $((w)) "$1")   >/dev/tty; exit 1;;
 
     *json) bat -l json --style plain --color=always "$1" || echo "no bat :(" ;;
     *) bat --style plain --color=always "$1" || echo "no bat :(" ;;

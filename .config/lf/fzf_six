@@ -1,5 +1,8 @@
 #!/bin/bash
 
+TMP_FILE="$HOME/.cache/lf/err.png"
+TMP_FILE_SIXEL="$HOME/.cache/lf/err.six"
+
 function check_cache {
     if [ ! -d "$HOME/.cache/lf" ]; then
 	mkdir -p "$HOME/.cache/lf"
@@ -10,73 +13,115 @@ function hash_filename {
     TMP_FILE="$HOME/.cache/lf/$(echo ${1%.*} | sed -e 's|/|\!|g').$2"
 }
 
+function hash_sixel {
+    TMP_FILE_SIXEL="$HOME/.cache/lf/$(echo ${1%.*} | sed -e 's|/|\!|g').$2"
+}
+
 function draw_clear {
     kitty +kitten icat --transfer-mode file --clear
 }
 
-function draw_image {
-    ( tput cup 2 $(($(tput cols)+6)) ; cat $1 && sleep 60 )>/dev/tty
-    # ( tput cup 2 $(($(tput cols)+6)) ; img2sixel --width $(($(tput cols)*8)) $1 && sleep 60 ) >/dev/tty
-    # ( tput cup 2 $(($(tput cols)+6)) ; wezterm imgcat --width $(tput cols) $1 && sleep 60 ) >/dev/tty
-    # kitty +icat --transfer-mode file --place "$(tput cols)x$(tput cols)@$(($(tput cols)+6))x2" "$1" && sleep 60
+function draw_kitty {
+    kitty +kitten icat --transfer-mode file --place "$(($(tput cols)/2-4))x$(($(tput lines)))@$(($(tput cols)/2+3))x2" "$1" && sleep 60
+}
+
+function draw_sixel {
+    killall -s SIGWINCH fzf && sleep 0.5 && #if >/dev/tty \
+    ( tput cup 2 $(($(tput cols)/2+3)) ; cat "$1" && sleep 60 )>/dev/tty  # After make_sixel
+}
+
+function draw_wezterm {
+    killall -s SIGWINCH fzf && sleep 0.5 && #if >/dev/tty \
+    # ( tput cup 2 $(($(tput cols)/2+3)) ; wezterm imgcat --width $(($(tput cols)/2-4-$2)) "$1" && sleep 60 ) >/dev/tty
+    ( tput cup 2 $(($(tput cols)/2+3)) ; img2sixel --width $(($(tput cols)*4-40-$3)) "$1" && sleep 60 ) >/dev/tty
 }
 
 function make_sixel {
+    if [ "${TMP_FILE_SIXEL}" -ot "$1" ]; then
+        img2sixel --width=$(($(tput cols)*4-40-$3)) -i "$1" -o "${TMP_FILE_SIXEL}"
+        # wezterm imgcat --width $(($(tput cols)/2-4-$2)) "$1" > "${TMP_FILE_SIXEL}"
+    fi
+}
+
+function make_djvu {
     if [ "${TMP_FILE}" -ot "$1" ]; then
-      img2sixel --width=$(($(tput cols)*8)) -i $1 -o "${TMP_FILE}"
-      # wezterm imgcat --width $(tput cols) $1 > "${TMP_FILE}"
+        ddjvu -format=ppm -page=1 "$1" "${TMP_FILE}"
     fi
 }
 
 function make_video {
     if [ "${TMP_FILE}" -ot "$1" ]; then
-	ffmpegthumbnailer -t 0% -q 3 -s 0 \
-			  -c jpeg -i "$1" -o "${TMP_FILE}"
+	      ffmpegthumbnailer -s 0 -c png -i "$1" -o "${TMP_FILE}"
     fi
 }
 
 function make_pdf {
     if [ "${TMP_FILE}" -ot "$1" ]; then
-	pdftoppm -png -f 1 -l 1 -jpeg -tiffcompression jpeg \
-		 -scale-to-x -1 -scale-to-y 1080 \
-		 -singlefile "$1" "${TMP_FILE%.png}"
+        mutool draw -F png -w $(($(tput cols)*2)) -o "${TMP_FILE}" "$1" 1
     fi
 }
 
 check_cache
 # draw_clear
-case $(file -b --mime-type "$1") in
-  text/*)
-    cat "$1"
-    ;;
-  image/*)
-    hash_filename "$1" "six"
-    make_sixel "$1" "$2" "$3"
-    draw_image "${TMP_FILE}" "$2" "$3" "$4" "$5"
-    # draw_image "$1" "$2" "$3" "$4" "$5"
-    exit 1
-    ;;
-  video/*)
-    hash_filename "$1" "jpg"
-    make_video "$1" "$2" "$3"
-    draw_image "${TMP_FILE}" "$2" "$3" "$4" "$5"
-    exit 1
-    ;;
-  application/pdf)
-    hash_filename "$1" "png"
-    make_pdf "$1" "$2" "$3"
-    draw_image "${TMP_FILE}" "$2" "$3" "$4" "$5"
-    exit 1
-    ;;
-  application/gzip|application/x-xz)
-    tar tf "$1"
-    ;;
-  application/zip)
-    unzip -Z -1 "$1"
-    ;;
-  application/x-sharedlib)
-    readelf -h "$1"
-    ;;
+case $(file -Lb --mime-type "$1") in
+
+    image/vnd.djvu)
+        hash_filename "$1" "ppm"
+        make_djvu "$1" "$2" "$3"
+        # hash_sixel "${TMP_FILE}" "six"
+        # make_sixel "${TMP_FILE}" "$2" "$3"
+        # draw_sixel "${TMP_FILE_SIXEL}" "$2" "$3" "$4" "$5"
+        # draw_kitty "${TMP_FILE}" "$2" "$3" "$4" "$5"
+        draw_wezterm "${TMP_FILE}" "$2" "$3" "$4" "$5"
+        exit 1
+        ;;
+    image/*)
+        # hash_sixel "$1" "six"
+        # make_sixel "$1" "$2" "$3"
+        # draw_sixel "${TMP_FILE_SIXEL}" "$2" "$3" "$4" "$5"
+        # draw_kitty "$1" "$2" "$3" "$4" "$5"
+        draw_wezterm "$1" "$2" "$3" "$4" "$5"
+        exit 1
+        ;;
+    video/*)
+        hash_filename "$1" "jpg"
+        make_video "$1" "$2" "$3"
+        # hash_sixel "${TMP_FILE}" "six"
+        # make_sixel "${TMP_FILE}" "$2" "$3"
+        # draw_sixel "${TMP_FILE_SIXEL}" "$2" "$3" "$4" "$5"
+        # draw_kitty "${TMP_FILE}" "$2" "$3" "$4" "$5"
+        draw_wezterm "${TMP_FILE}" "$2" "$3" "$4" "$5"
+        exit 1
+        ;;
+    application/pdf)
+        hash_filename "$1" "png"
+        make_pdf "$1" "$2" "$3"
+        # hash_sixel "${TMP_FILE}" "six"
+        # make_sixel "${TMP_FILE}" "20" "200"
+        # draw_sixel "${TMP_FILE_SIXEL}" "$2" "$3" "$4" "$5"
+        # draw_kitty "${TMP_FILE}" "$2" "$3" "$4" "$5"
+        draw_wezterm "${TMP_FILE}" "20" "200" "$4" "$5"
+        exit 1
+        ;;
+    application/gzip|*x-xz|*bzip*|*zstd)
+        tar tf "$1" || echo "no tar :("
+        ;;
+    application/zip)
+        unzip -Z -1 "$1" || echo "no unzip :("
+        ;;
+    application/x-sharedlib)
+        readelf -h "$1" || echo "no readelf :("
+        ;;
+    *rar)
+        unrar l "$1" || echo "no unrar :("
+        ;;
+    *json)
+        bat -l json --style plain --color always "$1" | awk "NR > ${OFFSET}-1" || echo "no bat :("
+        ;;
+    *)
+        bat --style plain --color always "$1" || echo "no bat :("
+        ;;
+
 esac
 
 exit 0

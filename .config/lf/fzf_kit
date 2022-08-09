@@ -8,13 +8,14 @@
 # imageW4=$((window_width/2 - 25))   #same-as-imageH2
 # imageH4=$((window_height/2 - 25))  #same-as-imageW2
 
-imageW=$(($COLUMNS))
-imageH=$(($LINES))
-imageW2=$((${COLUMNS}*17/2-25))
-imageH2=$((${LINES}*17/2-25))
+MARGIN=4
+imageW=$((${COLUMNS}/2-$MARGIN)) #$FZF_PREVIEW_COLUMNS
+imageH=$((${LINES}-$MARGIN))     #$FZF_PREVIEW_LINES
+imageW_sixel=$((${COLUMNS}*4-40))
+imageH_sixel=$((${LINES}*4-40))
 PADDING=2
-imageX=$(($(</dev/tty stty size | cut -d ' ' -f 2) - ${imageW} - $PADDING))
-imageY=$(($(</dev/tty stty size | cut -d ' ' -f 1) - ${imageH})) # imageY=2
+imageX=$(($(</dev/tty tput cols) - ${imageW} - $PADDING))
+imageY=$(($(</dev/tty tput lines) - ${imageH} - $PADDING)) # imageY=2=$PADDING
 
 case "$1" in
     *.tar*) tar tf "$1";;
@@ -26,11 +27,10 @@ case "$1" in
       kitty +icat --transfer-mode file --place "${imageW}x${imageH}@${imageX}x2" "$1" && sleep 60
       (echo "$LINES $COLUMNS"&& stty size&& tput lines&& tput cols&& kitty +icat --print-window-size) </dev/tty | tr "\n" " " ;;
 
-    # *.jpg|*.png)  tput sc && (tput cup 2 ${imageX};    img2sixel -w ${imageW2} $1)             >/dev/tty && tput rc;;
-    # *.jpg|*.png)  tput cup 2 ${imageX} >/dev/tty &&    img2sixel -w ${imageW2} $1              >/dev/tty;;
-    # *.jpg|*.png)  tput cup 2 ${imageX} </dev/tty &&    img2sixel -w ${imageW2} $1              >/dev/tty;;
-    # *.jpg|*.png) (tput cup 2 ${imageX} ;               wezterm imgcat --width ${imageW} $1)    >/dev/tty;;
-    # *.jpg|*.png)                                       wezterm cli split-pane --horizontal     -- bash -c "wezterm imgcat '$1' && read ";;
+    # *.jpg|*.png) killall -s SIGWINCH fzf && sleep 0.5 && (tput sc && tput cup 2 ${imageX}&&    img2sixel -w ${imageW_sixel} "$1")        >/dev/tty && sleep 60 && tput rc >/dev/tty;;
+    # *.jpg|*.png) killall -s SIGWINCH fzf && sleep 0.5 && (tput cup 2 ${imageX}&&               img2sixel -w ${imageW_sixel} "$1")        >/dev/tty && sleep 60;;
+    # *.jpg|*.png) killall -s SIGWINCH fzf && sleep 0.5 && (tput cup 2 ${imageX};                wezterm imgcat --width ${imageW} "$1")    >/dev/tty && sleep 60;;
+    # *.jpg|*.png)                                                                               wezterm cli split-pane --horizontal     -- bash -c "wezterm imgcat "$1" && read ";;
 
     *json) bat -l json --style plain --color=always "$1" || echo "no bat :(" ;;
     *) bat --style plain --color=always "$1" || echo "no bat :(" ;;
