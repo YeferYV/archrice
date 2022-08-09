@@ -3,7 +3,7 @@
 #
 
 # terminal emulator
-super + {_,shift +,ctrl +}Return
+super + {_,shift +,ctrl + }Return
 	{ \
 		$TERMINAL; \
 	, bspc rule -a \* -o state=floating && $TERMINAL; \
@@ -15,7 +15,7 @@ mod1 + {_,shift +,ctrl +}Return
   {kitty,alacritty,cool-retro-term}
 
 # dunst close/reopen notification
-ctrl + {_,shift + }space
+ctrl + {_,shift + }Return
 	dunstctl {close, history-pop}
 
 # make sxhkd reload its configuration files:

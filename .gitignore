@@ -1,9 +1,6 @@
-.config/ipython/profile_default/db/
-.config/ipython/profile_default/log/
-.config/ipython/profile_default/pid/
-.config/ipython/profile_default/security/
-.config/ipython/profile_default/startup/
-.config/ipython/profile_default/history.sqlite
+.config/ipython/profile_default/*
+!.config/ipython/profile_default/ipython_config.py
+
 .config/ncmpcpp/lyrics/
 .config/ncmpcpp/error.log
 .config/nvim/plugin

@@ -32,10 +32,9 @@ date +%T | awk -F ':' '($1 >= 22 && $2 == 30)' | xargs -I_ [ -z _ ] || (echo "22
 # date +%T | awk -F ':' '($1 >= 22 && $2 == 10)' | xargs -I_ [ -z _ ] || (echo "22:10 hours 🛌 4AM rule, feeling untired, study math, bysnappy" | tee >(festival --tts)  && countdown 1800 && sudo poweroff)
 date +%T | awk -F ':' '($1 >= 22 && $2 == 00)' | xargs -I_ [ -z _ ] || (echo "22:00 hours 🛌 slow time, follow the rules" | tee >(festival --tts) && countdown 1800 && sudo poweroff)
 # date +%T | awk -F ':' '($1 >= 21 && $2 == 00)' | xargs -I_ [ -z _ ] || (echo "21:00 hours 🛌 feeling slow, low cognition" | tee >(festival --tts) && countdown 3600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 21 && $2 == 50) {exit 1}' || (festival --tts <<<"22:20 hours 💤 sleeping late equals sleepy next day" && notify-send -u low "22:20 hours 💤")
+date +%T | awk -F ':' '($1 >= 21 && $2 == 50) {exit 1}' || (festival --tts <<<"$(date +%T) hours 💤 sleeping late equals sleepy next day" && notify-send -u low "$(date +%T) hours 💤")
 date +%T | awk -F ':' '($1 >= 21 && $2 ~".0") {print $1":"$2}' | festival --tts
 date +%T | awk -F ':' '($1 ~ "." && $2 == 00) {print $1":"$2}' | festival --tts
 cat /sys/class/power_supply/BAT0/capacity | awk ' $1 >= 98 {system("festival --tts <<<complete-charge") }'
 cat /sys/class/power_supply/BAT0/status | awk '$1 == "Charging" {exit 1}' &&
 cat /sys/class/power_supply/BAT0/capacity | awk '$1 <= 15 {system("festival --tts <<<"$1"-percent") } ; $1 == 5 {system("notify-send -u critical " $1 "% discharging\n") }'
-

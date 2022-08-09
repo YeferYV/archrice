@@ -109,11 +109,13 @@ return {
       {key="f",          mods="ALT",  action=act.CopyMode("MoveForwardWord")},
       {key="Tab",        mods="NONE", action=act.CopyMode("MoveForwardWord")},
       {key="w",          mods="NONE", action=act.CopyMode("MoveForwardWord")},
+      {key="W",          mods="NONE", action=act.CopyMode("MoveForwardWord")},
 
       {key="LeftArrow", mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
       {key="b",         mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
       {key="Tab",       mods="SHIFT", action=act.CopyMode("MoveBackwardWord")},
       {key="b",         mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
+      {key="B",         mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
 
       {key="0",     mods="NONE",  action=act.CopyMode("MoveToStartOfLine")},
       {key="Enter", mods="NONE",  action=act.CopyMode("MoveToStartOfNextLine")},
@@ -135,12 +137,9 @@ return {
       {key="G", mods="SHIFT", action=act.CopyMode("MoveToScrollbackBottom")},
       {key="g", mods="NONE",  action=act.CopyMode("MoveToScrollbackTop")},
 
-      {key="H", mods="NONE",  action=act.CopyMode("MoveToViewportTop")},
-      {key="H", mods="SHIFT", action=act.CopyMode("MoveToViewportTop")},
-      {key="M", mods="NONE",  action=act.CopyMode("MoveToViewportMiddle")},
-      {key="M", mods="SHIFT", action=act.CopyMode("MoveToViewportMiddle")},
-      {key="L", mods="NONE",  action=act.CopyMode("MoveToViewportBottom")},
-      {key="L", mods="SHIFT", action=act.CopyMode("MoveToViewportBottom")},
+      {key="h", mods="ALT", action=act.CopyMode("MoveToViewportTop")},
+      {key="m", mods="ALT", action=act.CopyMode("MoveToViewportMiddle")},
+      {key="l", mods="ALT", action=act.CopyMode("MoveToViewportBottom")},
 
       {key="o", mods="NONE",  action=act.CopyMode("MoveToSelectionOtherEnd")},
       {key="O", mods="NONE",  action=act.CopyMode("MoveToSelectionOtherEndHoriz")},
@@ -148,22 +147,86 @@ return {
 
       {key="PageUp",   mods="NONE", action=act.CopyMode("PageUp")},
       {key="PageDown", mods="NONE", action=act.CopyMode("PageDown")},
-      {key="b",        mods="NONE", action=act.CopyMode("PageUp")},
-      {key="f",        mods="NONE", action=act.CopyMode("PageDown")},
       {key="u",        mods="NONE", action=act.CopyMode("PageUp")},
       {key="d",        mods="NONE", action=act.CopyMode("PageDown")},
-      {key="K",        mods="NONE", action=act.CopyMode("PageUp")},
-      {key="J",        mods="NONE", action=act.CopyMode("PageDown")},
 
-      {key="y", mods="NONE", action=wezterm.action{Multiple={
-             wezterm.action{CopyTo="ClipboardAndPrimarySelection"},
-             wezterm.action{CopyMode="Close"}
-      }}},
+      {key="H", mods="NONE", action=act.Multiple{
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+          act.CopyMode("MoveLeft"),
+        },
+      },
+      {key="J", mods="NONE", action=act.Multiple{
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+          act.CopyMode("MoveDown"),
+        },
+      },
+      {key="K", mods="NONE", action=act.Multiple{
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+          act.CopyMode("MoveUp"),
+        },
+      },
+      {key="L", mods="NONE", action=act.Multiple{
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+          act.CopyMode("MoveRight"),
+        },
+      },
 
-      {key="/", mods="NONE", action=wezterm.action{Search={CaseInSensitiveString=""}}},
-      {key="N", mods="NONE", action=act.CopyMode("PriorMatch")},
-      {key="n", mods="NONE", action=act.CopyMode("NextMatch")},
-
+      {key="y", mods="NONE", action=act.Multiple{
+          wezterm.action{CopyTo="ClipboardAndPrimarySelection"},
+          act.CopyMode("ClearPattern"),
+          wezterm.action{CopyMode="Close"}
+        },
+      },
+      {key="/", mods="NONE", action=act.Multiple{
+          act.Search{CaseInSensitiveString=""},
+        },
+      },
+      {key="N", mods="NONE", action=act.Multiple{
+          act.CopyMode("PriorMatch"),
+          act.CopyMode{SetSelectionMode="Cell"},
+        },
+      },
+      {key="n", mods="NONE", action=act.Multiple{
+          act.CopyMode("NextMatch"),
+          act.CopyMode{SetSelectionMode="Cell"},
+        },
+      },
+      {key="u", mods="CTRL", action=act.Multiple{
+          act.ClearSelection,
+          -- act.CompleteSelection 'Clipboard',
+        },
+      }
     },
     search_mode = {
       {key="Escape", mods="NONE", action=act.Multiple{
@@ -171,10 +234,17 @@ return {
           act.CopyMode("ClearPattern"),
           act.CopyMode("Close"),
       }},
-      {key="Enter", mods="NONE", action="ActivateCopyMode"},
+
+      -- {key="Enter", mods="NONE", action="ActivateCopyMode"},
+      {key="Enter", mods="NONE", action=act.Multiple{
+          act.ActivateCopyMode,
+          act.CopyMode{SetSelectionMode="Cell"},
+          -- act.ClearSelection,
+          -- act.CopyMode('ClearSelectionMode'),
+        }
+      },
+
       {key="p", mods="CTRL", action=act.CopyMode("PriorMatch")},
-      {key="PageUp", mods="NONE", action=act.CopyMode("PriorMatchPage")},
-      {key="PageDown", mods="NONE", action=act.CopyMode("NextMatchPage")},
       {key="n", mods="CTRL", action=act.CopyMode("NextMatch")},
       {key="r", mods="CTRL", action=act.CopyMode("CycleMatchType")},
       {key="u", mods="CTRL", action=act.CopyMode("ClearPattern")},
@@ -210,14 +280,16 @@ return {
         act.CopyMode("ClearPattern"),
         act.CopyMode("Close"),
         act.ActivateCopyMode,
-    }},
+      }
+    },
 
     -- Search Case Insensitive
     {key="F", mods="SHIFT|CTRL", action=act.Multiple{
         act.Search{CaseInSensitiveString=""},
         act.SendKey{key="u", mods="CTRL"},
         act.CopyMode("ClearPattern"),
-    }},
+      },
+    },
 
     -- quick select
     { key="o", mods="CTRL|SHIFT", action=wezterm.action.QuickSelect},
@@ -231,18 +303,21 @@ return {
            local url = window:get_selection_text_for_pane(pane)
            wezterm.log_info("opening: " .. url)
            wezterm.open_with(url)
-        end)
-      }
+        end),
+      },
     },
 
     -- Clipboard Shortcuts
     {key="c", mods="ALT", action=wezterm.action{CopyTo="Clipboard"}},
     {key="v", mods="ALT", action=wezterm.action{PasteFrom="Clipboard"}},
 
+    -- Window shortcuts
+    {key="n", mods='SHIFT|CTRL', action = wezterm.action.SpawnWindow },
+
     -- Panes Shortcuts
     {key="w", mods="CTRL", action=wezterm.action{CloseCurrentPane={confirm=false}}},
-    {key="b", mods="CTRL|SHIFT", action=act.RotatePanes("CounterClockwise")},
-    {key="n", mods="CTRL|SHIFT", action=act.RotatePanes("Clockwise")},
+    {key="r", mods="CTRL|SHIFT", action=act.RotatePanes("CounterClockwise")},
+    {key="r", mods="CTRL|ALT", action=act.RotatePanes("Clockwise")},
 
     -- Tab shortcut
     {key="t", mods="CTRL|SHIFT", action=wezterm.action{SpawnCommandInNewTab={cwd=""}}},
