@@ -26,7 +26,8 @@ function hash_sixel {
 }
 
 function draw_kitty {
-    kitty +kitten icat --transfer-mode file --place "${W}x${H}@${X}x${Y}" "$1"
+    [[ -z $TMUX ]] && kitty +kitten icat --transfer-mode file --place "${W}x${H}@${X}x${Y}" "$1" ||\
+      ( tput cup $((Y)) $((X)) && img2sixel --loop-control=disable --height=400 "$1" ) >$(head -n1 /tmp/sixel-$WEZTERM_PANE)
 }
 
 function draw_sixel {

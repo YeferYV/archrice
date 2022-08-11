@@ -64,15 +64,11 @@ HISTFILE=~/.cache/zsh/history
 # [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-files"
 # [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 
-# Tmux get parent tty
-# tty >> /tmp/sixel-$WINDOWID
-# trap "rm /tmp/sixel-$WINDOWID" EXIT
-
 ## Basic auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
-compinit
+compinit -d ~/.cache/zsh/.zcompdump
 _comp_options+=(globdots)		# Include hidden files.
 
 ## vi mode
@@ -111,28 +107,27 @@ preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
 # v() { xdotool set_window --name $(TMP=$1;echo ${TMP##*/}) $WINDOWID; vim $1; }
 # n() { xdotool set_window --name $(TMP=$1;echo ${TMP##*/}) $WINDOWID; nvim $1; }
-x2xalarm() { ssh -YC drksl@4l4rm x2x -north -to :0.0; }
-
-nvim-terminal() nvim -c "terminal zsh"
-zle -N nvim-terminal
-bindkey '^e' nvim-terminal
+# x2xalarm() { ssh -YC drksl@4l4rm x2x -north -to :0.0; }
 
 ## Tmux not-printed(archwiki)
-tmux-attach() {( exec </dev/tty; exec <&1; TMUX= tmux attach || tmux new )}
-tmux-choose-tree() {( exec </dev/tty; exec <&1; TMUX= tmux attach\; choose-tree -s -w )}
+tmux-attach() {
+    (exec </dev/tty; exec <&1; tty >> /tmp/sixel-$WEZTERM_PANE; tmux attach || tmux new-session)
+    trap "rm /tmp/sixel-$WEZTERM_PANE" EXIT
+}
+tmux-choose-tree() {
+    (exec </dev/tty; exec <&1; tty >> /tmp/sixel-$WEZTERM_PANE; tmux attach\; choose-tree -s -w)
+    trap "rm /tmp/sixel-$WEZTERM_PANE" EXIT
+}
 tmux-new-session() {
-    # Launching tmux inside a zle widget is not easy
-    # Hence, We delegate the work to the parent zsh
-    BUFFER=" { tmux list-sessions >& /dev/null && tmux new-session } || tmux"
-    # eval $BUFFER > /dev/null
-    zle accept-line
+    (exec </dev/tty; exec <&1; tty >> /tmp/sixel-$WEZTERM_PANE; tmux new-session)
+    trap "rm /tmp/sixel-$WEZTERM_PANE" EXIT
 }
 
 zle -N tmux-attach
 zle -N tmux-choose-tree
 zle -N tmux-new-session
-bindkey '^a' tmux-attach
-bindkey '^z' tmux-choose-tree
+bindkey '^a' tmux-attach      #wezterm-leaderkey
+bindkey '^e' tmux-choose-tree #tree-explorer
 bindkey '^s' tmux-new-session
 
 ## Show ncpmcpp printed(archwiki)
@@ -142,15 +137,15 @@ ncmpcppShow() {
 }
 
 ## Show ncpmcpp(archwiki)
-ncmpcppShow() {
+ncmpcppBrowserMedia() {
   ncmpcpp <$TTY
   zle redisplay
 }
 
 zle -N ncmpcppShow
-zle -N ncmpcppShow
-bindkey '^p' ncmpcppShow
-bindkey '^y' ncmpcppShow
+zle -N ncmpcppBrowserMedia
+bindkey '^n' ncmpcppShow
+bindkey '^b' ncmpcppBrowserMedia
 
 cdUndoKey() {
   popd > /dev/null
@@ -233,9 +228,34 @@ fzf_cd () {
 zle -N fmzcd
 zle -N fzfprev
 zle -N fzf_cd
-bindkey '^f' fmzcd
-bindkey '^g' fzfprev
-bindkey '^k' fzf_cd
+bindkey '^z' fmzcd
+bindkey '^f' fzfprev
+bindkey '^g' fzf_cd
+
+my-script1() printf '\x1b[D' >/dev/tty #tput cub1
+my-script2() printf '\x1b[B' >/dev/tty #tput cud1
+my-script3() printf '\x1b[A' >/dev/tty #tput cuu1
+my-script4() printf '\x1b[C' >/dev/tty #tput cuf1
+my-script5() printf '\x1b[5S' >/dev/tty
+my-script6() printf '\x1b[2 q' >/dev/tty
+my-script7() nvim -c "terminal zsh"
+my-script8() lazygit
+zle -N my-script1
+zle -N my-script2
+zle -N my-script3
+zle -N my-script4
+zle -N my-script5
+zle -N my-script6
+zle -N my-script7
+zle -N my-script8
+bindkey '^[n' my-script1
+bindkey '^[m' my-script2
+bindkey '^[,' my-script3
+bindkey '^[.' my-script4
+bindkey '^[[' my-script5
+bindkey '^[]' my-script6
+bindkey '^[z' my-script7
+bindkey '^[i' my-script8
 
 #fix supress key in st
 bindkey '^[[P' delete-char
