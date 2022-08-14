@@ -48,6 +48,9 @@ return require('packer').startup(function(use)
   }
 
   -- Colors
+  -- use { 'TheNiteCoder/mountaineer.vim' }
+  -- use { 'mountain-theme/Mountain' }
+  -- use { 'pradyungn/Mountain', rtp='vim' }
   use { 'norcalli/nvim-colorizer.lua', commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb1" }
   -- use { 'lunarvim/colorschemes', commit = "2ddcd2a552583c1ca3659910b44c07c52778a0a6" }
   -- use { 'ChristianChiarulli/nvcode-color-schemes.vim'}

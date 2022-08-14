@@ -327,8 +327,8 @@ map glu   $lf -remote "send $id select '$(~/.config/lf/fzfimg/fzfimg.sh)'" #http
 map glw   $lf -remote "send $id select '$(fzf --bind='alt-p:execute-silent((tput cup 2 $(($COLUMNS/2)); wezterm imgcat --width $(($COLUMNS/2)) {})>/dev/tty)')'"
 map glc   $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' $HOME/.config/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
 map gmm   !mediainfo $f | less && xdotool key KP_Enter
-map gms   $wezterm cli split-pane --horizontal -- bash -c "timg $fx && read"
-map gmt   $wezterm cli spawn -- bash -c "timg $fx && read"
+map gms   $wezterm cli split-pane --horizontal -- bash -c "timg --center $fx && read"
+map gmt   $wezterm cli spawn -- bash -c "timg --center $fx && read"
 map gmj   :down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
 map gmk   :up; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
 map gmi   imgcat

@@ -38,10 +38,10 @@ keymap("t", "<M-Right>", "<C-\\><C-n>:vertical resize +2<CR>", opts)
 -- Navigate buffers
 keymap("n", "<Tab>", ":bnext<CR>", opts)
 keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
-keymap("n", "<leader>q", ":bdelete<CR>", opts)
+keymap("n", "<leader>x", ":bdelete<CR>", opts)
 keymap("n", "<leader><Tab>", ":tabnext<CR>", opts)
 keymap("n", "<leader><S-Tab>", ":tabprevious<CR>", opts)
-keymap("n", "<leader><x>", ":tabdelete<CR>", opts)
+keymap("n", "<leader>Q", ":tabdelete<CR>", opts)
 
 -- Move text up and down
 keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
@@ -138,6 +138,9 @@ keymap("n","<leader>P",'"*P',opts)
 keymap("v","<leader>p",'"*p',opts)
 keymap("v","<leader>P",'"*P',opts)
 
+-- Column Format
+keymap("v","<leader>F",":'<,'>!column -t<CR>",opts)
+
 -- File Tree
 keymap("n","<leader>e",":NvimTreeToggle<CR>",opts)
 keymap("n","<leader>E",":NvimTreeFindFile<CR>",opts)
@@ -187,14 +190,16 @@ keymap("n","<leader>8","<Cmd>BufferLineGoToBuffer 8<CR>",opts)
 keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
 
 -- Telescope
-keymap("n","<leader>th","<cmd>TSHighlightCapturesUnderCursor<CR>",opts)
-keymap("n","<leader>tp","<cmd>lua require'telescope.builtin'.builtin{}<CR>",opts)
-keymap("n","<leader>to","<cmd>lua require'telescope.builtin'.oldfiles{}<CR>",opts)
-keymap("n","<leader>t;","<cmd>lua require'telescope.builtin'.buffers{}<CR>",opts)
-keymap("n","<leader>t/","<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>",opts)
-keymap("n","<leader>t'","<cmd>lua require'telescope.builtin'.marks{}<CR>",opts)
-keymap("n","<leader>tg","<cmd>lua require'telescope.builtin'.git_files{}<CR>",opts)
-keymap("n","<leader>tf","<cmd>lua require'telescope.builtin'.find_files{}<CR>",opts)
-keymap("n","<leader>tr","cmd>lua require'telescope.builtin'.live_grep{}<CR>",opts)
-keymap("n","<leader>tc","<cmd>lua require'telescope.builtin'.colorscheme{}<CR>",opts)
+keymap("n","<leader>tH","<cmd>TSHighlightCapturesUnderCursor<CR>",opts)
+keymap("n","<leader>fa","<cmd>Telescope find_files follow=true no_ignore=true hidden=true <CR>",opts)
+keymap("n","<leader>ff","<cmd>lua require'telescope.builtin'.find_files{}<CR>",opts)
+keymap("n","<leader>fw","<cmd>lua require'telescope.builtin'.live_grep{}<CR>",opts)
+keymap("n","<leader>fb","<cmd>lua require'telescope.builtin'.buffers{}<CR>",opts)
+keymap("n","<leader>fh","<cmd>lua require'telescope.builtin'.help_tags{}<CR>",opts)
+keymap("n","<leader>fo","<cmd>lua require'telescope.builtin'.oldfiles{}<CR>",opts)
+keymap("n","<leader>fB","<cmd>lua require'telescope.builtin'.builtin{}<CR>",opts)
+keymap("n","<leader>f/","<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>",opts)
+keymap("n","<leader>f'","<cmd>lua require'telescope.builtin'.marks{}<CR>",opts)
+keymap("n","<leader>fg","<cmd>lua require'telescope.builtin'.git_files{}<CR>",opts)
+keymap("n","<leader>th","<cmd>lua require'telescope.builtin'.colorscheme{}<CR>",opts)
 
