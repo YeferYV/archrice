@@ -26,11 +26,11 @@ vim.cmd [[
     autocmd VimResized * tabdo wincmd =
   augroup end
 
-  augroup _alpha
-    autocmd!
-    autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-  augroup end
-
+  " augroup _alpha
+  "   autocmd!
+  "   autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
+  " augroup end
+  "
   " augroup _lsp_autoformat
   "   autocmd!
   "   autocmd BufWritePre * lua vim.lsp.buf.formatting()
@@ -58,9 +58,22 @@ vim.cmd [[
   "   au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
   " augroup end
 
+  " augroup _enable_terminal_insert_by_default
+  "   autocmd!
+  "   autocmd BufEnter * if &filetype == 'vs-terminal' | set noruler laststatus=0 cmdheight=3 | startinsert | endif
+  "   autocmd BufEnter * if &filetype == 'sp-terminal' | set noruler laststatus=3 cmdheight=2 | startinsert | endif
+  "   autocmd TermLeave * set ruler showcmd laststatus=3 cmdheight=2
+  "   autocmd TermClose * set ruler showcmd laststatus=3 cmdheight=2
+  " augroup end
+
   augroup _enable_terminal_insert_by_default
     autocmd!
-    au WinEnter * if &buftype == 'terminal' | startinsert | endif
+    " autocmd BufEnter * if &buftype == 'terminal' | startinsert | endif
+    autocmd BufEnter term://* startinsert | set nonumber statusline=%<
+    autocmd TermOpen * startinsert | set nonumber statusline=%@
+    autocmd TermEnter * startinsert | set nonumber statusline=%@
+    autocmd TermLeave * set statusline=%{%v:lua.require'lualine'.statusline()%}
+    autocmd TermClose * if &filetype != 'toggleterm' | call feedkeys("i") | endif
   augroup end
 
   augroup _hightlight_whitespaces
@@ -93,21 +106,13 @@ vim.cmd [[
     else
       let s:hidden_all = 0
       set ruler
-      set laststatus=2
+      set laststatus=3
       set cmdheight=2
       set showcmd
       " set number
     endif
   endfunction
   nnoremap <silent> <C-z> :call ToggleHiddenAll()<CR>
-
-  autocmd TermOpen * setlocal noruler laststatus=0 cmdheight=3 noshowcmd nonumber | startinsert
-  autocmd TermEnter * setlocal noruler laststatus=0 cmdheight=3 noshowcmd nonumber | startinsert
-  autocmd TermLeave * set ruler laststatus=2 cmdheight=2 showcmd
-  autocmd TermClose * set ruler laststatus=2 cmdheight=2 showcmd
-  " autocmd TermClose * close
-  " autocmd TermClose * quit
-  " autocmd TermOpen * call feedkeys("i")
 ]]
 
 -- WindowBufferSwap
@@ -141,7 +146,7 @@ vim.cmd [[
   " tnoremap <C-x> <C-\><C-n>:call SwitchWindow(v:count1)<CR><Esc>
 ]]
 
---SwitchWindow2
+-- SwitchWindow2
 vim.cmd [[
   function! SwitchWindow2()
     let thiswin = winnr()

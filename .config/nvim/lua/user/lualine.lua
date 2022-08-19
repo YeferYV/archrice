@@ -139,7 +139,8 @@ lualine.setup({
     },
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
-		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline","toggleterm" },
+		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline","toggleterm", "terminal" },
+    -- disabled_buftypes = { 'quickfix', 'prompt','terminal' }, -- not working
 		always_divide_middle = true,
 	},
 	sections = {

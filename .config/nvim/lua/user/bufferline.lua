@@ -114,18 +114,18 @@ require('bufferline').setup {
     },
 
     duplicate_selected = {
-      guifg = { attribute = "fg", highlight = "TabLineSel" },
-      guibg = { attribute = "bg", highlight = "TabLineSel" },
-      gui = "italic",
+      guifg = "#ff0000",
+      guibg = "#000000",
+      gui = "bold",
     },
     duplicate_visible = {
-      guifg = { attribute = "fg", highlight = "TabLine" },
-      guibg = { attribute = "bg", highlight = "TabLine" },
+      guifg = "#888888",
+      guibg = "#ff0000",
       gui = "italic",
     },
     duplicate = {
-      guifg = { attribute = "fg", highlight = "TabLine" },
-      guibg = { attribute = "bg", highlight = "TabLine" },
+      guifg = "#888888",
+      guibg = "#111111",
       gui = "italic",
     },
 

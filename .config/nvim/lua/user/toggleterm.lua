@@ -6,7 +6,7 @@ end
 toggleterm.setup({
 	size = 20,
 	open_mapping = [[<c-\>]],
-	hide_numbers = true,
+  hide_numbers = true, -- hide the number column in toggleterm buffers
 	shade_filetypes = {},
 	shade_terminals = true,
 	shading_factor = 2,
@@ -25,6 +25,12 @@ toggleterm.setup({
 			background = "Normal",
 		},
 	},
+  winbar = {
+    enabled = false,
+    name_formatter = function(term) --  term: Terminal
+      return term.name
+    end
+  },
 })
 
 function _G.set_terminal_keymaps()
