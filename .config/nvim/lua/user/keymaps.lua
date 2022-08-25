@@ -139,10 +139,12 @@ keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
 -- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Terminal tabs/splits/float
-keymap("n","<leader>tf",":ToggleTerm direction=float <CR>",opts)
-keymap("n","<leader>tT",":lua vim.cmd[[ToggleTerm direction=tab]]      require('bufferline').setup{options={always_show_bufferline=true}}<CR>",opts)
-keymap("n","<leader>tt",":lua vim.cmd[[tabnew|terminal]]               vim.cmd[[startinsert | set ft=terminal nonumber ]] require('bufferline').setup{options={always_show_bufferline=true}}<CR>",opts)
-keymap("n","<leader>te",":lua vim.cmd[[terminal]]                      vim.cmd[[startinsert | set ft=terminal nonumber ]]<CR>",opts)
+keymap("n","<leader>tB","<C-w>T<CR>",opts)                                                                                                                                                              -- Move terminal to Buffer
+keymap("n","<leader>tf",":ToggleTerm direction=float <CR>",opts)                                                                                                                                        -- float termininal
+keymap("n","<leader>tt",":ToggleTerm <CR>",opts)                                                                                                                                                        -- toggle terminal
+keymap("n","<leader>tT",":lua vim.cmd[[terminal]]                      vim.cmd[[startinsert | set ft=terminal nonumber ]]<CR>",opts)                                                                    -- Tab terminal
+keymap("n","<leader>te",":lua vim.cmd[[tabnew|terminal]]               vim.cmd[[startinsert | set ft=terminal nonumber ]] require('bufferline').setup{options={always_show_bufferline=true}}<CR>",opts) -- external terminal
+keymap("n","<leader>tE",":lua vim.cmd[[ToggleTerm direction=tab]]      require('bufferline').setup{options={always_show_bufferline=true}}<CR>",opts)                                                    -- External terminal
 -- keymap("n","<leader>tz",":lua vim.cmd[[vs +te]]                        vim.cmd[[startinsert | set ft=vs-terminal nonumber laststatus=0 cmdheight=3 ]]<CR>",opts)
 -- keymap("n","<leader>tZ",":lua vim.cmd[[sp +te]]                        vim.cmd[[startinsert | set ft=sp-terminal nonumber laststatus=3 cmdheight=2 ]]<CR>",opts)
 -- keymap("n","<leader>ts",":vsplit +te | vertical resize 80              | setlocal ft=vs-terminal nonumber laststatus=0 cmdheight=3 | startinsert <CR>",opts)
@@ -170,20 +172,31 @@ keymap("n","<leader>tco","!opout<CR>",opts)
 -- Terminal Column Format
 keymap("v","<leader>tC",":'<,'>!column -t<CR>",opts)
 
+-- Terminal to left/down/up/right
+keymap("n", "<leader>tH", "<C-w><S-h>", opts)
+keymap("n", "<leader>tJ", "<C-w><S-j>", opts)
+keymap("n", "<leader>tK", "<C-w><S-k>", opts)
+keymap("n", "<leader>tL", "<C-w><S-l>", opts)
+
 -- Toggle HighlightSearch/HideAll
 keymap("n","<leader>th",":set hlsearch!<CR>",opts)
-keymap("n","<leader>tH",":call ToggleHiddenAll()<CR>",opts)
 
 -- Toggle cursorline/linehighlight
 keymap("n","<leader>tn",":set cursorline!<CR>",opts)
+keymap("n","<leader>tN",":call ToggleStatusLine()<CR>",opts)
 
--- Toggle Switch window
+-- Toggle Maximize/Zoom
+keymap("n","<leader>tm","<c-w>_ | <c-w>|",opts)
+keymap("n","<leader>t=","<c-w>=",opts)
+
+-- Terminal Rotate r=down/right R=up/left
+keymap("n", "<leader>tr", "<C-w>r", opts)
+keymap("n", "<leader>tR", "<C-w><S-R>", opts)
+
+-- Toggle Swap/Switch window
+keymap("n", "<leader>ts", "<C-w>x", opts)
 keymap("n","<leader>tS",":call SwitchWindow2()<CR>",opts)
 keymap("t","<leader>tS","<C-\\><C-n>:call WinBufSwap()<CR><Esc>",opts)
-
--- Toggle Zoom
-keymap("n","<leader>tz","<c-w>_ | <c-w>|",opts)
-keymap("n","<leader>tZ","<c-w>=",opts)
 
 -- Terminal Paste from secondary clipboard
 keymap("n","<leader>tp",'"*p',opts)

@@ -5,16 +5,16 @@
     "tasks": [
         {
             "label": "echo",
-            // "type": "shell",
+            "type": "shell",
+            "command": "echo Hello",
             // "type": "process",
-            // "command": "echo Hello",
             // "command": "${command:extension.wolf.touchBarStart}",
             // "command": "${command:extension.wolf.barkAtCurrentFile}",
-            "command": "${command:wolf.barkAtCurrentFile}",
+            // "command": "${command:wolf.barkAtCurrentFile}",
             // "command": "${command:workbench.action.terminal.toggleTerminal}",
-            "runOptions": {
-                "runOn": "folderOpen",
-            }
+            // "runOptions": {
+                // "runOn": "folderOpen",
+            // }
         }
     ]
 }

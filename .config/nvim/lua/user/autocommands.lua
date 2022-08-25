@@ -95,7 +95,7 @@ vim.cmd [[
 -- toggle status line
 vim.cmd [[
   let s:hidden_all = 0
-  function! ToggleHiddenAll()
+  function! ToggleStatusLIne()
     if s:hidden_all  == 0
       let s:hidden_all = 1
       set noruler
@@ -112,7 +112,7 @@ vim.cmd [[
       " set number
     endif
   endfunction
-  nnoremap <silent> <C-z> :call ToggleHiddenAll()<CR>
+  nnoremap <silent> <C-z> :call ToggleStatusLIne()<CR>
 ]]
 
 -- WindowBufferSwap
