@@ -3,9 +3,11 @@
 #
 
 # terminal emulator
-super + {_,shift +,ctrl + }Return
+super + {_,shift + ,ctrl + ,shift + ctrl + ,alt + }Return
 	{ \
 		$TERMINAL; \
+	, bspc node -p east -o 0.5 && $TERMINAL; \
+	, bspc node -p south -o 0.5 && $TERMINAL; \
 	, bspc rule -a \* -o state=floating && $TERMINAL; \
 	, bspc rule -a \* -o state=floating && wezterm --config initial_rows=47 --config initial_cols=169; \
 	}
@@ -329,38 +331,38 @@ shift + XF86MonBrightness{Down,Up}
 super + {F11,F12}
   {dmenumount,dmenuumount}
 
-# chromium play-pause
-shift + space
-  playerctl --player=chromium play-pause
-
 # chromium next-toggle-prev
-alt + KP_{Right,Begin,Left}
+super + KP_{Right,Begin,Left}
   playerctl --player=chromium {next,play-pause,previous}
 
+# chromium play-pause
+super + ctrl + p
+  playerctl --player=chromium play-pause
+
 # chromium rewind-forward
-alt + {a,s}
+super + ctrl + {w,e}
   YTID="$(wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1')"; \
   CUID="$(xdo id)"; \
   xdo activate $YTID && sleep 0.2 && xdotool key --clearmodifiers {w,e} && xdo activate $CUID
 	# playerctl --player=chromium position {5-,5+}
 
 # mpv next-toggle-prev
-super + KP_{Right,Begin,Left}
+mod1 + KP_{Right,Begin,Left}
   playerctl --player=mpv {next,play-pause,previous}
 
 # mpv vol (down,up)
-super + KP_{Down,Up}
+mod1 + KP_{Down,Up}
 	{ \
 	  playerctl --player=mpv volume 0.1-; \
 	, [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=mpv volume 0.1+; \
 	}
 
 # spotify next-toggle-prev
-mod1 + KP_{Right,Begin,Left}
+ctrl + KP_{Right,Begin,Left}
   playerctl --player=spotify {next,play-pause,previous}
 
 # spotify vol (down/up)
-mod1 + KP_{Down,Up}
+ctrl + KP_{Down,Up}
 	{ \
 		playerctl --player=spotify volume 0.1-; \
 	, [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=spotify volume 0.1+; \

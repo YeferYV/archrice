@@ -259,6 +259,8 @@ return {
     -- {key="m", mods="CMD", action="DisableDefaultAssignment"} ,
     {key="v", mods="LEADER", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
     {key="v", mods="LEADER|SHIFT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+    {key="v", mods="CTRL|ALT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+    {key="h", mods="CTRL|ALT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
     -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
     {key="a", mods="LEADER|CTRL", action=wezterm.action{SendString="\x01"}},
     {key = "[", mods = "LEADER", action = wezterm.action({ EmitEvent = "open_in_vim" }) },
@@ -316,8 +318,9 @@ return {
 
     -- Panes Shortcuts
     {key="w", mods="CTRL", action=wezterm.action{CloseCurrentPane={confirm=false}}},
-    {key="r", mods="CTRL|SHIFT", action=act.RotatePanes("CounterClockwise")},
-    {key="r", mods="CTRL|ALT", action=act.RotatePanes("Clockwise")},
+    -- {key="l", mods="CTRL|SHIFT", action = 'DisableDefaultAssignment'},
+    {key="r", mods="CTRL|ALT", action=act.RotatePanes("CounterClockwise")},
+    {key="R", mods="CTRL|ALT", action=act.RotatePanes("Clockwise")},
 
     -- Tab shortcut
     {key="t", mods="CTRL|SHIFT", action=wezterm.action{SpawnCommandInNewTab={cwd=""}}},
