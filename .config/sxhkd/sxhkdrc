@@ -196,11 +196,11 @@ super + alt + shift + {u,i,o,p}
   xdo move -x $x -y $y; xdo resize -w $w -h $h
 
 # move floating window by 10px
-super + alt + {Left,Down,Up,Right}
+super + alt + {h,j,k,l}
 	bspc node -v {-10 0,0 10,0 -10,10 0}
 
 # hover window to corner
-super + alt + shift + {Left,Down,Up,Right}
+super + alt + shift + {h,j,k,l}
   hover {left,down,up,right}
 
 # xdo resize (small/medium)
