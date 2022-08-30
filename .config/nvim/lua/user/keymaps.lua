@@ -158,6 +158,7 @@ keymap("n","<leader>V",":ToggleTerm direction=horizontal size=10<CR>",opts)
 keymap("n","<leader>tbt","<cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<CR>",opts)
 keymap("n","<leader>tbf","<cmd>lua require('bufferline').setup{options={always_show_bufferline=false}} <CR>",opts)
 keymap("n","<leader>tb0","<cmd>set showtabline=0<CR>",opts)
+keymap("n","<leader>tbT", "<C-w><S-T><cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<CR>", opts)
 
 -- Toggle Codi
 keymap("n","<leader>tc0",":Codi!<CR>",opts)
@@ -173,10 +174,10 @@ keymap("n","<leader>tco","!opout<CR>",opts)
 keymap("v","<leader>tC",":'<,'>!column -t<CR>",opts)
 
 -- Terminal to left/down/up/right
-keymap("n", "<leader>tH", "<C-w><S-h>", opts)
-keymap("n", "<leader>tJ", "<C-w><S-j>", opts)
-keymap("n", "<leader>tK", "<C-w><S-k>", opts)
-keymap("n", "<leader>tL", "<C-w><S-l>", opts)
+keymap("n","<leader>tH", "<C-w><S-h>", opts)
+keymap("n","<leader>tJ", "<C-w><S-j>", opts)
+keymap("n","<leader>tK", "<C-w><S-k>", opts)
+keymap("n","<leader>tL", "<C-w><S-l>", opts)
 
 -- Toggle HighlightSearch/HideAll
 keymap("n","<leader>th",":set hlsearch!<CR>",opts)
@@ -190,8 +191,8 @@ keymap("n","<leader>tm","<c-w>_ | <c-w>|",opts)
 keymap("n","<leader>t=","<c-w>=",opts)
 
 -- Terminal Rotate r=down/right R=up/left
-keymap("n", "<leader>tr", "<C-w>r", opts)
-keymap("n", "<leader>tR", "<C-w><S-R>", opts)
+keymap("n","<leader>tr", "<C-w>r", opts)
+keymap("n","<leader>tR", "<C-w><S-R>", opts)
 
 -- Toggle Swap/Switch window
 keymap("n", "<leader>ts", "<C-w>x", opts)

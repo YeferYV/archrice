@@ -151,9 +151,21 @@ hi   GitSignsDelete                        guifg=#880000   guibg=none     gui=no
 "--  nvimtree
 hi   NvimTreeStatusLine                    guifg=black     guibg=#000000  gui=none
 hi   NvimTreeStatusLineNC                  guifg=black     guibg=#000000  gui=none
+hi   NvimTreeCursorLine                    guifg=#2222ff   guibg=#000000  gui=none
+hi   NvimTreeIndentMarker                  guifg=#495466   guibg=#000000  gui=none
+hi   NvimTreeFolderIcon                    guifg=#727c8c   guibg=#000000  gui=none
+hi   NvimTreeFolderName                    guifg=#727c8c   guibg=#000000  gui=none
 
 "--  Cmp
 hi   link CmpItemAbbr Pmenu
 hi   link CmpItemAbbrMatch WildMenu
 hi   link CmpItemAbbrMatchFuzzyDefault PmenuSbar
 hi   link CmpItemMenu Comment
+
+"-- Indentline
+hi  IndentBlanklineChar                    guifg=#222222   guibg=#000000  gui=none
+hi  IndentBlanklineSpaceChar               guifg=#b0b0b0   guibg=#000000  gui=none
+hi  IndentBlanklineSpaceCharBlankline      guifg=#0000FF   guibg=#000000  gui=none
+hi  IndentBlanklineContextChar             guifg=#444444   guibg=#000000  gui=none
+hi  IndentBlanklineContextSpaceChar        guifg=#0000FF   guibg=#000000  gui=none
+hi  IndentBlanklineContextStart            guifg=none      guibg=#1c1c1c  gui=none

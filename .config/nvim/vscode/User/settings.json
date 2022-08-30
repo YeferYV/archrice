@@ -292,7 +292,49 @@
     "type": "bindings",
     "bindings": [
       {
-        "key": "d",
+        "key": "b",
+        "name": "Toggle breakpoint",
+        "type": "command",
+        "command": "editor.debug.action.toggleBreakpoint"
+      },
+      {
+        "key": "B",
+        "name": "Toggle inline breakpoint",
+        "type": "command",
+        "command": "editor.debug.action.toggleInlineBreakpoint"
+      },
+      {
+        "key": "c",
+        "name": "Continue debug",
+        "type": "command",
+        "command": "workbench.action.debug.continue"
+      },
+      {
+        "key": "i",
+        "name": "Step into",
+        "type": "command",
+        "command": "workbench.action.debug.stepInto"
+      },
+      {
+        "key": "o",
+        "name": "Step over",
+        "type": "command",
+        "command": "workbench.action.debug.stepOver"
+      },
+      {
+        "key": "O",
+        "name": "Step out",
+        "type": "command",
+        "command": "workbench.action.debug.stepOut"
+      },
+      {
+        "key": "j",
+        "name": "Jump to cursor",
+        "type": "command",
+        "command": "debug.jumpToCursor"
+      },
+      {
+        "key": "s",
         "name": "Start debug",
         "type": "command",
         "command": "workbench.action.debug.start"
@@ -302,12 +344,6 @@
         "name": "Stop debug",
         "type": "command",
         "command": "workbench.action.debug.stop"
-      },
-      {
-        "key": "c",
-        "name": "Continue debug",
-        "type": "command",
-        "command": "workbench.action.debug.continue"
       },
       {
         "key": "p",
@@ -328,44 +364,8 @@
         "command": "workbench.action.debug.restart"
       },
       {
-        "key": "i",
-        "name": "Step into",
-        "type": "command",
-        "command": "workbench.action.debug.stepInto"
-      },
-      {
-        "key": "s",
-        "name": "Step over",
-        "type": "command",
-        "command": "workbench.action.debug.stepOver"
-      },
-      {
-        "key": "o",
-        "name": "Step out",
-        "type": "command",
-        "command": "workbench.action.debug.stepOut"
-      },
-      {
-        "key": "b",
-        "name": "Toggle breakpoint",
-        "type": "command",
-        "command": "editor.debug.action.toggleBreakpoint"
-      },
-      {
-        "key": "B",
-        "name": "Toggle inline breakpoint",
-        "type": "command",
-        "command": "editor.debug.action.toggleInlineBreakpoint"
-      },
-      {
-        "key": "j",
-        "name": "Jump to cursor",
-        "type": "command",
-        "command": "debug.jumpToCursor"
-      },
-      {
-        "key": "v",
-        "name": "REPL",
+        "key": "t",
+        "name": "Toggle REPL",
         "type": "command",
         "command": "workbench.debug.action.toggleRepl"
       },
@@ -1467,6 +1467,10 @@
   },
   "workbench.colorCustomizations": {
       "[Mountain]":{
+          // "editorCursor.background": "#555555",
+          // "editorCursor.foreground": "#aaaaaa",
+          "terminalCursor.background": "#000000",
+          "terminalCursor.foreground": "#ffffff",
           "activityBar.background" : "#131313",
           "breadcrumb.foreground":"#535353",
           "editorGroupHeader.tabsBackground":"#181818",

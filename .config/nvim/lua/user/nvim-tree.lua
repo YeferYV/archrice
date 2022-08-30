@@ -24,7 +24,8 @@ nvim_tree.setup {
   },
   -- auto_close = true,
   open_on_tab = false,
-  hijack_cursor = false,
+  hijack_cursor = true,
+  hijack_unnamed_buffer_when_opening = false,
   update_cwd = true,
   diagnostics = {
     enable = true,
@@ -58,7 +59,7 @@ nvim_tree.setup {
     height = 30,
     hide_root_folder = false,
     side = "left",
-    -- auto_resize = true,
+    adaptive_size = true,
     mappings = {
       custom_only = false,
       list = {
@@ -79,7 +80,7 @@ nvim_tree.setup {
     },
     open_file = {
       quit_on_open = true,
-      resize_window = false,
+      resize_window = true,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
@@ -101,16 +102,16 @@ nvim_tree.setup {
     full_name = false,
     highlight_opened_files = "none",
     root_folder_modifier = ":~",
-    indent_markers = {
-      enable = true,
-      inline_arrows = true,
-      icons = {
-        corner = "└",
-        edge = "│",
-        item = "│",
-        none = " ",
-      },
-    },
+    -- indent_markers = {
+    --   enable = true,
+    --   inline_arrows = true,
+    --   icons = {
+    --     corner = "└",
+    --     edge = "│",
+    --     item = "│",
+    --     none = " ",
+    --   },
+    -- },
     icons = {
       webdev_colors = true,
       git_placement = "before",
