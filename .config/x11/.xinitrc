@@ -59,7 +59,7 @@ mkdir -p "$HOME"/.local/share/keyrings
 
 ###############################################################################
 # see https://bbs.archlinux.org/viewtopic.php?id=273011
-# exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & disown
 ###############################################################################
 
 ## window-manager (exec for logout)

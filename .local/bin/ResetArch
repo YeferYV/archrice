@@ -3,41 +3,43 @@
 # exit on error
 set -eu
 
-#curl -LO blackarch.org/strap.sh
-#sh strap.sh
+# curl -LO blackarch.org/strap.sh
+# sh strap.sh
 
-#curl -LO larbs.xyz/larbs.sh
-#sh larbs.sh
+# curl -LO larbs.xyz/larbs.sh
+# sh larbs.sh
 
-#curl -LO nixos.org/nix/install
-#sh install
+# curl -LO nixos.org/nix/install
+# sh install
 
-#curl LO raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-#bash install.sh
+# curl LO raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+# bash install.sh
 
-#sed -n '17,129p' ResetArch | sed 's/ \//g' > resetarchpackages
-#comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base-devel|sort) > installedpackages
+# sed -n '17,129p' ResetArch | sed 's/ \//g' > resetarchpackages
+# comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base-devel|sort) > installedpackages
 
-#-- pacman configs
-[ $(id -u) != 1000 ] && printf "\e[1;31mRun it as unprivileged user(wheel group), sudo command needed\e[0m\n" >&2 && exit 1
+#-- Pacman configs
+[ $(id -u) == 0 ] && printf "\e[1;31mRun it as unprivileged user(wheel group), sudo command needed\e[0m\n" >&2 && exit 1
 sudo sed -i '33s/#//' /etc/pacman.conf
 sudo sed -i '37s/#//' /etc/pacman.conf
 sudo pacman-key --init
 sudo pacman-key --populate
-sudo pacman -Syu base-devel git
+sudo pacman -Syu --noconfirm base-devel git
 
+# FIXME: location conflicts with stow after running RiceArch
+# FIXME: Root PATH compatibility
 #-- Neovim version 0.7
-curl -Lo $HOME/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage && chmod +x $HOME/.local/bin/nvim
+# [ ! -e $HOME/.local/bin ] && mkdir -p $HOME/.local/bin
+# curl -Lo $HOME/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage && chmod +x $HOME/.local/bin/nvim
 
 #-- yay
-git clone https://aur.archlinux.org/yay-bin.git
-cd yay-bin
-makepkg -si
+git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
+cd /tmp/yay-bin
+makepkg -si --noconfirm
 
 #-- 4rch dependencies
-yay -Syu \
+true | yay -Syu --noconfirm --noprovides --noanswerclean --noanswerdiff --needed --mflags "--noconfirm" \
 bat \
-bash-language-server \
 bedstead-fonts \
 broadcom-wl \
 bspwm \
@@ -71,25 +73,21 @@ mpd \
 mpv \
 mpv-mpris \
 ncmpcpp \
-nerd-fonts-cascadia-code \
+neovim \
 network-manager-applet \
 ntfs-3g \
 openssh \
-paru-bin \
-pavucontrol \
 perl-file-mimeinfo \
 picom \
+pipewire \
+pipewire-pulse \
 playerctl \
 polybar \
-pulseaudio-alsa \
-pyright \
-python-pynvim \
 redshift \
 siji-git \
-sgtk-menu \
 snapper \
 snapper-rollback \
-spaceship-prompt-git \
+spaceship-prompt \
 stow \
 sxhkd \
 sxiv \
@@ -97,7 +95,6 @@ touchcursor-linux-git \
 trash-cli \
 unclutter \
 unzip \
-vim-sxhkdrc-git \
 wezterm \
 xcape \
 xclip \
@@ -112,11 +109,13 @@ xf86-input-synaptics \
 xwallpaper \
 zathura \
 zathura-pdf-mupdf \
-zsh \
 zsh-autosuggestions \
 zsh-fast-syntax-highlighting \
 
-####optional####
+#-- Clean
+true | yay -Scc
+
+#-- Optional
 # 8188eu-aircrack-dkms-git
 # acpi
 # abook
@@ -181,6 +180,7 @@ zsh-fast-syntax-highlighting \
 # mutt-wizard-git
 # ncdu
 # neofetch
+# nerd-fonts-cascadia-code
 # nerd-fonts-hack
 # networkmanager
 # newsboat
@@ -192,10 +192,13 @@ zsh-fast-syntax-highlighting \
 # novnc
 # obs-studio
 # os-prober
+# pavucontrol
 # pamixer
+# paru-bin
 # pcmanfm-gtk3
 # pfetch
 # poppler
+# pulseaudio-alsa
 # pulsemixer
 # pywal
 # python-ueberzug-git
@@ -204,6 +207,7 @@ zsh-fast-syntax-highlighting \
 # ripgrep
 # rxvt-unicode
 # scrcpy
+# sgtk-menu
 # simple-mtpfs
 # sixel-tmux-git
 # skippy-xd-git
@@ -214,7 +218,7 @@ zsh-fast-syntax-highlighting \
 # stpv-git
 # sxhkhm-git
 # task-spooler
-# terminus-font \
+# terminus-font
 # termplay
 # tigervnc
 # tmate
