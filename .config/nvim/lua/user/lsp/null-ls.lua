@@ -15,6 +15,7 @@ local diagnostics = null_ls.builtins.diagnostics
 --     formatting.black.with({ extra_args = { "--fast" } }),
 --     -- formatting.stylua,
 --     -- diagnostics.flake8
+--     diagnostics.shellcheck
 --   },
 -- })
 
@@ -26,6 +27,9 @@ local null_sources = {}
 for _, package in ipairs(mason_registry.get_installed_packages()) do
 	if package.spec.categories[1] == Pkg.Cat.Formatter then
 		table.insert(null_sources, null_ls.builtins.formatting[package.name])
+	end
+	if package.spec.categories[1] == Pkg.Cat.Linter then
+		table.insert(null_sources, null_ls.builtins.diagnostics[package.name])
 	end
 end
 
