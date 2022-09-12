@@ -24,6 +24,7 @@ sudo sed -i '33s/#//' /etc/pacman.conf
 sudo sed -i '37s/#//' /etc/pacman.conf
 sudo pacman-key --init
 sudo pacman-key --populate
+sudo pacman -Sy  --noconfirm archlinux-keyring
 sudo pacman -Syu --noconfirm base-devel git
 
 # FIXME: location conflicts with stow after running RiceArch
@@ -60,6 +61,7 @@ google-chrome \
 gtk-theme-arc-gruvbox-git \
 htop-vim \
 kitty \
+lazygit \
 lf-sixel-git \
 libnotify \
 light \
