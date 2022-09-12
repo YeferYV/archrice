@@ -3,6 +3,9 @@
 ## notification daemon
 dunst &
 
+## enable docker/root's nvim clipboard
+# xhost +
+
 ## music player daemon
 # mpd &
 # mpDris2 &

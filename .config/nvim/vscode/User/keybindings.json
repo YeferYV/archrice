@@ -75,45 +75,55 @@
             "after": ["<esc>", "l"]
         }
     },
+    // {
+    //     "key": "alt+d",
+    //     "command": "workbench.action.terminal.scrollDown",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+    // },
+    // {
+    //     "key": "alt+e",
+    //     "command": "workbench.action.terminal.scrollUp",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+    // },
+    // {
+    //     "key": "alt+r",
+    //     "command": "workbench.action.terminal.scrollUpPage",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+    // },
+    // {
+    //     "key": "alt+f",
+    //     "command": "workbench.action.terminal.scrollDownPage",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+    // },
+    // {
+    //     "key": "alt+g",
+    //     "command": "workbench.action.terminal.scrollToBottom",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+    // },
+    // {
+    //     "key": "alt+t",
+    //     "command": "workbench.action.terminal.scrollToTop",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+    // },
+    // {
+    //     "key": "alt+w",
+    //     "command": "workbench.action.terminal.scrollToPreviousCommand",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
+    // },
+    // {
+    //     "key": "alt+s",
+    //     "command": "workbench.action.terminal.scrollToNextCommand",
+    //     "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
+    // },
     {
-        "key": "alt+d",
-        "command": "workbench.action.terminal.scrollDown",
-        "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
-    },
-    {
-        "key": "alt+e",
-        "command": "workbench.action.terminal.scrollUp",
-        "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+        "key": "alt+w",
+        "command": "-workbench.action.terminal.toggleFindWholeWord",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     },
     {
         "key": "alt+r",
-        "command": "workbench.action.terminal.scrollUpPage",
-        "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
-    },
-    {
-        "key": "alt+f",
-        "command": "workbench.action.terminal.scrollDownPage",
-        "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
-    },
-    {
-        "key": "alt+g",
-        "command": "workbench.action.terminal.scrollToBottom",
-        "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
-    },
-    {
-        "key": "alt+t",
-        "command": "workbench.action.terminal.scrollToTop",
-        "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
-    },
-    {
-        "key": "alt+w",
-        "command": "workbench.action.terminal.scrollToPreviousCommand",
-        "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
-    },
-    {
-        "key": "alt+s",
-        "command": "workbench.action.terminal.scrollToNextCommand",
-        "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
+        "command": "-workbench.action.terminal.toggleFindRegex",
+        "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     },
     // {
     //     "key": "ctrl+alt+b",
