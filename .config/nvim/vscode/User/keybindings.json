@@ -19,6 +19,38 @@
         "command": "renameFile",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
+    // {
+    //     "key": "space",
+    //     "command": "filesExplorer.openFilePreserveFocus",
+    //     "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+    // },
+    // {
+    //     "key": "enter",
+    //     "command": "explorer.openAndPassFocus",
+    //     "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+    // },
+    {
+        "key": "l",
+        "command": "vim.remap",
+        "args": {
+          "commands":[
+            { "command": "explorer.openAndPassFocus" },
+            { "command": "workbench.action.toggleSidebarVisibility" },
+          ]
+        },
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+    },
+    {
+        "key": "v",
+        "command": "vim.remap",
+        "args": {
+          "commands":[
+            { "command": "explorer.openToSide" },
+            { "command": "workbench.action.toggleSidebarVisibility" },
+          ]
+        },
+        "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
+    },
     {
         "key": "alt+space",
         "command": "whichkey.show",
@@ -197,6 +229,13 @@
     //     "command": "editor.action.fontZoomReset"
     // },
     // {
+    //     "key": "ctrl+alt+=",
+    //     "command": "vim.remap",
+    //     "args": {
+    //         "after": ["<C-w>", "="]
+    //     },
+    // },
+    // {
     //     "key": "ctrl+alt+space",
     //     "command": "-toggleSuggestionFocus",
     //     "when": "suggestWidgetVisible && textInputFocus"
@@ -204,27 +243,56 @@
     {
         "key": "ctrl+alt+space",
         "command": "workbench.action.tasks.runTask",
-        "args": "tmux-copy-mode"
+        "args": "tmux-copy-mode",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+alt+left",
+        "command": "vim.remap",
+        "args": {
+            "after": ["<C-w>", "<"]
+        }
+    },
+    {
+        "key": "ctrl+alt+down",
+        "command": "vim.remap",
+        "args": {
+            "after": ["<C-w>", "-"]
+        }
+    },
+    {
+        "key": "ctrl+alt+up",
+        "command": "vim.remap",
+        "args": {
+            "after": ["<C-w>", "+"]
+        }
+    },
+    {
+        "key": "ctrl+alt+right",
+        "command": "vim.remap",
+        "args": {
+            "after": ["<C-w>", ">"]
+        }
     },
     {
         "key": "ctrl+alt+left",
         "command": "workbench.action.terminal.resizePaneLeft",
-        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+        "when": "terminalFocus"
     },
     {
         "key": "ctrl+alt+right",
         "command": "workbench.action.terminal.resizePaneRight",
-        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+        "when": "terminalFocus"
     },
     {
         "key": "ctrl+alt+down",
         "command": "workbench.action.terminal.resizePaneDown",
-        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+        "when": "terminalFocus"
     },
     {
         "key": "ctrl+alt+up",
         "command": "workbench.action.terminal.resizePaneUp",
-        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+        "when": "terminalFocus"
     },
     {
         "key": "ctrl+h",
@@ -345,5 +413,5 @@
         "key": "ctrl+up",
         "command": "workbench.action.terminal.focusNextPane",
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
-    }
+    },
 ]

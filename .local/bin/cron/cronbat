@@ -35,6 +35,6 @@ date +%T | awk -F ':' '($1 >= 22 && $2 == 30)' | xargs -I_ [ -z _ ] || (echo "22
 date +%T | awk -F ':' '($1 >= 21 && $2 == 50) {exit 1}' || (festival --tts <<<"$(date +%T) hours 💤 sleeping late equals sleepy next day" && notify-send -u low "$(date +%T) hours 💤")
 date +%T | awk -F ':' '($1 >= 21 && $2 ~".0") {print $1":"$2}' | festival --tts
 date +%T | awk -F ':' '($1 ~ "." && $2 == 00) {print $1":"$2}' | festival --tts
-cat /sys/class/power_supply/BAT0/capacity | awk ' $1 >= 98 {system("festival --tts <<<complete-charge") }'
+cat /sys/class/power_supply/BAT0/capacity | awk ' $1 >= 95 {system("festival --tts <<<complete-charge") }'
 cat /sys/class/power_supply/BAT0/status | awk '$1 == "Charging" {exit 1}' &&
 cat /sys/class/power_supply/BAT0/capacity | awk '$1 <= 10 {system("festival --tts <<<"$1"-percent") } ; $1 == 5 {system("notify-send -u critical " $1 "% discharging\n") }'

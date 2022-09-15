@@ -180,7 +180,7 @@ keymap("n","<leader>tK", "<C-w><S-k>", opts)
 keymap("n","<leader>tL", "<C-w><S-l>", opts)
 
 -- Toggle HighlightSearch/HideAll
-keymap("n","<leader>th",":set hlsearch!<CR>",opts)
+keymap("n","<leader>th",":noh<CR>",opts)
 
 -- Toggle cursorline/linehighlight
 keymap("n","<leader>tn",":set cursorline!<CR>",opts)

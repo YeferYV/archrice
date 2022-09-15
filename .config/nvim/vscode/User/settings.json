@@ -4,6 +4,7 @@
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
+  "vim.highlightedyank.enable" : true,
   "vim.insertModeKeyBindings": [
     {
       "before": ["j","k"],
@@ -18,6 +19,19 @@
     {
       "before": ["<space>"],
       "commands": ["whichkey.show"]
+    },
+    {
+        "before": [ "p" ],
+      // "after": ["c","<C-r>","0"],
+        "after": [ "p", "g", "v", "y" ]
+    },
+    {
+        "before": [ ">" ],
+        "commands": [ "editor.action.indentLines" ]
+    },
+    {
+        "before": [ "<" ],
+        "commands": [ "editor.action.outdentLines" ]
     },
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -1206,8 +1220,7 @@
         "command": "vim.remap",
         "args": {
           "commands":[
-            // { "command": ":noh" },
-            { "command": ":set hlsearch!" },
+            { "command": ":nohl" },
           ]
         }
       },
