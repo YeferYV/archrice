@@ -60,6 +60,7 @@ gnome-keyring \
 google-chrome \
 gtk-theme-arc-gruvbox-git \
 htop-vim \
+imagemagick \
 kitty \
 lazygit \
 lf-sixel-git \
@@ -95,6 +96,7 @@ sxhkd \
 sxiv \
 touchcursor-linux-git \
 trash-cli \
+ttf-unifont \
 unclutter \
 unzip \
 wezterm \

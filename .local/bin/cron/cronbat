@@ -37,4 +37,4 @@ date +%T | awk -F ':' '($1 >= 21 && $2 ~".0") {print $1":"$2}' | festival --tts
 date +%T | awk -F ':' '($1 ~ "." && $2 == 00) {print $1":"$2}' | festival --tts
 cat /sys/class/power_supply/BAT0/capacity | awk ' $1 >= 98 {system("festival --tts <<<complete-charge") }'
 cat /sys/class/power_supply/BAT0/status | awk '$1 == "Charging" {exit 1}' &&
-cat /sys/class/power_supply/BAT0/capacity | awk '$1 <= 20 {system("festival --tts <<<"$1"-percent") } ; $1 == 15 {system("notify-send -u critical " $1 "% discharging\n") }'
+cat /sys/class/power_supply/BAT0/capacity | awk '$1 <= 10 {system("festival --tts <<<"$1"-percent") } ; $1 == 5 {system("notify-send -u critical " $1 "% discharging\n") }'

@@ -306,39 +306,3 @@ bindkey '^v' edit-command-line
 
 bindkey '^I' expand-or-complete
 
-
-[[ -n "$TMUX" ]] && {
-  [ -e /usr/share/zsh/plugins/fzf-tab-bin-git/fzf-tab.plugin.zsh ]&& \
-  source /usr/share/zsh/plugins/fzf-tab-bin-git/fzf-tab.plugin.zsh && {
-    fzf_tab_complete() {
-      [[ $#BUFFER == 0 ]] && {
-        BUFFER="tmux " && CURSOR=5
-        export FZF_DEFAULT_OPTS='--layout=reverse --border --color hl+:#ff0000'
-        zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-        # zstyle ':fzf-tab:*' fzf-bindings 'space:accept,enter:accept+execute(xdotool key KP_Enter && cat /tmp/tmuxpopup | sh )'
-        zstyle ':fzf-tab:*' fzf-bindings 'space:accept,enter:accept+execute(echo "xdotool key KP_Enter && cat /tmp/tmuxpopup | sh" >/tmp/fzftabcomplete)'
-      }||{
-        export FZF_DEFAULT_OPTS='--layout=reverse --border --color hl+:#ff0000'
-        zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
-        zstyle ':fzf-tab:*' accept-line enter
-        zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-      }
-      zle fzf-tab-complete
-      [ -e /tmp/fzftabcomplete ]&& (cat /tmp/fzftabcomplete | sh && rm /tmp/fzftabcomplete ) >/dev/null 2>&1
-      # BUFFER_TMP="$BUFFER" && BUFFER="" && zle reset-prompt # && sh -c "echo $BUFFER_TMP"
-    }
-    zle -N fzf_tab_complete
-    zstyle ':fzf-tab:*' continuous-trigger
-    bindkey '^i' fzf_tab_complete
-    # zstyle ':fzf-tab:complete:*:*' fzf-preview '(bat --style=plain  --color=always ${(Q)realpath})2>/dev/null || ls --color ${(Q)realpath}'
-    zstyle ':fzf-tab:complete:(cd|ls):*' fzf-preview '(bat --style=plain  --color=always ${(Q)realpath})2>/dev/null || ls --color ${(Q)realpath}'
-    zstyle ':fzf-tab:complete:*:options' fzf-preview
-    zstyle ':fzf-tab:complete:*:argument-1' fzf-preview
-    zstyle ':fzf-tab:complete:-command-:*' fzf-preview \
-           '(out=$(cht.sh "$word") 2>/dev/null && awk "/Unknown topic/ {exit 1}" <<<"$out" && echo $out) || \
-            (out=$(MANWIDTH=$FZF_PREVIEW_COLUMNS man "$word") 2>/dev/null && echo $out) || \
-            (out=$(which "$word") && echo $out) || \
-            (echo "${(P)word}")'
-  }
-} || true
-
