@@ -180,16 +180,10 @@
   ],
   "vim.leader": "<space>",
   "vim.handleKeys": {
-      "<C-b>": false,
-      "<C-f>": false,
+    "<C-b>": false,
+    "<C-f>": false,
   },
   "whichkey.bindings": [
-  {
-    "key": ";",
-    "name": "commands",
-    "type": "command",
-    "command": "workbench.action.showCommands"
-  },
   {
     "key": "/",
     "name": "comment",
@@ -352,16 +346,41 @@
         "command": "workbench.action.debug.pause"
       },
       {
-        "key": "r",
-        "name": "Run without debugging",
+        "key": "q",
+        "name": "Quokka start",
         "type": "command",
-        "command": "workbench.action.debug.run"
+        "command": "workbench.action.tasks.runTask",
+        "args": "quokka-start"
       },
       {
-        "key": "R",
+        "key": "Q",
+        "name": "Quokka stop",
+        "type": "command",
+        "command": "vim.remap",
+        "args": {
+          "commands":[
+            {
+                "command": "workbench.action.tasks.runTask",
+                "args": "quokka-stop",
+            },
+            {
+              "command": "workbench.action.toggleAuxiliaryBar"
+            },
+          ]
+        }
+
+      },
+      {
+        "key": "r",
         "name": "Restart debug",
         "type": "command",
         "command": "workbench.action.debug.restart"
+      },
+      {
+        "key": "R",
+        "name": "Run without debugging",
+        "type": "command",
+        "command": "workbench.action.debug.run"
       },
       {
         "key": "t",
@@ -370,24 +389,37 @@
         "command": "workbench.debug.action.toggleRepl"
       },
       {
-        "key": "w",
+        "key": "v",
         "name": "Focus on watch window",
         "type": "command",
         "command": "workbench.debug.action.focusWatchView"
       },
       {
-        "key": "W",
+        "key": "V",
         "name": "Add to watch",
         "type": "command",
         "command": "editor.debug.action.selectionToWatch"
-      }
+      },
+      {
+        "key": "w",
+        "name": "Wolf start",
+        "type": "command",
+        "command": "workbench.action.tasks.runTask",
+        "args": "wolf-start"
+      },
+      {
+        "key": "W",
+        "name": "Wolf stop",
+        "type": "command",
+        "command": "workbench.action.tasks.runTask",
+        "args": "wolf-stop"
+      },
     ]
   },
   {
     "key": "e",
     "name": "Toggle Explorer",
     "type": "command",
-    // "command": "workbench.action.toggleSidebarVisibility"
     "command": "workbench.view.explorer"
   },
   {
@@ -478,6 +510,13 @@
       },
       {
         "key": "g",
+        "name": "lazygit",
+        "type": "command",
+        "command": "workbench.action.tasks.runTask",
+        "args": "lazygit"
+      },
+      {
+        "key": "G",
         "name": "Graph",
         "type": "command",
         "command": "git-graph.view"
@@ -495,12 +534,6 @@
         "command": "git.viewFileHistory"
       },
       {
-        "key": "i",
-        "name": "Next Change",
-        "type": "command",
-        "command": "workbench.action.editor.nextChange"
-      },
-      {
         "key": "I",
         "name": "Init",
         "type": "command",
@@ -508,6 +541,12 @@
       },
       {
         "key": "j",
+        "name": "Next Change",
+        "type": "command",
+        "command": "workbench.action.editor.nextChange"
+      },
+      {
+        "key": "k",
         "name": "Previous Change",
         "type": "command",
         "command": "workbench.action.editor.previousChange"
@@ -989,7 +1028,7 @@
     "type": "bindings",
     "bindings": [
       {
-        "key": "\\",
+        "key": "0",
         "name": "Focus tabs view",
         "type": "command",
         "command": "workbench.action.terminal.focusTabs",
@@ -1036,8 +1075,8 @@
       {
         "key": "h",
         "name": "Resize left",
-        "type": "command",
-        "command": "workbench.action.terminal.resizePaneLeft",
+        "type": "commands",
+        "commands": ["workbench.action.terminal.resizePaneLeft","workbench.action.terminal.resizePaneLeft"],
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
       },
       {
@@ -1057,8 +1096,8 @@
       {
         "key": "l",
         "name": "Resize right",
-        "type": "command",
-        "command": "workbench.action.terminal.resizePaneRight",
+        "type": "commands",
+        "commands": ["workbench.action.terminal.resizePaneRight","workbench.action.terminal.resizePaneRight"],
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
       },
       {
@@ -1092,10 +1131,24 @@
         "command": "workbench.action.terminal.moveToTerminalPanel",
       },
       {
-        "key": "s",
+        "key": "+",
         "name": "Split terminal (inActiveWorkspace)",
         "type": "command",
         "command": "workbench.action.terminal.splitInActiveWorkspace"
+      },
+      {
+        "key": "s",
+        "name": "tmux split vertical",
+        "type": "command",
+        "command": "workbench.action.tasks.runTask",
+        "args": "tmux-split-vertical"
+      },
+      {
+        "key": "S",
+        "name": "tmux split horizontal",
+        "type": "command",
+        "command": "workbench.action.tasks.runTask",
+        "args": "tmux-split-horizontal"
       },
       {
         "key": "t",
@@ -1121,60 +1174,6 @@
         "type": "commands",
         "commands": ["workbench.action.positionPanelBottom","workbench.action.terminal.focus"]
       },
-      // {
-      //   "key": "v",
-      //   "name": "vertical Terminal",
-      //   "type": "conditional",
-      //   "bindings":[
-      //     {
-      //       "key": "",
-      //       "name": "vertical Terminal focused unneeded",
-      //       "type": "commands",
-      //       "commands": ["workbench.action.togglePanel","workbench.action.positionPanelRight"],
-      //       // "args":
-      //       // {
-      //       //   "key": "",
-      //       //   "name": "Focus Terminal",
-      //       //   "type": "command",
-      //       //   "command": "workbench.action.terminal.toggleTerminal",
-      //       //   "when": "!terminalFocus"
-      //       // },
-      //     },
-      //     {
-      //       "key": "'when':'!terminalFocus'",
-      //       "name": "vertical Terminal focused needed",
-      //       "type": "commands",
-      //       "commands": ["workbench.action.terminal.toggleTerminal"]
-      //     },
-      //   ]
-      // },
-      // {
-      //   "key": "V",
-      //   "name": "horizontal Terminal",
-      //   "type": "conditional",
-      //   "bindings":[
-      //     {
-      //       "key": "",
-      //       "name": "horizontal Terminal focused unneeded",
-      //       "type": "commands",
-      //       "commands": ["workbench.action.togglePanel","workbench.action.positionPanelBottom"],
-      //       // "args":
-      //       // {
-      //       //   "key": "",
-      //       //   "name": "Focus Terminal",
-      //       //   "type": "command",
-      //       //   "command": "workbench.action.terminal.toggleTerminal",
-      //       //   "when": "!terminalFocus"
-      //       // },
-      //     },
-      //     {
-      //       "key": "'when':'!terminalFocus'",
-      //       "name": "vertical Terminal focused needed",
-      //       "type": "commands",
-      //       "commands": ["workbench.action.terminal.toggleTerminal"]
-      //     },
-      //   ]
-      // },
     ]
   },
   {
@@ -1184,15 +1183,15 @@
     "bindings": [
       {
         "key": "b",
-        "name": "Toggle menu bar",
-        "type": "command",
-        "command": "workbench.action.toggleMenuBar",
-      },
-      {
-        "key": "B",
         "name": "Toggle activity bar",
         "type": "command",
         "command": "workbench.action.toggleActivityBarVisibility",
+      },
+      {
+        "key": "B",
+        "name": "Toggle menu bar",
+        "type": "command",
+        "command": "workbench.action.toggleMenuBar",
       },
       {
         "key": "f",
@@ -1207,12 +1206,8 @@
         "command": "vim.remap",
         "args": {
           "commands":[
-            // { "command": ":noh" }
+            // { "command": ":noh" },
             { "command": ":set hlsearch!" },
-              // {
-              //     "command": "editor.action.codeAction",
-              //     "args": { "kind": "refactor.extract" }
-              // }
           ]
         }
       },
@@ -1235,10 +1230,22 @@
         "command": "workbench.action.togglePanel"
       },
       {
+        "key": "q",
+        "name": "Toggle quokka",
+        "type": "command",
+        "command": "quokka.toggle",
+      },
+      {
         "key": "s",
-        "name": "Toggle side bar visibility",
+        "name": "Toggle sidebar visibility",
         "type": "command",
         "command": "workbench.action.toggleSidebarVisibility"
+      },
+      {
+        "key": "S",
+        "name": "Toggle sec-sidebar visibility",
+        "type": "command",
+        "command": "workbench.action.toggleAuxiliaryBar"
       },
       {
         "key": "t",
@@ -1251,18 +1258,6 @@
         "name": "Toggle tab visibility",
         "type": "command",
         "command": "workbench.action.toggleTabsVisibility"
-      },
-      {
-        "key": "w",
-        "name": "Wolf start",
-        "type": "command",
-        "command": "wolf.touchBarStart"
-      },
-      {
-        "key": "W",
-        "name": "Wolf bark",
-        "type": "command",
-        "command": "wolf.barkAtCurrentFile"
       },
       {
         "key": "x",
@@ -1295,6 +1290,13 @@
     "name": "Horizontal split",
     "type": "commands",
     "commands": ["workbench.action.positionPanelBottom","workbench.action.terminal.focus"]
+  },
+  {
+    "key": " ",
+    "name": "tmux copy mode",
+    "type": "command",
+    "command": "workbench.action.tasks.runTask",
+    "args": "tmux-copy-mode"
   },
   {
     "key": "w",
@@ -1400,6 +1402,12 @@
     ]
   },
   {
+    "key": "x",
+    "name": "Close active editor",
+    "type": "command",
+    "command": "workbench.action.closeActiveEditor"
+  },
+  {
     "key": "y",
     "name": "Sync...",
     "type": "bindings",
@@ -1423,7 +1431,7 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.cursorSurroundingLines": 4,
-  "editor.fontFamily": "\"3270Medium NF\",\"Bedstead\",\"CaskaydiaCove Nerd Font\"",
+  "editor.fontFamily": "\"3270Medium Nerd Font\",\"Bedstead\",\"CaskaydiaCove Nerd Font\"",
   // "editor.fontSize": 15,
   "editor.fontWeight": 500,
   "editor.inlineSuggest.enabled": true,
@@ -1431,95 +1439,95 @@
   "editor.renderLineHighlight": "none",
   "editor.suggest.preview": true,
   "editor.tokenColorCustomizations": {
-      "textMateRules": [
-          {
-              "scope": "keyword",
-              "settings": { "fontStyle": "bold" }
-          },
-          {
-              "scope": "entity.name.type",
-              "settings": { "fontStyle": "bold" }
-          },
-          {
-              "scope": "storage",
-              "settings": { "fontStyle": "bold" }
-          },
-          {
-              "scope": "constant.language",
-              "settings": { "fontStyle": "bold" }
-          },
-          {
-              "scope": "support.class.builtin",
-              "settings": { "fontStyle": "bold" }
-          }
-      ]
+    "textMateRules": [
+      {
+        "scope": "keyword",
+        "settings": { "fontStyle": "bold" }
+      },
+      {
+        "scope": "entity.name.type",
+        "settings": { "fontStyle": "bold" }
+      },
+      {
+        "scope": "storage",
+        "settings": { "fontStyle": "bold" }
+      },
+      {
+        "scope": "constant.language",
+        "settings": { "fontStyle": "bold" }
+      },
+      {
+        "scope": "support.class.builtin",
+        "settings": { "fontStyle": "bold" }
+      }
+    ]
   },
   "explorer.decorations.colors": false,
   "files.exclude": {
-      "node_modules": true
+    "node_modules": true
   },
   "files.trimTrailingWhitespace": true,
   "github.copilot.enable": {
-      "*": true,
-      "yaml": false,
-      "plaintext": false,
-      "markdown": true
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": true
   },
   "workbench.colorCustomizations": {
-      "[Mountain]":{
-          "activityBar.background" : "#131313",
-          "breadcrumb.foreground":"#535353",
-          "editorGroupHeader.tabsBackground":"#181818",
-          "editorLineNumber.activeForeground" : "#f0f0f0",
-          "editorLineNumber.foreground" : "#373737",
-          "editorSuggestWidget.background": "#0f0f0f", // widget bg
-          "editorSuggestWidget.border": "#535353",
-          "editorSuggestWidget.focusHighlightForeground": "#746f91",
-          "editorSuggestWidget.highlightForeground": "#746f91", // typed(matching) symbols color
-          "editorSuggestWidget.selectedBackground": "#1c1c1c",
-          "list.activeSelectionBackground" : "#090909",
-          "list.focusAndSelectionOutline" : "#555555",
-          "list.focusBackground" : "#181818",
-          "list.inactiveSelectionBackground" : "#181818",
-          "sideBar.background" : "#090909",
-          "sideBar.foreground": "#A1A1A1",
-          "statusBar.background" : "#212121",
-          "statusBar.foreground" : "#cccccc",
-          "tab.activeBackground" : "#0f0f0f",
-          "tab.inactiveForeground" :"#535353",
-          // "editorCursor.background": "#555555",
-          // "editorCursor.foreground": "#aaaaaa",
-          // "scrollbarSlider.background": "#373737",
-          // "statusBar.background" : "#131313",
-          // "statusBar.debuggingBackground": "#263238",
-          // "statusBar.foreground" : "#818181",
-          // "statusBar.noFolderBackground" : "#212121",
-          "terminalCursor.background": "#000000",
-          "terminalCursor.foreground": "#ffffff",
-          "terminal.foreground": "#b3b3b3",
-          "terminal.background": "#000000",
-          "terminal.ansiBlack": "#222222",
-          "terminal.ansiBlue": "#5555cc",
-          "terminal.ansiCyan": "#7acaca",
-          "terminal.ansiGreen": "#008800",
-          "terminal.ansiMagenta": "#8855ff",
-          "terminal.ansiRed": "#bb0000",
-          "terminal.ansiWhite": "#ffffff",
-          "terminal.ansiYellow": "#bbbb00",
-          "terminal.ansiBrightBlack": "#555555",
-          "terminal.ansiBrightBlue": "#1c1cff",
-          "terminal.ansiBrightCyan": "#008888",
-          "terminal.ansiBrightGreen": "#00ff00",
-          "terminal.ansiBrightMagenta": "#880088",
-          "terminal.ansiBrightRed": "#ff0000",
-          "terminal.ansiBrightWhite": "#ff4400",
-          "terminal.ansiBrightYellow": "#ffff00",
-          "terminal.selectionBackground": "#4d52f8",
-      },
+    "[Mountain]":{
+      "activityBar.background" : "#131313",
+      "breadcrumb.foreground":"#535353",
+      "editorGroupHeader.tabsBackground":"#181818",
+      "editorLineNumber.activeForeground" : "#f0f0f0",
+      "editorLineNumber.foreground" : "#373737",
+      "editorSuggestWidget.background": "#0f0f0f", // widget bg
+      "editorSuggestWidget.border": "#535353",
+      "editorSuggestWidget.focusHighlightForeground": "#746f91",
+      "editorSuggestWidget.highlightForeground": "#746f91", // typed(matching) symbols color
+      "editorSuggestWidget.selectedBackground": "#1c1c1c",
+      "list.activeSelectionBackground" : "#090909",
+      "list.focusAndSelectionOutline" : "#555555",
+      "list.focusBackground" : "#181818",
+      "list.inactiveSelectionBackground" : "#181818",
+      "sideBar.background" : "#090909",
+      "sideBar.foreground": "#A1A1A1",
+      "statusBar.background" : "#212121",
+      "statusBar.foreground" : "#cccccc",
+      "tab.activeBackground" : "#0f0f0f",
+      "tab.inactiveForeground" :"#535353",
+      // "editorCursor.background": "#555555",
+      // "editorCursor.foreground": "#aaaaaa",
+      // "scrollbarSlider.background": "#373737",
+      // "statusBar.background" : "#131313",
+      // "statusBar.debuggingBackground": "#263238",
+      // "statusBar.foreground" : "#818181",
+      // "statusBar.noFolderBackground" : "#212121",
+      "terminalCursor.background": "#000000",
+      "terminalCursor.foreground": "#ffffff",
+      "terminal.foreground": "#b3b3b3",
+      "terminal.background": "#000000",
+      "terminal.ansiBlack": "#222222",
+      "terminal.ansiBlue": "#5555cc",
+      "terminal.ansiCyan": "#7acaca",
+      "terminal.ansiGreen": "#008800",
+      "terminal.ansiMagenta": "#8855ff",
+      "terminal.ansiRed": "#bb0000",
+      "terminal.ansiWhite": "#ffffff",
+      "terminal.ansiYellow": "#bbbb00",
+      "terminal.ansiBrightBlack": "#555555",
+      "terminal.ansiBrightBlue": "#1c1cff",
+      "terminal.ansiBrightCyan": "#008888",
+      "terminal.ansiBrightGreen": "#00ff00",
+      "terminal.ansiBrightMagenta": "#880088",
+      "terminal.ansiBrightRed": "#ff0000",
+      "terminal.ansiBrightWhite": "#ff4400",
+      "terminal.ansiBrightYellow": "#ffff00",
+      "terminal.selectionBackground": "#4d52f8",
+    },
   },
   "Lua.telemetry.enable": false,
   "debug.inlineValues": "on",
-  // "diffEditor.renderSideBySide": false,
+  "diffEditor.renderSideBySide": false,
   // "git.autofetch": true,
   "gitlens.codeLens.enabled": false,
   "gitlens.currentLine.enabled": false,
@@ -1548,4 +1556,5 @@
   "workbench.folderLabelColor": "#ff0000",
   "workbench.panel.defaultLocation": "right",
   "window.menuBarVisibility": "toggle",
+  "explorer.confirmDelete": false,
 }
