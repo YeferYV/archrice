@@ -19,6 +19,15 @@
         "command": "renameFile",
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
     },
+    {
+        "key": "e",
+        "command": "whichkey.triggerKey",
+        "args": {
+            "key": "e",
+            "when": "sideBarVisible && explorerViewletVisible"
+        },
+        "when": "whichkeyVisible && sideBarVisible && explorerViewletVisible"
+    },
     // {
     //     "key": "space",
     //     "command": "filesExplorer.openFilePreserveFocus",

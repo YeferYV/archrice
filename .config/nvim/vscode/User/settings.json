@@ -432,9 +432,22 @@
   },
   {
     "key": "e",
-    "name": "Toggle Explorer",
-    "type": "command",
-    "command": "workbench.view.explorer"
+    "name": "Show tree/explorer view",
+    "type": "conditional",
+    "bindings": [
+      {
+        "key": "",
+        "name": "default",
+        "type": "command",
+        "command": "workbench.view.explorer"
+      },
+      {
+        "key": "when:sideBarVisible && explorerViewletVisible",
+        "name": "Hide explorer",
+        "type": "command",
+        "command": "workbench.action.toggleSidebarVisibility"
+      }
+    ]
   },
   {
     "key": "f",
@@ -983,7 +996,6 @@
         "key": "e",
         "name": "Show explorer",
         "type": "command",
-        // "command": "workbench.view.explorer"
         "command": "workbench.action.toggleSidebarVisibility"
       },
       {
@@ -1441,39 +1453,69 @@
   },
 ],
 
-  "editor.bracketPairColorization.enabled": true,
+  // "editor.bracketPairColorization.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.cursorSurroundingLines": 4,
-  "editor.fontFamily": "\"3270Medium Nerd Font\",\"Bedstead\",\"CaskaydiaCove Nerd Font\"",
-  // "editor.fontSize": 15,
-  "editor.fontWeight": 500,
+  // "editor.fontFamily": "\"3270Medium Nerd Font\",\"Bedstead\",\"CaskaydiaCove Nerd Font\"",
+  // "editor.fontSize": 16,
+  // "editor.lineHeight": 1.1,
+  "editor.fontFamily": "\"CaskaydiaCove Nerd Font\",\"3270Medium Nerd Font\",\"Bedstead\"",
+  "editor.fontSize": 13,
+  "editor.fontWeight": 400,
   "editor.inlineSuggest.enabled": true,
   "editor.minimap.enabled": false,
   "editor.renderLineHighlight": "none",
   "editor.suggest.preview": true,
   "editor.tokenColorCustomizations": {
-    "textMateRules": [
-      {
-        "scope": "keyword",
-        "settings": { "fontStyle": "bold" }
-      },
-      {
-        "scope": "entity.name.type",
-        "settings": { "fontStyle": "bold" }
-      },
-      {
-        "scope": "storage",
-        "settings": { "fontStyle": "bold" }
-      },
-      {
-        "scope": "constant.language",
-        "settings": { "fontStyle": "bold" }
-      },
-      {
-        "scope": "support.class.builtin",
-        "settings": { "fontStyle": "bold" }
-      }
-    ]
+    "[Hacker]":{
+      "textMateRules": [
+        {
+          "name": "Punctuation && Comments",
+          "scope": [
+            "comment",
+            "comment.block",
+            "comment.line",
+            "string.quoted.docstring",
+            "string.quoted.docstring.multi.python",
+            "punctuation.definition.string.begin.python",
+            "punctuation.definition.string.end.python",
+            "punctuation.definition.comment",
+            "punctuation.end.definition.comment",
+            "punctuation.start.definition.comment"
+          ],
+          "settings": {
+            // "foreground": "#2c2c2c",
+            // "foreground": "#3c3c3c",
+            // "foreground": "#4c4c4c",
+            "foreground": "#5c5c5c",
+          }
+        },
+        {
+          "scope": "constant.language",
+          "settings": { "fontStyle": "", "foreground":"#1cff1c" }
+        },
+        {
+          "scope": "constant.numeric",
+          "settings": { "fontStyle": "", "foreground":"#1cff1c" }
+        },
+        {
+          "scope": "entity.name.type",
+          "settings": { "fontStyle": "bold", "foreground":"#ff0000" }
+        },
+        {
+          "scope": "keyword",
+          "settings": { "fontStyle": "bold", "foreground":"#5c5cff" }
+        },
+        {
+          "scope": "storage",
+          "settings": { "fontStyle": "bold", "foreground":"#5c5cff" }
+        },
+        {
+          "scope": "support.class.builtin",
+          "settings": { "fontStyle": "bold", "foreground":"#ff0000" }
+        },
+      ]
+    },
   },
   "explorer.decorations.colors": false,
   "files.exclude": {
@@ -1487,6 +1529,39 @@
     "markdown": true
   },
   "workbench.colorCustomizations": {
+    "editorBracketHighlight.foreground1" : "#88ff88",
+    "editorBracketHighlight.foreground2" : "#8888ff",
+    "editorBracketHighlight.foreground3" : "#ffff00",
+    "editorBracketHighlight.foreground4" : "#44ff44",
+    "editorBracketHighlight.foreground5" : "#4444ff",
+    "editorBracketHighlight.foreground6" : "#ff0000",
+    "[Hacker]":{
+      "editor.selectionBackground":"#55555555",
+      "editor.selectionHighlightBackground":"#33333333",
+      "editor.wordHighlightStrongBackground":"#33333333",
+      "editor.wordHighlightBackground": "#33333333",
+      "editorLineNumber.foreground":"#55555555",
+      "editorSuggestWidget.focusHighlightForeground": "#7574d5", // typed(matching) symbols color
+      "editorSuggestWidget.highlightForeground": "#7574d5", // typed(matching) symbols color
+      "editorSuggestWidget.selectedBackground": "#55555555",
+      "list.activeSelectionBackground" : "#090909", // explorer
+      "list.focusAndSelectionOutline" : "#555555", // explorer
+      "list.focusForeground" : "#bbbbbb", // explorer
+      "list.focusBackground" : "#181818", // explorer
+      "list.highlightForeground": "#7574d5", // typed(matching) symbols color
+      "list.focusHighlightForeground": "#7574d5", // typed(matching) symbols color
+      "list.inactiveSelectionBackground" : "#181818", // explorer
+      "quickInputList.focusBackground":"#55555555",
+      "sideBar.background":"#0a0b0a",
+      "terminal.ansiBlack": "#222222",
+      "terminal.ansiBlue": "#5555cc",
+      "terminal.ansiCyan": "#7acaca",
+      "terminal.ansiGreen": "#008800",
+      "terminal.ansiMagenta": "#8855ff",
+      "terminal.ansiRed": "#bb0000",
+      "terminal.ansiWhite": "#ffffff",
+      "terminal.ansiYellow": "#bbbb00",
+    },
     "[Mountain]":{
       "activityBar.background" : "#131313",
       "breadcrumb.foreground":"#535353",
@@ -1495,7 +1570,7 @@
       "editorLineNumber.foreground" : "#373737",
       "editorSuggestWidget.background": "#0f0f0f", // widget bg
       "editorSuggestWidget.border": "#535353",
-      "editorSuggestWidget.focusHighlightForeground": "#746f91",
+      "editorSuggestWidget.focusHighlightForeground": "#746f91", // typed(matching) symbols color
       "editorSuggestWidget.highlightForeground": "#746f91", // typed(matching) symbols color
       "editorSuggestWidget.selectedBackground": "#1c1c1c",
       "list.activeSelectionBackground" : "#090909",
@@ -1557,17 +1632,19 @@
   "tabnine.experimentalAutoImports": true,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "tmux",
-  // "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontFamily": "'3270Medium Nerd Font','TerminessTTF Nerd Font'",
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.fontWeight": 500,
   "terminal.integrated.shellIntegration.enabled": false,
   "window.customMenuBarAltFocus": false,
   "window.enableMenuBarMnemonics": false,
   "wolf.logErrors": true,
   "wolf.pythonPath": "/usr/bin/python",
   "workbench.startupEditor": "none",
-  "workbench.colorTheme": "Mountain",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.folderLabelColor": "#ff0000",
   "workbench.panel.defaultLocation": "right",
   "window.menuBarVisibility": "toggle",
   "explorer.confirmDelete": false,
+  "workbench.colorTheme": "Hacker",
 }
