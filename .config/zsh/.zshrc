@@ -4,7 +4,7 @@
 fpath=(~/.config/zsh/ $fpath)
 
 ## Enable colors and change prompt:
-autoload -U colors && colors	# Load colors
+# autoload -U colors && colors	# Load colors
 
 ## Bash like prompt
 # PS1="\
@@ -22,18 +22,18 @@ autoload -U colors && colors	# Load colors
 # RPROMPT="$GITSTATUS_PROMPT"  # right prompt
 # PS1="%B%~ ﲵ "
 
-customprompt()
-{
-    if [[ $PWD == $HOME ]]; then
-        # echo ''
-        # PS1="%F{green}%Bﲵ "
-        export SPACESHIP_DIR_SHOW="false"
-    else
-        # echo $PWD
-        # PS1="%F{green}%~ ﲵ "
-        export SPACESHIP_DIR_SHOW="true"
-    fi
-}
+# customprompt()
+# {
+#   if [[ $PWD == $HOME ]]; then
+#     # PS1="%F{green}%Bﲵ "
+#     # starship config directory.disabled true
+#     export SPACESHIP_DIR_SHOW="false"
+#   else
+#     # PS1="%F{green}%~ ﲵ "
+#     # starship config directory.disabled false
+#     export SPACESHIP_DIR_SHOW="true"
+#   fi
+# }
 # typeset -a precmd_functions
 # precmd_functions+=(customprompt)
 # precmd() { customprompt }
@@ -44,7 +44,7 @@ customprompt()
 # export PROMPT_COMMAND='echo -ne "\033]0; ${${PWD/#$HOME/~}##*/} \a"'
 # export PROMPT_COMMAND='echo -ne "\033]0; ${${PWD/#$HOME/~}##*/} \007"'
 export PROMPT_COMMAND='echo -ne "\033]0; $(TMP=${PWD/#$HOME/\~}; echo ${TMP##*/}) \007"'
-precmd() { customprompt; eval "$PROMPT_COMMAND" }
+precmd() { eval "$PROMPT_COMMAND" }
 
 # export LC_ALL=en_US.UTF-8
 export LS_COLORS="tw=30:di=90:ow=94:ln=34"
@@ -163,14 +163,14 @@ zle -N                 cdUndoKey
 bindkey '^[[1;3D'      cdParentKey
 bindkey '^[[1;3C'      cdUndoKey
 
-ranger_cd() {
-    temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
-    ranger --choosedir="$temp_file" -- "${@:-$PWD}"
-    if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
-        cd -- "$chosen_dir"
-    fi
-    rm -f -- "$temp_file"
-}
+# ranger_cd() {
+#     temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+#     ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+#     if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+#         cd -- "$chosen_dir"
+#     fi
+#     rm -f -- "$temp_file"
+# }
 # bindkey -s '^r' 'ranger\n'
 # [ -n $RANGERCD ] && unset RANGERCD && ranger_cd
 # [ -z "$RANGERCD" ] && echo "Empty string"; [ -n "$RANGERCD" ] && echo "No-empty string"
@@ -186,7 +186,7 @@ lfcd () {
         dir="$(cat "$tmp")"
         rm -f "$tmp" >/dev/null
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-        customprompt
+        # customprompt
         [[ -d $1 ]] || zle reset-prompt
         eval "$PROMPT_COMMAND"
     fi
@@ -207,7 +207,7 @@ fmzcd () {
     if [ -d "$res" ] && [ "$res" != "$PWD" ]; then
         cd "$res" || return 1
     fi
-    customprompt
+    # customprompt
     zle reset-prompt
     rm "$tmp" >/dev/null
 }
@@ -216,13 +216,13 @@ fmzcd () {
 fzfprev() {
   cd $(dirname "$(fzfp --layout=reverse --height 70% --border --color hl+:#ff0000\
     --bind='?:toggle-preview' <$TTY )")
-  customprompt
+  # customprompt
   zle reset-prompt
 }
 
 fzf_cd () {
   cd $(dirname "$(fzf --layout=reverse --height 40% --border --color hl+:#ff0000 <$TTY )")
-  customprompt
+  # customprompt
   zle reset-prompt
 }
 
@@ -287,10 +287,6 @@ bindkey '^v' edit-command-line
   source /usr/share/fzf/key-bindings.zsh
   source /usr/share/fzf/completion.zsh }
 
-# [ -e $HOME/.nix-profile/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]&& \
-#   source $HOME/.nix-profile/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ||\
-#   source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
 [ -e $HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]&&\
   source $HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ||\
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
@@ -299,10 +295,7 @@ bindkey '^v' edit-command-line
   source $HOME/.nix-profile/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh ||\
   source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
-## Spaceship Prompt
-[ -e $HOME/.nix-profile/lib/spaceship-prompt/spaceship.zsh ]&&\
-  source ~/.nix-profile/lib/spaceship-prompt/spaceship.zsh ||{
-  autoload -U promptinit; promptinit; prompt spaceship }
-
 bindkey '^I' expand-or-complete
 
+# Starship
+eval "$(starship init zsh)"

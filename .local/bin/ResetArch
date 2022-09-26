@@ -90,7 +90,7 @@ redshift \
 siji-git \
 snapper \
 snapper-rollback \
-spaceship-prompt \
+starship \
 stow \
 sxhkd \
 sxiv \
@@ -215,6 +215,7 @@ true | yay -Scc
 # simple-mtpfs
 # sixel-tmux-git
 # skippy-xd-git
+# spaceship-prompt
 # spotify
 # spotify-adblock-git
 # spotify-adkiller-git

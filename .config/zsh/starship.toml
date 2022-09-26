@@ -1,0 +1,80 @@
+# format = """
+# $battery\
+# $sudo\
+# $username\
+# $directory\
+# $git_branch\
+# $git_status\
+# $time\
+# $status\
+# $character\
+# $package\
+# """
+
+format = """
+$battery\
+$sudo\
+$username\
+$custom\
+$git_branch\
+$git_status\
+$time\
+$status\
+$character\
+$package\
+"""
+
+# format = "[$symbol($output )]($style)"
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+# Timeout 10 min
+command_timeout = 600000
+
+[line_break]
+disabled = true
+# truncation_symbol = "…/"
+
+[directory]
+disabled = false
+style = "bold fg:#555555"
+format = "[$path ]($style)"
+truncation_length = 9
+# truncation_symbol = "…/"
+
+# [directory.substitutions]
+# "~" = " .../ "
+
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[ﲵ ](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[ﲵ ](bold red)"
+vimcmd_symbol =	"[ﲵ ](bold green)"
+vimcmd_replace_one_symbol =	"[ﲵ ](bold purple)"
+vimcmd_replace_symbol =	"[ﲵ ](bold purple)"
+vimcmd_visual_symbol =	"[ﲵ ](bold yellow)"
+format = "$symbol"
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = false
+
+[custom.home]
+when = """ test "$HOME" = "$PWD" """
+format = ""
+# format = """[ﲵ ](fg:#0000ff)"""
+
+[custom.gitroot]
+command = """
+[ "${PWD:A}" = "$PWD" ] && {
+    GIT_ROOT=$(git rev-parse --show-toplevel)
+    DIR="$GIT_ROOT:t${${PWD}#$~~GIT_ROOT}"
+  }||{
+    DIR=$PWD
+  }
+  echo ${DIR/$HOME/\\~}
+"""
+when = """ test "$HOME" != "$PWD" """
+format = """[$output](bold fg:#555555) """
