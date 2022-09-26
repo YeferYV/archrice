@@ -1,5 +1,20 @@
 #!/bin/bash
 
+#================== Docker Build from Image ==================#
+
+# cd ../..
+# docker run -it \
+#            --name archrice \
+#            --privileged \
+#            --volume=$(pwd):/root/.config/dotfiles/dotfiles \
+#            --volume=/run/user/1000/pipewire-0:/run/user/1000/pipewire-0 \
+#            --volume=/tmp/.X11-unix:/tmp/.X11-unix \
+#            archlinux:base-devel bash -uelic '
+#              cd /root/.config/dotfiles/dotfiles/.local/bin
+#              RESETARCH_SNAPSHOT=true ./RiceArch
+#              su - drknss
+#            '
+
 #======================= Usage Example =======================#
 
 # pacman -S polkit-gnome libvirt qemu virt-manager vagrant
@@ -52,16 +67,16 @@ USER=${ARCH_USER:-drknss}
 set -eu
 sudo -s -- <<===
   set -eu
-  timedatectl set-ntp true
-  hwclock --systohc
+  # timedatectl set-ntp true
+  # hwclock --systohc
   ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
-  sed -i '177s/#//' /etc/locale.gen
+  sed -i 's/#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
   locale-gen
   echo "LANG=en_US.UTF-8"                    > /etc/locale.conf
   echo "4rch"                                > /etc/hostname
-  echo "127.0.0.1 localhost"                >> /etc/hosts
-  echo "::1       localhost"                >> /etc/hosts
-  echo "127.0.1.1 4rch.localdomain 4rch"    >> /etc/hosts
+  # echo "127.0.0.1 localhost"                >> /etc/hosts
+  # echo "::1       localhost"                >> /etc/hosts
+  # echo "127.0.1.1 4rch.localdomain 4rch"    >> /etc/hosts
   useradd -mG video,wheel $USER
   echo root:toor | chpasswd
   echo $USER:toor | chpasswd
@@ -96,8 +111,8 @@ sudo -s -- <<===
 [ "${RESETARCH_SNAPSHOT:-}" == true ] && {
   printf "\n\e[1;33m ReseArch snapshot \e[0m\n"
   sudo -u $USER -s -- ./ResetArch
-  sudo snapper -c root create -d "after-ResetArch"
-  sudo snapper -c home create -d "after-ResetArch"
+  # sudo snapper -c root create -d "after-ResetArch"
+  # sudo snapper -c home create -d "after-ResetArch"
 }
 
 #================== Post-Install (dotfiles) ==================#
@@ -133,8 +148,8 @@ sudo -u $USER -s -- <<===
 
   # sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
   # sudo grub-mkconfig -o /boot/grub/grub.cfg
-  sudo systemctl enable NetworkManager
-  sudo systemctl enable cronie
+  # sudo systemctl enable NetworkManager
+  # sudo systemctl enable cronie
 
   # neovim plugins
   set +eu # disable exit on error (spoiler nvim still outputs errors)
