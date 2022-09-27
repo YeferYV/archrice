@@ -65,10 +65,9 @@ HISTFILE=~/.cache/zsh/history
 # [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 
 ## Basic auto/tab complete:
-autoload -U compinit
-zstyle ':completion:*' menu select
+autoload -U compinit && compinit -d ~/.cache/zsh/.zcompdump
 zmodload zsh/complist
-compinit -d ~/.cache/zsh/.zcompdump
+zstyle ':completion:*' menu select
 _comp_options+=(globdots)		# Include hidden files.
 
 ## vi mode
