@@ -1466,6 +1466,7 @@
   "editor.minimap.enabled": false,
   "editor.renderLineHighlight": "none",
   "editor.suggest.preview": true,
+  "editor.tabSize": 2,
   "editor.tokenColorCustomizations": {
     "[Hacker]":{
       "textMateRules": [
