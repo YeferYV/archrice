@@ -11,7 +11,7 @@ export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\
 export PS1="[\w]\$ "
 
 #-- Default programs:
-# export SHELL="$(which zsh)"
+export SHELL="$(which zsh)"
 # export TERM="xterm-256color"
 export EDITOR="nvim"
 export VISUAL="nvim"
