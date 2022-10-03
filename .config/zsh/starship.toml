@@ -7,8 +7,8 @@
 # $git_status\
 # $time\
 # $status\
-# $character\
 # $package\
+# $character\
 # """
 
 format = """
@@ -20,8 +20,8 @@ $git_branch\
 $git_status\
 $time\
 $status\
-$character\
 $package\
+$character\
 """
 
 # format = "[$symbol($output )]($style)"
@@ -59,7 +59,7 @@ format = "$symbol"
 
 # Disable the package module, hiding it from the prompt completely
 [package]
-disabled = false
+disabled = true
 
 [custom.home]
 when = """ test "$HOME" = "$PWD" """
