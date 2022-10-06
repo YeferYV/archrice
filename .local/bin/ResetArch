@@ -27,11 +27,8 @@ sudo pacman-key --populate
 sudo pacman -Sy  --noconfirm archlinux-keyring
 sudo pacman -Syu --noconfirm base-devel git
 
-# FIXME: location conflicts with stow after running RiceArch
-# FIXME: Root PATH compatibility
-#-- Neovim version 0.7
-# [ ! -e $HOME/.local/bin ] && mkdir -p $HOME/.local/bin
-# curl -Lo $HOME/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage && chmod +x $HOME/.local/bin/nvim
+#-- Neovim version 0.7.2
+sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage && sudo chmod +x /usr/local/bin/nvim
 
 #-- yay
 git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
@@ -76,7 +73,6 @@ mpd \
 mpv \
 mpv-mpris \
 ncmpcpp \
-neovim \
 network-manager-applet \
 ntfs-3g \
 openssh \
