@@ -27,7 +27,8 @@ unclutter --timeout 1 &
 
 ## Load a resource file, and merge with the current settings (for urxvt)
 # xrdb -merge ~/.config/x11/xresources &
-xrdb <<<"*background: #000000" # sxiv background
+xrdb -merge <<<"*background: #000000" # sxiv background
+xrdb -merge <<<"*foreground: #ff0000" # sxiv foreground
 
 ## To Load pointer
 xsetroot -cursor_name left_ptr &
