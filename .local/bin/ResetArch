@@ -35,48 +35,38 @@ git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
 cd /tmp/yay-bin
 makepkg -si --noconfirm
 
-#-- 4rch dependencies
-true | yay -Syu --noconfirm --noprovides --noanswerclean --noanswerdiff --needed --mflags "--noconfirm" \
-bat \
+#-- Packages excluded on docker
+[ ! -e /.dockerenv ] && yes | yay -S --noconfirm \
 bedstead-fonts \
 broadcom-wl \
 bspwm \
 btrfs-progs \
-cht.sh-git \
 cronie \
-dmenu \
 dosfstools \
+dmenu \
 dragon-drop \
 dunst \
 exfat-utils \
-ffmpegthumbnailer \
-fuse2 \
-fzf \
 festival-us \
+fuse2 \
 gnome-keyring \
 google-chrome \
 gtk-theme-arc-gruvbox-git \
 htop-vim \
 imagemagick \
 kitty \
-lazygit \
-lf-sixel-git \
 libnotify \
 light \
 maim \
 man-db \
 mediainfo \
 moreutils \
-mupdf-tools \
 mpc \
 mpd \
-mpv \
 mpv-mpris \
 ncmpcpp \
 network-manager-applet \
 ntfs-3g \
-openssh \
-perl-file-mimeinfo \
 picom \
 pipewire \
 pipewire-pulse \
@@ -86,18 +76,12 @@ redshift \
 siji-git \
 snapper \
 snapper-rollback \
-starship \
-stow \
 sxhkd \
 sxiv \
 touchcursor-linux-git \
-trash-cli \
 ttf-unifont \
 unclutter \
-unzip \
-wezterm \
 xcape \
-xclip \
 xdo \
 xdotool \
 xorg-server \
@@ -107,8 +91,27 @@ xorg-xset \
 xorg-xsetroot \
 xf86-input-synaptics \
 xwallpaper \
-zathura \
 zathura-pdf-mupdf \
+
+#-- 4rch dependencies
+yes | yay -S --noconfirm \
+bat \
+cht.sh-git \
+ffmpegthumbnailer \
+fzf \
+lazygit \
+lf \
+libsixel \
+mupdf-tools \
+mpv \
+perl-file-mimeinfo \
+ripgrep \
+starship \
+stow \
+trash-cli \
+unzip \
+wezterm \
+xclip \
 zsh-autosuggestions \
 zsh-fast-syntax-highlighting \
 
@@ -164,6 +167,7 @@ true | yay -Scc
 # i3status
 # intel-ucode
 # lazygit
+# lf-sixel-git
 # libreoffice
 # libsixel
 # libxft-bgra
@@ -204,7 +208,6 @@ true | yay -Scc
 # python-ueberzug-git
 # qemu-user-static
 # ranger-sixel
-# ripgrep
 # rxvt-unicode
 # scrcpy
 # sgtk-menu

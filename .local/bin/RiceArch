@@ -1,21 +1,32 @@
 #!/bin/bash
 
-#================== Docker Build from Image ==================#
+#==================== Docker run archrice ====================#
 
-# cd ../..
+# cd "$(git rev-parse --show-toplevel)"
 # docker run -it \
 #            --name archrice \
 #            --privileged \
-#            --volume=$(pwd):/root/.config/dotfiles/dotfiles \
-#            --volume=/run/user/1000/pipewire-0:/run/user/1000/pipewire-0 \
+#            --volume=${PWD%/*}:/home/dtfls/dotfiles-docker-volume \
+#            --volume=/run/user/1000/pulse/native:/run/user/1000/pulse/native \
 #            --volume=/tmp/.X11-unix:/tmp/.X11-unix \
-#            archlinux:base-devel bash -uelic '
-#              cd /root/.config/dotfiles/dotfiles/.local/bin
-#              RESETARCH_SNAPSHOT=true ./RiceArch
-#              su - drknss
+#            archlinux:base-devel \
+#            bash -uelic '
+#              if [ ! -e /home/drknss ]; then
+#                tty >> /tmp/sixel-
+#                cd /home/dtfls/dotfiles-docker-volume/dotfiles/.local/bin
+#                RESETARCH_SNAPSHOT=true ./RiceArch
+#                mkdir -p /run/user/1000/pulse
+#                chown -R drknss:drknss /run/user/1000
+#                yes | pacman -S pulseaudio
+#              else
+#                reset
+#              fi
+#              chmod g+w /dev/pts/0
+#              stty rows $(tput lines) && stty cols $(tput cols) && stty sane
+#              su - "drknss" bash -c "export XDG_RUNTIME_DIR=/run/user/1000 && script -qI /dev/null"
 #            '
 
-#======================= Usage Example =======================#
+#======================= Vagrant build =======================#
 
 # pacman -S polkit-gnome libvirt qemu virt-manager vagrant
 # exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & disown
@@ -77,13 +88,13 @@ sudo -s -- <<===
   # echo "127.0.0.1 localhost"                >> /etc/hosts
   # echo "::1       localhost"                >> /etc/hosts
   # echo "127.0.1.1 4rch.localdomain 4rch"    >> /etc/hosts
-  useradd -mG video,wheel $USER
+  useradd -mG video,wheel,tty $USER
   echo root:toor | chpasswd
   echo $USER:toor | chpasswd
   echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"  > /etc/sudoers.d/wheel
 ===
 
-#====================== Btrfs snapshot ======================#
+#======================= Btrfs snapshot ======================#
 
 [ "${BTRFS_SNAPSHOT:-}" == true ] && {
   [ $(id -u) != 0 ] && echo "\e[1;33mRun it as root user at root's folder\e[0m\n" >&2 && exit 1
@@ -136,10 +147,11 @@ sudo -u $USER -s -- <<===
   # mpc --port=6601 update
   ln -s /home/$USER/.config/shell/profile /home/$USER/.zprofile
   ln -s /home/$USER/.config/x11/.xinitrc /home/$USER/.xinitrc
+  [ ! -e /etc/X11/xorg.conf.d/ ] && sudo mkdir -p /etc/X11/xorg.conf.d/
   sudo cp /home/$USER/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
   sudo cp /home/$USER/.config/wallhaven-4lokdp.jpg /home/$USER/.local/share/bg
   sudo chsh --shell /usr/bin/zsh $USER
-  crontab /home/$USER/.local/bin/cron/lowbatnotificationcron
+  [ -x "$(command -v crontab)" ] && crontab /home/$USER/.local/bin/cron/lowbatnotificationcron
 
   # 3270 font
   mkdir -p ~/.local/share/fonts/3270-github
