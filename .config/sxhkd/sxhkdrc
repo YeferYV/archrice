@@ -20,8 +20,12 @@ mod1 + {_,shift +,ctrl +}Return
 ctrl + {_,shift + }Return
 	dunstctl {close, history-pop}
 
-# make sxhkd reload its configuration files:
+# stop cronbat
 super + Escape
+  ps aux | grep cronbat | awk '\{print $2\}' | xargs kill -9 & dunstctl close
+
+# make sxhkd reload its configuration files:
+super + shift + Escape
 	pkill -USR1 -x sxhkd
 
 #
