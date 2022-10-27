@@ -9,4 +9,4 @@ esac
 fi
 
 # kitty +icat --clear --silent --transfer-mode file
-kitty +icat --clear --transfer-mode file
+kitty +icat --clear --transfer-mode file || killall -s SIGWINCH lf
