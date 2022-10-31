@@ -137,6 +137,7 @@ true | yay -Scc
 # blackarch-keyring
 # blueman
 # bsp-layout
+# bsptab-git
 # cdrtools
 # cheat-git
 # cheat-sh
