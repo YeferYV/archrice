@@ -359,15 +359,19 @@ super + KP_{Right,Begin,Left}
   playerctl --player=chromium {next,play-pause,previous}
 
 # chromium play-pause
-super + ctrl + p
+XF86Launch{1,4}
   playerctl --player=chromium play-pause
 
 # chromium rewind-forward
-super + ctrl + {w,e}
+XF86Launch{2,3}
 	playerctl --player=chromium position {5-,5+}
   # YTID="$(wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1')"; \
   # CUID="$(xdo id)"; \
   # xdo activate $YTID && sleep 0.2 && xdotool key --clearmodifiers {w,e} && xdo activate $CUID
+
+# chromium play-paus,rewind
+{XF86Shop, shift + space}
+  playerctl --player=chromium {play-pause, position 5-}
 
 # mpv next-toggle-prev
 mod1 + KP_{Right,Begin,Left}
@@ -388,10 +392,10 @@ ctrl + KP_{Right,Begin,Left}
 ctrl + KP_{Down,Up}
 	{ \
 		playerctl --player=spotify volume 0.1-; \
-	, [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=spotify volume 0.1+; \
+	, [[ "$(playerctl -p spotify volume)" < 1 ]]&& playerctl --player=spotify volume 0.1+; \
 	}
 
-# mpc next-toggle-prev
+# mpc next-toggle-prev-vol
 KP_{Right,Begin,Left,Down,Up}
   mpc --port=6601 {next,toggle,prev,volume -2,volume +2}
 
@@ -458,16 +462,3 @@ super + {_,shift +} e
 # browser
 super + {_,shift +} w
   { google-chrome-stable --process-per-site, killall chrome}
-
-# skippy
-#mod1 + BackSpace
-#   skippy-xd-runner --activate {--prev,--next}
-
-# skippy
-#mod1 + {~Tab,space}
-#   skippy-xd-runner {--activate --next,--toggle}
-
-# skippy
-#XF86Shop
-#  skippy-xd-runner --toggle
-
