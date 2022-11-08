@@ -37,7 +37,7 @@ makepkg -si --noconfirm
 
 #-- Packages excluded on docker
 [ ! -e /.dockerenv ] && yes | yay -S --noconfirm \
-bedstead-fonts \
+bedstead-fonts-powerline \
 broadcom-wl \
 bspwm \
 btrfs-progs \
@@ -79,6 +79,7 @@ snapper-rollback \
 sxhkd \
 sxiv \
 touchcursor-linux-git \
+ttf-terminus-nerd \
 ttf-unifont \
 unclutter \
 xcape \

@@ -1,0 +1,95 @@
+configuration {
+  display-drun: "Applications:";
+  display-window: "Windows:";
+  drun-display-format: "{name}";
+  window-format: "{w}:{t}";
+  // font: "CaskaydiaCove Nerd Font Medium 10";
+  font: "TerminessTTF Nerd Font Medium 12";
+  modi: "window,run,drun";
+}
+
+@theme "/dev/null"
+
+* {
+  bg: #11121D88;
+  bg-alt: #444b6a88;
+
+  fg: #FFFFFF;
+  fg-alt: #787c99;
+
+  // background-color: #00000000;
+  background-color: @bg;
+
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 0;
+}
+
+window {
+  background-color: #00000088;
+  width: 100%;
+  // height: 100%;
+  // padding: 200 10 200 10;
+}
+
+element {
+  background-color: #00000000;
+  padding: 8 8;
+  text-color: @fg-alt;
+  orientation: vertical;
+}
+
+element selected {
+  background-color: #787c993c;
+  text-color: @fg;
+}
+
+element-text {
+  background-color: #00000000;
+  text-color: inherit;
+  vertical-align: 0.5;
+  width:  200px;
+}
+
+element-icon {
+  background-color: #00000000;
+  size: 300;
+  padding: 0 0 0 0;
+}
+
+entry {
+  // background-color: #00000000;
+  background-color: @bg-alt;
+  enabled: false;
+  padding: 12;
+  text-color: @fg;
+}
+
+inputbar {
+  children: [prompt, entry];
+}
+
+listview {
+  // background-color: #00000000;
+  background-color: @bg;
+  padding: 8 8;
+  columns: 8;
+  lines: 8;
+  layout: horizontal;
+}
+
+mainbox {
+  // background-color: #00000000;
+  background-color: @bg;
+  children: [inputbar, listview];
+}
+
+prompt {
+  background-color: @bg-alt;
+  enabled: false;
+  padding: 12 0 0 12;
+  text-color: @fg;
+}
+
+/* vim: ft=sass

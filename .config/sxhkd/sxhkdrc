@@ -130,14 +130,21 @@ super + {apostrophe,backslash}
 mod4 + shift + {apostrophe,backslash}
   bspc config -d focused border_width {0,2}
 
-# skippy last window
-shift + space
-  skippy-xd-runner --activate {--prev,--next} && skippy-xd-runner --toggle
+# focus the last node
+{XF86WWW, shift + space}
+	bspc node -f last
 
-# skippy alt-tab
-{alt + ~Tab, XF86WWW}
-  skippy-xd-runner {--activate --next, --toggle}
-
+# rofi alt-tab
+alt + Tab
+  rofi \
+    -show window  -window-thumbnail -show-icons \
+    -kb-cancel "Escape" \
+    -kb-accept-entry "!Alt-Tab,!Alt_L,!Alt+Alt_L,Return" \
+    -kb-accept-entry "!Alt-Tab,Return" \
+    -kb-row-down "Alt+Tab" \
+    -kb-row-up "Alt+ISO_Left_Tab"& \
+  xdotool keyup Tab;\
+  xdotool keydown Tab;
 
 # focus the last node/desktop
 super + {Tab,grave}
