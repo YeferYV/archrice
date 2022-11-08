@@ -130,12 +130,21 @@ super + {apostrophe,backslash}
 mod4 + shift + {apostrophe,backslash}
   bspc config -d focused border_width {0,2}
 
+# skippy last window
+shift + space
+  skippy-xd-runner --activate {--prev,--next} && skippy-xd-runner --toggle
+
+# skippy alt-tab
+{alt + ~Tab, XF86WWW}
+  skippy-xd-runner {--activate --next, --toggle}
+
+
 # focus the last node/desktop
-super + {grave,Tab}
+super + {Tab,grave}
 	bspc {node,desktop} -f last
 
 # swap the last node/desktop
-super + shift + {grave,Tab}
+super + shift + {Tab,grave}
 	bspc {node,desktop} -s last
 
 # swap the last node/desktop
@@ -370,8 +379,8 @@ XF86Launch{2,3}
   # xdo activate $YTID && sleep 0.2 && xdotool key --clearmodifiers {w,e} && xdo activate $CUID
 
 # chromium play-paus,rewind
-{XF86Shop, shift + space}
-  playerctl --player=chromium {play-pause, position 5-}
+XF86Shop
+  playerctl --player=chromium play-pause
 
 # mpv next-toggle-prev
 mod1 + KP_{Right,Begin,Left}
