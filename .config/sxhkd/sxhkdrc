@@ -144,7 +144,7 @@ alt + Tab
     -kb-row-down "Alt+Tab" \
     -kb-row-up "Alt+ISO_Left_Tab"& \
   xdotool keyup Tab;\
-  xdotool keydown Tab;
+  xdotool key Tab;
 
 # focus the last node/desktop
 super + {Tab,grave}
