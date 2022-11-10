@@ -29,6 +29,7 @@ unclutter --timeout 1 &
 # xrdb -merge ~/.config/x11/xresources &
 xrdb -merge <<<"*background: #000000" # sxiv background
 xrdb -merge <<<"*foreground: #ff0000" # sxiv foreground
+xrdb -merge <<<"Xcursor.theme: Adwaita" # wezterm cursor
 
 ## To Load pointer
 xsetroot -cursor_name left_ptr &

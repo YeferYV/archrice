@@ -130,6 +130,17 @@ super + {apostrophe,backslash}
 mod4 + shift + {apostrophe,backslash}
   bspc config -d focused border_width {0,2}
 
+# rofi emoji
+super + {alt,ctrl} + e
+  rofimoji \
+    --action clipboard copy print \
+    { \
+      --selector-args="-theme ~/.config/rofi/unicode.rasi -theme-str 'window \{width:90%; height:50%;\}' " \
+      --files all \
+    , --selector-args="-theme ~/.config/rofi/unicode.rasi" \
+      --files fontawesome nerd_font gitmoji emojis latin-1 \
+    }
+
 # focus the last node
 {XF86WWW, shift + space}
 	bspc node -f last

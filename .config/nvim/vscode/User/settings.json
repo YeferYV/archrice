@@ -1459,7 +1459,7 @@
   // "editor.fontFamily": "\"3270Medium Nerd Font\",\"Bedstead\",\"CaskaydiaCove Nerd Font\"",
   // "editor.fontSize": 16,
   // "editor.lineHeight": 1.1,
-  "editor.fontFamily": "\"CaskaydiaCove Nerd Font\",\"3270Medium Nerd Font\",\"Bedstead\"",
+  "editor.fontFamily": "\"CaskaydiaCove Nerd Font\",\"Font Awesome 6 Free Solid\",\"3270Medium Nerd Font\",\"Bedstead\"",
   "editor.fontSize": 13,
   "editor.fontWeight": 400,
   "editor.inlineSuggest.enabled": true,

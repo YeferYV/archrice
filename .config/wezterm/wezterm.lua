@@ -67,14 +67,29 @@ return {
       intensity = "Bold",
       -- font = wezterm.font({family="TerminessTTF Nerd Font", scale = 1.05},{stretch="Normal", weight="ExtraBlack", foreground = "#ff8800"}), -- bright palet colors
       -- font = wezterm.font({family="Bedstead", scale = 1.05},{stretch="Normal", weight="ExtraBlack", foreground = "#ff8800"}), -- bright palet colors
-      font = wezterm.font({family="Bedstead", scale = 1.00},{stretch="Normal", weight="Medium", foreground = "#ff8800"}), -- bright palet colors
+      -- font = wezterm.font({family="Bedstead", scale = 1.00},{stretch="Normal", weight="Medium", foreground = "#ff8800"}), -- bright palet colors
+      -- font = wezterm.font({family="Bedstead for Powerline", scale = 1.00},{stretch="Normal", weight="Medium", foreground = "#ff8800"}), -- bright palet colors
+      font = wezterm.font_with_fallback({
+          {family="Bedstead"},
+          {family="Noto Color Emoji"},
+          {family="Symbols Nerd Font Mono"},
+          {family="Font Awesome 6 Free Solid"},
+        },
+        {stretch="Normal", weight="Medium", foreground = "#ff8800"}
+      ),
     },
     {
       intensity = "Normal",
       -- font = wezterm.font("CaskaydiaCove Nerd Font", {weight="Bold", stretch="Normal", style=Normal}), -- ansi palet colors
       -- font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="Normal", weight="DemiBold"}), -- ansi palet colors
-      font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="Normal", weight="Medium"}), -- ansi palet colors
-      -- font = wezterm.font({family="3270Medium Nerd Font", scale = 1.20},{stretch="UltraExpanded", weight="DemiBold"}), -- ansi palet colors
+      -- font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="Normal", weight="Medium"}), -- ansi palet colors
+      -- font = wezterm.font({family="3270 Nerd Font", scale = 1.20},{stretch="UltraExpanded", weight="Medium"}), -- ansi palet colors
+      font = wezterm.font_with_fallback({
+        {family="IBM 3270", scale = 1.20, stretch="Normal", weight="Medium"},
+        {family="Noto Color Emoji", weight="Regular", stretch="Normal", style="Normal"},
+        {family="Symbols Nerd Font Mono", weight="Regular", stretch="Normal", style="Normal"},
+        {family="Font Awesome 6 Free", weight="Black"},
+      }),
     },
   },
 

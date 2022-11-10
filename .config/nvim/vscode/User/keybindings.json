@@ -422,5 +422,9 @@
         "key": "ctrl+shift+k",
         "command": "workbench.action.terminal.focusNextPane",
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "workbench.extensions.action.debugExtensionHost"
     }
 ]
