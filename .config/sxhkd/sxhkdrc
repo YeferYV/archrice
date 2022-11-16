@@ -144,18 +144,24 @@ super + {alt,ctrl} + e
 # focus the last node
 {XF86WWW, shift + space}
 	bspc node -f last
+  # xprop -root _NET_CLIENT_LIST_STACKING | ( read VAR; echo $VAR | cut --delimiter="," --fields=$(($(echo $VAR | wc -w) - 5)) | xargs xdo activate )
 
 # rofi alt-tab
 alt + Tab
-  rofi \
-    -show window  -window-thumbnail -show-icons \
-    -kb-cancel "Escape" \
-    -kb-accept-entry "!Alt-Tab,!Alt_L,!Alt+Alt_L,Return" \
-    -kb-accept-entry "!Alt-Tab,Return" \
-    -kb-row-down "Alt+Tab" \
-    -kb-row-up "Alt+ISO_Left_Tab"& \
-  xdotool keyup Tab;\
-  xdotool key Tab;
+  A=$(($(xprop -root _NET_CLIENT_LIST_STACKING | wc -w) - 4)); \
+  ( if [[ $A -le 5 ]]; then echo "$((A * 20))% 33%"; elif [[ 6 -le $A && $A -le 10 ]]; then echo "100% 66%"; else echo "100% 100%"; fi; ) | read RWIDTH RHEIGHT; \
+  RWIDTH=$RWIDTH RHEIGHT=$RHEIGHT \
+    rofi \
+      -show window  -window-thumbnail -show-icons \
+      -kb-accept-entry "!Alt-Tab,!Alt_L,!Alt+Alt_L,Return" \
+      -kb-row-right "Alt+Tab,Alt+l" \
+      -kb-row-up "Alt+k" \
+      -kb-row-down "Alt+j" \
+      -kb-row-left "Alt+ISO_Left_Tab,Alt+h"& \
+    xdotool keyup Tab;\
+    xdotool key Tab;
+  # (if [ $A -le 4 ]; then echo "$((A * 342)) 47% 42%"; elif [ 5 -eq $A ]; then echo "100% 33%"; else if [[ 6 -le $A && $A -le 10 ]]; then echo "100% 66%";fi;fi;) | read W H I; \
+  # RWIDTH=$W RHEIGHT=$H ICON=$I
 
 # focus the last node/desktop
 super + {Tab,grave}

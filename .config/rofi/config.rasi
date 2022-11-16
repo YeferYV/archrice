@@ -2,6 +2,8 @@ configuration {
   display-drun: "Applications:";
   display-window: "Windows:";
   drun-display-format: "{name}";
+  show-icons: true;
+  window-thumbnail: true;
   window-format: "{w}:{t}";
   // font: "CaskaydiaCove Nerd Font Medium 10";
   font: "TerminessTTF Nerd Font Medium 12";
@@ -14,10 +16,12 @@ configuration {
   bg: #11121D88;
   bg-alt: #444b6a88;
 
+  black: #00000000;
+  black-alt: #00000088;
+
   fg: #FFFFFF;
   fg-alt: #787c99;
 
-  // background-color: #00000000;
   background-color: @bg;
 
   border: 0;
@@ -27,14 +31,13 @@ configuration {
 }
 
 window {
-  background-color: #00000088;
-  width: 100%;
-  // height: 100%;
-  // padding: 200 10 200 10;
+  background-color: @black-alt;
+  width: env(RWIDTH,100%);
+  height: env(RHEIGHT,100%);
 }
 
 element {
-  background-color: #00000000;
+  background-color: @black;
   padding: 8 8;
   text-color: @fg-alt;
   orientation: vertical;
@@ -46,20 +49,20 @@ element selected {
 }
 
 element-text {
-  background-color: #00000000;
+  background-color: @black;
   text-color: inherit;
   vertical-align: 0.5;
   width:  200px;
 }
 
 element-icon {
-  background-color: #00000000;
-  size: 300;
+  background-color: @black;
+  // size: env(ICON,28%);
+  size: env(ICON,218);
   padding: 0 0 0 0;
 }
 
 entry {
-  // background-color: #00000000;
   background-color: @bg-alt;
   enabled: false;
   padding: 12;
@@ -71,16 +74,17 @@ inputbar {
 }
 
 listview {
-  // background-color: #00000000;
   background-color: @bg;
-  padding: 8 8;
-  columns: 8;
-  lines: 8;
-  layout: horizontal;
+  columns: env(COL,5);
+  lines: 0;
+  flow: horizontal;
+  // layout: horizontal;
+  // dynamic: true;
+  // fixed-columns: true;
+  // fixed-height: true;
 }
 
 mainbox {
-  // background-color: #00000000;
   background-color: @bg;
   children: [inputbar, listview];
 }
