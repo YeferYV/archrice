@@ -153,7 +153,12 @@ super + {alt,ctrl} + e
 # focus the last node
 {XF86WWW, shift + space}
 	bspc node -f last
-  # xprop -root _NET_CLIENT_LIST_STACKING | ( read VAR; echo $VAR | cut --delimiter="," --fields=$(($(echo $VAR | wc -w) - 5)) | xargs xdo activate )
+
+# fzf alt-tab
+super + alt + z
+  bspc rule -a \* -o state=floating && \
+  wezterm start --always-new-process -- bash -c \
+  'test=$(fzf < <((xdo id -D & xdo id -d) | xargs -I var xprop -id var _NET_WM_NAME | cut -d"\"" -f2)) && xdo activate $( xdo id -a "$test");'
 
 # rofi alt-tab
 alt + Tab
@@ -232,14 +237,6 @@ super + ctrl + shift + space
 # move/resize
 #
 
-# # expand a window by moving one of its side outward
-# super + alt + {m,comma,period,slash}
-#   bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-#
-# # contract a window by moving one of its side inward
-# super + alt + shift + {m,comma,period,slash}
-#   bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
 # balance desktop's nodes
 super + v
   bspc node @/ -B
@@ -286,11 +283,6 @@ super + {_,shift + }n
 #
 # status bar
 #
-
-# toggle polybar
-# super + shift + space
-#   ( pgrep polybar && killall polybar && bspc config top_padding 0 ) || \
-#   ( $HOME/.config/polybar/launch.sh && sleep 0.5 && bspc config top_padding 18 );
 
 # toggle polybar
 super + shift + space
@@ -407,9 +399,6 @@ XF86Launch{1,4}
 # chromium rewind-forward
 XF86Launch{2,3}
 	playerctl --player=chromium position {5-,5+}
-  # YTID="$(wmctrl -l | awk '/YouTube/ \{print $1\}' | awk 'NR==1')"; \
-  # CUID="$(xdo id)"; \
-  # xdo activate $YTID && sleep 0.2 && xdotool key --clearmodifiers {w,e} && xdo activate $CUID
 
 # chromium play-paus,rewind
 XF86Shop
