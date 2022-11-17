@@ -7,7 +7,7 @@ configuration {
   window-format: "{w}:{t}";
   // font: "CaskaydiaCove Nerd Font Medium 10";
   font: "TerminessTTF Nerd Font Medium 12";
-  modi: "window,run,drun,emoji:rofimoji,ssh";
+  modi: "";
 }
 
 @theme "/dev/null"
