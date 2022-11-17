@@ -130,6 +130,15 @@ super + {apostrophe,backslash}
 mod4 + shift + {apostrophe,backslash}
   bspc config -d focused border_width {0,2}
 
+# rofi drun
+super + ctrl + d
+  A='rofimoji --action clipboard copy print --files fontawesome nerd_font gitmoji emojis latin-1'; \
+  COL=10 \
+  ICON=10% \
+  ENTRY=true \
+  SWITCHER=true \
+  rofi -modi "window,run,drun,emoji:$A,ssh" -show drun
+
 # rofi emoji
 super + {alt,ctrl} + e
   rofimoji \
@@ -480,7 +489,7 @@ super + shift + b
   wezterm start ncmpcpp
 
 # dmenu launcher
-super + {_,shift +,ctrl +}d
+super + {_,shift +,alt +}d
 	{ \
 		dmenu_run; \
 	, wezterm start $(dmenu_path | dmenu); \

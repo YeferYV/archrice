@@ -7,7 +7,7 @@ configuration {
   window-format: "{w}:{t}";
   // font: "CaskaydiaCove Nerd Font Medium 10";
   font: "TerminessTTF Nerd Font Medium 12";
-  modi: "window,run,drun";
+  modi: "window,run,drun,emoji:rofimoji,ssh";
 }
 
 @theme "/dev/null"
@@ -64,7 +64,7 @@ element-icon {
 
 entry {
   background-color: @bg-alt;
-  enabled: false;
+  enabled: env(ENTRY,false);
   padding: 12;
   text-color: @fg;
 }
@@ -86,7 +86,20 @@ listview {
 
 mainbox {
   background-color: @bg;
-  children: [inputbar, listview];
+  children: [inputbar, listview, mode-switcher];
+}
+
+mode-switcher {
+  background-color: @bg-alt;
+  enabled: env(SWITCHER,false);
+}
+
+button {
+    text-color: @fg-alt;
+}
+
+button selected.normal {
+    text-color: @fg;
 }
 
 prompt {
