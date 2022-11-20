@@ -154,9 +154,11 @@ sudo -u $USER -s -- <<===
   [ -x "$(command -v crontab)" ] && crontab /home/$USER/.local/bin/cron/lowbatnotificationcron
 
   # 3270 font
-  mkdir -p ~/.local/share/fonts/3270-github
-  curl -LO https://github.com/rbanffy/3270font/releases/download/v3.0.0/3270_fonts_32ca849.zip
-  unzip 3270_fonts_32ca849.zip -d ~/.local/share/fonts/3270-github
+  mkdir -p "$HOME"/.local/share/fonts
+  git clone --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
+  cd nerd-fonts
+  git sparse-checkout add patched-fonts/3270
+  cp -r patched-fonts/3270 "$HOME"/.local/share/fonts/
 
   # sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
   # sudo grub-mkconfig -o /boot/grub/grub.cfg

@@ -294,7 +294,7 @@ bindkey '^v' edit-command-line
   source $HOME/.nix-profile/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh ||\
   source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
-bindkey '^I' expand-or-complete
+# bindkey '^I' expand-or-complete
 
 # Starship
 eval "$(starship init zsh)"

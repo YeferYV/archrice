@@ -37,7 +37,7 @@ makepkg -si --noconfirm
 
 #-- Packages excluded on docker
 [ ! -e /.dockerenv ] && yes | yay -S --noconfirm \
-bedstead-fonts-powerline \
+bedstead \
 broadcom-wl \
 bspwm \
 btrfs-progs \
@@ -137,6 +137,7 @@ true | yay -Scc
 # base
 # bc
 # bcm43142-firmware
+# bedstead-fonts-powerline
 # binfmt-qemu-static
 # brave-bin
 # bashtop

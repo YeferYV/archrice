@@ -22,24 +22,24 @@ return {
   use_fancy_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
   tab_bar_at_bottom = true,
-  adjust_window_size_when_changing_font_size = false,
   front_end = "OpenGL",
   -- animation_fps = 60,
   default_prog = { "zsh" },
   font_size = 10.0,
+  adjust_window_size_when_changing_font_size = false,
 
-  -- cell_width = 1.20,
-  -- line_height = 0.90,
-  -- cell_width = 1.9,
-  -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
-  -- custom_block_glyphs = false,
-  -- unicode_version=9 ,
-  -- freetype_load_target = "Light",
-  -- freetype_render_target = "HorizontalLcd",
+  -- use_cap_height_to_scale_fallback_fonts = true,
   -- font_hinting = "Full",
   -- font_antialias = "Greyscale",
   -- font_antialias = "Subpixel",
+  -- freetype_load_target = "Light",
+  -- freetype_render_target = "HorizontalLcd",
   -- freetype_interpreter_version = 40,
+  -- cell_width = 1.20,
+  -- line_height = 0.90,
+  -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
+  -- custom_block_glyphs = false,
+  -- unicode_version=9 ,
   -- bold_brightens_ansi_colors = false, -- default true
   window_close_confirmation = "NeverPrompt",
 
@@ -64,36 +64,32 @@ return {
 
   font_rules= {
     {
-      intensity = "Bold",
-      -- font = wezterm.font({family="TerminessTTF Nerd Font", scale = 1.05},{stretch="Normal", weight="ExtraBlack", foreground = "#ff8800"}), -- bright palet colors
-      -- font = wezterm.font({family="Bedstead", scale = 1.05},{stretch="Normal", weight="ExtraBlack", foreground = "#ff8800"}), -- bright palet colors
-      -- font = wezterm.font({family="Bedstead", scale = 1.00},{stretch="Normal", weight="Medium", foreground = "#ff8800"}), -- bright palet colors
-      -- font = wezterm.font({family="Bedstead for Powerline", scale = 1.00},{stretch="Normal", weight="Medium", foreground = "#ff8800"}), -- bright palet colors
+      intensity = "Bold", -- bright palet colors
       font = wezterm.font_with_fallback({
-          {family="Bedstead"},
-          {family="Noto Color Emoji"},
-          {family="Symbols Nerd Font Mono"},
-          {family="Font Awesome 6 Free Solid"},
+        -- {family="Bedstead for Powerline"},
+        {family="Bedstead"},
+        {family="Noto Color Emoji"},
+        {family="Symbols Nerd Font Mono"},
+        {family="TerminessTTF Nerd Font"},
+        {family="Font Awesome 6 Free Solid"},
         },
         {stretch="Normal", weight="Medium", foreground = "#ff8800"}
       ),
     },
     {
-      intensity = "Normal",
-      -- font = wezterm.font("CaskaydiaCove Nerd Font", {weight="Bold", stretch="Normal", style=Normal}), -- ansi palet colors
-      -- font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="Normal", weight="DemiBold"}), -- ansi palet colors
-      -- font = wezterm.font({family="IBM 3270", scale = 1.20},{stretch="Normal", weight="Medium"}), -- ansi palet colors
-      -- font = wezterm.font({family="3270 Nerd Font", scale = 1.20},{stretch="UltraExpanded", weight="Medium"}), -- ansi palet colors
+      intensity = "Normal", -- ansi palet colors
       font = wezterm.font_with_fallback({
-        {family="IBM 3270", scale = 1.20, stretch="Normal", weight="Medium"},
+        -- {family="IBM 3270", scale = 1.20, stretch="Normal", weight="Medium"},
+        {family="3270 Nerd Font", scale = 1.20, stretch="Normal", weight="Medium"},
         {family="Noto Color Emoji", weight="Regular", stretch="Normal", style="Normal"},
         {family="Symbols Nerd Font Mono", weight="Regular", stretch="Normal", style="Normal"},
+        {family="CaskaydiaCove Nerd Font", weight="Bold", stretch="Normal", style="Normal"},
         {family="Font Awesome 6 Free", weight="Black"},
       }),
     },
   },
 
-   key_tables = {
+  key_tables = {
     copy_mode = {
       {key="q", mods="NONE", action=act.Multiple{
           act.SendKey{key="u", mods="CTRL"},
@@ -123,13 +119,11 @@ return {
 
       {key="RightArrow", mods="ALT",  action=act.CopyMode("MoveForwardWord")},
       {key="f",          mods="ALT",  action=act.CopyMode("MoveForwardWord")},
-      {key="Tab",        mods="NONE", action=act.CopyMode("MoveForwardWord")},
       {key="w",          mods="NONE", action=act.CopyMode("MoveForwardWord")},
       {key="W",          mods="NONE", action=act.CopyMode("MoveForwardWord")},
 
       {key="LeftArrow", mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
       {key="b",         mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
-      {key="Tab",       mods="SHIFT", action=act.CopyMode("MoveBackwardWord")},
       {key="b",         mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
       {key="B",         mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
 
@@ -141,6 +135,10 @@ return {
       {key="^",     mods="NONE",  action=act.CopyMode("MoveToStartOfLineContent")},
       {key="^",     mods="SHIFT", action=act.CopyMode("MoveToStartOfLineContent")},
       {key="m",     mods="ALT",   action=act.CopyMode("MoveToStartOfLineContent")},
+
+      {key="Tab",   mods="SHIFT", action=act.ActivateTabRelative(-1)},
+      {key="Tab",   mods="NONE",  action=act.ActivateTabRelative(1)},
+      {key=";",     mods="NONE",  action=wezterm.action.ActivateLastTab},
 
       -- {key="v", mods="NONE", action=wezterm.action{CopyMode="ToggleSelectionByCell"}},
       {key=" ", mods="NONE",  action=act.CopyMode{SetSelectionMode="Cell"}},
@@ -340,23 +338,28 @@ return {
 
     -- Tab shortcut
     {key="t", mods="CTRL|SHIFT", action=wezterm.action{SpawnCommandInNewTab={cwd=""}}},
-    {key="t", mods="CTRL", action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
-    {key="1", mods="ALT", action=wezterm.action{ActivateTab=0}},
-    {key="2", mods="ALT", action=wezterm.action{ActivateTab=1}},
-    {key="3", mods="ALT", action=wezterm.action{ActivateTab=2}},
-    {key="4", mods="ALT", action=wezterm.action{ActivateTab=3}},
-    {key="5", mods="ALT", action=wezterm.action{ActivateTab=4}},
-    {key="6", mods="ALT", action=wezterm.action{ActivateTab=5}},
-    {key="7", mods="ALT", action=wezterm.action{ActivateTab=6}},
-    {key="8", mods="ALT", action=wezterm.action{ActivateTab=7}},
-    {key="9", mods="ALT", action=wezterm.action{ActivateTab=8}},
-    {key="0", mods="ALT", action=wezterm.action{ActivateTab=-1}},
+    {key="t", mods="CTRL",       action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
+    {key=";", mods="ALT",        action=wezterm.action.ActivateLastTab},
+    {key="s", mods="ALT",        action=wezterm.action.ActivateTabRelative(-1)},
+    {key="f", mods="ALT",        action=wezterm.action.ActivateTabRelative(1)},
+    {key='s', mods='SHIFT|ALT',  action=wezterm.action.MoveTabRelative(-1) },
+    {key='f', mods='SHIFT|ALT',  action=wezterm.action.MoveTabRelative(1) },
+    {key="1", mods="ALT",        action=wezterm.action{ActivateTab=0}},
+    {key="2", mods="ALT",        action=wezterm.action{ActivateTab=1}},
+    {key="3", mods="ALT",        action=wezterm.action{ActivateTab=2}},
+    {key="4", mods="ALT",        action=wezterm.action{ActivateTab=3}},
+    {key="5", mods="ALT",        action=wezterm.action{ActivateTab=4}},
+    {key="6", mods="ALT",        action=wezterm.action{ActivateTab=5}},
+    {key="7", mods="ALT",        action=wezterm.action{ActivateTab=6}},
+    {key="8", mods="ALT",        action=wezterm.action{ActivateTab=7}},
+    {key="9", mods="ALT",        action=wezterm.action{ActivateTab=8}},
+    {key="0", mods="ALT",        action=wezterm.action{ActivateTab=-1}},
 
     -- Scrolling shortcuts
     {key="e", mods="ALT", action=wezterm.action{ScrollByLine=-1}},
     {key="d", mods="ALT", action=wezterm.action{ScrollByLine=1}},
-    {key="r", mods="ALT", action=wezterm.action{ScrollByPage=-1}},
-    {key="f", mods="ALT", action=wezterm.action{ScrollByPage=1}},
+    {key="q", mods="ALT", action=wezterm.action{ScrollByPage=-1}},
+    {key="a", mods="ALT", action=wezterm.action{ScrollByPage=1}},
     {key="t", mods="ALT", action="ScrollToTop"},
     {key="g", mods="ALT", action="ScrollToBottom"},
     {key="LeftArrow", mods="CTRL|ALT", action=wezterm.action{AdjustPaneSize={"Left", 1}}},

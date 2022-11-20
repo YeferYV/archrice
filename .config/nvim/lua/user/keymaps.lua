@@ -105,6 +105,12 @@ keymap("n","<leader>6","<Cmd>BufferLineGoToBuffer 6<CR>",opts)
 keymap("n","<leader>7","<Cmd>BufferLineGoToBuffer 7<CR>",opts)
 keymap("n","<leader>8","<Cmd>BufferLineGoToBuffer 8<CR>",opts)
 keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
+keymap("n","<leader>;",":call CycleLastBuffer()<CR>",opts)
+keymap("n",";;",":call CycleLastBuffer()<CR>",opts)
+keymap("n",";s","<Cmd>BufferLineCyclePrev <CR>",opts)
+keymap("n",";f","<Cmd>BufferLineCycleNext <CR>",opts)
+keymap("n",";S","<Cmd>BufferLineMovePrev <CR>",opts)
+keymap("n",";F","<Cmd>BufferLineMoveNext <CR>",opts)
 
 -- File Tree
 -- keymap("n","<leader>e",":NvimTreeToggle<CR>",opts)

@@ -217,6 +217,12 @@
     "type": "bindings",
     "bindings": [
       {
+        "key": ";",
+        "name": "Recently buffer",
+        "type": "command",
+        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+      },
+      {
         "key": "b",
         "name": "Show all buffers/editors",
         "type": "command",
@@ -227,6 +233,30 @@
         "name": "Close other editors",
         "type": "command",
         "command": "workbench.action.closeOtherEditors"
+      },
+      {
+        "key": "s",
+        "name": "previous buffer",
+        "type": "command",
+        "command": "workbench.action.previousEditor",
+      },
+      {
+        "key": "f",
+        "name": "next buffer",
+        "type": "command",
+        "command": "workbench.action.nextEditor",
+      },
+      {
+        "key": "S",
+        "name": "Move editor left in group",
+        "type": "command",
+        "command": "workbench.action.moveEditorLeftInGroup"
+      },
+      {
+        "key": "F",
+        "name": "Move editor right in group",
+        "type": "command",
+        "command": "workbench.action.moveEditorRightInGroup"
       },
       {
         "key": "h",
@@ -981,9 +1011,15 @@
       },
       {
         "key": "t",
-        "name": "Text",
+        "name": "Text in Files",
         "type": "command",
         "command": "workbench.action.findInFiles"
+      },
+      {
+        "key": "T",
+        "name": "Text in Folder",
+        "type": "command",
+        "command": "filesExplorer.findInFolder"
       }
     ]
   },
@@ -1390,7 +1426,7 @@
       },
       {
         "key": "n",
-        "name": "Focus previous editor group",
+        "name": "Focus next editor group",
         "type": "command",
         "command": "workbench.action.focusNextGroup"
       },
@@ -1456,12 +1492,10 @@
   // "editor.bracketPairColorization.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.cursorSurroundingLines": 4,
-  // "editor.fontFamily": "\"3270Medium Nerd Font\",\"Bedstead\",\"CaskaydiaCove Nerd Font\"",
-  // "editor.fontSize": 16,
-  // "editor.lineHeight": 1.1,
-  "editor.fontFamily": "\"CaskaydiaCove Nerd Font\",\"Font Awesome 6 Free Solid\",\"3270Medium Nerd Font\",\"Bedstead\"",
+  "editor.fontFamily": "\"CaskaydiaCove Nerd Font\",\"Bedstead\",\"Font Awesome 6 Free Solid\"",
   "editor.fontSize": 13,
   "editor.fontWeight": 400,
+  // "editor.lineHeight": 1.4,
   "editor.inlineSuggest.enabled": true,
   "editor.minimap.enabled": false,
   "editor.renderLineHighlight": "none",
@@ -1633,7 +1667,7 @@
   "tabnine.experimentalAutoImports": true,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "tmux",
-  "terminal.integrated.fontFamily": "'3270Medium Nerd Font','TerminessTTF Nerd Font'",
+  "terminal.integrated.fontFamily": "'3270 Nerd Font','TerminessTTF Nerd Font','Font Awesome 6 Free Solid'",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": 500,
   "terminal.integrated.shellIntegration.enabled": false,

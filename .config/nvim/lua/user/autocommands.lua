@@ -162,6 +162,20 @@ vim.cmd [[
   " tnoremap <C-x> <C-\><C-n>:call WinBufSwap()<CR><Esc>
 ]]
 
+-- Cycle Last Buffer
+vim.cmd [[
+  let s:var = 0
+  function! CycleLastBuffer()
+    if s:var  == 0
+      let s:var = 1
+      exe "BufferLineCyclePrev"
+    else
+      let s:var = 0
+      exe "BufferLineCycleNext"
+    endif
+  endfunction
+]]
+
 -- WindowSwap
 vim.cmd [[
   function! MarkWindowSwap()

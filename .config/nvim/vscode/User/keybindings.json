@@ -116,6 +116,36 @@
             "after": ["<esc>", "l"]
         }
     },
+    {
+        "key": "alt+s",
+        "command": "workbench.action.previousEditor",
+        "when": "!terminalFocus",
+    },
+    {
+        "key": "alt+f",
+        "command": "workbench.action.nextEditor",
+        "when": "!terminalFocus",
+    },
+    {
+        "key": "shift+alt+s",
+        "command": "workbench.action.moveEditorLeftInGroup",
+        "when": "!terminalFocus",
+    },
+    {
+        "key": "shift+alt+f",
+        "command": "workbench.action.moveEditorRightInGroup",
+        "when": "!terminalFocus",
+    },
+    {
+        "key": "alt+;",
+        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+        "when": "!terminalFocus",
+    },
+    {
+        "key": ";",
+        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+        "when": "!terminalFocus && vim.mode == 'Normal'",
+    },
     // {
     //     "key": "alt+d",
     //     "command": "workbench.action.terminal.scrollDown",
@@ -388,12 +418,12 @@
     {
         "key": "tab",
         "command": "workbench.action.nextEditor",
-        "when": "!terminalFocus && vim.mode == 'Normal'",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
     },
     {
         "key": "shift+tab",
         "command": "workbench.action.previousEditor",
-        "when": "!terminalFocus && vim.mode == 'Normal'",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
     },
     {
         "key": "ctrl+tab",
@@ -426,5 +456,15 @@
     {
         "key": "ctrl+alt+d",
         "command": "workbench.extensions.action.debugExtensionHost"
-    }
+    },
+    {
+        "key": "ctrl+up",
+        "command": "-workbench.action.terminal.scrollToPreviousCommand",
+        "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "-workbench.action.terminal.scrollToNextCommand",
+        "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
+    },
 ]

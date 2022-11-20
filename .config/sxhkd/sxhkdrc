@@ -56,7 +56,7 @@ super + alt + {q,r}
 	bspc {quit,wm -r}
 
 # close and kill
-super + {_,shift + }q
+super + {_,shift +} x
 	bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
@@ -76,7 +76,7 @@ super + g
 #
 
 # set the window state
-super + {t,shift + t,s,f}
+super + {t,shift + t,d,e}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -100,7 +100,7 @@ mod4 + shift + {h,j,k,l}
   $HOME/.config/bspwm/bspwm_smart_move {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
+super + ctrl + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
@@ -108,8 +108,12 @@ super + {_,shift + }c
 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + alt + {minus,equal}
+super + {s,f}
 	bspc desktop -f {prev,next}.local
+
+# swap the next/previous desktop in the current monitor
+super + shift + {s,f}
+	bspc desktop -s {prev,next}.local
 
 # no/reset gaps size
 super + bracket{left,right}
@@ -151,7 +155,7 @@ super + {alt,ctrl} + e
     }
 
 # focus the last node
-{XF86WWW, shift + space}
+{XF86DOS, shift + space, super + semicolon}
 	bspc node -f last
 
 # fzf alt-tab
@@ -202,7 +206,7 @@ super + {_,shift + }{1-9,0,minus,equal}
 	bspc {desktop -f,node -d} '^{1-9,10,11,12}'
 
 # rotate focused tree CCW/CW
-super + {_,shift +}r
+super + control + {_,shift +} r
 	bspc node @focused:/ -C {forward,backward}
 
 # Rotate the current nodes parent
@@ -356,6 +360,10 @@ super + shift + {Left,Down,Up,Right}
 {XF86Finance,XF86Game}
   xdotool click {1,2}
 
+# mouse scroll
+XF86Launch{8,9}
+  xdotool click {4,5}
+
 # super volume
 super + XF86Audio{Raise,Lower}Volume
   pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
@@ -478,7 +486,7 @@ super + shift + b
   wezterm start ncmpcpp
 
 # dmenu launcher
-super + {_,shift +,alt +}d
+super + {_,shift +,alt +} p
 	{ \
 		dmenu_run; \
 	, wezterm start $(dmenu_path | dmenu); \
@@ -487,7 +495,7 @@ super + {_,shift +,alt +}d
 	}
 
 # lf user/root
-super + {_,shift +} e
+super + {_,shift +} r
 	{LF_CD=true wezterm, sudo -i LF_CD=true LS_COLORS="" $TERMINAL}
 
 # browser

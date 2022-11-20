@@ -73,7 +73,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 export DEBIAN_FRONTEND=noninteractive
 # export CACA_DRIVER=ncurses
 # export FZF_DEFAULT_OPTS="--layout=reverse --height 40% --border"
-export FZF_COMPLETION_TRIGGER=''
+# export FZF_COMPLETION_TRIGGER=''
 
 # export LESS="-R --use-color --LINE-NUMBERS --color=Nk" #causes manpages badformatting
 export LESS='-RS'
