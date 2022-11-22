@@ -117,6 +117,22 @@
         }
     },
     {
+        "key": ";",
+        "command": "vim.remap",
+        "when": "!terminalFocus && vim.mode == 'Normal'",
+        "args": {
+            "after": ["<C-6>"]
+        }
+    },
+    {
+        "key": "alt+;",
+        "command": "vim.remap",
+        "when": "!terminalFocus",
+        "args": {
+            "after": ["<C-6>"]
+        }
+    },
+    {
         "key": "alt+s",
         "command": "workbench.action.previousEditor",
         "when": "!terminalFocus",
@@ -135,16 +151,6 @@
         "key": "shift+alt+f",
         "command": "workbench.action.moveEditorRightInGroup",
         "when": "!terminalFocus",
-    },
-    {
-        "key": "alt+;",
-        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
-        "when": "!terminalFocus",
-    },
-    {
-        "key": ";",
-        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
-        "when": "!terminalFocus && vim.mode == 'Normal'",
     },
     // {
     //     "key": "alt+d",

@@ -89,9 +89,14 @@ local mappings = {
   ["7"] = "which_key_ignore",
   ["8"] = "which_key_ignore",
   ["9"] = "which_key_ignore",
-  ["b"] = {
-    "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-    "Buffers",
+  b = {
+    name = "Buffer",
+    b = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>", "Telescope Buffer" },
+    s = { "<Cmd>BufferLineCyclePrev <CR>","Previous Buffer" },
+    f = { "<Cmd>BufferLineCycleNext <CR>","Next Buffer" },
+    S = { "<Cmd>BufferLineMovePrev <CR>","Move to Previous Buffer" },
+    F = { "<Cmd>BufferLineMoveNext <CR>","Move to Next Buffer" },
+    [";"] = { "<C-6>","Move to last Buffer" },
   },
   d = {
     name = "Debugger",
