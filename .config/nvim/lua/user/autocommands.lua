@@ -112,7 +112,7 @@ vim.cmd [[
       " set number
     endif
   endfunction
-  nnoremap <silent> <C-z> :call ToggleStatusLIne()<CR>
+  " nnoremap <silent> <C-z> :call ToggleStatusLIne()<CR>
 ]]
 
 -- WindowBufferSwap
@@ -162,18 +162,15 @@ vim.cmd [[
   " tnoremap <C-x> <C-\><C-n>:call WinBufSwap()<CR><Esc>
 ]]
 
--- Cycle Last Buffer
 vim.cmd [[
-  let s:var = 0
-  function! CycleLastBuffer()
-    if s:var  == 0
-      let s:var = 1
-      exe "BufferLineCyclePrev"
-    else
-      let s:var = 0
-      exe "BufferLineCycleNext"
+  function! LastActiveTab()
+    if !exists('g:lasttab')
+      let g:lasttab = 1
     endif
+    au TabLeave * let g:lasttab = tabpagenr()
+    exe "tabn ".g:lasttab
   endfunction
+    " nnoremap <C-z> :call LastActiveTab()<CR>
 ]]
 
 -- WindowSwap

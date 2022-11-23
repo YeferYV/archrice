@@ -267,9 +267,11 @@ return require("packer").startup(function(use)
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim",
-    commit = "d96eaa914aab6cfc4adccb34af421bdd496468b0",
-		requires = { "nvim-lua/plenary.nvim",
-      commit = "968a4b9afec0c633bc369662e78f8c5db0eba249" },
+    commit = "cea9c75c19d172d2c6f089f21656019734a615cf",
+		requires = {
+      { "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" },
+      { "nvim-telescope/telescope-fzf-native.nvim", commit = "65c0ee3d4bb9cb696e262bca1ea5e9af3938fc90" , run = "make" }
+    }
 	})
 
   -- UI

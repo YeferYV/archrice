@@ -163,9 +163,9 @@ hi   link CmpItemAbbrMatchFuzzyDefault PmenuSbar
 hi   link CmpItemMenu Comment
 
 "-- Indentline
-hi  IndentBlanklineChar                    guifg=#222222   guibg=#000000  gui=none
-hi  IndentBlanklineSpaceChar               guifg=#b0b0b0   guibg=#000000  gui=none
-hi  IndentBlanklineSpaceCharBlankline      guifg=#0000FF   guibg=#000000  gui=none
-hi  IndentBlanklineContextChar             guifg=#444444   guibg=#000000  gui=none
-hi  IndentBlanklineContextSpaceChar        guifg=#0000FF   guibg=#000000  gui=none
-hi  IndentBlanklineContextStart            guifg=none      guibg=#1c1c1c  gui=none
+hi  IndentBlanklineChar                    guifg=#222222   guibg=none     gui=none
+hi  IndentBlanklineSpaceChar               guifg=#b0b0b0   guibg=none     gui=none
+hi  IndentBlanklineSpaceCharBlankline      guifg=#0000FF   guibg=none     gui=none
+hi  IndentBlanklineContextChar             guifg=#444444   guibg=none     gui=none
+hi  IndentBlanklineContextSpaceChar        guifg=#0000FF   guibg=none     gui=none
+hi  IndentBlanklineContextStart            guifg=none   guibg=none     gui=none

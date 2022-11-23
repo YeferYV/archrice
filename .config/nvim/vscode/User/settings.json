@@ -218,15 +218,24 @@
     "bindings": [
       {
         "key": ";",
-        "name": "Recently buffer",
+        "name": "Recent editor",
         "type": "command",
-        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+        "command": "vim.remap",
+        "args": {
+          "after": ["<C-6>"]
+        }
       },
       {
         "key": "b",
-        "name": "Show all buffers/editors",
+        "name": "Find editors",
         "type": "command",
         "command": "workbench.action.showAllEditors"
+      },
+      {
+        "key": "B",
+        "name": "Recent editors",
+        "type": "command",
+        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
       },
       {
         "key": "C",
@@ -236,13 +245,13 @@
       },
       {
         "key": "s",
-        "name": "previous buffer",
+        "name": "Previous editor",
         "type": "command",
         "command": "workbench.action.previousEditor",
       },
       {
         "key": "f",
-        "name": "next buffer",
+        "name": "Next editor",
         "type": "command",
         "command": "workbench.action.nextEditor",
       },
@@ -283,19 +292,7 @@
         "command": "workbench.action.moveEditorToRightGroup"
       },
       {
-        "key": "n",
-        "name": "Next editor",
-        "type": "command",
-        "command": "workbench.action.nextEditor"
-      },
-      {
-        "key": "p",
-        "name": "Previous editor",
-        "type": "command",
-        "command": "workbench.action.previousEditor"
-      },
-      {
-        "key": "N",
+        "key": "t",
         "name": "New untitled editor",
         "type": "command",
         "command": "workbench.action.files.newUntitledFile"
@@ -404,8 +401,8 @@
         "args": {
           "commands":[
             {
-                "command": "workbench.action.tasks.runTask",
-                "args": "quokka-stop",
+              "command": "workbench.action.tasks.runTask",
+              "args": "quokka-stop",
             },
             {
               "command": "workbench.action.toggleAuxiliaryBar"
@@ -1365,6 +1362,22 @@
     "type": "bindings",
     "bindings": [
       {
+        "key": ";",
+        "name": "Recent editor group",
+        "type": "command",
+        "command": "vim.remap",
+        "args": {
+          "commands":[
+            {
+              "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+            },
+            {
+              "command": "workbench.action.acceptSelectedQuickOpenItem"
+            },
+          ]
+        }
+      },
+      {
         "key": "c",
         "name": "Combine all editors",
         "type": "command",
@@ -1407,12 +1420,6 @@
         "command": "workbench.action.moveActiveEditorGroupRight"
       },
       {
-        "key": "t",
-        "name": "Toggle editor group sizes",
-        "type": "command",
-        "command": "workbench.action.toggleEditorWidths"
-      },
-      {
         "key": "m",
         "name": "Maximize editor group",
         "type": "command",
@@ -1435,6 +1442,12 @@
         "name": "Focus previous editor group",
         "type": "command",
         "command": "workbench.action.focusPreviousGroup"
+      },
+      {
+        "key": "t",
+        "name": "Toggle editor group sizes",
+        "type": "command",
+        "command": "workbench.action.toggleEditorWidths"
       },
       {
         "key": "v",
