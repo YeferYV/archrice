@@ -91,6 +91,8 @@ local mappings = {
   ["9"] = "which_key_ignore",
   ["e"] = "which_key_ignore",
   ["p"] = "which_key_ignore",
+  ["q"] = "which_key_ignore",
+  ["Q"] = "which_key_ignore",
   ["v"] = "which_key_ignore",
   ["V"] = "which_key_ignore",
   ["x"] = "which_key_ignore",
@@ -288,6 +290,19 @@ local mappings = {
     R = { "<cmd>lua vim.cmd[[NvimTreeRefresh]]<cr>", "Refresh Explorer" },
     s = { "<cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "Show Buffer Status" },
     S = { "<cmd>lua require('bufferline').setup{options={always_show_bufferline=false}}<cr>", "Hide Buffer Status" },
+    u = {
+      function()
+        local ok, start = require("indent_blankline.utils").get_current_context(
+          vim.g.indent_blankline_context_patterns,
+          vim.g.indent_blankline_use_treesitter_scope
+        )
+        if ok then
+          vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
+          vim.cmd [[normal! _]]
+        end
+      end,
+      "Jump to current_context",
+    },
   },
 
   w = {

@@ -169,7 +169,7 @@ return require("packer").startup(function(use)
 	-- LSP
 	use({ "neovim/nvim-lspconfig", commit = "148c99bd09b44cf3605151a06869f6b4d4c24455" }) -- enable LSP
 	use({ "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" }) -- for formatters and linters
-  use({ "RRethy/vim-illuminate", commit = "c82e6d04f27a41d7fdcad9be0bce5bb59fcb78e5" })
+  use({ "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" })
 	use({
 		"williamboman/mason.nvim",
 		commit = "49c7826ebca62374df44b20fcd0df7a287d4511d",
@@ -190,28 +190,7 @@ return require("packer").startup(function(use)
   use({ "kyazdani42/nvim-web-devicons", commmit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e" })
 
 	-- whichkey
-	use({
-		"folke/which-key.nvim",
-		commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71",
-		-- config = function()
-		-- 	require("which-key").setup({
-		-- 		window = {
-		-- 			border = "single", -- none/single/double/shadow
-		-- 		},
-		-- 	})
-		-- 	require("which-key").register({
-		-- 		["1"] = "which_key_ignore",
-		-- 		["2"] = "which_key_ignore",
-		-- 		["3"] = "which_key_ignore",
-		-- 		["4"] = "which_key_ignore",
-		-- 		["5"] = "which_key_ignore",
-		-- 		["6"] = "which_key_ignore",
-		-- 		["7"] = "which_key_ignore",
-		-- 		["8"] = "which_key_ignore",
-		-- 		["9"] = "which_key_ignore",
-		-- 	}, { prefix = "<leader>" })
-		-- end,
-	})
+	use({ "folke/which-key.nvim", commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71", })
 
 	-- Surround block of codes
 	use({ "tpope/vim-surround", commit = "bf3480dc9ae7bea34c78fbba4c65b4548b5b1fea" })

@@ -1,39 +1,9 @@
 -- vim:ft=vim:ts=2:sw=2:sts=2
 
 vim.cmd [[
-  augroup _general_settings
-    autocmd!
-    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
-    autocmd BufWinEnter * :set formatoptions-=cro
-    autocmd FileType qf set nobuflisted
-  augroup end
-
-  augroup _git
-    autocmd!
-    autocmd FileType gitcommit setlocal wrap
-    autocmd FileType gitcommit setlocal spell
-  augroup end
-
-  augroup _markdown
-    autocmd!
-    autocmd FileType markdown setlocal wrap
-    autocmd FileType markdown setlocal spell
-  augroup end
-
-  augroup _auto_resize
-    autocmd!
-    autocmd VimResized * tabdo wincmd =
-  augroup end
-
   " augroup _alpha
   "   autocmd!
   "   autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-  " augroup end
-  "
-  " augroup _lsp_autoformat
-  "   autocmd!
-  "   autocmd BufWritePre * lua vim.lsp.buf.formatting()
   " augroup end
 
   " augroup _autostart_codi
@@ -42,16 +12,10 @@ vim.cmd [[
   "   au BufEnter *.py Codi
   " augroup end
 
-  augroup _stop_newlines_commented
-    autocmd!
-  " au FileType * set fo-=c fo-=r fo-=o
-    au BufEnter * set fo-=c fo-=r fo-=o
-  augroup end
-
-  augroup _jump_to_last_position_on_reopen
-    autocmd!
-    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-  augroup end
+  " augroup _auto_resize
+  "   autocmd!
+  "   autocmd VimResized * tabdo wincmd =
+  " augroup end
 
   " augroup _disable_nvimtree_status
   "   autocmd!
@@ -76,6 +40,31 @@ vim.cmd [[
     autocmd TermClose * if &filetype != 'toggleterm' | call feedkeys("i") | endif
   augroup end
 
+  augroup _filetype_vimcommentary_support
+    autocmd!
+    autocmd FileType sxhkd setlocal commentstring=#\ %s
+  augroup end
+
+  augroup _general_settings
+    autocmd!
+    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
+    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
+    autocmd BufWinEnter * :set formatoptions-=cro
+    autocmd FileType qf set nobuflisted
+  augroup end
+
+  augroup _git
+    autocmd!
+    autocmd FileType gitcommit setlocal wrap
+    autocmd FileType gitcommit setlocal spell
+  augroup end
+
+  augroup _toogle_nvimtree_cursor
+    autocmd!
+    autocmd BufEnter * if &filetype == 'NvimTree' | setlocal guicursor=n:ver100-CursorLine | endif
+    autocmd BufEnter * if &filetype != 'NvimTree' | setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20 | endif
+  augroup end
+
   augroup _hightlight_whitespaces
     autocmd!
     autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
@@ -85,52 +74,40 @@ vim.cmd [[
     autocmd BufWritePre * :%s/\s\+$//e
   augroup end
 
-  augroup _filetype_vimcommentary_support
+  augroup _jump_to_last_position_on_reopen
     autocmd!
-    autocmd FileType sxhkd setlocal commentstring=#\ %s
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  augroup end
+
+  " augroup _lsp_autoformat
+  "   autocmd!
+  "   autocmd BufWritePre * lua vim.lsp.buf.formatting()
+  " augroup end
+
+  augroup _markdown
+    autocmd!
+    autocmd FileType markdown setlocal wrap
+    autocmd FileType markdown setlocal spell
+  augroup end
+
+  augroup _stop_newlines_commented
+    autocmd!
+  " au FileType * set fo-=c fo-=r fo-=o
+    au BufEnter * set fo-=c fo-=r fo-=o
   augroup end
 
 ]]
 
--- toggle status line
+-- Last Active Tab
 vim.cmd [[
-  let s:hidden_all = 0
-  function! ToggleStatusLIne()
-    if s:hidden_all  == 0
-      let s:hidden_all = 1
-      set noruler
-      set laststatus=0
-      set cmdheight=3
-      set noshowcmd
-      " set nonumber
-    else
-      let s:hidden_all = 0
-      set ruler
-      set laststatus=3
-      set cmdheight=2
-      set showcmd
-      " set number
+  function! LastActiveTab()
+    if !exists('g:lasttab')
+      let g:lasttab = 1
     endif
+    au TabLeave * let g:lasttab = tabpagenr()
+    exe "tabn ".g:lasttab
   endfunction
-  " nnoremap <silent> <C-z> :call ToggleStatusLIne()<CR>
-]]
-
--- WindowBufferSwap
-vim.cmd [[
-  function! WinBufSwap()
-    let thiswin = winnr()
-    let thisbuf = bufnr("%")
-    let lastwin = winnr("#")
-    let lastbuf = winbufnr(lastwin)
-
-    exec  lastwin . " wincmd w" ."|".
-        \ "buffer ". thisbuf ."|".
-        \ thiswin ." wincmd w" ."|".
-        \ "buffer ". lastbuf
-  endfunction
-
-  command! Wswap :call WinBufSwap()
-  " map <C-v> :call WinBufSwap()<CR>
+    " nnoremap <C-z> :call LastActiveTab()<CR>
 ]]
 
 -- SwitchWindow
@@ -162,18 +139,48 @@ vim.cmd [[
   " tnoremap <C-x> <C-\><C-n>:call WinBufSwap()<CR><Esc>
 ]]
 
+-- toggle status line
 vim.cmd [[
-  function! LastActiveTab()
-    if !exists('g:lasttab')
-      let g:lasttab = 1
+  let s:hidden_all = 0
+  function! ToggleStatusLIne()
+    if s:hidden_all  == 0
+      let s:hidden_all = 1
+      set noruler
+      set laststatus=0
+      set cmdheight=3
+      set noshowcmd
+      " set nonumber
+    else
+      let s:hidden_all = 0
+      set ruler
+      set laststatus=3
+      set cmdheight=2
+      set showcmd
+      " set number
     endif
-    au TabLeave * let g:lasttab = tabpagenr()
-    exe "tabn ".g:lasttab
   endfunction
-    " nnoremap <C-z> :call LastActiveTab()<CR>
+  " nnoremap <silent> <C-z> :call ToggleStatusLIne()<CR>
 ]]
 
--- WindowSwap
+-- Window Buffer Swap
+vim.cmd [[
+  function! WinBufSwap()
+    let thiswin = winnr()
+    let thisbuf = bufnr("%")
+    let lastwin = winnr("#")
+    let lastbuf = winbufnr(lastwin)
+
+    exec  lastwin . " wincmd w" ."|".
+        \ "buffer ". thisbuf ."|".
+        \ thiswin ." wincmd w" ."|".
+        \ "buffer ". lastbuf
+  endfunction
+
+  command! Wswap :call WinBufSwap()
+  " map <C-v> :call WinBufSwap()<CR>
+]]
+
+-- Window Swap
 vim.cmd [[
   function! MarkWindowSwap()
     let g:markedWinNum = winnr()
@@ -197,3 +204,33 @@ vim.cmd [[
   " nmap <silent> <C-x> :call DoWindowSwap()<CR>
 ]]
 
+-- Toogle NvimTree Cursor
+-- local group = vim.api.nvim_create_augroup("SmashThatLikeButton", { clear = true })
+-- vim.api.nvim_create_autocmd({"BufLeave","FileType"}, {
+--   pattern = "NvimTree",
+--   group = group,
+--   callback = function()
+--     vim.opt.guicursor = { "n-v-c-sm:block","i-ci-ve:ver25","r-cr-o:hor20" }
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd({"BufEnter","FileType"}, {
+--   pattern = "NvimTree",
+--   group = group,
+--   callback = function()
+--     vim.opt.guicursor = { "n:ver100-CursorLine" }
+--   end,
+-- })
+
+-- -- FIXME: NvimTree conflict
+-- -- show cursorline only in active Window
+-- local cursorGrp = vim.api.nvim_create_augroup("CursorLine", { clear = true })
+-- vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+--   pattern = "*",
+--   group = cursorGrp,
+--   command = "set cursorline"
+-- })
+-- vim.api.nvim_create_autocmd( { "InsertEnter", "WinLeave" }, {
+--   pattern = "*",
+--   group = cursorGrp,
+--   command = "set nocursorline"
+-- })

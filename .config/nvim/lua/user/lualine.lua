@@ -8,7 +8,7 @@ local hide_in_width = function()
 end
 
 local colors = {
-  bg       = '#000000',
+  bg       = 'none',
   fg       = '#555555',
   yellow   = '#ECBE7B',
   cyan     = '#008080',
@@ -51,7 +51,7 @@ local location = {
 
 -- cool function for progress
 local progress = {
-  color = { bg = '#000000', gui = 'bold' },
+  color = { bg = 'none', gui = 'bold' },
   'progress'
   -- function()
   --   local current_line = vim.fn.line(".")

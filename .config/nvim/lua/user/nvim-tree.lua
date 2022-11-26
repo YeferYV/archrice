@@ -24,7 +24,7 @@ nvim_tree.setup {
   },
   -- auto_close = true,
   open_on_tab = false,
-  hijack_cursor = true,
+  -- hijack_cursor = true,
   hijack_unnamed_buffer_when_opening = false,
   update_cwd = true,
   diagnostics = {
@@ -49,12 +49,27 @@ nvim_tree.setup {
     dotfiles = false,
     custom = {},
   },
+  live_filter = {
+    prefix = "[FILTER]:",
+    always_show_folders = false,
+  },
   git = {
     enable = true,
     ignore = true,
     timeout = 500,
   },
   view = {
+    -- float = {
+    --   enable = true,
+    --   open_win_config = {
+    --     relative = "cursor",
+    --     border = "rounded",
+    --     width = 30,
+    --     height = 30,
+    --     row = 1,
+    --     col = 1,
+    --   },
+    -- },
     width = 30,
     height = 30,
     hide_root_folder = false,
@@ -68,6 +83,8 @@ nvim_tree.setup {
         { key = "v", action = "vsplit" },
         { key = "V", action = "split" },
         { key = "t", action = "tabnew" },
+        { key = "J", action = "" },
+        { key = "K", action = "" },
       },
     },
     number = false,

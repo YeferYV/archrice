@@ -5,7 +5,7 @@ require('bufferline').setup {
     close_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
     right_mouse_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
     left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
-    middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
+    middle_mouse_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
     -- NOTE: this plugin is designed with this icon in mind,
     -- and so changing this is NOT recommended, this is intended
     -- as an escape hatch for people who cannot bear it for whatever reason
@@ -67,97 +67,99 @@ require('bufferline').setup {
     --   return buffer_a.modified > buffer_b.modified
     -- end
   },
-  highlights = {
-    fill = {
-      guifg = "#888888",
-      guibg = "#111111",
-    },
-    background = {
-      guifg = "#888888",
-      guibg = "#111111",
-    },
-
-    buffer_selected = {
-      guifg = '#ff0000',
-      guibg = '#000000',
-      gui = 'bold',
-    },
-
-    buffer_visible = {
-      guifg = "#ff0000",
-      guibg = "#000000",
-    },
-    close_button = {
-      guifg = "#888888",
-      guibg = "#111111",
-    },
-    close_button_visible = {
-      guifg = "#000000",
-      guibg = "#000000",
-    },
-    close_button_selected = {
-      guifg = "#ff0000",
-      guibg = "#000000",
-    },
-
-    tab_selected = {
-      guifg = "#ff0000",
-      guibg = "#000000",
-    },
-    tab = {
-      guifg = "#888888",
-      guibg = "#111111",
-    },
-    tab_close = {
-      guifg = "#888888",
-      guibg = "#111111",
-    },
-
-    duplicate_selected = {
-      guifg = "#ff0000",
-      guibg = "#000000",
-      gui = "bold",
-    },
-    duplicate_visible = {
-      guifg = "#888888",
-      guibg = "#ff0000",
-      gui = "italic",
-    },
-    duplicate = {
-      guifg = "#888888",
-      guibg = "#111111",
-      gui = "italic",
-    },
-
-    modified = {
-      guifg = "#888888",
-      guibg = "#000000",
-    },
-    modified_selected = {
-      guifg = "#888888",
-      guibg = "#000000",
-    },
-    modified_visible = {
-      guifg = "#888888",
-      guibg = "#000000",
-    },
-
-    separator = {
-      guifg = "#000000",
-      guibg = "#000000",
-    },
-    separator_selected = {
-      guifg = "#000000",
-      guibg = "#000000",
-    },
-    separator_visible = {
-      guifg = "#000000",
-      guibg = "#000000",
-    },
-    indicator_selected = {
-      guifg = "#000000",
-      guibg = "#000000",
-    },
-  },
-
+  -- highlights = {
+  --   fill = {
+  --     guifg = "none",
+  --     guibg = "none",
+  --   },
+  --   background = {
+  --     guifg = "#666666",
+  --     guibg = "#0b0b0b",
+  --   },
+  --
+  --   buffer_selected = {
+  --     guifg = '#4141ad',
+  --     guibg = '#111111',
+  --     gui = 'bold',
+  --   },
+  --   buffer_visible = {
+  --     guifg = "#a1a1ad",
+  --     guibg = "#111111",
+  --   },
+  --
+  --   close_button = {
+  --     guifg = "#666666",
+  --     guibg = "#0b0b0b",
+  --   },
+  --   close_button_selected = {
+  --     guifg = "#4141ad",
+  --     guibg = "#111111",
+  --   },
+  --   close_button_visible = {
+  --     guifg = "#a1a1ad",
+  --     guibg = "#111111",
+  --   },
+  --
+  --   tab = {
+  --     guifg = "#666666",
+  --     guibg = "none",
+  --   },
+  --   tab_close = {
+  --     guifg = "#666666",
+  --     guibg = "none",
+  --   },
+  --   tab_selected = {
+  --     guifg = "#4141ad",
+  --     guibg = "none",
+  --   },
+  --
+  --   duplicate = {
+  --     guifg = "#666666",
+  --     guibg = "#0b0b0b",
+  --     gui = "underline",
+  --     guisp = "#0b0b0b"
+  --   },
+  --   duplicate_selected = {
+  --     guifg = "#4141ad",
+  --     guibg = "#111111",
+  --     gui = "underline",
+  --     guisp = "#4141ad"
+  --   },
+  --   duplicate_visible = {
+  --     guifg = "#a1a1ad",
+  --     guibg = "#111111",
+  --     gui = "underline",
+  --     guisp = "#111111"
+  --   },
+  --
+  --   modified = {
+  --     guifg = "#666666",
+  --     guibg = "#0b0b0b",
+  --   },
+  --   modified_selected = {
+  --     guifg = "#4141ad",
+  --     guibg = "#111111",
+  --   },
+  --   modified_visible = {
+  --     guifg = "#a1a1ad",
+  --     guibg = "#111111",
+  --   },
+  --
+  --   separator = {
+  --     guifg = "#000000",
+  --     guibg = "none",
+  --   },
+  --   separator_selected = {
+  --     guifg = "#000000",
+  --     guibg = "none",
+  --   },
+  --   separator_visible = {
+  --     guifg = "#111111",
+  --     guibg = "#111111",
+  --   },
+  --   indicator_selected = {
+  --     guifg = "#111111",
+  --     guibg = "#111111",
+  --   },
+  -- },
 }

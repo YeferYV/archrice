@@ -116,7 +116,9 @@ keymap("n",";S","<Cmd>BufferLineMovePrev <CR>",opts)
 keymap("n",";F","<Cmd>BufferLineMoveNext <CR>",opts)
 
 -- Explorer
-keymap("n","e","<Cmd>lua vim.cmd[[NvimTreeToggle]] vim.cmd[[IndentBlanklineEnable]]<CR>",opts)
+keymap("n","<leader>e","<Cmd>lua vim.cmd[[NvimTreeToggle]] vim.cmd[[IndentBlanklineEnable]]<CR>",opts)
+keymap("n","<leader>q","<Cmd>lua require('nvim-tree').setup{ view={ float={ enable=true, open_win_config={ relative='cursor' }}}} vim.cmd[[NvimTreeFindFile]]<CR>",opts)
+keymap("n","<leader>Q","<Cmd>lua require('nvim-tree').setup{ view={ float={ enable=false }}} vim.cmd[[NvimTreeFindFile]]<CR>",opts)
 
 -- Terminal
 keymap("n","<leader>v","<Cmd>ToggleTerm direction=vertical   size=80<CR>",opts)
