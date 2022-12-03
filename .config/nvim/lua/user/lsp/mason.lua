@@ -24,7 +24,7 @@ require("mason-lspconfig").setup_handlers({
 })
 
 -- local server = vim.lsp.buf_get_clients()
-local servers = lspconfig.available_servers()
+local servers = lspconfig.util.available_servers()
 for _, server in pairs(servers) do
 	local opts = {
 		on_attach = require("user.lsp.handlers").on_attach,

@@ -27,8 +27,8 @@ sudo pacman-key --populate
 sudo pacman -Sy  --noconfirm archlinux-keyring
 sudo pacman -Syu --noconfirm base-devel git
 
-#-- Neovim version 0.7.2
-sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage && sudo chmod +x /usr/local/bin/nvim
+#-- Neovim version 0.8.1
+sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.8.1/nvim.appimage && sudo chmod +x /usr/local/bin/nvim
 
 #-- yay
 git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin

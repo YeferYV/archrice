@@ -266,6 +266,8 @@ local mappings = {
     t = { "<cmd>ToggleTerm <cr>", "Toggle ToggleTerm" },
     T = { ":lua vim.cmd[[terminal]] vim.cmd[[startinsert | set ft=terminal nonumber ]]<CR>",
           "Buffer terminal" },
+    -- H = { "<cmd>split +te  | resize 10          | setlocal ft=sp-terminal nonumber noruler laststatus=3 cmdheight=0 | startinsert<cr>", "Horizontal terminal" },
+    -- V = { "<cmd>vsplit +te | vertical resize 80 | setlocal ft=vs-terminal nonumber noruler laststatus=0 cmdheight=1 | startinsert<cr>", "Vertical terminal" },
     H = { "<cmd>split | resize 10 | term<cr>", "Horizontal terminal" },
     V = { "<cmd>vsplit | vertical resize 80 | term<cr>", "Vertical terminal" },
     h = { "<cmd>ToggleTerm direction=horizontal size=10<cr>", "Horizontal ToggleTerm" },
@@ -280,12 +282,17 @@ local mappings = {
 
   u = {
     name = "UI Toggle",
+    b = { "<cmd>call ToggleStatusLIne()<cr>", "Toggle StatusBar" },
     -- c = { "<cmd>Codi<cr>", "Codi Start"},
     -- C = { "<cmd>Codi!<cr>", "Codi Stop" },
+    c = { "<cmd>set cmdheight=1<cr>", "enable cmdheight" },
+    C = { "<cmd>set cmdheight=0<cr>", "disable cmdheight" },
+    g = { "<cmd>hi Normal guifg=none guibg=#0b0b0b<cr>", "enable background" },
+    G = { "<cmd>hi Normal guifg=none guibg=none   <cr>", "disable background" },
     h = { "<cmd>noh<cr>", "Toggle Highlight" },
-    n = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
     i = { "<cmd>IndentBlanklineToggle<cr>", "Toggle IndentBlankline" },
-    N = { "<cmd>call ToggleStatusLIne()<cr>", "Toggle StatusBar" },
+    l = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
+    L = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
     ["0"] = { "<cmd>set showtabline=0<cr>", "Close Buffer Status" },
     R = { "<cmd>lua vim.cmd[[NvimTreeRefresh]]<cr>", "Refresh Explorer" },
     s = { "<cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "Show Buffer Status" },
@@ -303,6 +310,8 @@ local mappings = {
       end,
       "Jump to current_context",
     },
+    w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
+    W = { "<cmd>set winbar=  <cr>", "disable winbar" },
   },
 
   w = {

@@ -148,7 +148,7 @@ lualine.setup({
 		lualine_b = {},
 		lualine_c = {},
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { 'diagnostics',treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
+		lualine_x = { 'searchcount','diagnostics',treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
 		lualine_y = { location },
 		lualine_z = { progress } ,
 	},

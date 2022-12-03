@@ -10,7 +10,7 @@ indent_blankline.setup {
   show_first_indent_level = false,
   use_treesitter = true,
   show_current_context = true,
-	show_current_context_start = true,
+  show_current_context_start = false,
   buftype_exclude = { "terminal", "nofile" },
   filetype_exclude = {
     "help",

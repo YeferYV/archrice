@@ -22,23 +22,21 @@ vim.cmd [[
   "   au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
   " augroup end
 
-  " augroup _enable_terminal_insert_by_default
+  " augroup _enable_terminal_insert_and_hide_terminal_statusline
   "   autocmd!
-  "   autocmd BufEnter * if &filetype == 'vs-terminal' | set noruler laststatus=0 cmdheight=3 | startinsert | endif
-  "   autocmd BufEnter * if &filetype == 'sp-terminal' | set noruler laststatus=3 cmdheight=2 | startinsert | endif
-  "   autocmd TermLeave * set ruler showcmd laststatus=3 cmdheight=2
-  "   autocmd TermClose * set ruler showcmd laststatus=3 cmdheight=2
+  "   autocmd BufEnter term://* startinsert
+  "   autocmd BufEnter        * if &filetype == 'vs-terminal' | set noruler laststatus=0 cmdheight=1 | endif
+  "   autocmd BufEnter        * if &filetype != 'vs-terminal' | set noruler laststatus=3 cmdheight=0 | endif
+  "   autocmd TermClose       * if &filetype != 'toggleterm'  | call feedkeys("i")                   | endif
   " augroup end
 
-  augroup _enable_terminal_insert_by_default
-    autocmd!
-    " autocmd BufEnter * if &buftype == 'terminal' | startinsert | endif
-    autocmd BufEnter term://* startinsert | set nonumber statusline=%<
-    autocmd TermOpen * startinsert | set nonumber statusline=%@
-    autocmd TermEnter * startinsert | set nonumber statusline=%@
-    autocmd TermLeave * set statusline=%{%v:lua.require'lualine'.statusline()%}
-    autocmd TermClose * if &filetype != 'toggleterm' | call feedkeys("i") | endif
-  augroup end
+  " augroup _enable_terminal_insert_and_hide_terminal_statusline
+  "   autocmd!
+  "   autocmd BufEnter    term://* startinsert
+  "   autocmd TermOpen,TermEnter * lua require('lualine').hide()              vim.cmd('set nocursorline nonumber statusline=%< | startinsert')
+  "   autocmd TermLeave          * lua require('lualine').hide({unhide=true}) vim.cmd('set cursorline')
+  "   autocmd TermClose          * if &filetype != 'toggleterm' | call feedkeys("i") | endif
+  " augroup end
 
   augroup _filetype_vimcommentary_support
     autocmd!
@@ -57,12 +55,6 @@ vim.cmd [[
     autocmd!
     autocmd FileType gitcommit setlocal wrap
     autocmd FileType gitcommit setlocal spell
-  augroup end
-
-  augroup _toogle_nvimtree_cursor
-    autocmd!
-    autocmd BufEnter * if &filetype == 'NvimTree' | setlocal guicursor=n:ver100-CursorLine | endif
-    autocmd BufEnter * if &filetype != 'NvimTree' | setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20 | endif
   augroup end
 
   augroup _hightlight_whitespaces
@@ -95,6 +87,12 @@ vim.cmd [[
   " au FileType * set fo-=c fo-=r fo-=o
     au BufEnter * set fo-=c fo-=r fo-=o
   augroup end
+
+  " augroup _toogle_nvimtree_cursor
+  "   autocmd!
+  "   autocmd BufEnter * if &filetype == 'NvimTree' | hi Cursor guifg=none guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor | endif
+  "   autocmd BufEnter * if &filetype != 'NvimTree' | setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20 | endif
+  " augroup end
 
 ]]
 
@@ -204,33 +202,51 @@ vim.cmd [[
   " nmap <silent> <C-x> :call DoWindowSwap()<CR>
 ]]
 
--- Toogle NvimTree Cursor
--- local group = vim.api.nvim_create_augroup("SmashThatLikeButton", { clear = true })
--- vim.api.nvim_create_autocmd({"BufLeave","FileType"}, {
---   pattern = "NvimTree",
---   group = group,
---   callback = function()
---     vim.opt.guicursor = { "n-v-c-sm:block","i-ci-ve:ver25","r-cr-o:hor20" }
---   end,
--- })
--- vim.api.nvim_create_autocmd({"BufEnter","FileType"}, {
---   pattern = "NvimTree",
---   group = group,
---   callback = function()
---     vim.opt.guicursor = { "n:ver100-CursorLine" }
---   end,
--- })
+-- _toogle_nvimtree_cursor
+local toogle_nvimtree_cursor = vim.api.nvim_create_augroup("_toogle_nvimtree_cursor", { clear = true })
+vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
+  group = toogle_nvimtree_cursor,
+  callback = function()
+    if vim.bo.filetype ~= "NvimTree" then
+      vim.cmd[[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
+    end
+  end,
+})
+vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
+  group = toogle_nvimtree_cursor,
+  callback = function()
+    if vim.bo.filetype == "NvimTree" then
+      vim.cmd[[hi Cursor guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor]]
+    end
+  end,
+})
 
--- -- FIXME: NvimTree conflict
--- -- show cursorline only in active Window
--- local cursorGrp = vim.api.nvim_create_augroup("CursorLine", { clear = true })
--- vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
---   pattern = "*",
---   group = cursorGrp,
---   command = "set cursorline"
--- })
--- vim.api.nvim_create_autocmd( { "InsertEnter", "WinLeave" }, {
---   pattern = "*",
---   group = cursorGrp,
---   command = "set nocursorline"
--- })
+-- _enable_terminal_insert_and_hide_terminal_statusline
+local hide_terminal_statusline = vim.api.nvim_create_augroup("_enable_terminal_insert_and_hide_terminal_statusline", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter","Filetype" }, {
+  group = hide_terminal_statusline,
+  pattern = "term://*",
+  command = "startinsert"
+})
+vim.api.nvim_create_autocmd( { "TermEnter","TermOpen" }, {
+  group = hide_terminal_statusline,
+  callback = function()
+    require('lualine').hide()
+    vim.cmd[[set nocursorline nonumber statusline=%< | startinsert]]
+  end,
+})
+vim.api.nvim_create_autocmd({ "TermLeave" }, {
+  group = hide_terminal_statusline,
+  callback = function()
+    require('lualine').hide({unhide=true})
+    vim.cmd[[set cursorline]]
+  end,
+})
+vim.api.nvim_create_autocmd({ "TermClose" }, {
+  group = hide_terminal_statusline,
+  callback = function()
+    if vim.bo.filetype ~= "toggleterm" then
+      vim.cmd[[ call feedkeys("i") ]]
+    end
+  end,
+})
