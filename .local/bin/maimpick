@@ -5,11 +5,10 @@ menu() {
 	printf "a selected area\\ncurrent window\\nfullscreen\\na selected area (copy)\\ncurrent window (copy)\\nfullscreen (copy)" | dmenu -l 6 -i -p "Screenshot which area?"
 }
 
-if [ "$1" == "fullscreen" ]; then
+if [ "$1" = "fullscreen" ]; then
 		maim --hidecursor ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png"
 else
 	option="$(menu)"
-	# echo $option
 	case "$option" in
 		"a selected area") maim --hidecursor -s ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" || exit ;;
 		"current window") maim --hidecursor -i "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
@@ -19,8 +18,5 @@ else
 		"fullscreen (copy)") maim --hidecursor | xclip -selection clipboard -t image/png ;;
 		*) notify-send "Nothing selected" && exit ;;
 	esac
-fi
-
-# sleep 0.5s && \
+fi &&
 notify-send "Maim" "screenshot done"
-

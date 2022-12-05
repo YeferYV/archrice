@@ -117,15 +117,11 @@ return {
       {key="UpArrow",    mods="NONE", action=act.CopyMode("MoveUp")},
       {key="RightArrow", mods="NONE", action=act.CopyMode("MoveRight")},
 
-      {key="RightArrow", mods="ALT",  action=act.CopyMode("MoveForwardWord")},
-      {key="f",          mods="ALT",  action=act.CopyMode("MoveForwardWord")},
-      {key="w",          mods="NONE", action=act.CopyMode("MoveForwardWord")},
-      {key="W",          mods="NONE", action=act.CopyMode("MoveForwardWord")},
+      {key="w",     mods="NONE", action=act.CopyMode("MoveForwardWord")},
+      {key="W",     mods="NONE", action=act.CopyMode("MoveForwardWord")},
 
-      {key="LeftArrow", mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
-      {key="b",         mods="ALT",   action=act.CopyMode("MoveBackwardWord")},
-      {key="b",         mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
-      {key="B",         mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
+      {key="b",     mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
+      {key="B",     mods="NONE",  action=act.CopyMode("MoveBackwardWord")},
 
       {key="0",     mods="NONE",  action=act.CopyMode("MoveToStartOfLine")},
       {key="Enter", mods="NONE",  action=act.CopyMode("MoveToStartOfNextLine")},
@@ -134,11 +130,10 @@ return {
       {key="$",     mods="SHIFT", action=act.CopyMode("MoveToEndOfLineContent")},
       {key="^",     mods="NONE",  action=act.CopyMode("MoveToStartOfLineContent")},
       {key="^",     mods="SHIFT", action=act.CopyMode("MoveToStartOfLineContent")},
-      {key="m",     mods="ALT",   action=act.CopyMode("MoveToStartOfLineContent")},
 
       {key="Tab",   mods="SHIFT", action=act.ActivateTabRelative(-1)},
       {key="Tab",   mods="NONE",  action=act.ActivateTabRelative(1)},
-      {key=";",     mods="NONE",  action=wezterm.action.ActivateLastTab},
+      {key=";",     mods="NONE",  action=act.ActivateLastTab},
 
       -- {key="v", mods="NONE", action=wezterm.action{CopyMode="ToggleSelectionByCell"}},
       {key=" ", mods="NONE",  action=act.CopyMode{SetSelectionMode="Cell"}},
@@ -313,7 +308,7 @@ return {
       action=wezterm.action.QuickSelectArgs{
         label = "open url",
         patterns={
-           "https?://\\S+"
+          '"(https?://\\S+)"|(https?://\\S+)'
         },
         action = wezterm.action_callback(function(window, pane)
            local url = window:get_selection_text_for_pane(pane)

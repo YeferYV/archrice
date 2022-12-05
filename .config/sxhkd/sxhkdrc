@@ -457,7 +457,6 @@ super + BackSpace
         --use-damage \
         --xrender-sync-fence \
         --backend glx \
-        --experimental-backends \
         --transparent-clipping \
         # --active-opacity=0.90 \
         # --inactive-opacity=0.90 \
@@ -501,3 +500,15 @@ super + {_,shift +} r
 # browser
 super + {_,shift +} w
   { google-chrome-stable --process-per-site, killall chrome}
+
+# toggle background
+super + alt + ctrl + w
+  (printf "\x1b]11;{#0c0c0c,#000000}\x1b\\\\") > $(find /dev/pts -iname '[0-9]')
+
+# pywal background
+super + alt + {_, shift +} w
+  wal { --theme random, -i "$HOME/.config/wallhaven-4lokdp.jpg" -b "0c0c0c"}
+
+# pywal wallpaper
+super + ctrl + {_, shift +} w
+  wal { -i "$HOME/bgs/bgi/eyelust/eyelust" , -R }
