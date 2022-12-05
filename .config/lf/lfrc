@@ -98,10 +98,10 @@ cmd open ${{
     #"sudo -E env "PATH=$PATH" lf" https://unix.stackexchange.com/questions/83191/how-to-make-sudo-preserve-path
     case $(file --dereference --brief --mime-type $f) in
         text/*|application/json) printf "\033]0; ${f##*/} \007" > /dev/tty; $EDITOR $fx ;;
-	      image/*) basename -a $fx | bspswap sxiv -baio ;;
-	      audio/*) basename -a $fx | bspswap mpv --force-window --playlist=- ;;
-	      video/*) basename -a $fx | bspswap mpv --playlist=- ;;
-        application/pdf) bspswap zathura $fx ;;
+	      image/*) basename -a $fx | $SWALLOWER sxiv -baio ;;
+	      audio/*) basename -a $fx | $SWALLOWER mpv --force-window --playlist=- ;;
+	      video/*) basename -a $fx | $SWALLOWER mpv --playlist=- ;;
+        application/pdf) $SWALLOWER zathura $fx ;;
         #*) for f in $fx; do xdg-open $f &>/dev/null &;;
         *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
     esac
@@ -122,13 +122,13 @@ cmd imgcat !{{
 }}
 
 cmd sixel ${{
-    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && { Xsixel :1 -screen 1024x1024 -exec 'basename -a $fx | sxiv -baio'
+    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && { Xsixel :11 -screen 1024x1024 -exec 'basename -a $fx | sxiv -baio'
     }||{
     case $(file --dereference --brief --mime-type $fx) in
         text/*)   bat --paging always --wrap never $fx;;
-        image/*)  Xsixel :1 -screen 1024x1024 -exec 'sxiv $fx' 2>/dev/null;;
+        image/*)  Xsixel :11 -screen 1024x1024 -exec 'sxiv $fx' 2>/dev/null;;
         video/*)  mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) $fx;;
-        application/pdf) Xsixel :1 -screen 1024x1024 -exec 'zathura $fx' 2>/dev/null;;
+        application/pdf) Xsixel :11 -screen 1024x1024 -exec 'zathura $fx' 2>/dev/null;;
     esac
     }
 }}
@@ -182,6 +182,7 @@ cmd tmuxtty ${{
 
 cmd fzf_preview ${{
     # fzf with lf images preview like keybinding
+    export FZF_DEFAULT_COMMAND='rg --files -g "!.git" --hidden'
     export FZF_PREVIEWER="$HOME/.config/lf/${1}"
     fzf --bind='alt-j:down+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
         --bind='alt-k:up+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
@@ -209,12 +210,12 @@ cmd fzf_preview ${{
 # https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
 cmd fzf_rg ${{
     # Switch between Ripgrep launcher mode (CTRL-R) and fzf filtering mode (CTRL-F)
-    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    RG_PREFIX="rg --column --glob='!.git' --hidden --line-number --no-heading --color=always --smart-case"
     INITIAL_QUERY="${*:-}"
     IFS=: read -ra selected < <(
       FZF_DEFAULT_COMMAND="$RG_PREFIX $(printf %q "$INITIAL_QUERY")" \
       fzf --ansi \
-          --color "hl:-1:underline,hl+:-1:underline:reverse" \
+          --color "hl:-1:underline,hl+:-1:underline:reverse,bg+:#111111" \
           --disabled --query "$INITIAL_QUERY" \
           --bind="change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
           --bind="ctrl-f:unbind(change,ctrl-f)+change-prompt(2. fzf> )+enable-search+clear-query+rebind(ctrl-r)" \
@@ -312,9 +313,9 @@ map b     setbg $f
 map B     $vidir $fx
 map C     copyto
 map D     $trash --trash-dir ~/.cache/Trash $fx
-map gbm   $bspswap mpv $fx
-map gbl   $bspswap libreoffice --nologo $fx
-map gbc   $bspswap code $fx
+map gbm   $ $SWALLOWER mpv $fx
+map gbl   $ $SWALLOWER libreoffice --nologo $fx
+map gbc   $ $SWALLOWER code $fx
 map gdt   duplicateterm
 map gdl   duplicatelf
 map gdd   draganddrop
@@ -345,8 +346,8 @@ map gpm   push :$mkdir<space>-p<space>
 map gpv   push :$nvim<space>
 map gtl   tmuxtty lf
 map gtz   tmuxtty zsh
-map J     half-down
-map K     half-up
+map J     push 10j
+map K     push 10k
 
 map i     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' bat --pager "less -R" --paging always --wrap never $fx
 map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less -R $f
