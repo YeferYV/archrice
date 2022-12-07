@@ -16,7 +16,7 @@ hi   Constant                              guifg=#bbbb00  guibg=none     gui=non
 hi   Cursor                                guifg=#5555ff  guibg=none     gui=none
 hi   CursorColumn                          guifg=none     guibg=none     gui=none
 hi   CursorLine                            guifg=none     guibg=#080808  gui=none
-hi   CursorLineFold                        guifg=none     guibg=#080811  gui=none
+hi   CursorLineFold                        guifg=#444444  guibg=none     gui=none
 hi   CursorLineNr                          guifg=#cccccc  guibg=none     gui=none
 hi   CursorLineSign                        guifg=none     guibg=none     gui=none
 hi   Debug                                 guifg=#ff4400  guibg=none     gui=none
@@ -30,7 +30,7 @@ hi   ExtraWhitespace                       guifg=none     guibg=#ff0000  gui=non
 hi   Float                                 guifg=#008888  guibg=none     gui=none
 hi   FloatBorder                           guifg=none     guibg=none     gui=none
 hi   FoldColumn                            guifg=none     guibg=none     gui=none
-hi   Folded                                guifg=none     guibg=#0000ff  gui=none
+hi   Folded                                guifg=none     guibg=#444444  gui=none
 hi   Function                              guifg=#008800  guibg=none     gui=none
 hi   Identifier                            guifg=#5e81ac  guibg=none     gui=none
 hi   Ignore                                guifg=none     guibg=none     gui=bold
@@ -120,6 +120,7 @@ hi   link @string                          String
 hi   link @string.escape                   TSStringEscape              " SpecialChar
 hi   link @string.special                  TSStringRegex               " SpecialChar
 hi   link @structure                       Structure
+hi   link @symbol                          TSSymbol
 hi   link @tag                             Tag
 hi   link @tag.attribute                   TSAttribute
 hi   link @tag.delimiter                   TSTagDelimiter
@@ -229,10 +230,10 @@ hi   DiagnosticSignHint                    guifg=#ff8800  guibg=none     gui=non
 hi   DiagnosticSignInfo                    guifg=#bbbb00  guibg=none     gui=none
 
 "--  Diff
-hi   DiffAdd                               guifg=#ffffff  guibg=#0000ff  gui=none
+hi   DiffAdd                               guifg=#ffffff  guibg=#00cc00  gui=none
 hi   DiffChange                            guifg=#888888  guibg=none     gui=underline
 hi   DiffDelete                            guifg=#ffffff  guibg=#ff0000  gui=none
-hi   DiffText                              guifg=#ffffff  guibg=#444444  gui=none
+hi   DiffText                              guifg=#ffffff  guibg=#0000ff  gui=none
 
 "--  Bufferline
 hi   BufferLineFill                        guifg=none     guibg=none     gui=none

@@ -11,7 +11,11 @@ if not config_status_ok then
   return
 end
 
-local tree_cb = nvim_tree_config.nvim_tree_callback
+local function quit_on_open()
+  local nt_api = require("nvim-tree.api")
+  nt_api.node.open.edit()
+  nt_api.tree.toggle()
+end
 
 nvim_tree.setup {
   disable_netrw = true,
@@ -71,15 +75,16 @@ nvim_tree.setup {
     --   },
     -- },
     width = 25,
-    -- height = 25,
+    preserve_window_proportions = false,
     hide_root_folder = false,
     side = "left",
-    adaptive_size = true,
+    adaptive_size = false,
     mappings = {
       custom_only = false,
       list = {
-        { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-        { key = "h", cb = tree_cb "close_node" },
+        { key = { "<CR>", "o" }, action = "edit" },
+        { key = "l", action = "quit_on_open", action_cb = quit_on_open },
+        { key = "h", action = "close_node" },
         { key = "v", action = "vsplit" },
         { key = "V", action = "split" },
         { key = "t", action = "tabnew" },
@@ -98,8 +103,8 @@ nvim_tree.setup {
       restrict_above_cwd = false,
     },
     open_file = {
-      quit_on_open = true,
-      resize_window = true,
+      quit_on_open = false,
+      resize_window = false,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
