@@ -11,10 +11,14 @@ if not config_status_ok then
   return
 end
 
-local function quit_on_open()
+local function quit_on_open(node)
   local nt_api = require("nvim-tree.api")
   nt_api.node.open.edit()
-  nt_api.tree.toggle()
+
+  if node.extension then
+    nt_api.tree.toggle()
+  end
+
 end
 
 nvim_tree.setup {
@@ -75,10 +79,10 @@ nvim_tree.setup {
     --   },
     -- },
     width = 25,
-    preserve_window_proportions = false,
+    preserve_window_proportions = true,
     hide_root_folder = false,
     side = "left",
-    adaptive_size = false,
+    adaptive_size = true,
     mappings = {
       custom_only = false,
       list = {
@@ -95,7 +99,7 @@ nvim_tree.setup {
     number = false,
     relativenumber = false,
   },
-   actions = {
+  actions = {
     use_system_clipboard = true,
     change_dir = {
       enable = true,
