@@ -63,6 +63,17 @@ local progress = {
   -- end,
 }
 
+local show_macro_recording = {
+  function()
+    local recording_register = vim.fn.reg_recording()
+    if recording_register == "" then
+        return ""
+    else
+        return "Recording @" .. recording_register
+    end
+  end
+}
+
 local treesitterIcon = {
   color = { fg = '#224422', gui = 'bold' },
   function()--
@@ -148,7 +159,7 @@ lualine.setup({
 		lualine_b = {},
 		lualine_c = {},
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { 'searchcount','diagnostics',treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
+		lualine_x = { 'searchcount',show_macro_recording,'diagnostics',treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
 		lualine_y = { location },
 		lualine_z = { progress } ,
 	},
