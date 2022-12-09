@@ -142,7 +142,8 @@ return require("packer").startup(function(use)
   -- DAP
   use { "mfussenegger/nvim-dap", commit = "8f396b7836b9bbda9edd9f655f12ca377ae97676" }
   use { "rcarriga/nvim-dap-ui", commit = "54365d2eb4cb9cfab0371306c6a76c913c5a67e3" }
-  -- use { "ravenxrz/DAPInstall.nvim", commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de" }
+  use { "jay-babu/mason-nvim-dap.nvim", commit = "40c9a53c208a2d7e008b27d994ac001fadc7a5a2" }
+  -- use { "jay-babu/mason-null-ls.nvim", commit = "ab5d99619de2263508abb7fb05ef3a0f24a8d73d" }
 
 	-- File Explorer
   use({ "DaikyXendo/nvim-tree.lua", commit = "f8a27904e18938c5a7d477d05331b356740e8e92" })
