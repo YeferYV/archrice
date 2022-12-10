@@ -231,8 +231,9 @@ vim.api.nvim_create_autocmd({ "BufEnter","Filetype" }, {
 vim.api.nvim_create_autocmd( { "TermEnter","TermOpen" }, {
   group = hide_terminal_statusline,
   callback = function()
-    require('lualine').hide()
-    vim.cmd[[set nocursorline nonumber statusline=%< | startinsert]]
+    -- require('lualine').hide()
+    -- vim.cmd[[set nocursorline nonumber statusline=%< | startinsert]]
+    vim.cmd[[set nocursorline nonumber | startinsert]]
   end,
 })
 vim.api.nvim_create_autocmd({ "TermLeave" }, {

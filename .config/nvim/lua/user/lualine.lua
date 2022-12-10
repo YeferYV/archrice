@@ -67,9 +67,9 @@ local show_macro_recording = {
   function()
     local recording_register = vim.fn.reg_recording()
     if recording_register == "" then
-        return ""
+      return ""
     else
-        return "Recording @" .. recording_register
+      return "Recording @" .. recording_register
     end
   end
 }
@@ -118,13 +118,45 @@ local lspServer = {
   color = { fg = '#ffffff', gui = 'bold' },
 }
 
-local spaces = function()
-	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-end
+local function path() return vim.fn.fnamemodify(vim.fn.getcwd(), ':~') end
+local function spaces()	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth") end
 
--- tooggleterm status
-local function toggleterm_status() return ' ' .. vim.b.toggle_number end
-local my_extension = { sections = { lualine_a = {toggleterm_status} }, filetypes = {'toggleterm'} }
+local neotree_status = {
+  color = { fg = '#ff8800', gui = 'none' },
+  function()
+    if vim.bo.filetype == "neo-tree" then
+      return ''
+    else
+      return ''
+    end
+  end
+}
+
+local toggleterm_status = {
+  color = { fg = '#31B53E', gui = 'none' },
+  function()
+    if vim.bo.filetype == "sp-terminal" or vim.bo.filetype == "vs-terminal" then
+      return ''
+    else
+      return ' ' .. vim.b.toggle_number
+      -- return ' ' .. vim.b.toggle_number
+      -- return ' ' .. vim.b.toggle_number
+      -- return ' ' .. vim.b.toggle_number
+    end
+  end
+}
+
+local my_extension = {
+  sections = {
+		lualine_a = { branch },
+    -- lualine_b = { 'tabs','mode','filesize'},
+    lualine_x = { 'searchcount', neotree_status, toggleterm_status, path },
+		lualine_y = { location },
+    lualine_z = { progress }
+  },
+  filetypes = {'toggleterm','sp-terminal','vs-terminal','neo-tree'},
+  buftypes = {'terminal'}
+}
 
 lualine.setup({
 	options = {
@@ -150,7 +182,7 @@ lualine.setup({
     },
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
-		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline","toggleterm", "terminal" },
+		-- disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline","toggleterm", "terminal" },
     -- disabled_buftypes = { 'quickfix', 'prompt','terminal' }, -- not working
 		always_divide_middle = true,
 	},
@@ -158,8 +190,7 @@ lualine.setup({
 		lualine_a = { branch },
 		lualine_b = {},
 		lualine_c = {},
-		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { 'searchcount',show_macro_recording,'diagnostics',treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
+		lualine_x = { 'searchcount', show_macro_recording, 'diagnostics', treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
 		lualine_y = { location },
 		lualine_z = { progress } ,
 	},
@@ -172,5 +203,5 @@ lualine.setup({
 		lualine_z = {},
 	},
 	tabline = {},
-	-- extensions = {my_extension},
+	extensions = { my_extension, 'nvim-dap-ui' },
 })

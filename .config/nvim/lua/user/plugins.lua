@@ -147,6 +147,8 @@ return require("packer").startup(function(use)
 
 	-- File Explorer
   use({ "DaikyXendo/nvim-tree.lua", commit = "f8a27904e18938c5a7d477d05331b356740e8e92" })
+  use({ "nvim-neo-tree/neo-tree.nvim", commit = "7c6903b05b13c5d4c3882c896a59e6101cb51ea7" })
+  use({ "MunifTanjim/nui.nvim", commit = "2a6533fb798efad7dd783311315bab8dc5eb381b" })
 
 	-- For snippets completion
 	use({ "L3MON4D3/LuaSnip", commit = "bc9ba285be806cd8f1db9e7dbd50e33a300e11c2" }) --snippet engine

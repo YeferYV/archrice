@@ -44,6 +44,16 @@
         "args": {
           "commands":[
             { "command": "explorer.openAndPassFocus" },
+          ]
+        },
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+    },
+    {
+        "key": "o",
+        "command": "vim.remap",
+        "args": {
+          "commands":[
+            { "command": "explorer.openAndPassFocus" },
             { "command": "workbench.action.toggleSidebarVisibility" },
           ]
         },

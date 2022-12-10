@@ -66,7 +66,7 @@ require('bufferline').setup {
     --     return true
     --   end
     -- end,
-    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+    offsets = { { filetype = "neo-tree", text = "", padding = 1 } },
     themable = true,
     color_icons = true, -- whether or not to add the filetype icon highlights
     show_buffer_icons = true,
