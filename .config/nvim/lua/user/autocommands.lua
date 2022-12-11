@@ -17,9 +17,9 @@ vim.cmd [[
   "   autocmd VimResized * tabdo wincmd =
   " augroup end
 
-  " augroup _disable_nvimtree_status
+  " augroup _disable_neotree_status
   "   autocmd!
-  "   au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree" | set laststatus=0 | else | set laststatus=2 | endif
+  "   au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "neo-tree" | set laststatus=0 | else | set laststatus=2 | endif
   " augroup end
 
   " augroup _enable_terminal_insert_and_hide_terminal_statusline
@@ -88,10 +88,10 @@ vim.cmd [[
     au BufEnter * set fo-=c fo-=r fo-=o
   augroup end
 
-  " augroup _toogle_nvimtree_cursor
+  " augroup _toogle_neotree_cursor
   "   autocmd!
-  "   autocmd BufEnter * if &filetype == 'NvimTree' | hi Cursor guifg=none guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor | endif
-  "   autocmd BufEnter * if &filetype != 'NvimTree' | setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20 | endif
+  "   autocmd BufEnter * if &filetype == 'neo-tree' | hi Cursor guifg=none guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor | endif
+  "   autocmd BufEnter * if &filetype != 'neo-tree' | setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20 | endif
   " augroup end
 
 ]]
@@ -202,24 +202,24 @@ vim.cmd [[
   " nmap <silent> <C-x> :call DoWindowSwap()<CR>
 ]]
 
--- _toogle_nvimtree_cursor
-local toogle_nvimtree_cursor = vim.api.nvim_create_augroup("_toogle_nvimtree_cursor", { clear = true })
-vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
-  group = toogle_nvimtree_cursor,
-  callback = function()
-    if vim.bo.filetype ~= "NvimTree" then
-      vim.cmd[[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
-    end
-  end,
-})
-vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
-  group = toogle_nvimtree_cursor,
-  callback = function()
-    if vim.bo.filetype == "NvimTree" then
-      vim.cmd[[hi Cursor guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor]]
-    end
-  end,
-})
+-- -- _toogle_neotree_cursor
+-- local toogle_neotree_cursor = vim.api.nvim_create_augroup("_toogle_neotree_cursor", { clear = true })
+-- vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
+--   group = toogle_neotree_cursor,
+--   callback = function()
+--     if vim.bo.filetype ~= "neo-tree" then
+--       vim.cmd[[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
+--     end
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
+--   group = toogle_neotree_cursor,
+--   callback = function()
+--     if vim.bo.filetype == "neo-tree" then
+--       vim.cmd[[hi Cursor guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor]]
+--     end
+--   end,
+-- })
 
 -- _enable_terminal_insert_and_hide_terminal_statusline
 local hide_terminal_statusline = vim.api.nvim_create_augroup("_enable_terminal_insert_and_hide_terminal_statusline", { clear = true })
