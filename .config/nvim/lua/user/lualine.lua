@@ -190,6 +190,7 @@ lualine.setup({
 		lualine_a = { branch },
 		lualine_b = {},
 		lualine_c = {},
+		-- lualine_c = { { navic.get_location, cond = navic.is_available }, },
 		lualine_x = { 'searchcount', show_macro_recording, 'diagnostics', treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
 		lualine_y = { location },
 		lualine_z = { progress } ,

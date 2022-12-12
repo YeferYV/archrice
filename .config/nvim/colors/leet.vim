@@ -76,6 +76,8 @@ hi   VertSplit                             guifg=#555555  guibg=none     gui=non
 hi   visual                                guifg=none     guibg=#1c1c1c  gui=none
 hi   WarningMsg                            guifg=#ff0000  guibg=none     gui=none
 hi   WildMenu                              guifg=#ff0000  guibg=none     gui=none
+hi   WinBar                                guifg=#495466  guibg=none     gui=none
+hi   WinBarNC                              guifg=#495466  guibg=none     gui=none
 
 "--  Treesitter
 hi   link @boolean                         Boolean
