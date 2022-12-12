@@ -162,51 +162,6 @@ return require("packer").startup(function(use)
 	--   },
 	-- }
 
-	-- Intellisense
-	-- use {'tzachar/cmp-tabnine', commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = 'powershell ./install.ps1'}
-	use({ "tzachar/cmp-tabnine", commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = "./install.sh" })
-	use({ "github/copilot.vim", commit = "5a411d19ce7334ab10ba12516743fc25dad363fa" })
-
-	-- LSP
-	use({ "neovim/nvim-lspconfig", commit = "9f49f35cf04edcf11fc23d849467d51f462be141" }) -- enable LSP
-	use({ "jose-elias-alvarez/null-ls.nvim", commit = "a67897283fdb0051ad5c72e840e1845e195b979b" }) -- for formatters and linters
-  use({ "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" })
-	use({
-		"williamboman/mason.nvim",
-		commit = "22129c714fcb0acd2cebba77980e6461a2c69d6b",
-		config = function()
-			require("mason").setup()
-		end,
-		requires = {
-			"williamboman/mason-lspconfig.nvim",
-			commit = "4674ed145fd0e72c9bfdb32b647f968b221bf2f2",
-			config = function()
-				require("mason-lspconfig").setup()
-			end,
-		},
-	})
-
-	-- Status line
-	use({ "nvim-lualine/lualine.nvim", commit = "bfa0d99ba6f98d077dd91779841f1c88b7b5c165"})
-  use({ "nvim-tree/nvim-web-devicons", commit = "189ad3790d57c548896a78522fd8b0d0fc11be31" })
-  use({ "DaikyXendo/nvim-material-icon", commit = "602088c2682e61cbebd7191de7dc88bfa90c6890" })
-  use({ "SmiteshP/nvim-navic", commit = "7a2b823152fe4de65ee7925b0e32d26ed73bc57c" })
-
-	-- whichkey
-	use({ "folke/which-key.nvim", commit = "61553aeb3d5ca8c11eea8be6eadf478062982ac9", })
-
-	-- Surround block of codes
-	use({ "tpope/vim-surround", commit = "3d188ed2113431cf8dac77be61b842acb64433d9" })
-
-	-- Syntax hightlighting
-	-- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
-	use({ "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" })
-	use({
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564",
-		opt = true,
-	})
-
 	-- Git
 	use({
 		"lewis6991/gitsigns.nvim",
@@ -244,6 +199,57 @@ return require("packer").startup(function(use)
 		end,
 	})
 
+	-- Intellisense
+	-- use {'tzachar/cmp-tabnine', commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = 'powershell ./install.ps1'}
+	use({ "tzachar/cmp-tabnine", commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = "./install.sh" })
+	use({ "github/copilot.vim", commit = "5a411d19ce7334ab10ba12516743fc25dad363fa" })
+
+	-- LSP
+	use({ "neovim/nvim-lspconfig", commit = "9f49f35cf04edcf11fc23d849467d51f462be141" }) -- enable LSP
+	use({ "jose-elias-alvarez/null-ls.nvim", commit = "a67897283fdb0051ad5c72e840e1845e195b979b" }) -- for formatters and linters
+  use({ "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" })
+	use({
+		"williamboman/mason.nvim",
+		commit = "22129c714fcb0acd2cebba77980e6461a2c69d6b",
+		config = function()
+			require("mason").setup()
+		end,
+		requires = {
+			"williamboman/mason-lspconfig.nvim",
+			commit = "4674ed145fd0e72c9bfdb32b647f968b221bf2f2",
+			config = function()
+				require("mason-lspconfig").setup()
+			end,
+		},
+	})
+
+  -- Motions
+  use({
+    "https://github.com/ggandor/leap.nvim",
+    commit = "8f0d4a96d888f40ceff4f5a47f01ec06d48cb75a",
+		requires = {
+      { "tpope/vim-repeat", commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a" }
+    }
+  })
+
+	-- Status line
+	use({ "nvim-lualine/lualine.nvim", commit = "bfa0d99ba6f98d077dd91779841f1c88b7b5c165"})
+  use({ "nvim-tree/nvim-web-devicons", commit = "189ad3790d57c548896a78522fd8b0d0fc11be31" })
+  use({ "DaikyXendo/nvim-material-icon", commit = "602088c2682e61cbebd7191de7dc88bfa90c6890" })
+  use({ "SmiteshP/nvim-navic", commit = "7a2b823152fe4de65ee7925b0e32d26ed73bc57c" })
+
+	-- Surround block of codes
+	use({ "tpope/vim-surround", commit = "3d188ed2113431cf8dac77be61b842acb64433d9" })
+
+	-- Syntax Hightlighting
+	-- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
+	use({ "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" })
+	use({
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564",
+		opt = true,
+	})
+
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim",
     commit = "cabf991b1d3996fa6f3232327fc649bbdf676496",
@@ -253,12 +259,21 @@ return require("packer").startup(function(use)
     }
 	})
 
+	-- Terminal
+	use({ "akinsho/toggleterm.nvim", commit = "3ba683827c623affb4d9aa518e97b34db2623093" })
+
   -- UI
   use { "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" }
   use { "lewis6991/impatient.nvim", commit = "d3dd30ff0b811756e735eb9020609fa315bfbbcc" }
   use { "ahmedkhalf/project.nvim", commit = "685bc8e3890d2feb07ccf919522c97f7d33b94e4" }
 
-	-- The interactive scratchpad (aka playground or quokka-alt)
+	-- Text Objects
+	-- use { 'wellle/targets.vim',
+	--   commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d",
+	--   event = 'VimEnter'
+	-- }
+
+	-- The Interactive Scratchpad (aka playground or quokka-alt)
 	-- use({ "metakirby5/codi.vim", commit = "6537ba677a0c7c6c796b195f29077b57fad33716" })
 
 	-- Vim Jump to Match words
@@ -267,14 +282,8 @@ return require("packer").startup(function(use)
 	--   event = 'VimEnter'
 	-- }
 
-	-- Vim more Text Objects
-	-- use { 'wellle/targets.vim',
-	--   commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d",
-	--   event = 'VimEnter'
-	-- }
-
-	-- Vim Terminal
-	use({ "akinsho/toggleterm.nvim", commit = "3ba683827c623affb4d9aa518e97b34db2623093" })
+	-- Whichkey
+	use({ "folke/which-key.nvim", commit = "61553aeb3d5ca8c11eea8be6eadf478062982ac9", })
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

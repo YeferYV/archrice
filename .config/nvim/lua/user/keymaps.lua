@@ -54,6 +54,12 @@ keymap("i", "kj", "<ESC>", opts)
 -- keymap("v", "jk", "<ESC>", opts) --slow
 -- keymap("v", "kj", "<ESC>", opts) --slow
 
+-- Motions
+vim.keymap.set({'n', 'x', 'o'}, 't', '<Plug>(leap-forward-to)')
+vim.keymap.set({'n', 'x', 'o'}, 'T', '<Plug>(leap-backward-to)')
+-- vim.keymap.set({'n', 'x', 'o'}, 'x', '<Plug>(leap-forward-till)')
+-- vim.keymap.set({'n', 'x', 'o'}, 'X', '<Plug>(leap-backward-till)')
+
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
