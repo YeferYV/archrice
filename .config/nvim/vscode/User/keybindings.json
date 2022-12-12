@@ -126,14 +126,14 @@
             "after": ["<esc>", "l"]
         }
     },
-    {
-        "key": ";",
-        "command": "vim.remap",
-        "when": "!terminalFocus && textInputFocus && vim.mode == 'Normal'",
-        "args": {
-            "after": ["<C-6>"]
-        }
-    },
+    // {
+    //     "key": ";",
+    //     "command": "vim.remap",
+    //     "when": "!terminalFocus && textInputFocus && vim.mode == 'Normal'",
+    //     "args": {
+    //         "after": ["<C-6>"]
+    //     }
+    // },
     {
         "key": "alt+;",
         "command": "vim.remap",

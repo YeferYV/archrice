@@ -1,5 +1,6 @@
 {
   "vim.easymotion": true,
+  "vim.sneak": true,
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
@@ -192,7 +193,8 @@
     //   "commands": [ "workbench.action.terminal.toggleTerminal"]
     // },
   ],
-  "vim.leader": "<space>",
+  // "vim.leader": "<space>",
+  "vim.leader": ";",
   "vim.handleKeys": {
     "<C-b>": false,
     "<C-f>": false,
