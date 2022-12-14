@@ -225,11 +225,43 @@ return require("packer").startup(function(use)
 
   -- Motions
   use({
-    "https://github.com/ggandor/leap.nvim",
-    commit = "8f0d4a96d888f40ceff4f5a47f01ec06d48cb75a",
+    "justinmk/vim-sneak", commit = "93395f5b56eb203e4c8346766f258ac94ea81702",
+    config = function()
+      vim.cmd[[
+        let g:sneak#prompt = ''
+        " let g:sneak#target_labels = ";sftunq/SFGHLTUNRMQZ?0"
+        " let g:sneak#use_ic_scs = 1
+        " let g:sneak#label = 1
+        " let g:sneak#label_esc = "\<Space>"
+        " nnoremap s <Plug>Sneak_s
+        " nnoremap S <Plug>Sneak_S
+        " onoremap z <Plug>Sneak_s
+        " onoremap Z <Plug>Sneak_S
+        " vnoremap z <Plug>Sneak_s
+        " vnoremap Z <Plug>Sneak_S
+        " xnoremap z <Plug>Sneak_s
+        " xnoremap Z <Plug>Sneak_S
+        " map ; <Plug>Sneak_;
+        " map , <Plug>Sneak_,
+        map f <Plug>Sneak_f
+        map F <Plug>Sneak_F
+        map t <Plug>Sneak_t
+        map T <Plug>Sneak_T
+        map \ <Plug>SneakLabel_s
+        map \| <Plug>SneakLabel_S
+        nmap <expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
+      ]]
+    end,
 		requires = {
       { "tpope/vim-repeat", commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a" }
-    }
+    },
+  })
+  use({
+    "phaazon/hop.nvim",
+    commit = "90db1b2c61b820e230599a04fedcd2679e64bd07",
+    config = function()
+      require("hop").setup()
+    end,
   })
 
 	-- Status line
@@ -239,7 +271,27 @@ return require("packer").startup(function(use)
   use({ "SmiteshP/nvim-navic", commit = "7a2b823152fe4de65ee7925b0e32d26ed73bc57c" })
 
 	-- Surround block of codes
-	use({ "tpope/vim-surround", commit = "3d188ed2113431cf8dac77be61b842acb64433d9" })
+	-- use({ 'tpope/vim-surround', commit = "3d188ed2113431cf8dac77be61b842acb64433d9" })
+  use({
+    "kylechui/nvim-surround",
+    commit = "6cc6b54d3728a17e34bb5c9b9db05c7e5690813d",
+    config = function()
+      require("nvim-surround").setup({
+        -- keymaps = {
+        --   insert          = '<C-g>z',
+        --   insert_line     = '<C-g>Z',
+        --   normal          = 'yz',
+        --   normal_cur      = 'YZ',
+        --   normal_line     = 'yzz',
+        --   normal_cur_line = 'YZZ',
+        --   visual          = 'z',
+        --   visual_line     = 'Z',
+        --   delete          = 'dz',
+        --   change          = 'cz',
+        -- }
+      })
+    end
+  })
 
 	-- Syntax Hightlighting
 	-- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }

@@ -146,14 +146,36 @@ require("neo-tree").setup({
     },
     mappings = {
       ["<space>"] = false, -- disable space until we figure out which-key disabling
-      ["h"] = {
-        "toggle_node",
+      ["<2-LeftMouse>"] = {
+        "open",
         nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
       },
-      ["<2-LeftMouse>"] = "open",
+      ["h"] = function(state)
+        local node = state.tree:get_node()
+          if node.type == 'directory' and node:is_expanded() then
+            require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+          else
+            require'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
+          end
+        end,
+      ["l"] = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'directory' then
+            if not node:is_expanded() then
+              require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+            elseif node:has_children() then
+              require'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
+            end
+          else
+            state.commands["open"](state)
+          end
+        end,
       ["<cr>"] = "open",
-      ["l"] = "open",
       ["o"] = "quit_on_open",
+      ["L"] = function(state)
+          state.commands["open"](state)
+          vim.cmd("Neotree reveal")
+        end,
       ["i"] = {
         command = function(state)
           local node = state.tree:get_node()
@@ -167,43 +189,52 @@ require("neo-tree").setup({
       ["<esc>"] = "revert_preview",
       -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
       ["P"] = { "toggle_preview", config = { use_float = true } },
-      ["V"] = "open_split",
       ["v"] = "open_vsplit",
-      -- ["S"] = "split_with_window_picker",
+      ["V"] = "open_split",
+      -- ["w"] = "open_with_window_picker",
       -- ["s"] = "vsplit_with_window_picker",
+      -- ["S"] = "split_with_window_picker",
+      ["s"] = false,
+      ["S"] = false,
+      ["t"] = function(state)
+          state.commands["open_tabnew"](state)
+          vim.cmd("Neotree show")
+          require('bufferline').setup{options={always_show_bufferline=true}}
+        end,
+      ["T"] = function(state)
+          state.commands["open_tab_drop"](state)
+          vim.cmd("Neotree show")
+          require('bufferline').setup{options={always_show_bufferline=true}}
+        end,
       ["f"] = false,
-      -- ["fa"] = function() vim.cmd[[/ a]] vim.cmd[[normal ta]] end,
-      -- ["fb"] = function() vim.cmd[[/ b]] vim.cmd[[normal tb]] end,
-      -- ["fc"] = function() vim.cmd[[/ c]] vim.cmd[[normal tc]] end,
-      -- ["fd"] = function() vim.cmd[[/ d]] vim.cmd[[normal td]] end,
-      -- ["fe"] = function() vim.cmd[[/ e]] vim.cmd[[normal te]] end,
-      -- ["ff"] = function() vim.cmd[[/ f]] vim.cmd[[normal tf]] end,
-      -- ["fg"] = function() vim.cmd[[/ g]] vim.cmd[[normal tg]] end,
-      -- ["fh"] = function() vim.cmd[[/ h]] vim.cmd[[normal th]] end,
-      -- ["fi"] = function() vim.cmd[[/ i]] vim.cmd[[normal ti]] end,
-      -- ["fj"] = function() vim.cmd[[/ j]] vim.cmd[[normal tj]] end,
-      -- ["fk"] = function() vim.cmd[[/ k]] vim.cmd[[normal tk]] end,
-      -- ["fl"] = function() vim.cmd[[/ l]] vim.cmd[[normal tl]] end,
-      -- ["fm"] = function() vim.cmd[[/ m]] vim.cmd[[normal tm]] end,
-      -- ["fn"] = function() vim.cmd[[/ n]] vim.cmd[[normal tn]] end,
-      -- ["fo"] = function() vim.cmd[[/ o]] vim.cmd[[normal to]] end,
-      -- ["fp"] = function() vim.cmd[[/ p]] vim.cmd[[normal tp]] end,
-      -- ["fq"] = function() vim.cmd[[/ q]] vim.cmd[[normal tq]] end,
-      -- ["fr"] = function() vim.cmd[[/ r]] vim.cmd[[normal tr]] end,
-      -- ["fs"] = function() vim.cmd[[/ s]] vim.cmd[[normal ts]] end,
-      -- ["ft"] = function() vim.cmd[[/ t]] vim.cmd[[normal tt]] end,
-      -- ["fu"] = function() vim.cmd[[/ u]] vim.cmd[[normal tu]] end,
-      -- ["fv"] = function() vim.cmd[[/ v]] vim.cmd[[normal tv]] end,
-      -- ["fw"] = function() vim.cmd[[/ w]] vim.cmd[[normal tw]] end,
-      -- ["fx"] = function() vim.cmd[[/ x]] vim.cmd[[normal tx]] end,
-      -- ["fy"] = function() vim.cmd[[/ y]] vim.cmd[[normal ty]] end,
-      -- ["fz"] = function() vim.cmd[[/ z]] vim.cmd[[normal tz]] end,
-      ["t"] = "open_tabnew",
-      ["T"] = "open_tab_drop",
-      ["w"] = "open_with_window_picker",
-      ["C"] = "close_node",
+      ["fa"] = function() vim.cmd[[normal 0]] vim.cmd[[/ a]] vim.cmd[[normal n]] end,
+      ["fb"] = function() vim.cmd[[normal 0]] vim.cmd[[/ b]] vim.cmd[[normal n]] end,
+      ["fc"] = function() vim.cmd[[normal 0]] vim.cmd[[/ c]] vim.cmd[[normal n]] end,
+      ["fd"] = function() vim.cmd[[normal 0]] vim.cmd[[/ d]] vim.cmd[[normal n]] end,
+      ["fe"] = function() vim.cmd[[normal 0]] vim.cmd[[/ e]] vim.cmd[[normal n]] end,
+      ["ff"] = function() vim.cmd[[normal 0]] vim.cmd[[/ f]] vim.cmd[[normal n]] end,
+      ["fg"] = function() vim.cmd[[normal 0]] vim.cmd[[/ g]] vim.cmd[[normal n]] end,
+      ["fh"] = function() vim.cmd[[normal 0]] vim.cmd[[/ h]] vim.cmd[[normal n]] end,
+      ["fi"] = function() vim.cmd[[normal 0]] vim.cmd[[/ i]] vim.cmd[[normal n]] end,
+      ["fj"] = function() vim.cmd[[normal 0]] vim.cmd[[/ j]] vim.cmd[[normal n]] end,
+      ["fk"] = function() vim.cmd[[normal 0]] vim.cmd[[/ k]] vim.cmd[[normal n]] end,
+      ["fl"] = function() vim.cmd[[normal 0]] vim.cmd[[/ l]] vim.cmd[[normal n]] end,
+      ["fm"] = function() vim.cmd[[normal 0]] vim.cmd[[/ m]] vim.cmd[[normal n]] end,
+      ["fn"] = function() vim.cmd[[normal 0]] vim.cmd[[/ n]] vim.cmd[[normal n]] end,
+      ["fo"] = function() vim.cmd[[normal 0]] vim.cmd[[/ o]] vim.cmd[[normal n]] end,
+      ["fp"] = function() vim.cmd[[normal 0]] vim.cmd[[/ p]] vim.cmd[[normal n]] end,
+      ["fq"] = function() vim.cmd[[normal 0]] vim.cmd[[/ q]] vim.cmd[[normal n]] end,
+      ["fr"] = function() vim.cmd[[normal 0]] vim.cmd[[/ r]] vim.cmd[[normal n]] end,
+      ["fs"] = function() vim.cmd[[normal 0]] vim.cmd[[/ s]] vim.cmd[[normal n]] end,
+      ["ft"] = function() vim.cmd[[normal 0]] vim.cmd[[/ t]] vim.cmd[[normal n]] end,
+      ["fu"] = function() vim.cmd[[normal 0]] vim.cmd[[/ u]] vim.cmd[[normal n]] end,
+      ["fv"] = function() vim.cmd[[normal 0]] vim.cmd[[/ v]] vim.cmd[[normal n]] end,
+      ["fw"] = function() vim.cmd[[normal 0]] vim.cmd[[/ w]] vim.cmd[[normal n]] end,
+      ["fx"] = function() vim.cmd[[normal 0]] vim.cmd[[/ x]] vim.cmd[[normal n]] end,
+      ["fy"] = function() vim.cmd[[normal 0]] vim.cmd[[/ y]] vim.cmd[[normal n]] end,
+      ["fz"] = function() vim.cmd[[normal 0]] vim.cmd[[/ z]] vim.cmd[[normal n]] end,
       ["z"] = "close_all_nodes",
-      --["Z"] = "expand_all_nodes",
+      ["Z"] = "expand_all_nodes",
       ["a"] = {
         "add",
         -- some commands may take optional config options, see `:h neo-tree-mappings` for details
@@ -224,6 +255,7 @@ require("neo-tree").setup({
       --    show_path = "none" -- "none", "relative", "absolute"
       --  }
       --}
+      ["C"] = "close_node",
       ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
       ["q"] = "close_window",
       ["R"] = "refresh",
@@ -366,9 +398,10 @@ require("neo-tree").setup({
         ["<bs>"] = "navigate_up",
         ["."] = "set_root",
         ["H"] = "toggle_hidden",
+        ["O"] = "toggle_node",
         ["/"] = "fuzzy_finder",
         ["D"] = "fuzzy_finder_directory",
-        ["s"] = "filter_on_submit",
+        ["F"] = "filter_on_submit",
         ["<c-x>"] = "clear_filter",
         ["gk"] = "prev_git_modified",
         ["gj"] = "next_git_modified",

@@ -13,7 +13,7 @@ hi   Comment                               guifg=#555555  guibg=none     gui=non
 hi   Conceal                               guifg=none     guibg=none     gui=none
 hi   Conditional                           guifg=#5555ff  guibg=none     gui=none
 hi   Constant                              guifg=#bbbb00  guibg=none     gui=none
-hi   Cursor                                guifg=#5555ff  guibg=none     gui=none
+hi   Cursor                                guifg=#000000  guibg=#1c1cff  gui=none
 hi   CursorColumn                          guifg=none     guibg=none     gui=none
 hi   CursorLine                            guifg=none     guibg=#080808  gui=none
 hi   CursorLineFold                        guifg=#444444  guibg=none     gui=none
@@ -40,7 +40,7 @@ hi   Keyword                               guifg=#5555ff  guibg=none     gui=bol
 hi   Label                                 guifg=#5e81ac  guibg=none     gui=none
 hi   LineNr                                guifg=#555555  guibg=none     gui=none
 hi   Macro                                 guifg=#1c1cff  guibg=none     gui=none
-hi   MatchParen                            guifg=#ff0000  guibg=#ffff00  gui=none
+hi   MatchParen                            guifg=#ffff00  guibg=#ff0000  gui=none
 hi   NonText                               guifg=#000000  guibg=none     gui=none
 hi   Normal                                guifg=none     guibg=none     gui=none
 hi   Number                                guifg=#1cff1c  guibg=none     gui=none
@@ -337,3 +337,7 @@ hi   NvimTreeRootFolder                    guifg=#495466  guibg=none     gui=bol
 " hi link  NeoTreeTitleBar                 CursorLineFold
 " hi link  NeoTreeSymbolicLinkTarget       NeoTreeFileName
 " hi link  NeoTreeWindowsHidden            NeoTreeDotfile
+
+"--  Sneak
+hi   Sneak                                 guifg=#ff0000  guibg=#000000  gui=none
+hi   SneakScope                            guifg=#000000  guibg=#1c1cff  gui=none

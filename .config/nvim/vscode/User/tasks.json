@@ -71,5 +71,28 @@
                 "reveal": "never",
             }
         },
+        {
+            "label": "open-file",
+            "type": "shell",
+            "command": "${command:explorer.openAndPassFocus}",
+            "presentation": {
+                "reveal": "never",
+            }
+        },
+        {
+            "label": "unfocus",
+            "type": "shell",
+            "command": "${command:workbench.view.explorer}",
+            "presentation": {
+                "reveal": "never",
+            }
+        },
+        {
+            "label": "open-file-unfocus",
+            // "type": "shell",
+            // "command": "${command:explorer.openAndPassFocus} && sleep 3 && ${command:workbench.view.explorer}",
+            "dependsOrder": "sequence",
+            "dependsOn": ["open-file", "unfocus"],
+        },
     ]
 }

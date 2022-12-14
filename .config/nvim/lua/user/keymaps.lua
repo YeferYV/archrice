@@ -54,12 +54,6 @@ keymap("i", "kj", "<ESC>", opts)
 -- keymap("v", "jk", "<ESC>", opts) --slow
 -- keymap("v", "kj", "<ESC>", opts) --slow
 
--- Motions
-vim.keymap.set({'n', 'x', 'o'}, 't', '<Plug>(leap-forward-to)')
-vim.keymap.set({'n', 'x', 'o'}, 'T', '<Plug>(leap-backward-to)')
--- vim.keymap.set({'n', 'x', 'o'}, 'x', '<Plug>(leap-forward-till)')
--- vim.keymap.set({'n', 'x', 'o'}, 'X', '<Plug>(leap-backward-till)')
-
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
@@ -85,40 +79,13 @@ keymap("i","<C-right>","<Plug>(copilot-next)",opts)
 
 -- Alternative way to quit/write
 keymap("n","<S-q>",":q<CR>",opts)
-keymap("n","<S-s>",":w<CR>",opts)
+keymap("n","<S-r>",":w<CR>",opts)
 
 -- Quick Jump
 keymap("n","J","10j",opts)
 keymap("n","K","10k",opts)
 keymap("n","H","10h",opts)
 keymap("n","L","10l",opts)
-keymap("n","fa","/\\v([^a-z]a|^a)<cr><cmd>noh<cr>",opts)
-keymap("n","fb","/\\v([^a-z]b|^b)<cr><cmd>noh<cr>",opts)
-keymap("n","fc","/\\v([^a-z]c|^c)<cr><cmd>noh<cr>",opts)
-keymap("n","fd","/\\v([^a-z]d|^d)<cr><cmd>noh<cr>",opts)
-keymap("n","fe","/\\v([^a-z]e|^e)<cr><cmd>noh<cr>",opts)
-keymap("n","ff","/\\v([^a-z]f|^f)<cr><cmd>noh<cr>",opts)
-keymap("n","fg","/\\v([^a-z]g|^g)<cr><cmd>noh<cr>",opts)
-keymap("n","fh","/\\v([^a-z]h|^h)<cr><cmd>noh<cr>",opts)
-keymap("n","fi","/\\v([^a-z]i|^i)<cr><cmd>noh<cr>",opts)
-keymap("n","fj","/\\v([^a-z]j|^j)<cr><cmd>noh<cr>",opts)
-keymap("n","fk","/\\v([^a-z]k|^k)<cr><cmd>noh<cr>",opts)
-keymap("n","fl","/\\v([^a-z]l|^l)<cr><cmd>noh<cr>",opts)
-keymap("n","fm","/\\v([^a-z]m|^m)<cr><cmd>noh<cr>",opts)
-keymap("n","fn","/\\v([^a-z]n|^n)<cr><cmd>noh<cr>",opts)
-keymap("n","fo","/\\v([^a-z]o|^o)<cr><cmd>noh<cr>",opts)
-keymap("n","fp","/\\v([^a-z]p|^p)<cr><cmd>noh<cr>",opts)
-keymap("n","fq","/\\v([^a-z]q|^q)<cr><cmd>noh<cr>",opts)
-keymap("n","fr","/\\v([^a-z]r|^r)<cr><cmd>noh<cr>",opts)
-keymap("n","fs","/\\v([^a-z]s|^s)<cr><cmd>noh<cr>",opts)
-keymap("n","ft","/\\v([^a-z]t|^t)<cr><cmd>noh<cr>",opts)
-keymap("n","fu","/\\v([^a-z]u|^u)<cr><cmd>noh<cr>",opts)
-keymap("n","fv","/\\v([^a-z]v|^v)<cr><cmd>noh<cr>",opts)
-keymap("n","fw","/\\v([^a-z]w|^w)<cr><cmd>noh<cr>",opts)
-keymap("n","fx","/\\v([^a-z]x|^x)<cr><cmd>noh<cr>",opts)
-keymap("n","fy","/\\v([^a-z]y|^y)<cr><cmd>noh<cr>",opts)
-keymap("n","fz","/\\v([^a-z]z|^z)<cr><cmd>noh<cr>",opts)
-
 -- Quick forward yank
 keymap("n","Y","yg_",opts)
 
@@ -140,12 +107,35 @@ keymap("n","<leader>6","<Cmd>BufferLineGoToBuffer 6<CR>",opts)
 keymap("n","<leader>7","<Cmd>BufferLineGoToBuffer 7<CR>",opts)
 keymap("n","<leader>8","<Cmd>BufferLineGoToBuffer 8<CR>",opts)
 keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
+keymap("n","<leader>'","<Cmd>Telescope marks initial_mode=normal<CR>",opts)
 -- keymap("n","<leader>;",":call CycleLastBuffer()<CR>",opts)
-keymap("n",";;","<C-6>",opts)
-keymap("n",";s","<Cmd>BufferLineCyclePrev <CR>",opts)
-keymap("n",";f","<Cmd>BufferLineCycleNext <CR>",opts)
-keymap("n",";S","<Cmd>BufferLineMovePrev <CR>",opts)
-keymap("n",";F","<Cmd>BufferLineMoveNext <CR>",opts)
+-- keymap("n",";;","<C-6>",opts)
+-- keymap("n",";s","<Cmd>BufferLineCyclePrev <CR>",opts)
+-- keymap("n",";f","<Cmd>BufferLineCycleNext <CR>",opts)
+-- keymap("n",";S","<Cmd>BufferLineMovePrev <CR>",opts)
+-- keymap("n",";F","<Cmd>BufferLineMoveNext <CR>",opts)
+
+-- normal mode (easymotion-like)
+vim.api.nvim_set_keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", {noremap=true})
+
+-- visual mode (easymotion-like)
+vim.api.nvim_set_keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
+vim.api.nvim_set_keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", {noremap=true})
+
+-- normal mode (sneak-like)
+vim.api.nvim_set_keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
+vim.api.nvim_set_keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
+
+-- visual mode (sneak-like)
+vim.api.nvim_set_keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
+vim.api.nvim_set_keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
 
 -- Explorer
 keymap("n","<leader>e","<Cmd>Neotree toggle left<CR>",opts)

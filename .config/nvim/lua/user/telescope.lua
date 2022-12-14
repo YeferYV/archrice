@@ -57,7 +57,7 @@ telescope.setup {
         ["<CR>"] = actions.select_default,
         ["<C-x>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
-        ["<C-t>"] = actions.select_tab,
+        ["<M-t>"] = actions.select_tab,
 
         ["<C-y>"] = require("telescope.actions.layout").cycle_layout_next,
         ["<C-?>"] = require("telescope.actions.layout").toggle_preview,
@@ -76,11 +76,15 @@ telescope.setup {
       },
 
       n = {
+        ["q"] = actions.close,
         ["<esc>"] = actions.close,
         ["<CR>"] = actions.select_default,
         ["<C-x>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
-        ["<C-t>"] = actions.select_tab,
+        ["<M-t>"] = actions.select_tab,
+        ["V"] = actions.select_horizontal,
+        ["v"] = actions.select_vertical,
+        ["t"] = actions.select_tab,
 
         ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
         ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
@@ -89,14 +93,15 @@ telescope.setup {
 
         ["j"] = actions.move_selection_next,
         ["k"] = actions.move_selection_previous,
-        ["H"] = actions.move_to_top,
-        ["M"] = actions.move_to_middle,
-        ["L"] = actions.move_to_bottom,
+        ["l"] = actions.select_default,
+        ["J"] = actions.results_scrolling_up,
+        ["K"] = actions.results_scrolling_down,
 
         ["<Down>"] = actions.move_selection_next,
         ["<Up>"] = actions.move_selection_previous,
         ["gg"] = actions.move_to_top,
         ["G"] = actions.move_to_bottom,
+        ["M"] = actions.move_to_middle,
 
         ["<C-y>"] = require("telescope.actions.layout").cycle_layout_next,
         ["<C-?>"] = require("telescope.actions.layout").toggle_preview,
@@ -121,7 +126,7 @@ telescope.setup {
             local current_picker = action_state.get_current_picker(prompt_bufnr)
 
             local opts = {
-              entry_maker = make_entry.gen_from_file(opts),
+              entry_maker = make_entry.gen_from_file(),
               default_text = current_picker:_get_prompt()
             }
 
@@ -135,7 +140,7 @@ telescope.setup {
             local current_picker = action_state.get_current_picker(prompt_bufnr)
 
             local opts = {
-              entry_maker = make_entry.gen_from_file(opts),
+              entry_maker = make_entry.gen_from_file(),
               default_text = current_picker:_get_prompt()
             }
 

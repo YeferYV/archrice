@@ -1,11 +1,17 @@
 {
   "vim.easymotion": true,
-  "vim.sneak": true,
   "vim.incsearch": true,
-  "vim.useSystemClipboard": true,
-  "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
   "vim.highlightedyank.enable" : true,
+  "vim.sneak": true,
+  "vim.sneakHighlightBackgroundColor": "#0c0c0c",
+  "vim.sneakHighlightFontColor": "#ff1c1c",
+  // "vim.sneakLabelMode": true,
+  // "vim.sneakLabelTargets": ";sftunq/SFGHLTUNRMQZ?0",
+  "vim.sneakReplacesF": true,
+  "vim.sneakUseIgnorecaseAndSmartcase": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
   "vim.insertModeKeyBindings": [
     {
       "before": ["j","k"],
@@ -22,17 +28,17 @@
       "commands": ["whichkey.show"]
     },
     {
-        "before": [ "p" ],
+      "before": [ "p" ],
       // "after": ["c","<C-r>","0"],
-        "after": [ "p", "g", "v", "y" ]
+      "after": [ "p", "g", "v", "y" ]
     },
     {
-        "before": [ ">" ],
-        "commands": [ "editor.action.indentLines" ]
+      "before": [ ">" ],
+      "commands": [ "editor.action.indentLines" ]
     },
     {
-        "before": [ "<" ],
-        "commands": [ "editor.action.outdentLines" ]
+      "before": [ "<" ],
+      "commands": [ "editor.action.outdentLines" ]
     },
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -45,7 +51,7 @@
       "commands": [ ":q" ]
     },
     {
-      "before": ["<S-s>"],
+      "before": ["<S-r>"],
       "commands": [ ":w" ]
     },
     // {
@@ -194,24 +200,31 @@
     // },
   ],
   // "vim.leader": "<space>",
-  "vim.leader": ";",
+  "vim.leader": "\\",
   "vim.handleKeys": {
     "<C-b>": false,
     "<C-f>": false,
   },
+  // "whichkey.delay": 1,
   "whichkey.bindings": [
   {
+    "key": ".",
+    "name": "Repeat Which-key",
+    "type": "command",
+    "command" : "whichkey.repeatMostRecent"
+
+  },
+  {
     "key": "/",
-    "name": "comment",
+    "name": "Comment",
     "type": "command",
     "command": "editor.action.commentLine",
   },
   {
     "key": "?",
-    "name": "View All References",
+    "name": "FZF Wich-key",
     "type": "command",
-    "command": "references-view.find",
-    "when": "editorHasReferenceProvider"
+    "command": "whichkey.searchBindings",
   },
   {
     "key": "b",
@@ -461,7 +474,7 @@
   },
   {
     "key": "e",
-    "name": "Show tree/explorer view",
+    "name": "Toggle Explorer",
     "type": "conditional",
     "bindings": [
       {
@@ -479,6 +492,12 @@
     ]
   },
   {
+    "key": "E",
+    "name": "Focus Explorer",
+    "type": "command",
+    "command": "workbench.view.explorer"
+  },
+  {
     "key": "f",
     "name": "Find & Replace...",
     "type": "bindings",
@@ -490,11 +509,17 @@
         "command": "editor.action.startFindReplaceAction"
       },
       {
-        "key": "s",
-        "name": "Symbol",
+        "key": "r",
+        "name": "Rename",
         "type": "command",
         "command": "editor.action.rename",
         "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+      },
+      {
+        "key": "s",
+        "name": "Symbol/Function",
+        "type": "command",
+        "command": "workbench.action.gotoSymbol"
       },
       {
         "key": "p",
@@ -871,6 +896,18 @@
         "command": "references-view.find",
         "when": "editorHasReferenceProvider"
       },
+      {
+        "key": "V",
+        "name": "View All Implementations",
+        "type": "command",
+        "command": "references-view.findImplementations"
+      },
+      {
+        "key": "z",
+        "name": "View Calls Hierarchy",
+        "command": "references-view.showCallHierarchy",
+        "when": "editorHasCallHierarchyProvider"
+      },
     ]
   },
   {
@@ -970,6 +1007,19 @@
         "command": "editor.action.peekDeclaration"
       },
       {
+        "key": "h",
+        "name": "Show Hover",
+        "type": "command",
+        "command": "editor.action.showHover",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "H",
+        "name": "Hover Definition",
+        "type": "command",
+        "command": "editor.action.showDefinitionPreviewHover",
+      },
+      {
         "key": "i",
         "name": "Implementation",
         "type": "command",
@@ -994,6 +1044,12 @@
         "name": "Type Definition",
         "type": "command",
         "command": "editor.action.peekTypeDefinition"
+      },
+      {
+        "key": "z",
+        "name": "Calls Hierarchy",
+        "command": "editor.showCallHierarchy",
+        "when": "editorHasCallHierarchyProvider"
       }
     ]
   },
@@ -1019,6 +1075,11 @@
         "name": "Text in Folder",
         "type": "command",
         "command": "filesExplorer.findInFolder"
+      },
+      {
+        "key": "E",
+        "name": "Editor Search ",
+        "command": "search.action.openNewEditor"
       }
     ]
   },
@@ -1284,7 +1345,19 @@
         "command": "editor.action.toggleMinimap"
       },
       {
+        "key": "n",
+        "name": "Go to Next Fold",
+        "type": "command",
+        "command": "editor.gotoNextFold"
+      },
+      {
         "key": "p",
+        "name": "Go to Previous Fold",
+        "type": "command",
+        "command": "editor.gotoPreviousFold"
+      },
+      {
+        "key": "P",
         "name": "Toggle panel visibility",
         "type": "command",
         "command": "workbench.action.togglePanel"
@@ -1318,6 +1391,19 @@
         "name": "Toggle tab visibility",
         "type": "command",
         "command": "workbench.action.toggleTabsVisibility"
+      },
+      {
+        "key": "u",
+        "name": "Go to Parent Fold",
+        "type": "commands",
+        "commands": ["editor.gotoParentFold","cursorHome"],
+      },
+      {
+        "key": "U",
+        "name": "Go to Bracket",
+        "type": "command",
+        "command": "editor.action.jumpToBracket",
+        "when": "editorTextFocus"
       },
       {
         "key": "x",
@@ -1489,16 +1575,24 @@
     "type": "bindings",
     "bindings": [
       {
-        "key": "d",
-        "name": "Download Settings",
-        "type": "command",
-        "command": "extension.downloadSettings"
+        "key": "c",
+        "name": "Sync Show Conflicts",
+        "command": "workbench.userDataSync.actions.showConflicts"
       },
       {
-        "key": "u",
-        "name": "Upload Settings",
-        "type": "command",
-        "command": "extension.updateSettings"
+        "key": "d",
+        "name": "Sync Show Data",
+        "command": "workbench.userDataSync.actions.showSyncedData"
+      },
+      {
+        "key": "n",
+        "name": "Sync Now",
+        "command": "workbench.userDataSync.actions.syncNow"
+      },
+      {
+        "key": "l",
+        "name": "Sync Logs",
+        "command": "workbench.userDataSync.actions.showLog"
       }
     ]
   },
@@ -1508,6 +1602,7 @@
   "editor.cursorBlinking": "solid",
   "editor.cursorSurroundingLines": 4,
   "editor.fontFamily": "\"CaskaydiaCove Nerd Font\",\"Bedstead\",\"Font Awesome 6 Free Solid\"",
+  "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.fontWeight": 400,
   // "editor.lineHeight": 1.4,
@@ -1574,6 +1669,9 @@
       ]
     },
   },
+  // "explorer.excludeGitIgnore": true,
+  // "explorer.fileNesting.enabled": true,
+  "explorer.confirmDelete": false,
   "explorer.decorations.colors": false,
   "files.exclude": {
     "node_modules": true
@@ -1670,7 +1768,6 @@
       "terminal.selectionBackground": "#4d52f8",
     },
   },
-  "Lua.telemetry.enable": false,
   "debug.inlineValues": "on",
   "diffEditor.renderSideBySide": false,
   // "git.autofetch": true,
@@ -1680,12 +1777,15 @@
   // "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
   // "javascript.referencesCodeLens.enabled": true,
   // "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "Lua.telemetry.enable": false,
+  "material-icon-theme.folders.color": "#A1A1A1",
+  "material-icon-theme.folders.theme": "specific",
   "python.defaultInterpreterPath": "/bin/python",
   // "quokka.automaticRestart": true,
   // "quokka.automaticStartRegex": "\\.(ts|js|jsx|tsx)$",
-  "material-icon-theme.folders.color": "#A1A1A1",
-  "material-icon-theme.folders.theme": "specific",
   "scm.alwaysShowActions": true,
+  "search.defaultViewMode": "tree",
+  "security.workspace.trust.untrustedFiles": "open",
   "tabnine.experimentalAutoImports": true,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.linux": "tmux",
@@ -1695,13 +1795,15 @@
   "terminal.integrated.shellIntegration.enabled": false,
   "window.customMenuBarAltFocus": false,
   "window.enableMenuBarMnemonics": false,
+  "window.menuBarVisibility": "toggle",
   "wolf.logErrors": true,
   "wolf.pythonPath": "/usr/bin/python",
-  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Hacker",
+  // "workbench.editor.enablePreviewFromQuickOpen": true,
+  // "workbench.editor.enablePreview": false,
+  "workbench.editor.untitled.hint": "hidden",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.folderLabelColor": "#ff0000",
   "workbench.panel.defaultLocation": "right",
-  "window.menuBarVisibility": "toggle",
-  "explorer.confirmDelete": false,
-  "workbench.colorTheme": "Hacker",
+  "workbench.startupEditor": "none",
 }
