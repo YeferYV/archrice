@@ -492,12 +492,6 @@
     ]
   },
   {
-    "key": "E",
-    "name": "Focus Explorer",
-    "type": "command",
-    "command": "workbench.view.explorer"
-  },
-  {
     "key": "f",
     "name": "Find & Replace...",
     "type": "bindings",
@@ -965,6 +959,12 @@
   },
   {
     "key": "o",
+    "name": "Focus Explorer",
+    "type": "command",
+    "command": "workbench.view.explorer"
+  },
+  {
+    "key": "O",
     "name": "Open...",
     "type": "bindings",
     "bindings": [

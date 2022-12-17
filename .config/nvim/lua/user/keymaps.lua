@@ -107,7 +107,6 @@ keymap("n","<leader>6","<Cmd>BufferLineGoToBuffer 6<CR>",opts)
 keymap("n","<leader>7","<Cmd>BufferLineGoToBuffer 7<CR>",opts)
 keymap("n","<leader>8","<Cmd>BufferLineGoToBuffer 8<CR>",opts)
 keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
-keymap("n","<leader>'","<Cmd>Telescope marks initial_mode=normal<CR>",opts)
 -- keymap("n","<leader>;",":call CycleLastBuffer()<CR>",opts)
 -- keymap("n",";;","<C-6>",opts)
 -- keymap("n",";s","<Cmd>BufferLineCyclePrev <CR>",opts)
@@ -136,10 +135,6 @@ vim.api.nvim_set_keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {norema
 -- visual mode (sneak-like)
 vim.api.nvim_set_keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
 vim.api.nvim_set_keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
-
--- Explorer
-keymap("n","<leader>e","<Cmd>Neotree toggle left<CR>",opts)
-keymap("n","<leader>q","<Cmd>Neotree filesystem reveal float<CR>",opts)
 
 -- Toggle Highlight
 keymap("n","<leader>h","<cmd>noh<cr>",opts)

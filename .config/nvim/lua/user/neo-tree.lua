@@ -150,42 +150,8 @@ require("neo-tree").setup({
         "open",
         nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
       },
-      ["h"] = function(state)
-        local node = state.tree:get_node()
-          if node.type == 'directory' and node:is_expanded() then
-            require'neo-tree.sources.filesystem'.toggle_directory(state, node)
-          else
-            require'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
-          end
-        end,
-      ["l"] = function(state)
-          local node = state.tree:get_node()
-          if node.type == 'directory' then
-            if not node:is_expanded() then
-              require'neo-tree.sources.filesystem'.toggle_directory(state, node)
-            elseif node:has_children() then
-              require'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
-            end
-          else
-            state.commands["open"](state)
-          end
-        end,
       ["<cr>"] = "open",
       ["o"] = "quit_on_open",
-      ["L"] = function(state)
-          state.commands["open"](state)
-          vim.cmd("Neotree reveal")
-        end,
-      ["i"] = {
-        command = function(state)
-          local node = state.tree:get_node()
-          if node.is_link then
-            print(node.path ..  " ➛ " .. node.link_to)
-          else
-            print (node.path)
-          end
-        end,
-      },
       ["<esc>"] = "revert_preview",
       -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
       ["P"] = { "toggle_preview", config = { use_float = true } },
@@ -196,16 +162,6 @@ require("neo-tree").setup({
       -- ["S"] = "split_with_window_picker",
       ["s"] = false,
       ["S"] = false,
-      ["t"] = function(state)
-          state.commands["open_tabnew"](state)
-          vim.cmd("Neotree show")
-          require('bufferline').setup{options={always_show_bufferline=true}}
-        end,
-      ["T"] = function(state)
-          state.commands["open_tab_drop"](state)
-          vim.cmd("Neotree show")
-          require('bufferline').setup{options={always_show_bufferline=true}}
-        end,
       ["f"] = false,
       ["fa"] = function() vim.cmd[[normal 0]] vim.cmd[[/ a]] vim.cmd[[normal n]] end,
       ["fb"] = function() vim.cmd[[normal 0]] vim.cmd[[/ b]] vim.cmd[[normal n]] end,
@@ -382,6 +338,29 @@ require("neo-tree").setup({
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                                     -- instead of relying on nvim autocmd events.
     commands = {
+
+      getparent_closenode = function(state)
+        local node = state.tree:get_node()
+          if node.type == 'directory' and node:is_expanded() then
+            require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+          else
+            require'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
+          end
+        end,
+
+      getchild_open = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'directory' then
+            if not node:is_expanded() then
+              require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+            elseif node:has_children() then
+              require'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
+            end
+          else
+            state.commands["open"](state)
+          end
+        end,
+
       quit_on_open = function (state)
         local node = state.tree:get_node()
         if require("neo-tree.utils").is_expandable(node) then
@@ -392,19 +371,92 @@ require("neo-tree").setup({
           vim.cmd('normal! M')
         end
       end,
+
+      open_tabnew_showbuffer = function(state)
+          state.commands["open_tabnew"](state)
+          vim.cmd("Neotree show")
+          require('bufferline').setup{options={always_show_bufferline=true}}
+        end,
+
+      open_tabdrop_showbuffer = function(state)
+          state.commands["open_tab_drop"](state)
+          vim.cmd("Neotree show")
+          require('bufferline').setup{options={always_show_bufferline=true}}
+        end,
+
+      open_unfocus = function(state)
+          state.commands["open"](state)
+          vim.cmd("Neotree reveal")
+        end,
+
+      print_path = function(state)
+          local node = state.tree:get_node()
+          if node.is_link then
+            print(node.path ..  " ➛ " .. node.link_to)
+          else
+            print (node.path)
+          end
+        end,
+
+      system_open = function(state)
+        local node = state.tree:get_node()
+        local path = node:get_id()
+        vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
+      end,
+
+      wezterm_open = function(state)
+        local node = state.tree:get_node()
+        local path = node:get_id()
+        vim.api.nvim_command(string.format("silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read '", path))
+      end,
+
+      sixel_open_float = function(state)
+        local node = state.tree:get_node()
+        local path = node:get_id()
+        require('toggleterm.terminal').Terminal:new({
+          cmd = string.format("(img2sixel -h 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
+          direction = "float",
+          on_open = function(term)
+              vim.cmd[[ call feedkeys("\<Esc>") ]]
+              vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+            end,
+        }):toggle()
+      end,
+
+      sixel_open_vertical = function(state)
+        local node = state.tree:get_node()
+        local path = node:get_id()
+        -- vim.api.nvim_command(string.format("silent TermExec direction=vertical cmd='(tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE)'", path))
+        -- vim.cmd[[wincmd l]]; vim.api.nvim_command(string.format("term ((tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read)", path));
+        require('toggleterm.terminal').Terminal:new({
+          cmd = string.format("(img2sixel -w 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
+          on_exit = function(term)
+              vim.api.nvim_command("!killall -s SIGWINCH nvim")
+            end,
+        }):toggle(70,"vertical")
+      end,
     },
     window = {
       mappings = {
         ["<bs>"] = "navigate_up",
         ["."] = "set_root",
+        ["h"] = "getparent_closenode",
+        ["l"] = "getchild_open",
         ["H"] = "toggle_hidden",
-        ["O"] = "toggle_node",
+        ["L"] = "open_unfocus",
+        ["i"] = "print_path",
+        ["X"] = "sixel_open_vertical",
+        ["W"] = "sixel_open_float",
+        ["w"] = "wezterm_open",
+        ["O"] = "system_open",
         ["/"] = "fuzzy_finder",
         ["D"] = "fuzzy_finder_directory",
         ["F"] = "filter_on_submit",
         ["<c-x>"] = "clear_filter",
         ["gk"] = "prev_git_modified",
         ["gj"] = "next_git_modified",
+        ["t"] = "getparent_closenode",
+        ["T"] = "getchild_open",
       }
     }
   },

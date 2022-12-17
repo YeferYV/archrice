@@ -89,10 +89,8 @@ local mappings = {
   ["7"] = "which_key_ignore",
   ["8"] = "which_key_ignore",
   ["9"] = "which_key_ignore",
-  ["e"] = "which_key_ignore",
   ["h"] = "which_key_ignore",
   ["p"] = "which_key_ignore",
-  ["q"] = "which_key_ignore",
   ["Q"] = "which_key_ignore",
   ["v"] = "which_key_ignore",
   ["V"] = "which_key_ignore",
@@ -100,6 +98,8 @@ local mappings = {
   ["y"] = "which_key_ignore",
   ["<Tab>"] = { "which_key_ignore" },
   ["<S-Tab>"] = { "which_key_ignore" },
+
+  ["'"] = { "<Cmd>Telescope marks initial_mode=normal<CR>","Marks"},
 
   b = {
     name = "Buffer",
@@ -115,7 +115,7 @@ local mappings = {
     -- T = { "<cmd>bufdo | :setlocal nobuflisted | :b# | :tabe # | :lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "buffers to Tab" },
     v = { "<cmd>vertical ball<cr>","Buffers to vertical windows" },
     V = { "<cmd>belowright ball<cr>","Buffers to horizontal windows" },
-    x = { "<cmd>bdelete!<cr>","Close Buffer" },
+    x = { "<cmd>:bp | bd #<cr>","Close Buffer" },
     [";"] = {"<cmd>buffer #","Recent buffer"},
   },
 
@@ -171,6 +171,10 @@ local mappings = {
     "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Find Files",
   },
+
+  ["e"] = { "<cmd>Neotree toggle left<cr>", "Neotree Toggle" },
+  ["o"] = { "<cmd>Neotree focus<cr>", "Neotree focus" },
+  ["q"] = { "<cmd>Neotree filesystem reveal float<cr>", "Neotree float" },
 
   g = {
     name = "Git",
@@ -236,7 +240,6 @@ local mappings = {
     f = { "<cmd>Telescope grep_string search= theme=ivy<cr>", "Grep string"},
     F = { "<cmd>Telescope live_grep theme=ivy<cr>", "Live Grep" },
     g = { "<cmd>Telescope git_files theme=ivy<cr>", "Git Files (hidden included)" },
-    G = { "<cmd>Telescope git_branches theme=ivy initial_mode=normal<cr>", "Git Checkout Branch" },
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
     p = { "<cmd>Telescope projects<cr>", "Projects" },
@@ -244,6 +247,7 @@ local mappings = {
     Q = { "<cmd>Telescope quickfixhistory<cr>", "Telescope QuickFix History" },
     r = { "<cmd>Telescope oldfiles initial_mode=normal<cr>", "Open Recent File" },
     R = { "<cmd>Telescope registers initial_mode=normal<cr>", "Registers" },
+    s = { "<cmd>Telescope grep_string<cr>", "Grep string under cursor"},
     ["+"] = { "<cmd>Telescope builtin previewer=false initial_mode=normal<cr>", "More"},
     ["/"] = { "<cmd>Telescope find_files theme=ivy hidden=true<cr>", "Find files"},
     ["'"] = { "<cmd>Telescope marks theme=ivy initial_mode=normal<cr>", "Marks" },
@@ -296,8 +300,8 @@ local mappings = {
     i = { "<cmd>IndentBlanklineToggle<cr>", "Toggle IndentBlankline" },
     l = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
     L = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
-    n = { "<cmd>Neotree focus<cr>", "Neotree focus" },
-    N = { "<cmd>Neotree show<cr>", "Neotree show" },
+    n = { "<cmd>Neotree show<cr>", "Neotree show" },
+    N = { "<cmd>Neotree close<cr>", "Neotree close" },
     s = { "<cmd>call ToggleStatusLIne()<cr>", "Toggle StatusBar" },
     u = {
       function()

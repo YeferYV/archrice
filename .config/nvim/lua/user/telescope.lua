@@ -23,7 +23,7 @@ telescope.setup {
     selection_caret = " ",
     path_display = { "smart" },
     file_ignore_patterns = {
-      "node_modules", ".git",
+      "node_modules", "!.git/",
     },
     selection_strategy = "reset",
     sorting_strategy = "ascending",
@@ -130,7 +130,7 @@ telescope.setup {
               default_text = current_picker:_get_prompt()
             }
 
-            local cmd = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" }
+            local cmd = { "rg", "--files", "--hidden", "--glob", "!.git/" }
             current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
           end,
           ["l"] = function(prompt_bufnr)
@@ -182,7 +182,7 @@ telescope.setup {
             local current_picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
             local opts = {
               default_text = current_picker:_get_prompt(),
-              vimgrep_arguments = { 'rg', '--hidden', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', "--glob", "!**/.git/*" },
+              vimgrep_arguments = { 'rg', '--hidden', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', "--glob", "!.git/" },
             }
             require('telescope.builtin').grep_string(require('telescope.themes').get_ivy(opts))
           end,

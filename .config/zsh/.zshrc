@@ -104,9 +104,9 @@ zle -N zle-line-init
 echo -ne '\e[6 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
-# v() { xdotool set_window --name $(TMP=$1;echo ${TMP##*/}) $WINDOWID; vim $1; }
-# n() { xdotool set_window --name $(TMP=$1;echo ${TMP##*/}) $WINDOWID; nvim $1; }
 # x2xalarm() { ssh -YC drksl@4l4rm x2x -north -to :0.0; }
+l() {                                            tty > /tmp/sixel-$WEZTERM_PANE; lfcd $1; trap "rm /tmp/sixel-$WEZTERM_PANE >/dev/null" EXIT; }
+n() { printf "\033]0; ${1##*/} \007" > /dev/tty; tty > /tmp/sixel-$WEZTERM_PANE; nvim $1; trap "rm /tmp/sixel-$WEZTERM_PANE >/dev/null" EXIT; }
 
 ## Tmux not-printed(archwiki)
 tmux-attach() {
@@ -186,7 +186,7 @@ lfcd () {
         rm -f "$tmp" >/dev/null
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
         # customprompt
-        [[ -d $1 ]] || zle reset-prompt
+        [[ -d $1 ]] || zle reset-prompt 2>/dev/null
         eval "$PROMPT_COMMAND"
     fi
 }

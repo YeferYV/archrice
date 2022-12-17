@@ -53,9 +53,9 @@ alias \
 	pacman="sudo pacman --noconfirm" \
 	ytfzf-term="alacritty -e ytfzf" \
 	ytfzf-thumb="ytfzf -t" \
-	e="$EDITOR" \
-	z="zathura" \
-	l="$HOME/.config/lf/lf-wiki-previewer/lf_previewer.sh" \
+	# e="$EDITOR" \
+	# z="zathura" \
+	# l="$HOME/.config/lf/lf-wiki-previewer/lf_previewer.sh" \
 	# YT="youtube-viewer" \
 	# f="$FILE" \
 
