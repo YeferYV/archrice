@@ -175,6 +175,7 @@ local mappings = {
   ["e"] = { "<cmd>Neotree toggle left<cr>", "Neotree Toggle" },
   ["o"] = { "<cmd>Neotree focus<cr>", "Neotree focus" },
   ["q"] = { "<cmd>Neotree filesystem reveal float<cr>", "Neotree float" },
+  ["m"] = { "<cmd>Mason<cr>", "Mason" },
 
   g = {
     name = "Git",
@@ -226,8 +227,10 @@ local mappings = {
     V = { "<cmd>Telescope lsp_references initial_mode=normal<cr>", "Telescope View References" },
     w = { "<cmd>Telescope lsp_implementations initial_mode=normal<cr>", "Telescope View Implementations" },
     W = { "<cmd>Telescope lsp_definitions initial_mode=normal<cr>", "Telescope View Definitions" },
-    z = { "<cmd>Telescope lsp_incoming_calls initial_mode=normal<cr>", "Telescope incoming calls" },
-    Z = { "<cmd>Telescope lsp_outgoing_calls initial_mode=normal<cr>", "Telescope outgoing calls" },
+    x = { "<cmd>Telescope lsp_incoming_calls initial_mode=normal<cr>", "Telescope incoming calls" },
+    X = { "<cmd>Telescope lsp_outgoing_calls initial_mode=normal<cr>", "Telescope outgoing calls" },
+    z = { "<cmd>AerialToggle<cr>","Symbols outline"},
+    Z = { "<cmd>AerialToggle float<cr>","Symbols outline"},
   },
 
   s = {
@@ -248,6 +251,17 @@ local mappings = {
     r = { "<cmd>Telescope oldfiles initial_mode=normal<cr>", "Open Recent File" },
     R = { "<cmd>Telescope registers initial_mode=normal<cr>", "Registers" },
     s = { "<cmd>Telescope grep_string<cr>", "Grep string under cursor"},
+    z = {
+      function()
+        local aerial_avail, _ = pcall(require, "aerial")
+        if aerial_avail then
+          require("telescope").extensions.aerial.aerial()
+        else
+          require("telescope.builtin").lsp_document_symbols()
+        end
+      end,
+      "Search symbols",
+    },
     ["+"] = { "<cmd>Telescope builtin previewer=false initial_mode=normal<cr>", "More"},
     ["/"] = { "<cmd>Telescope find_files theme=ivy hidden=true<cr>", "Find files"},
     ["'"] = { "<cmd>Telescope marks theme=ivy initial_mode=normal<cr>", "Marks" },

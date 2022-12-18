@@ -10,6 +10,8 @@ local options = {
   fileencoding = "utf-8",                  -- the encoding written to a file
   -- fileencoding = "utf-16",                  -- the encoding written to a file
   fillchars = { eob = " " },               -- Disable `~` on nonexistent lines
+  foldlevelstart = 99,                     -- Start Outline without folding it
+  foldlevel = 99,                          -- Start Outline without folding it
   -- guicursor = a,
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
   hlsearch = true,                         -- highlight all matches on previous search pattern
