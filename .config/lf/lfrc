@@ -182,7 +182,7 @@ cmd tmuxtty ${{
 
 cmd fzf_preview ${{
     # fzf with lf images preview like keybinding
-    export FZF_DEFAULT_COMMAND='rg --files -g "!.git" --hidden'
+    export FZF_DEFAULT_COMMAND='rg --files -g "!.git/" --hidden'
     export FZF_PREVIEWER="$HOME/.config/lf/${1}"
     fzf --bind='alt-j:down+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
         --bind='alt-k:up+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
@@ -210,7 +210,7 @@ cmd fzf_preview ${{
 # https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
 cmd fzf_rg ${{
     # Switch between Ripgrep launcher mode (CTRL-R) and fzf filtering mode (CTRL-F)
-    RG_PREFIX="rg --column --glob='!.git' --hidden --line-number --no-heading --color=always --smart-case"
+    RG_PREFIX="rg --column --glob='!.git/' --hidden --line-number --no-heading --color=always --smart-case"
     INITIAL_QUERY="${*:-}"
     IFS=: read -ra selected < <(
       FZF_DEFAULT_COMMAND="$RG_PREFIX $(printf %q "$INITIAL_QUERY")" \
@@ -348,6 +348,7 @@ map gtl   tmuxtty lf
 map gtz   tmuxtty zsh
 map J     push 10j
 map K     push 10k
+map L     $ $SWALLOWER neovide $fx
 
 map i     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' bat --pager "less -R" --paging always --wrap never $fx
 map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less -R $f

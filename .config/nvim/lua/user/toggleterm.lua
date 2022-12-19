@@ -22,13 +22,24 @@ toggleterm.setup({
 	close_on_exit = true,
 	shell = vim.o.shell,
 	-- shell = "zsh",
+	highlights = {
+    -- highlights which map to a highlight group name and a table of it's values
+    -- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
+    Normal = { -- text/cursor
+      guifg = "#cccccc",
+      guibg = "#333333",
+    },
+    NormalFloat = {
+      link = 'Normal'
+    },
+    FloatBorder = {
+      link = "ToggleTermFloatBorder"
+    },
+  },
+
 	float_opts = {
 		border = "curved",
 		winblend = 0,
-		highlights = {
-			border = "Normal",
-			background = "Normal",
-		},
 	},
   winbar = {
     enabled = false,

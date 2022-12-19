@@ -28,7 +28,7 @@ hi   ErrorMsg                              guifg=#ff0000  guibg=none     gui=non
 hi   Exception                             guifg=#bb0000  guibg=none     gui=none
 hi   ExtraWhitespace                       guifg=none     guibg=#ff0000  gui=none
 hi   Float                                 guifg=#008888  guibg=none     gui=none
-hi   FloatBorder                           guifg=none     guibg=none     gui=none
+hi   FloatBorder                           guifg=#444444  guibg=none     gui=none
 hi   FoldColumn                            guifg=none     guibg=none     gui=none
 hi   Folded                                guifg=none     guibg=#444444  gui=none
 hi   Function                              guifg=#008800  guibg=none     gui=none
@@ -170,7 +170,7 @@ hi   TSNone                                guifg=#bbbbbb  guibg=none     gui=non
 hi   TSNote                                guifg=#ffff00  guibg=none     gui=none
 hi   TSNumber                              guifg=#1cff1c  guibg=none     gui=none
 hi   TSOperator                            guifg=#5555ff  guibg=none     gui=none
-hi   TSParameter                           guifg=#5e81ac  guibg=none     gui=none
+hi   TSParameter                           guifg=#bbbbbb  guibg=none     gui=none
 hi   TSParameterReference                  guifg=#880088  guibg=none     gui=none
 hi   TSProperty                            guifg=#7acaca  guibg=none     gui=none
 hi   TSPunc                                guifg=#e8e8e8  guibg=none     gui=none
@@ -192,7 +192,7 @@ hi   TSType                                guifg=#880088  guibg=none     gui=non
 hi   TSTypeBuiltin                         guifg=#5e81ac  guibg=none     gui=none
 hi   TSURI                                 guifg=#7acaca  guibg=none     gui=bold
 hi   TSUnderline                           guifg=none     guibg=none     gui=underline
-hi   TSVariable                            guifg=#cccccc  guibg=none     gui=none
+hi   TSVariable                            guifg=#bbbbbb  guibg=none     gui=none
 hi   TSVariableBuiltin                     guifg=#515171  guibg=none     gui=none
 hi   TSWarning                             guifg=#bbbb00  guibg=none     gui=none
 
@@ -263,12 +263,20 @@ hi   BufferLineSeparatorVisible            guifg=#111111  guibg=#111111  gui=non
 hi   BufferLineIndicatorSelected           guifg=#111111  guibg=#111111  gui=none
 hi   BufferLineIndicatorVisible            guifg=none     guibg=none     gui=none
 
+"--  Borders
+" hi   link TelescopeBorder                  FloatBorder  -- default Normal
+" hi   link ToggleTermFloatBorder            FloatBorder  -- default Normal
+" hi   link DapUIFloatBorder                 FloatBorder  -- default Normal
+hi   link LspInfoBorder                    FloatBorder
+hi   link WhichKeyBorder                   FloatBorder
+
 "--  Cmp
 hi   link CmpItemAbbr                      Pmenu
 hi   link CmpItemAbbrMatch                 WildMenu     " guifg=#4141ad
 hi   link CmpItemAbbrMatchFuzzyDefault     PmenuSbar
 hi   link CmpItemKind                      PmenuSbar    " guifg=#7574a5
 hi   link CmpItemMenu                      Comment
+hi   link CmpItemMenuDefault               FloatBorder
 
 "--  git
 hi   GitSignsAdd                           guifg=#005500  guibg=none     gui=none
@@ -332,9 +340,9 @@ hi   NvimTreeRootFolder                    guifg=#495466  guibg=none     gui=bol
 " hi link  NeoTreeWinSeparator             WinSeparator
 " hi link  NeoTreeEndOfBuffer              EndOfBuffer
 " hi link  NeoTreeFilterTerm               SpecialChar
-" hi link  NeoTreeFloatBorder              CursorLineFold
-" hi link  NeoTreeFloatTitle               CursorLineFold
-" hi link  NeoTreeTitleBar                 CursorLineFold
+" hi link  NeoTreeFloatBorder              FloatBorder
+" hi link  NeoTreeFloatTitle               FloatBorder
+" hi link  NeoTreeTitleBar                 FloatBorder
 " hi link  NeoTreeSymbolicLinkTarget       NeoTreeFileName
 " hi link  NeoTreeWindowsHidden            NeoTreeDotfile
 

@@ -491,7 +491,7 @@ require("neo-tree").setup({
     {
       event = "neo_tree_buffer_enter",
       handler = function()
-        vim.cmd[[hi Cursor guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor]]
+        vim.cmd[[hi Cursor guifg=#5555ff blend=100 | setlocal guicursor=n:Cursor/lCursor]]
         vim.cmd[[hi Search guifg=#5555ff guibg=#111111]]
       end
     },

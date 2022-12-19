@@ -11,8 +11,8 @@ export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\
 # export PS1="[\w]\$ "
 
 #-- Default programs:
-export SHELL="$(which zsh)"
 # export TERM="xterm-256color"
+export SHELL="$(which zsh)"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export OPENER="xdg-open"
@@ -23,6 +23,7 @@ export BROWSER="google-chrome-stable"
 export SWALLOWER="bspswap"
 export SURFRAW_text_browser='w3m -sixel'
 export SURFRAW_graphical=no
+# export NEOVIDE_MULTIGRID=true
 
 #-- ~/Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"

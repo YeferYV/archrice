@@ -48,6 +48,31 @@ local options = {
 
 vim.opt.shortmess:append "c"
 
+-- neovide
+if vim.g.neovide == true then
+  options.guifont = { "FiraCode Nerd Font:h10" }
+  vim.api.nvim_set_keymap("n", "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>", { silent = true })
+  vim.api.nvim_set_keymap("n", "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>", { silent = true })
+  vim.api.nvim_set_keymap("n", "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>", { silent = true })
+  _G.airline_powerline_fonts = 1
+  _G.neovide_confirm_quit = true
+  _G.neovide_cursor_animation_length = 10.0
+  _G.neovide_cursor_antialiasing = true
+  _G.neovide_cursor_trail_size = 10.0
+  _G.neovide_cursor_vfx_mode = ""
+  _G.neovide_cursor_vfx_opacity = 200.0
+  _G.neovide_cursor_vfx_particle_density = 10.0
+  _G.neovide_cursor_vfx_particle_lifetime = 1.5
+  _G.neovide_cursor_vfx_particle_speed = 10.0
+  _G.neovide_floating_blur_amount_x = 2.0
+  _G.neovide_floating_blur_amount_y = 2.0
+  _G.neovide_hide_mouse_when_typing = true
+  _G.neovide_no_idle = true
+  _G.neovide_scroll_animation_length = 0.3
+  _G.neovide_transparency = 0.5
+  _G.neovide_window_floating_opacity = 0.5
+end
+
 for k, v in pairs(options) do
   vim.opt[k] = v
 end

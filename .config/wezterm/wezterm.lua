@@ -17,7 +17,7 @@ return {
   -- enable_csi_u_key_encoding = true, --unmap ctrl-(j|i...) same as stty -ixon
   -- initial_rows = 50,
   -- initial_cols = 170,
-  force_reverse_video_cursor = true,
+  -- force_reverse_video_cursor = true,
   audible_bell = "Disabled",
   use_fancy_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
@@ -52,8 +52,8 @@ return {
   -- window_padding = {left = "6pt", right = "6pt", top = "10pt", bottom = "10pt"},
   -- window_padding = {left = "1cell", right = "1cell", top = "1cell", bottom = "1cell"},
   -- window_padding = {left = "1%", right = "1%", top = "2%", bottom = "2%"},
-  window_background_opacity = 9.0,
-  -- text_background_opacity = 0.5,
+  -- window_background_opacity = 0.7,
+  -- text_background_opacity = 0.9,
   scrollback_lines = 10000,
 
   foreground_text_hsb = {
@@ -66,20 +66,20 @@ return {
     {
       intensity = "Bold", -- bright palet colors
       font = wezterm.font_with_fallback({
-        -- {family="Bedstead for Powerline"},
+        {family="FiraCode Nerd Font"},
         {family="Bedstead"},
         {family="Noto Color Emoji"},
         {family="Symbols Nerd Font Mono"},
         {family="TerminessTTF Nerd Font"},
         {family="Font Awesome 6 Free Solid"},
         },
-        {stretch="Normal", weight="Medium", foreground = "#ff8800"}
+        {stretch="Normal", weight="Bold", foreground = "#ff8800"}
       ),
     },
     {
       intensity = "Normal", -- ansi palet colors
       font = wezterm.font_with_fallback({
-        -- {family="IBM 3270", scale = 1.20, stretch="Normal", weight="Medium"},
+        {family="FiraCode Nerd Font", scale = 1.00, stretch="Normal", weight="Medium"},
         {family="3270 Nerd Font", scale = 1.20, stretch="Normal", weight="Medium"},
         {family="Noto Color Emoji", weight="Regular", stretch="Normal", style="Normal"},
         {family="Symbols Nerd Font Mono", weight="Regular", stretch="Normal", style="Normal"},
@@ -275,16 +275,16 @@ return {
     {key = "[", mods = "LEADER", action = wezterm.action({ EmitEvent = "open_in_vim" }) },
     {key = "]", mods = "LEADER", action = "QuickSelect"},
 
-    -- {key="i", mods="CTRL", action={SendKey={key="i", mods="CTRL"}}}, --default:tab
-    -- {key="[", mods="CTRL", action={SendKey={key="[", mods="CTRL"}}}, --default:esc
-    -- {key="phys:i", mods="CTRL", action=wezterm.action{SendString="\x09"}}, --od -c
-    -- {key="phys:[", mods="CTRL", action=wezterm.action{SendString="\x1B"}}, --od -c
-    -- {key="LeftArrow", mods="ALT", action=wezterm.action{SendString="\x1bo"}}, --xxd
-    -- {key="RightArrow", mods="ALT", action=wezterm.action{SendString="\x1bo"}}, --xxd
-    -- {key="i", mods="ALT", action=wezterm.action{SendString="\x1b[5A"}}, --showkey -a
-    -- {key="u", mods="ALT", action=wezterm.action{SendString="\x1b[5B"}}, --showkey -a
-    -- {key="y", mods="ALT", action=wezterm.action{SendString="\x1b[5C"}}, --showkey -a
-    -- {key="o", mods="ALT", action=wezterm.action{SendString="\x1b[5D"}}, --showkey -a
+    -- {key="i", mods="CTRL", action={SendKey={key="i", mods="CTRL"}}}, -- default:tab
+    -- {key="[", mods="CTRL", action={SendKey={key="[", mods="CTRL"}}}, -- default:esc
+    -- {key="phys:i", mods="CTRL", action=wezterm.action{SendString="\x09"}}, -- od -c
+    -- {key="phys:[", mods="CTRL", action=wezterm.action{SendString="\x1B"}}, -- od -c
+    -- {key="LeftArrow", mods="ALT", action=wezterm.action{SendString="\x1bo"}}, -- xxd
+    -- {key="RightArrow", mods="ALT", action=wezterm.action{SendString="\x1bo"}}, -- xxd
+    -- {key="i", mods="ALT", action=wezterm.action{SendString="\x1b[5A"}}, -- showkey -a
+    -- {key="u", mods="ALT", action=wezterm.action{SendString="\x1b[5B"}}, -- showkey -a
+    -- {key="y", mods="ALT", action=wezterm.action{SendString="\x1b[5C"}}, -- showkey -a
+    -- {key="o", mods="ALT", action=wezterm.action{SendString="\x1b[5D"}}, -- showkey -a
 
     -- Copy Mode
     {key=" ", mods="ALT", action=act.Multiple{
@@ -308,7 +308,7 @@ return {
       action=wezterm.action.QuickSelectArgs{
         label = "open url",
         patterns={
-          '"(https?://\\S+)"|(https?://\\S+)'
+          '"(https?://\\S+)"|\'(https?://\\S+)\'|(https?://\\S+)'
         },
         action = wezterm.action_callback(function(window, pane)
            local url = window:get_selection_text_for_pane(pane)
@@ -372,26 +372,22 @@ return {
   -- color_scheme = "Retro",
   colors = {
     -- SHELL: for i in $(seq 256); do echo $(lua <<<"print('\27[${i}mReadydone${i}')"); done
-    -- cursor_bg = "#0000ff",
-    -- cursor_fg = "#cccccc",
+    cursor_bg = "#ffffff",
+    cursor_fg = "#000000",
     -- cursor_border = "#0000ff",
     -- ansi = {"#111111", "maroon", "green", "olive", "navy", "purple", "teal", "silver"},        -- Intensity Normal font SHELL:{30,37}
     ansi = {"#222222","#bb0000","#008800","#bbbb00","#5555cc","#8855ff","#7acaca","#ffffff"},     -- Intensity Normal font SHELL:{30,37}
     -- brights = {"#1c1c1c", "red", "lime", "yellow", "blue", "fuchsia", "aqua", "white"},        -- Intensity Bold font SHELL:{90,97}
-    brights = {"#555555","#ff0000","#00ff00","#ffff00","#1c1cff","#880088","#008888","#ff4400"},  -- Intensity Bold font SHELL:{90,97}
+    brights = {"#7c7c7c","#ff0000","#00ff00","#ffff00","#1c1cff","#880088","#008888","#ff4400"},  -- Intensity Bold font SHELL:{90,97}
 
     tab_bar = {
       -- The color of the strip that goes along the top of the window
       -- (does not apply when fancy tab bar is in use)
-      -- background = "#0b0022",
       background = "#000000",
 
       -- The active tab is the one that has focus in the window
       active_tab = {
-        -- The color of the background area for the tab
-        -- bg_color = "#2b2042",
         bg_color = "#222222",
-        -- The color of the text for the tab
         fg_color = "#c0c0c0",
 
         -- Specify whether you want "Half", "Normal" or "Bold" intensity for the
@@ -415,7 +411,6 @@ return {
 
       -- Inactive tabs are the tabs that do not have focus
       inactive_tab = {
-        -- bg_color = "#1b1032",
         bg_color = "#111111",
         fg_color = "#808080",
 
@@ -426,7 +421,6 @@ return {
       -- You can configure some alternate styling when the mouse pointer
       -- moves over inactive tabs
       inactive_tab_hover = {
-        -- bg_color = "#3b3052",
         bg_color = "#111111",
         fg_color = "#909090",
         italic = true,
@@ -437,9 +431,7 @@ return {
 
       -- The new tab button that let you create new tabs
       new_tab = {
-        -- bg_color = "#1b1032",
         bg_color = "#000000",
-        -- fg_color = "#808080",
         fg_color = "#000000",
 
         -- The same options that were listed under the `active_tab` section above
@@ -449,9 +441,8 @@ return {
       -- You can configure some alternate styling when the mouse pointer
       -- moves over the new tab button
       new_tab_hover = {
-        -- bg_color = "#3b3052",
-        bg_color = "#111111",
-        fg_color = "#909090",
+        bg_color = "#888888",
+        fg_color = "#ffffff",
         italic = true,
 
         -- The same options that were listed under the `active_tab` section above
