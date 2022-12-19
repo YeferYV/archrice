@@ -122,13 +122,13 @@ cmd imgcat !{{
 }}
 
 cmd sixel ${{
-    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && { Xsixel :11 -screen 1024x1024 -exec 'basename -a $fx | sxiv -baio'
+    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && { Xsixel :11 -screen 1024x1024 -exec 'basename -a $fx | sxiv -baio' # files with spaces not showing
     }||{
     case $(file --dereference --brief --mime-type $fx) in
         text/*)   bat --paging always --wrap never $fx;;
-        image/*)  Xsixel :11 -screen 1024x1024 -exec 'sxiv $fx' 2>/dev/null;;
+        image/*)  Xsixel :11 -screen 1024x1024 -exec 'sxiv "$fx"' 2>/dev/null;;
         video/*)  mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) $fx;;
-        application/pdf) Xsixel :11 -screen 1024x1024 -exec 'zathura $fx' 2>/dev/null;;
+        application/pdf) Xsixel :11 -screen 1024x1024 -exec 'zathura "$fx"' 2>/dev/null;;
     esac
     }
 }}
