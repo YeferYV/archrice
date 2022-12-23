@@ -25,6 +25,15 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
+-- position navigation (in wezterm <C-i> outputs Tab)
+keymap("n", "<C-y>", "<C-i>", opts)
+
+-- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
+-- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
+-- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
+keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>",opts)
+keymap("x", 'im', "`[o`]<Left>",opts)
+
 -- Resize with arrows
 keymap("n", "<M-Up>", ":resize -2<CR>", opts)
 keymap("n", "<M-Down>", ":resize +2<CR>", opts)

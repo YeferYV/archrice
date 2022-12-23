@@ -9,13 +9,13 @@ let g:colors_name='leet'
 hi   Boolean                               guifg=#1cff1c  guibg=none     gui=none
 hi   Character                             guifg=#ff4400  guibg=none     gui=none
 hi   ColorColumn                           guifg=none     guibg=none     gui=none
-hi   Comment                               guifg=#555555  guibg=none     gui=none
+hi   Comment                               guifg=#5c5c5c  guibg=none     gui=none
 hi   Conceal                               guifg=none     guibg=none     gui=none
 hi   Conditional                           guifg=#5555ff  guibg=none     gui=none
 hi   Constant                              guifg=#bbbb00  guibg=none     gui=none
 hi   Cursor                                guifg=#000000  guibg=#1c1cff  gui=none
 hi   CursorColumn                          guifg=none     guibg=none     gui=none
-hi   CursorLine                            guifg=none     guibg=#080808  gui=none
+hi   CursorLine                            guifg=none     guibg=none     gui=none
 hi   CursorLineFold                        guifg=#444444  guibg=none     gui=none
 hi   CursorLineNr                          guifg=#cccccc  guibg=none     gui=none
 hi   CursorLineSign                        guifg=none     guibg=none     gui=none
@@ -238,30 +238,30 @@ hi   DiffDelete                            guifg=#ffffff  guibg=#ff0000  gui=non
 hi   DiffText                              guifg=#ffffff  guibg=#0000ff  gui=none
 
 "--  Bufferline
-hi   BufferLineFill                        guifg=none     guibg=none     gui=none
-hi   BufferLineBackground                  guifg=#616161  guibg=#0b0b0b  gui=none
-hi   BufferLineBuffer                      guifg=none     guibg=none     gui=none
-hi   BufferLineBufferSelected              guifg=#4141ad  guibg=#111111  gui=bold
-hi   BufferLineBufferVisible               guifg=#a1a1ad  guibg=#111111  gui=bold
-hi   BufferLineCloseButton                 guifg=#616161  guibg=#0b0b0b  gui=none
-hi   BufferLineCloseButtonSelected         guifg=#4141ad  guibg=#111111  gui=none
-hi   BufferLineCloseButtonVisible          guifg=#a1a1ad  guibg=#111111  gui=none
-hi   BufferLineTab                         guifg=#616161  guibg=none     gui=none
-hi   BufferLineTabClose                    guifg=#616161  guibg=none     gui=none
-hi   BufferLineTabSelected                 guifg=#4141ad  guibg=none     gui=none
-hi   BufferLineTabSeparator                guifg=#000000  guibg=none     gui=none
-hi   BufferLineTabSeparatorSelected        guifg=#000000  guibg=none     gui=none
-hi   BufferLineDupllicate                  guifg=#616161  guibg=#0b0b0b  gui=underline
-hi   BufferLineDupllicateSelected          guifg=#4141ad  guibg=#111111  gui=underline
-hi   BufferLineDupllicateVisible           guifg=#a1a1ad  guibg=#111111  gui=underline
-hi   BufferLineModified                    guifg=#616161  guibg=#0b0b0b  gui=none
-hi   BufferLineModifiedSelected            guifg=#4141ad  guibg=#111111  gui=none
-hi   BufferLineModifiedVisible             guifg=#a1a1ad  guibg=#111111  gui=none
-hi   BufferLineSeparator                   guifg=#000000  guibg=none     gui=none
-hi   BufferLineSeparatorSelected           guifg=#000000  guibg=none     gui=none
-hi   BufferLineSeparatorVisible            guifg=#111111  guibg=#111111  gui=none
-hi   BufferLineIndicatorSelected           guifg=#111111  guibg=#111111  gui=none
-hi   BufferLineIndicatorVisible            guifg=none     guibg=none     gui=none
+hi   BufferLineFill                        guifg=none     guibg=none  gui=none
+hi   BufferLineBackground                  guifg=#616161  guibg=none  gui=none
+hi   BufferLineBuffer                      guifg=none     guibg=none  gui=none
+hi   BufferLineBufferSelected              guifg=#ffffff  guibg=none  gui=none
+hi   BufferLineBufferVisible               guifg=#a1a1ad  guibg=none  gui=none
+hi   BufferLineCloseButton                 guifg=#616161  guibg=none  gui=none
+hi   BufferLineCloseButtonSelected         guifg=#ffffff  guibg=none  gui=none
+hi   BufferLineCloseButtonVisible          guifg=#a1a1ad  guibg=none  gui=none
+hi   BufferLineTab                         guifg=#616161  guibg=none  gui=none
+hi   BufferLineTabClose                    guifg=#616161  guibg=none  gui=none
+hi   BufferLineTabSelected                 guifg=#ffffff  guibg=none  gui=none
+hi   BufferLineTabSeparator                guifg=#000000  guibg=none  gui=none
+hi   BufferLineTabSeparatorSelected        guifg=#000000  guibg=none  gui=none
+hi   BufferLineDupllicate                  guifg=#616161  guibg=none  gui=underline
+hi   BufferLineDupllicateSelected          guifg=#ffffff  guibg=none  gui=underline
+hi   BufferLineDupllicateVisible           guifg=#a1a1ad  guibg=none  gui=underline
+hi   BufferLineModified                    guifg=#616161  guibg=none  gui=none
+hi   BufferLineModifiedSelected            guifg=#ffffff  guibg=none  gui=none
+hi   BufferLineModifiedVisible             guifg=#a1a1ad  guibg=none  gui=none
+hi   BufferLineSeparator                   guifg=#5c5c5c  guibg=none  gui=none
+hi   BufferLineSeparatorSelected           guifg=#5c5c5c  guibg=none  gui=none
+hi   BufferLineSeparatorVisible            guifg=#5c5c5c  guibg=none  gui=none
+hi   BufferLineIndicatorSelected           guifg=#ffffff  guibg=none  gui=none
+hi   BufferLineIndicatorVisible            guifg=#5c5c5c  guibg=none  gui=none
 
 "--  Borders
 " hi   link TelescopeBorder                  FloatBorder  -- default Normal
@@ -310,7 +310,7 @@ hi   NvimTreeStatusLine                    guifg=none     guibg=none     gui=non
 
 "--  neo-tree
 hi   NeoTreeBufferNumber                   guifg=#555555  guibg=none     gui=none
-hi   NeoTreeCursorLine                     guifg=none     guibg=#111111  gui=none
+hi   NeoTreeCursorLine                     guifg=none     guibg=#1c1c1c  gui=none
 hi   NeoTreeDimText                        guifg=#505050  guibg=none     gui=none
 hi   NeoTreeDirectoryIcon                  guifg=#727c8c  guibg=none     gui=none
 hi   NeoTreeDirectoryName                  guifg=#727c8c  guibg=none     gui=none
@@ -331,6 +331,9 @@ hi   NeoTreeIndentMarker                   guifg=#222222  guibg=none     gui=non
 hi   NeoTreeExpander                       guifg=#727c8c  guibg=none     gui=none
 hi   NeoTreeRootName                       guifg=#495466  guibg=none     gui=bold
 hi   NvimTreeRootFolder                    guifg=#495466  guibg=none     gui=bold
+hi   NeoTreeTabInactive                    guifg=#888888  guibg=#1c1c1c  gui=none
+hi   NeoTreeTabSeparatorInactive           guifg=#101010  guibg=#1c1c1c  gui=none
+hi   NeoTreeTabSeparatorActive             guifg=#101010  guibg=none     gui=none
 " hi link  NeoTreeNormal                   Normal
 " hi link  NeoTreeNormalNC                 NormalNC
 " hi link  NeoTreeSignColumn               SignColumn

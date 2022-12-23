@@ -70,7 +70,7 @@ require("neo-tree").setup({
     },
     indent = {
       indent_size = 2,
-      padding = 0, -- extra padding on left hand side
+      padding = 1, -- extra padding on left hand side
       -- indent guides
       with_markers = true,
       indent_marker = "│",
@@ -132,8 +132,10 @@ require("neo-tree").setup({
     width = "28",
     popup = { -- settings that apply to float position only
       size = {
+        -- height = "90%",
+        -- width = "40",
         height = "80%",
-        width = "20%",
+        width = "50%",
       },
       -- position = { col = "100%", row = "2" },
       position = "50%", -- 50% means center it

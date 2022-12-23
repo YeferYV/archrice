@@ -32,7 +32,7 @@ require'nvim-treesitter.configs'.setup {
   textobjects = {
     select = {
       enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
-      include_surrounding_whitespace = true,
+      include_surrounding_whitespace = false,
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined here:
@@ -69,22 +69,76 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+        [']ac'] = '@class.outer',
+        [']aC'] = '@conditional.outer',
+        ["]ak"] = "@block.outer",
+        [']aK'] = '@call.outer',
+        ["]af"] = "@function.outer",
+        [']al'] = '@loop.outer',
+        [']aP'] = '@parameter.outer',
+
+        [']ic'] = '@class.inner',
+        [']iC'] = '@conditional.inner',
+        ["]ik"] = "@block.inner",
+        [']iK'] = '@call.inner',
+        ["]if"] = "@function.inner",
+        [']il'] = '@loop.inner',
+        [']iP'] = '@parameter.inner',
+        [']]'] = '@parameter.inner',
       },
       goto_next_end = {
-        [']M'] = '@function.inner',
-        [']['] = '@class.inner',
+        [']eac'] = '@class.outer',
+        [']eaC'] = '@conditional.outer',
+        ["]eak"] = "@block.outer",
+        [']eaK'] = '@call.outer',
+        ["]eaf"] = "@function.outer",
+        [']eal'] = '@loop.outer',
+        [']eaP'] = '@parameter.outer',
+
+        [']eic'] = '@class.inner',
+        [']eiC'] = '@conditional.inner',
+        ["]eik"] = "@block.inner",
+        [']eiK'] = '@call.inner',
+        ["]eif"] = "@function.inner",
+        [']eil'] = '@loop.inner',
+        [']eiP'] = '@parameter.inner',
       },
       goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
+        ['[ac'] = '@class.outer',
+        ['[aC'] = '@conditional.outer',
+        ["[ak"] = "@block.outer",
+        ['[aK'] = '@call.outer',
+        ["[af"] = "@function.outer",
+        ['[al'] = '@loop.outer',
+        ['[aP'] = '@parameter.outer',
+
+        ['[ic'] = '@class.inner',
+        ['[iC'] = '@conditional.inner',
+        ["[ik"] = "@block.inner",
+        ['[iK'] = '@call.inner',
+        ["[if"] = "@function.inner",
+        ['[il'] = '@loop.inner',
+        ['[iP'] = '@parameter.inner',
+        ['[['] = '@parameter.inner',
       },
       goto_previous_end = {
-        ['[M'] = '@function.inner',
-        ['[]'] = '@class.inner',
+        ['[eac'] = '@class.outer',
+        ['[eaC'] = '@conditional.outer',
+        ["[eak"] = "@block.outer",
+        ['[eaK'] = '@call.outer',
+        ["[eaf"] = "@function.outer",
+        ['[eal'] = '@loop.outer',
+        ['[eaP'] = '@parameter.outer',
+
+        ['[eic'] = '@class.inner',
+        ['[eiC'] = '@conditional.inner',
+        ["[eik"] = "@block.inner",
+        ['[eiK'] = '@call.inner',
+        ["[eif"] = "@function.inner",
+        ['[eil'] = '@loop.inner',
+        ['[eiP'] = '@parameter.inner',
       },
-    },
+      },
     swap = {
       enable = true,
       swap_next = {

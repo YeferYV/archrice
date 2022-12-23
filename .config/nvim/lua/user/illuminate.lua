@@ -13,7 +13,7 @@ require('illuminate').configure({
     delay = 100,
     -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
     filetypes_denylist = {
-      'NvimTree',
+      'neo-tree',
     },
     -- min_count_to_highlight: minimum number of matches required to perform highlighting
     min_count_to_highlight = 1,

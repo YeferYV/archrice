@@ -1,6 +1,7 @@
 {
   "vim.easymotion": true,
   "vim.incsearch": true,
+  "vim.foldfix": true,
   "vim.hlsearch": true,
   "vim.highlightedyank.enable" : true,
   "vim.sneak": true,
@@ -119,7 +120,7 @@
       "commands": [ "editor.action.triggerParameterHints" ]
     },
     {
-      "before": ["g","i"],
+      "before": ["g","I"],
       "commands": [ "editor.action.goToImplementation" ]
     },
     {
@@ -792,7 +793,7 @@
         "command": "editor.action.triggerParameterHints",
       },
       {
-        "key": "i",
+        "key": "I",
         "name": "Go to Implementation",
         "type": "command",
         "command": "editor.action.goToImplementation",
@@ -1020,7 +1021,7 @@
         "command": "editor.action.showDefinitionPreviewHover",
       },
       {
-        "key": "i",
+        "key": "I",
         "name": "Implementation",
         "type": "command",
         "command": "editor.action.peekImplementation",

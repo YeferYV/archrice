@@ -54,23 +54,38 @@ if vim.g.neovide == true then
   vim.api.nvim_set_keymap("n", "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>", { silent = true })
   vim.api.nvim_set_keymap("n", "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>", { silent = true })
   vim.api.nvim_set_keymap("n", "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>", { silent = true })
-  _G.airline_powerline_fonts = 1
-  _G.neovide_confirm_quit = true
-  _G.neovide_cursor_animation_length = 10.0
-  _G.neovide_cursor_antialiasing = true
-  _G.neovide_cursor_trail_size = 10.0
-  _G.neovide_cursor_vfx_mode = ""
-  _G.neovide_cursor_vfx_opacity = 200.0
-  _G.neovide_cursor_vfx_particle_density = 10.0
-  _G.neovide_cursor_vfx_particle_lifetime = 1.5
-  _G.neovide_cursor_vfx_particle_speed = 10.0
-  _G.neovide_floating_blur_amount_x = 2.0
-  _G.neovide_floating_blur_amount_y = 2.0
-  _G.neovide_hide_mouse_when_typing = true
-  _G.neovide_no_idle = true
-  _G.neovide_scroll_animation_length = 0.3
-  _G.neovide_transparency = 0.5
-  _G.neovide_window_floating_opacity = 0.5
+  -- vim.g.neovide_cursor_vfx_mode = "railgun"
+  -- vim.g.neovide_cursor_vfx_opacity = 200.0
+  -- vim.g.neovide_cursor_vfx_particle_density = 7.0
+  -- vim.g.neovide_cursor_vfx_particle_lifetime = 1.2
+  -- vim.g.neovide_cursor_vfx_particle_speed = 10.0
+  -- vim.g.neovide_floating_blur_amount_x = 3.0
+  -- vim.g.neovide_floating_blur_amount_y = 3.0
+  -- vim.g.neovide_transparency = 0.7
+  vim.g.airline_powerline_fonts = 1
+  vim.g.neovide_confirm_quit = false
+  vim.g.neovide_cursor_animation_length = 0.13
+  vim.g.neovide_cursor_antialiasing = true
+  vim.g.neovide_cursor_trail_size = 0.8
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_no_idle = true
+  vim.g.neovide_scroll_animation_length = 0.1
+  vim.g.terminal_color_0  = '#ff0000'
+  vim.g.terminal_color_1  = '#bb0000'
+  vim.g.terminal_color_2  = '#008800'
+  vim.g.terminal_color_3  = '#bbbb00'
+  vim.g.terminal_color_4  = '#5555ff'
+  vim.g.terminal_color_5  = '#8800ff'
+  vim.g.terminal_color_6  = '#7acaca'
+  vim.g.terminal_color_7  = '#ffffff'
+  vim.g.terminal_color_8  = '#7c7c7c'
+  vim.g.terminal_color_9  = '#ff0000'
+  vim.g.terminal_color_10 = '#00ff00'
+  vim.g.terminal_color_11 = '#ffff00'
+  vim.g.terminal_color_12 = '#1c1cff'
+  vim.g.terminal_color_13 = '#880088'
+  vim.g.terminal_color_14 = '#008888'
+  vim.g.terminal_color_15 = '#ff4400'
 end
 
 for k, v in pairs(options) do
