@@ -387,8 +387,10 @@ return {
 
       -- The active tab is the one that has focus in the window
       active_tab = {
-        bg_color = "#222222",
-        fg_color = "#c0c0c0",
+        -- bg_color = "#0c0c0c",
+        -- fg_color = "#ffffff",
+        bg_color = "#1c1c1c",
+        fg_color = "#888888",
 
         -- Specify whether you want "Half", "Normal" or "Bold" intensity for the
         -- label shown for this tab.
@@ -411,8 +413,8 @@ return {
 
       -- Inactive tabs are the tabs that do not have focus
       inactive_tab = {
-        bg_color = "#111111",
-        fg_color = "#808080",
+        bg_color = "#000000",
+        fg_color = "#2c2c2c",
 
         -- The same options that were listed under the `active_tab` section above
         -- can also be used for `inactive_tab`.
