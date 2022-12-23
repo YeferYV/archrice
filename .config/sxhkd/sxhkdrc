@@ -454,15 +454,25 @@ mod1 + ctrl + {1,2,3,4,5}
 super + BackSpace
 	{\
 		picom --glx-no-rebind-pixmap \
-        --use-damage \
-        --xrender-sync-fence \
-        --backend glx \
-        --transparent-clipping \
-        # --active-opacity=0.90 \
-        # --inactive-opacity=0.90 \
-        # --refresh-rate 30\
-				,\
+          --use-damage \
+          --xrender-sync-fence \
+          --backend glx \
+          --transparent-clipping \
+          # --active-opacity=0.90 \
+          # --inactive-opacity=0.90 \
+          # --refresh-rate 30\
+				  ,\
     killall picom\
+	}
+
+# compositor keep background
+super + alt + BackSpace
+	{ \
+	  picom --blur-method="dual_kawase" \
+	        --opacity-rule="70:class_g *= 'neovide'" \
+	        --opacity-rule="70:class_g *= 'wezterm'" \
+				  ,\
+	  killall picom \
 	}
 
 # compositor keep background
