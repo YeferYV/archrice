@@ -1,4 +1,5 @@
 local options = {
+  autoindent= true,                        -- auto indent new lines
   backup = false,                          -- creates a backup file
   clipboard = "unnamedplus",               -- allows neovim to access the system clipboard
   cmdheight = 0,                           -- more space in the neovim command line for displaying messages
@@ -63,7 +64,7 @@ if vim.g.neovide == true then
   -- vim.g.neovide_floating_blur_amount_y = 3.0
   -- vim.g.neovide_transparency = 0.7
   vim.g.airline_powerline_fonts = 1
-  vim.g.neovide_confirm_quit = false
+  vim.g.neovide_confirm_quit = true
   vim.g.neovide_cursor_animation_length = 0.13
   vim.g.neovide_cursor_antialiasing = true
   vim.g.neovide_cursor_trail_size = 0.8

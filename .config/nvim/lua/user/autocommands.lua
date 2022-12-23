@@ -82,6 +82,12 @@ vim.cmd [[
     autocmd FileType markdown setlocal spell
   augroup end
 
+  " augroup _save_folding
+  "   autocmd!
+  "   autocmd BufWinLeave *.* mkview
+  "   autocmd BufWinEnter *.* silent loadview
+  " augroup end
+
   augroup _stop_newlines_commented
     autocmd!
   " au FileType * set fo-=c fo-=r fo-=o

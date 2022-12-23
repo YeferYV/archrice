@@ -145,15 +145,9 @@ vim.api.nvim_set_keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {norema
 vim.api.nvim_set_keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
 vim.api.nvim_set_keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
 
--- Toggle Highlight
-keymap("n","<leader>h","<cmd>noh<cr>",opts)
-
 -- Terminal
 keymap("n","<leader>v","<Cmd>ToggleTerm direction=vertical   size=70<CR>",opts)
 keymap("n","<leader>V","<Cmd>ToggleTerm direction=horizontal size=10<CR>",opts)
-
--- Terminal Column Format
-keymap("v","<leader>tC",":'<,'>!column -t<CR>",opts)
 
 -- Window Swap
 keymap("t","<C-x>","<C-\\><C-n>:call WinBufSwap()<cr><Esc><cmd>set number<cr>",opts)
@@ -169,3 +163,8 @@ keymap("n","<leader>y",'"*yg_',opts)
 -- keymap("n","<leader>Y",'"*yy',opts)
 -- keymap("v","<leader>y",'"*y',opts)
 -- keymap("v","<leader>Y",'"*y',opts)
+-- Terminal Column Format
+
+-- Visual Fold (Vjzf: create fold, zj/zk: next/previous fold) and Format
+keymap("v","<leader>z",":'<,'>fold      <CR>",opts)
+keymap("v","<leader>Z",":'<,'>!column -t<CR>",opts)

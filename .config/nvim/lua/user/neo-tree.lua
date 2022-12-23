@@ -457,8 +457,8 @@ require("neo-tree").setup({
         ["<c-x>"] = "clear_filter",
         ["gk"] = "prev_git_modified",
         ["gj"] = "next_git_modified",
-        ["t"] = "getparent_closenode",
-        ["T"] = "getchild_open",
+        ["t"] = "open_tabnew_showbuffer",
+        ["T"] = "open_tabdrop_showbuffer",
       }
     }
   },
