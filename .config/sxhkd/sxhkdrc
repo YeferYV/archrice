@@ -3,7 +3,7 @@
 #
 
 # terminal emulator
-super + {_,shift + ,ctrl + ,shift + ctrl + ,alt + }Return
+mod4 + {_,shift + ,ctrl + ,shift + ctrl + ,alt + }Return
 	{ \
 		$TERMINAL; \
 	, bspc node -p east -o 0.5 && $TERMINAL; \
@@ -96,7 +96,7 @@ super + {h,j,k,l}
 	bspc node -f {west,south,north,east}
 
 # Swap focused window with the one in the given direction
-mod4 + shift + {h,j,k,l}
+super + shift + {h,j,k,l}
   $HOME/.config/bspwm/bspwm_smart_move {west,south,north,east}
 
 # focus the node for the given path jump
@@ -123,7 +123,7 @@ super + bracket{left,right}
 	}
 
 # Increase/descrease gap size
-mod4 + shift + bracket{left,right}
+super + shift + bracket{left,right}
 	bspc config window_gap $(($(bspc config window_gap) {+,-} 2))
 
 # toggle node border
@@ -131,8 +131,12 @@ super + {apostrophe,backslash}
 	bspc config -n focused border_width {0,2}
 
 # toggle desktop border
-mod4 + shift + {apostrophe,backslash}
+super + shift + {apostrophe,backslash}
   bspc config -d focused border_width {0,2}
+
+# toggle singleton border
+super + ctrl + {apostrophe,backslash}
+  bspc config borderless_singleton {true,false}
 
 # rofi drun
 super + ctrl + d
