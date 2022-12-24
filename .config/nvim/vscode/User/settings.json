@@ -124,6 +124,10 @@
       "commands": [ "editor.action.goToImplementation" ]
     },
     {
+      "before": [ "g","l" ],
+      "commands": ["workbench.action.navigateToLastEditLocation"],
+    },
+    {
       "before": ["g","n"],
       "commands": [ "editor.action.marker.next" ]
     },
