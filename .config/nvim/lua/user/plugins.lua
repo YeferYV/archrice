@@ -44,6 +44,15 @@ return require("packer").startup(function(use)
 		end,
 	})
 
+	-- Auto tags
+	use({
+		"windwp/nvim-ts-autotag", -- To autoclose and autorename tags
+		commit = "fdefe46c6807441460f11f11a167a2baf8e4534b",
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	})
+
 	-- Bufferline version v2.7.0 (Icon bg color linked to selected buffer color #137)
 	use({ "akinsho/bufferline.nvim", tag = "v2.7.0" })
 

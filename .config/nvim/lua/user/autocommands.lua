@@ -240,6 +240,7 @@ vim.api.nvim_create_autocmd( { "TermEnter","TermOpen" }, {
     -- require('lualine').hide()
     -- vim.cmd[[set nocursorline nonumber statusline=%< | startinsert]]
     vim.cmd[[set nocursorline nonumber | startinsert]]
+    vim.cmd[[hi ExtraWhitespace guibg=none]]
   end,
 })
 vim.api.nvim_create_autocmd({ "TermLeave" }, {
@@ -247,6 +248,7 @@ vim.api.nvim_create_autocmd({ "TermLeave" }, {
   callback = function()
     require('lualine').hide({unhide=true})
     vim.cmd[[set cursorline]]
+    vim.cmd[[hi ExtraWhitespace guibg=red]]
   end,
 })
 vim.api.nvim_create_autocmd({ "TermClose" }, {
@@ -255,5 +257,6 @@ vim.api.nvim_create_autocmd({ "TermClose" }, {
     if vim.bo.filetype ~= "toggleterm" then
       vim.cmd[[ call feedkeys("i") ]]
     end
+    vim.cmd[[hi ExtraWhitespace guibg=red]]
   end,
 })

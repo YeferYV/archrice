@@ -40,7 +40,7 @@ hi   Keyword                               guifg=#5555ff  guibg=none     gui=bol
 hi   Label                                 guifg=#5e81ac  guibg=none     gui=none
 hi   LineNr                                guifg=#555555  guibg=none     gui=none
 hi   Macro                                 guifg=#1c1cff  guibg=none     gui=none
-hi   MatchParen                            guifg=#ffff00  guibg=#ff0000  gui=none
+hi   MatchParen                            guifg=#000000  guibg=#1cff1c  gui=none
 hi   NonText                               guifg=#000000  guibg=none     gui=none
 hi   Normal                                guifg=none     guibg=none     gui=none
 hi   Number                                guifg=#1cff1c  guibg=none     gui=none
