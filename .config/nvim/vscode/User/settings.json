@@ -105,7 +105,7 @@
     },
     {
       "before": ["g","e"],
-      "commands": "workbench.actions.view.problems"
+      "commands": [ "workbench.actions.view.problems" ]
     },
     {
       "before": ["g","F"],
@@ -124,10 +124,6 @@
       "commands": [ "editor.action.goToImplementation" ]
     },
     {
-      "before": ["g","l"],
-      "commands": [ "codelens.showLensesInCurrentLine" ]
-    },
-    {
       "before": ["g","n"],
       "commands": [ "editor.action.marker.next" ]
     },
@@ -144,7 +140,7 @@
       "commands": [ "editor.action.marker.prevInFiles" ]
     },
     {
-      "before": ["g","q"],
+      "before": ["g","Q"],
       "commands": [ "editor.action.quickFix" ]
     },
     {
@@ -798,12 +794,6 @@
         "type": "command",
         "command": "editor.action.goToImplementation",
         "when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
-      },
-      {
-        "key": "l",
-        "name": "CodeLens",
-        "type": "command",
-        "command": "codelens.showLensesInCurrentLine"
       },
       {
         "key": "n",

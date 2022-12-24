@@ -18,6 +18,9 @@ vim.g.maplocalleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
+-- Jump to last change
+keymap("n", "gl", "`.", opts)
+
 -- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -165,6 +168,7 @@ keymap("n","<leader>y",'"*yg_',opts)
 -- keymap("v","<leader>Y",'"*y',opts)
 -- Terminal Column Format
 
--- Visual Fold (Vjzf: create fold, zj/zk: next/previous fold) and Format
+-- Visual Fold (Vjzf: create fold, zj/zk: next/previous fold), FormatColumn and FormatComment
 keymap("v","<leader>z",":'<,'>fold      <CR>",opts)
 keymap("v","<leader>Z",":'<,'>!column -t<CR>",opts)
+keymap("v","<leader>gw","gw",opts)
