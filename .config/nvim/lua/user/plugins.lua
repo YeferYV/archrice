@@ -148,10 +148,10 @@ return require("packer").startup(function(use)
 	use({ "hrsh7th/cmp-nvim-lsp", commit = "59224771f91b86d1de12570b4070fe4ad7cd1eeb" }) -- lsp completions
 
   -- DAP
-  use { "mfussenegger/nvim-dap", commit = "8f396b7836b9bbda9edd9f655f12ca377ae97676" }
-  use { "rcarriga/nvim-dap-ui", commit = "54365d2eb4cb9cfab0371306c6a76c913c5a67e3" }
-  use { "jay-babu/mason-nvim-dap.nvim", commit = "40c9a53c208a2d7e008b27d994ac001fadc7a5a2" }
-  -- use { "jay-babu/mason-null-ls.nvim", commit = "ab5d99619de2263508abb7fb05ef3a0f24a8d73d" }
+  use({ "mfussenegger/nvim-dap", commit = "8f396b7836b9bbda9edd9f655f12ca377ae97676" })
+  use({ "rcarriga/nvim-dap-ui", commit = "54365d2eb4cb9cfab0371306c6a76c913c5a67e3" })
+  use({ "jay-babu/mason-nvim-dap.nvim", commit = "40c9a53c208a2d7e008b27d994ac001fadc7a5a2" })
+  -- use({ "jay-babu/mason-null-ls.nvim", commit = "ab5d99619de2263508abb7fb05ef3a0f24a8d73d" })
 
 	-- File Explorer
   use({ "nvim-neo-tree/neo-tree.nvim", commit = "7c6903b05b13c5d4c3882c896a59e6101cb51ea7" })
@@ -304,10 +304,6 @@ return require("packer").startup(function(use)
 	-- Syntax Hightlighting
 	-- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
 	use({ "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" })
-	use({
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564",
-	})
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim",
@@ -326,26 +322,19 @@ return require("packer").startup(function(use)
   use { "lewis6991/impatient.nvim", commit = "d3dd30ff0b811756e735eb9020609fa315bfbbcc" }
   use { "ahmedkhalf/project.nvim", commit = "685bc8e3890d2feb07ccf919522c97f7d33b94e4" }
 
-	-- Text Objects
-	-- use { 'wellle/targets.vim',
-	--   commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d",
-	--   event = 'VimEnter'
-	-- }
+  -- Text Objects
+	-- use { 'wellle/targets.vim', commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d", }
+  use { "michaeljsmith/vim-indent-object", commit = "5c5b24c959478929b54a9e831a8e2e651a465965" }
+  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564", }
 
 	-- The Interactive Scratchpad (aka playground or quokka-alt)
-	-- use({ "metakirby5/codi.vim", commit = "6537ba677a0c7c6c796b195f29077b57fad33716" })
-
-	-- Vim Jump to Match words
-	-- use { 'andymass/vim-matchup',
-	--   commit="55e3330436784fb8ccc35a5cfeb13e48bab9dcd2",
-	--   event = 'VimEnter'
-	-- }
+	-- use { "metakirby5/codi.vim", commit = "6537ba677a0c7c6c796b195f29077b57fad33716" }
 
 	-- Whichkey
-	use({ "folke/which-key.nvim", commit = "61553aeb3d5ca8c11eea8be6eadf478062982ac9", })
+	use { "folke/which-key.nvim", commit = "61553aeb3d5ca8c11eea8be6eadf478062982ac9" }
 
   -- Window Outline
-  use({ 'stevearc/aerial.nvim', commit = "086e1904e51fc559673598afbc59842db7981501" })
+  use { 'stevearc/aerial.nvim', commit = "086e1904e51fc559673598afbc59842db7981501" }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
