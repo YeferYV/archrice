@@ -352,3 +352,116 @@ hi   NeoTreeTabSeparatorActive             guifg=#101010  guibg=none     gui=non
 "--  Sneak
 hi   Sneak                                 guifg=#ff0000  guibg=#000000  gui=none
 hi   SneakScope                            guifg=#000000  guibg=#1c1cff  gui=none
+
+"--  Lspsaga
+lua << EOF
+local highlights = {
+  -- code action
+  LspSagaCodeActionTitle        = { fg   = '#da8548', bg = 'none',    bold = true },
+  LspSagaCodeActionBorder       = { link = 'FloatBorder'                          },
+  LspSagaCodeActionTrunCateLine = { link = 'SpecialKey'                           },
+  LspSagaCodeActionContent      = { fg   = '#98be65', bg = 'none',    bold = true },
+  -- finder
+  LspSagaLspFinderBorder        = { link = 'FloatBorder'                          },
+  LspSagaAutoPreview            = { fg   = '#51afef', bg = 'none',                },
+  LspSagaFinderSelection        = { fg   = '#89d957', bg = 'none',    bold = true },
+  TargetFileName                = { fg   = '#d1d4cf', bg = 'none',                },
+  FinderParam                   = { fg   = '#CBA6F7', bg = '#392a52', bold = true },
+  FinderVirtText                = { fg   = '#c95942', bg = 'none',                },
+  DefinitionsIcon               = { fg   = '#e3e346', bg = 'none',                },
+  Definitions                   = { fg   = '#CBA6F7', bg = 'none',    bold = true },
+  DefinitionCount               = { link = 'Title'                                },
+  ReferencesIcon                = { fg   = '#e3e346', bg = 'none',                },
+  References                    = { fg   = '#CBA6F7', bg = 'none',    bold = true },
+  ReferencesCount               = { link = 'Title'                                },
+  ImplementsIcon                = { fg   = '#e3e346', bg = 'none',                },
+  Implements                    = { fg   = '#CBA6F7', bg = 'none',    bold = true },
+  ImplementsCount               = { link = 'Title'                                },
+  -- finder spinner
+  FinderSpinnerBorder           = { link = 'FloatBorder'                          },
+  FinderSpinnerTitle            = { fg   = '#1c1cff', bg = 'none',    bold = true },
+  FinderSpinner                 = { fg   = '#1c1cff', bg = 'none',    bold = true },
+  FinderPreviewSearch           = { link = 'Search'                               },
+  -- definition
+  DefinitionBorder              = { link = 'FloatBorder'                          },
+  DefinitionArrow               = { link = 'PmenuSel'                             },
+  DefinitionSearch              = { link = 'Search'                               },
+  DefinitionFile                = { link = 'PmenuSel'                             },
+  -- hover
+  LspSagaHoverBorder            = { link = 'FloatBorder'                          },
+  LspSagaHoverTrunCateLine      = { link = 'SpecialKey'                           },
+  -- rename
+  LspSagaRenameBorder           = { link = 'FloatBorder'                          },
+  LspSagaRenameMatch            = { link = 'Search'                               },
+  -- diagnostic
+  LspSagaDiagnosticSource       = { link = 'Comment'                              },
+  LspSagaDiagnosticError        = { link = 'DiagnosticError'                      },
+  LspSagaDiagnosticWarn         = { link = 'DiagnosticWarn'                       },
+  LspSagaDiagnosticInfo         = { link = 'DiagnosticInfo'                       },
+  LspSagaDiagnosticHint         = { link = 'DiagnosticHint'                       },
+  LspSagaErrorTrunCateLine      = { link = 'DiagnosticError'                      },
+  LspSagaWarnTrunCateLine       = { link = 'DiagnosticWarn'                       },
+  LspSagaInfoTrunCateLine       = { link = 'DiagnosticInfo'                       },
+  LspSagaHintTrunCateLine       = { link = 'DiagnosticHint'                       },
+  LspSagaDiagnosticBorder       = { link = 'FloatBorder'                          },
+  LspSagaDiagnosticHeader       = { fg   = '#afd700', bg = 'none',                },
+  DiagnosticQuickFix            = { fg   = '#4dd158', bg = 'none',    bold = true },
+  DiagnosticMap                 = { fg   = '#cf80ce', bg = 'none',                },
+  DiagnosticLineCol             = { fg   = '#73797e', bg = 'none',                },
+  LspSagaDiagnosticTruncateLine = { link = 'SpecialKey'                           },
+  ColInLineDiagnostic           = { link = 'Comment', bg = 'none',                },
+  -- signture help
+  LspSagaSignatureHelpBorder    = { link = 'FloatBorder'                          },
+  LspSagaShTrunCateLine         = { link = 'SpecialKey'                           },
+  -- lightbulb
+  LspSagaLightBulb              = { link = 'DiagnosticSignHint'                   },
+  -- shadow
+  SagaShadow                    = { link = 'FloatBorder'                          },
+  -- float
+  LspSagaBorderTitle            = { link = 'FloatBorder'                          },
+  -- Outline
+  LSOutlinePreviewBorder        = { link = 'FloatBorder'                          },
+  OutlineIndentEvn              = { fg   = '#3c3c3c', bg = 'none',                },
+  OutlineIndentOdd              = { fg   = '#3c3c3c', bg = 'none',                },
+  OutlineFoldPrefix             = { fg   = '#1cff1c', bg = 'none',                },
+  OutlineDetail                 = { fg   = '#1c1cff', bg = 'none',                },
+  -- all floatwindow of lspsaga
+  LspFloatWinNormal             = { link = 'Normal'                               },
+  -- Winbar
+  LspSagaWinbarKey = { fg = '#495466' },
+  LspSagaWinbarSep = { fg = '#495466' },
+  LspSagaWinbarEnum = { fg = '#495466' },
+  LspSagaWinbarFile = { fg = '#495466' },
+  LspSagaWinbarNull = { fg = '#495466' },
+  LspSagaWinbarArray = { fg = '#495466' },
+  LspSagaWinbarClass = { fg = '#495466' },
+  LspSagaWinbarEvent = { fg = '#495466' },
+  LspSagaWinbarField = { fg = '#495466' },
+  LspSagaWinbarMacro = { fg = '#495466' },
+  LspSagaWinbarMethod = { fg = '#495466' },
+  LspSagaWinbarModule = { fg = '#495466' },
+  LspSagaWinbarNumber = { fg = '#495466' },
+  LspSagaWinbarObject = { fg = '#495466' },
+  LspSagaWinbarString = { fg = '#495466' },
+  LspSagaWinbarStruct = { fg = '#495466' },
+  LspSagaWinbarBoolean = { fg = '#495466' },
+  LspSagaWinbarPackage = { fg = '#495466' },
+  LspSagaWinbarConstant = { fg = '#495466' },
+  LspSagaWinbarFunction = { fg = '#495466' },
+  LspSagaWinbarOperator = { fg = '#495466' },
+  LspSagaWinbarProperty = { fg = '#495466' },
+  LspSagaWinbarVariable = { fg = '#495466' },
+  LspSagaWinbarInterface = { fg = '#495466' },
+  LspSagaWinbarNamespace = { fg = '#495466' },
+  LspSagaWinbarParameter = { fg = '#495466' },
+  LspSagaWinbarTypeAlias = { fg = '#495466' },
+  LspSagaWinbarEnumMember = { fg = '#495466' },
+  LspSagaWinbarConstructor = { fg = '#495466' },
+  LspSagaWinbarStaticMethod = { fg = '#495466' },
+  LspSagaWinbarTypeParameter = { fg = '#495466' },
+}
+
+for group, conf in pairs(highlights) do
+  vim.api.nvim_set_hl(0, group, conf)
+end
+EOF

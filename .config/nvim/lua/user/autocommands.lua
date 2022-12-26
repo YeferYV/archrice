@@ -76,6 +76,11 @@ vim.cmd [[
   "   autocmd BufWritePre * lua vim.lsp.buf.formatting()
   " augroup end
 
+  augroup _lspsaga_highlights_overwrite
+    autocmd!
+    au BufReadPost * hi LspSagaWinbarSep guifg=#495466
+  augroup end
+
   augroup _markdown
     autocmd!
     autocmd FileType markdown setlocal wrap

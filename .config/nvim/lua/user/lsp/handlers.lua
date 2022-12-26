@@ -62,13 +62,13 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr,"n","ga",        "<cmd>lua vim.lsp.buf.code_action()<CR>",                                   opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gd",        "<cmd>lua vim.lsp.buf.definition()<CR>",                                    opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gD",        "<cmd>lua vim.lsp.buf.declaration()<CR>",                                   opts)
-  vim.api.nvim_buf_set_keymap(bufnr,"n","ge",        "<cmd>lua vim.diagnostic.open_float()<CR>",                                 opts) -- error diagnostic
   vim.api.nvim_buf_set_keymap(bufnr,"n","gF",        "<cmd>lua vim.lsp.buf.formatting()<CR>",                                    opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gh",        "<cmd>lua vim.lsp.buf.hover()<CR>",                                         opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gH",        "<cmd>lua vim.lsp.buf.signature_help()<CR>",                                opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gI",        "<cmd>lua vim.lsp.buf.implementation()<CR>",                                opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gL",        '<cmd>lua vim.lsp.codelens.run()<CR>',                                      opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gn",        '<cmd>lua vim.diagnostic.goto_next({                border="rounded"})<CR>',opts)
+  vim.api.nvim_buf_set_keymap(bufnr,"n","go",        "<cmd>lua vim.diagnostic.open_float()<CR>",                                 opts) -- error diagnostic
   vim.api.nvim_buf_set_keymap(bufnr,"n","gp",        '<cmd>lua vim.diagnostic.goto_prev({                border="rounded"})<CR>',opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gq",        "<cmd>lua vim.diagnostic.setloclist()<CR>",                                 opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gr",        "<cmd>lua vim.lsp.buf.references()<CR>",                                    opts)
@@ -78,18 +78,15 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
+
 	if client.name == "tsserver" then
 		client.server_capabilities.document_formatting = false
 	end
+
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
 
-  local navic = require("nvim-navic")
-	if client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
 end
-
 
 local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_ok then

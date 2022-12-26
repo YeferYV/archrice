@@ -216,6 +216,7 @@ return require("packer").startup(function(use)
 	use({ "neovim/nvim-lspconfig", commit = "9f49f35cf04edcf11fc23d849467d51f462be141" }) -- enable LSP
 	use({ "jose-elias-alvarez/null-ls.nvim", commit = "a67897283fdb0051ad5c72e840e1845e195b979b" }) -- for formatters and linters
   use({ "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" })
+	use({ "glepnir/lspsaga.nvim", commit = "b7b4777369b441341b2dcd45c738ea4167c11c9e", })
 	use({
 		"williamboman/mason.nvim",
 		commit = "22129c714fcb0acd2cebba77980e6461a2c69d6b",
@@ -276,7 +277,6 @@ return require("packer").startup(function(use)
 	use({ "nvim-lualine/lualine.nvim", commit = "bfa0d99ba6f98d077dd91779841f1c88b7b5c165"})
   use({ "nvim-tree/nvim-web-devicons", commit = "189ad3790d57c548896a78522fd8b0d0fc11be31" })
   use({ "DaikyXendo/nvim-material-icon", commit = "602088c2682e61cbebd7191de7dc88bfa90c6890" })
-  use({ "SmiteshP/nvim-navic", commit = "7a2b823152fe4de65ee7925b0e32d26ed73bc57c" })
 
 	-- Surround block of codes
 	-- use({ 'tpope/vim-surround', commit = "3d188ed2113431cf8dac77be61b842acb64433d9" })

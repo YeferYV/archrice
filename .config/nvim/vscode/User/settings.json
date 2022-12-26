@@ -104,10 +104,6 @@
       "commands": [ "editor.action.revealDeclaration" ]
     },
     {
-      "before": ["g","e"],
-      "commands": [ "workbench.actions.view.problems" ]
-    },
-    {
       "before": ["g","F"],
       "commands": [ "editor.action.format" ]
     },
@@ -134,6 +130,10 @@
     {
       "before": ["g","N"],
       "commands": [ "editor.action.marker.nextInFiles" ]
+    },
+    {
+      "before": ["g","o"],
+      "commands": [ "workbench.actions.view.problems" ]
     },
     {
       "before": ["g","p"],
@@ -768,12 +768,6 @@
         "command": "editor.action.revealDeclaration"
       },
       {
-        "key": "e",
-        "name": "Errors",
-        "type": "command",
-        "command": "workbench.actions.view.problems"
-      },
-      {
         "key": "F",
         "name": "Format",
         "type": "command",
@@ -815,6 +809,12 @@
       },
       {
         "key": "o",
+        "name": "Open Errors",
+        "type": "command",
+        "command": "workbench.actions.view.problems"
+      },
+      {
+        "key": "O",
         "name": "Outline",
         "type": "command",
         "command": "outline.focus"
@@ -1120,13 +1120,13 @@
         "command": "workbench.view.extensions"
       },
       {
-        "key": "p",
+        "key": "o",
         "name": "Show problem",
         "type": "command",
         "command": "workbench.actions.view.problems"
       },
       {
-        "key": "o",
+        "key": "O",
         "name": "Show output",
         "type": "command",
         "command": "workbench.action.output.toggleOutput"
