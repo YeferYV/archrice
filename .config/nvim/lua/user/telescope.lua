@@ -5,6 +5,7 @@ end
 
 require('telescope').load_extension('fzf')
 local actions = require "telescope.actions"
+local action_set = require "telescope.actions.set"
 
 telescope.setup {
   defaults = {
@@ -43,6 +44,18 @@ telescope.setup {
     },
     mappings = {
       i = {
+        -- FIXED: actions.edit_register
+        ["<C-r>"] = function(prompt_bufnr)
+            local selection = require("telescope.actions.state").get_selected_entry()
+            local updated_value = vim.fn.input("Edit [" .. selection.value .. "] ❯ ", selection.content)
+
+            vim.fn.setreg(selection.value:lower(), updated_value)
+            selection.content = updated_value
+
+            require("telescope.actions").close(prompt_bufnr)
+            require("telescope.builtin").resume()
+          end,
+
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
 
@@ -76,9 +89,22 @@ telescope.setup {
       },
 
       n = {
+        -- FIXED: actions.edit_register
+        ["<C-r>"] = function(prompt_bufnr)
+            local selection = require("telescope.actions.state").get_selected_entry()
+            local updated_value = vim.fn.input("Edit [" .. selection.value .. "] ❯ ", selection.content)
+
+            vim.fn.setreg(selection.value:lower(), updated_value)
+            selection.content = updated_value
+
+            require("telescope.actions").close(prompt_bufnr)
+            require("telescope.builtin").resume()
+          end,
+
         ["q"] = actions.close,
         ["<esc>"] = actions.close,
         ["<CR>"] = actions.select_default,
+
         ["<C-x>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
         ["<M-t>"] = actions.select_tab,
@@ -94,8 +120,12 @@ telescope.setup {
         ["j"] = actions.move_selection_next,
         ["k"] = actions.move_selection_previous,
         ["l"] = actions.select_default,
-        ["J"] = actions.results_scrolling_up,
-        ["K"] = actions.results_scrolling_down,
+        ["J"] = function(prompt_bufnr)
+            action_set.shift_selection(prompt_bufnr, 10)
+          end,
+        ["K"] = function(prompt_bufnr)
+            action_set.shift_selection(prompt_bufnr, -10)
+          end,
 
         ["<Down>"] = actions.move_selection_next,
         ["<Up>"] = actions.move_selection_previous,
