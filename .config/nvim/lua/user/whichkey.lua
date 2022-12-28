@@ -380,6 +380,13 @@ local mappings = {
     [":"] = { "<C-w>p<cmd>call SwitchWindow2()<cr>", "Move to recent window"},
     ["="] = { "<C-w>=", "Reset windows sizes"},
   },
+  y = {
+    name = "second clipboard",
+    ["p"] = { '"*p',"Paste After" },
+    ["P"] = { '"*P',"Paste Before" },
+    ["y"] = { '"*yg_',"Yank Forward" },
+    ["Y"] = { '"*Y',"Yank Line" },
+  },
   z = {
     name = "folding",
     ["j"] = { "zj","next fold" },
