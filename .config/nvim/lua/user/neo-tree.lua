@@ -363,17 +363,6 @@ require("neo-tree").setup({
           end
         end,
 
-      quit_on_open = function (state)
-        local node = state.tree:get_node()
-        if require("neo-tree.utils").is_expandable(node) then
-          state.commands["toggle_node"](state)
-        else
-          state.commands['open'](state)
-          state.commands["close_window"](state)
-          vim.cmd('normal! M')
-        end
-      end,
-
       open_tabnew_showbuffer = function(state)
           state.commands["open_tabnew"](state)
           vim.cmd("Neotree show")
@@ -400,16 +389,34 @@ require("neo-tree").setup({
           end
         end,
 
+      quit_on_open = function (state)
+        local node = state.tree:get_node()
+        if require("neo-tree.utils").is_expandable(node) then
+          state.commands["toggle_node"](state)
+        else
+          state.commands['open'](state)
+          state.commands["close_window"](state)
+          vim.cmd('normal! M')
+        end
+      end,
+
       system_open = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
         vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
       end,
 
-      wezterm_open = function(state)
+      sixel_open_vertical = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        vim.api.nvim_command(string.format("silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read '", path))
+        -- vim.api.nvim_command(string.format("silent TermExec direction=vertical cmd='(tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE)'", path))
+        -- vim.cmd[[wincmd l]]; vim.api.nvim_command(string.format("term ((tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read)", path));
+        require('toggleterm.terminal').Terminal:new({
+          cmd = string.format("(img2sixel -w 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
+          on_exit = function(term)
+              vim.api.nvim_command("!killall -s SIGWINCH nvim")
+            end,
+        }):toggle(70,"vertical")
       end,
 
       sixel_open_float = function(state)
@@ -425,18 +432,36 @@ require("neo-tree").setup({
         }):toggle()
       end,
 
-      sixel_open_vertical = function(state)
+      ueberzug_open_vertical = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        -- vim.api.nvim_command(string.format("silent TermExec direction=vertical cmd='(tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE)'", path))
-        -- vim.cmd[[wincmd l]]; vim.api.nvim_command(string.format("term ((tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read)", path));
         require('toggleterm.terminal').Terminal:new({
-          cmd = string.format("(img2sixel -w 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
-          on_exit = function(term)
-              vim.api.nvim_command("!killall -s SIGWINCH nvim")
-            end,
+          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='95' [y]='1' [width]='70' [height]='70' [path]='%s'); read; } | ueberzug layer --parser bash'", path),
+          -- on_exit = function(term)
+          --     vim.api.nvim_command("!killall -s SIGWINCH nvim")
+          --   end,
         }):toggle(70,"vertical")
       end,
+
+      ueberzug_open_float = function(state)
+        local node = state.tree:get_node()
+        local path = node:get_id()
+        require('toggleterm.terminal').Terminal:new({
+          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='12' [y]='5' [width]='110' [height]='110' [path]='%s'); read; } | ueberzug layer --parser bash'", path),
+          direction = "float",
+          -- on_open = function(term)
+          --     vim.cmd[[ call feedkeys("\<Esc>") ]]
+          --     vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+          --   end,
+        }):toggle()
+      end,
+
+      wezterm_open_vertical = function(state)
+        local node = state.tree:get_node()
+        local path = node:get_id()
+        vim.api.nvim_command(string.format("silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read '", path))
+      end,
+
     },
     window = {
       mappings = {
@@ -447,18 +472,20 @@ require("neo-tree").setup({
         ["H"] = "toggle_hidden",
         ["L"] = "open_unfocus",
         ["i"] = "print_path",
-        ["X"] = "sixel_open_vertical",
-        ["W"] = "sixel_open_float",
-        ["w"] = "wezterm_open",
         ["O"] = "system_open",
+        ["u"] = "ueberzug_open_float",
+        ["U"] = "ueberzug_open_vertical",
+        ["w"] = "wezterm_open_vertical",
+        ["z"] = "sixel_open_float",
+        ["Z"] = "sixel_open_vertical",
+        ["t"] = "open_tabnew_showbuffer",
+        ["T"] = "open_tabdrop_showbuffer",
         ["/"] = "fuzzy_finder",
         ["D"] = "fuzzy_finder_directory",
         ["F"] = "filter_on_submit",
         ["<c-x>"] = "clear_filter",
         ["gk"] = "prev_git_modified",
         ["gj"] = "next_git_modified",
-        ["t"] = "open_tabnew_showbuffer",
-        ["T"] = "open_tabdrop_showbuffer",
       }
     }
   },

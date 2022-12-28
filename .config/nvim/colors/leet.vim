@@ -15,7 +15,7 @@ hi   Conditional                           guifg=#5555ff  guibg=none     gui=non
 hi   Constant                              guifg=#bbbb00  guibg=none     gui=none
 hi   Cursor                                guifg=#000000  guibg=#1c1cff  gui=none
 hi   CursorColumn                          guifg=none     guibg=none     gui=none
-hi   CursorLine                            guifg=none     guibg=none     gui=none
+hi   CursorLine                            guifg=none     guibg=#0c0c0c  gui=none
 hi   CursorLineFold                        guifg=#444444  guibg=none     gui=none
 hi   CursorLineNr                          guifg=#cccccc  guibg=none     gui=none
 hi   CursorLineSign                        guifg=none     guibg=none     gui=none
