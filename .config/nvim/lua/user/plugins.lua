@@ -325,7 +325,10 @@ return require("packer").startup(function(use)
   -- Text Objects
 	-- use { 'wellle/targets.vim', commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d", }
   use { "michaeljsmith/vim-indent-object", commit = "5c5b24c959478929b54a9e831a8e2e651a465965" }
-  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564", }
+  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564" }
+  use { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }
+  use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
+  use { "mg979/vim-visual-multi", commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a" }
 
 	-- The Interactive Scratchpad (aka playground or quokka-alt)
 	-- use { "metakirby5/codi.vim", commit = "6537ba677a0c7c6c796b195f29077b57fad33716" }

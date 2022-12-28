@@ -437,9 +437,6 @@ require("neo-tree").setup({
         local path = node:get_id()
         require('toggleterm.terminal').Terminal:new({
           cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='95' [y]='1' [width]='70' [height]='70' [path]='%s'); read; } | ueberzug layer --parser bash'", path),
-          -- on_exit = function(term)
-          --     vim.api.nvim_command("!killall -s SIGWINCH nvim")
-          --   end,
         }):toggle(70,"vertical")
       end,
 
@@ -449,10 +446,6 @@ require("neo-tree").setup({
         require('toggleterm.terminal').Terminal:new({
           cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='12' [y]='5' [width]='110' [height]='110' [path]='%s'); read; } | ueberzug layer --parser bash'", path),
           direction = "float",
-          -- on_open = function(term)
-          --     vim.cmd[[ call feedkeys("\<Esc>") ]]
-          --     vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
-          --   end,
         }):toggle()
       end,
 

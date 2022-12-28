@@ -39,10 +39,10 @@ require'nvim-treesitter.configs'.setup {
         -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/queries/c/textobjects.scm
         -- ["aa"] = "@attribute.inner",  -- not supported in c/go/javascript/lua/python/rust
         -- ["ia"] = "@attribute.inner",  -- not supported in c/go/javascript/lua/python/rust
-        ['ac'] = '@class.outer',         -- not supported in lua
-        ['ic'] = '@class.inner',         -- not supported in lua
-        ['aC'] = '@conditional.outer',   --     supported in bash
-        ['iC'] = '@conditional.inner',   --     supported in bash
+        ['aq'] = '@class.outer',         -- not supported in lua
+        ['iq'] = '@class.inner',         -- not supported in lua
+        ['aQ'] = '@conditional.outer',   --     supported in bash
+        ['iQ'] = '@conditional.inner',   --     supported in bash
         ["ak"] = "@block.outer",
         ["ik"] = "@block.inner",         -- not supported in c
         ['aK'] = '@call.outer',
@@ -69,72 +69,72 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        [']ac'] = '@class.outer',
-        [']aC'] = '@conditional.outer',
-        ["]ak"] = "@block.outer",
+        [']aq'] = '@class.outer',
+        [']aQ'] = '@conditional.outer',
+        [']ak'] = '@block.outer',
         [']aK'] = '@call.outer',
-        ["]af"] = "@function.outer",
+        [']af'] = '@function.outer',
         [']al'] = '@loop.outer',
         [']aP'] = '@parameter.outer',
 
-        [']ic'] = '@class.inner',
-        [']iC'] = '@conditional.inner',
-        ["]ik"] = "@block.inner",
+        [']iq'] = '@class.inner',
+        [']iQ'] = '@conditional.inner',
+        [']ik'] = '@block.inner',
         [']iK'] = '@call.inner',
-        ["]if"] = "@function.inner",
+        [']if'] = '@function.inner',
         [']il'] = '@loop.inner',
         [']iP'] = '@parameter.inner',
         [']]'] = '@parameter.inner',
       },
       goto_next_end = {
-        [']eac'] = '@class.outer',
-        [']eaC'] = '@conditional.outer',
-        ["]eak"] = "@block.outer",
+        [']eaq'] = '@class.outer',
+        [']eaQ'] = '@conditional.outer',
+        [']eak'] = '@block.outer',
         [']eaK'] = '@call.outer',
-        ["]eaf"] = "@function.outer",
+        [']eaf'] = '@function.outer',
         [']eal'] = '@loop.outer',
         [']eaP'] = '@parameter.outer',
 
-        [']eic'] = '@class.inner',
-        [']eiC'] = '@conditional.inner',
-        ["]eik"] = "@block.inner",
+        [']eiq'] = '@class.inner',
+        [']eiQ'] = '@conditional.inner',
+        [']eik'] = '@block.inner',
         [']eiK'] = '@call.inner',
-        ["]eif"] = "@function.inner",
+        [']eif'] = '@function.inner',
         [']eil'] = '@loop.inner',
         [']eiP'] = '@parameter.inner',
       },
       goto_previous_start = {
-        ['[ac'] = '@class.outer',
-        ['[aC'] = '@conditional.outer',
-        ["[ak"] = "@block.outer",
+        ['[aq'] = '@class.outer',
+        ['[aQ'] = '@conditional.outer',
+        ['[ak'] = '@block.outer',
         ['[aK'] = '@call.outer',
-        ["[af"] = "@function.outer",
+        ['[af'] = '@function.outer',
         ['[al'] = '@loop.outer',
         ['[aP'] = '@parameter.outer',
 
-        ['[ic'] = '@class.inner',
-        ['[iC'] = '@conditional.inner',
-        ["[ik"] = "@block.inner",
+        ['[iq'] = '@class.inner',
+        ['[iQ'] = '@conditional.inner',
+        ['[ik'] = '@block.inner',
         ['[iK'] = '@call.inner',
-        ["[if"] = "@function.inner",
+        ['[if'] = '@function.inner',
         ['[il'] = '@loop.inner',
         ['[iP'] = '@parameter.inner',
         ['[['] = '@parameter.inner',
       },
       goto_previous_end = {
-        ['[eac'] = '@class.outer',
-        ['[eaC'] = '@conditional.outer',
-        ["[eak"] = "@block.outer",
+        ['[eaq'] = '@class.outer',
+        ['[eaQ'] = '@conditional.outer',
+        ['[eak'] = '@block.outer',
         ['[eaK'] = '@call.outer',
-        ["[eaf"] = "@function.outer",
+        ['[eaf'] = '@function.outer',
         ['[eal'] = '@loop.outer',
         ['[eaP'] = '@parameter.outer',
 
-        ['[eic'] = '@class.inner',
-        ['[eiC'] = '@conditional.inner',
-        ["[eik"] = "@block.inner",
+        ['[eiq'] = '@class.inner',
+        ['[eiQ'] = '@conditional.inner',
+        ['[eik'] = '@block.inner',
         ['[eiK'] = '@call.inner',
-        ["[eif"] = "@function.inner",
+        ['[eif'] = '@function.inner',
         ['[eil'] = '@loop.inner',
         ['[eiP'] = '@parameter.inner',
       },
@@ -152,8 +152,8 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       border = 'rounded', --'none', 'single', 'double', 'rounded', 'solid', 'shadow'.
       peek_definition_code = {
-        ["<leader>lf"] = "@function.outer",
-        ["<leader>lc"] = "@class.outer",
+        ['<leader>lf'] = '@function.outer',
+        ['<leader>lc'] = '@class.outer',
       },
     },
   },
