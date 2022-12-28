@@ -89,12 +89,9 @@ local mappings = {
   ["7"] = "which_key_ignore",
   ["8"] = "which_key_ignore",
   ["9"] = "which_key_ignore",
-  ["p"] = "which_key_ignore",
-  ["Q"] = "which_key_ignore",
-  ["v"] = "which_key_ignore",
-  ["V"] = "which_key_ignore",
-  ["x"] = "which_key_ignore",
-  ["y"] = "which_key_ignore",
+  ["v"] = "which_key_ignore", -- vertical ToggleTerm
+  ["V"] = "which_key_ignore", -- horizontal ToggleTerm
+  ["x"] = "which_key_ignore", -- Close Current Buffer
   ["<Tab>"] = { "which_key_ignore" },
   ["<S-Tab>"] = { "which_key_ignore" },
 
@@ -231,6 +228,25 @@ local mappings = {
     X = { "<cmd>Telescope lsp_outgoing_calls initial_mode=normal<cr>", "Telescope outgoing calls" },
     z = { "<cmd>AerialToggle<cr>","Symbols outline"},
     Z = { "<cmd>AerialToggle float<cr>","Symbols outline"},
+  },
+
+  p = {
+    name = "Peek LspSaga",
+    a = { "<cmd>Lspsaga code_action<cr>", "Code Action" },
+    d = { "<cmd>Lspsaga peek_definition<cr>", "Peek Definition" },
+    f = { "<cmd>Lspsaga lsp_finder<cr>", "Finder" },
+    h = { "<cmd>Lspsaga hover_doc<cr>", "Hover" },
+    n = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostics" },
+    N = { function() require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR }) end, "Next Error" },
+    o = { "<cmd>Lspsaga show_line_diagnostics<cr>", "Show Line Diagnostics" },
+    O = { "<cmd>Lspsaga show_cursor_diagnostics<cr>", "Show Cursor Diagnostics" },
+    p = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostics" },
+    P = { function() require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, "Prev Error" },
+    r = { "<cmd>Lspsaga open_floaterm ranger<cr>", "Ranger" },
+    R = { "<cmd>Lspsaga rename<cr>", "Rename" },
+    t = { "<cmd>Lspsaga open_floaterm<cr>", "Open Float Terminal" },
+    x = { "<cmd>Lspsaga close_floaterm<CR>", "Close Float Terminal" },
+    z = { "<cmd>Lspsaga outline<cr>", "Toggle outline" },
   },
 
   s = {

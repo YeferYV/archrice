@@ -4,6 +4,7 @@ local term_opts = { silent = true }
 
 -- Shorten function name
 local keymap = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
@@ -27,6 +28,7 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-t>", "<C-t>", opts)
 
 -- position navigation (in wezterm <C-i> outputs Tab)
 keymap("n", "<C-y>", "<C-i>", opts)
@@ -105,9 +107,9 @@ keymap("n","Y","yg_",opts)
 -- keymap("c","w!!","execute 'silent! write !sudo tee % >/dev/null' <bar> edit!",opts)
 keymap("c","w!!","w !sudo tee %",opts)
 
--- ╭───────────────────────╮
--- │ Start leader mappings │
--- ╰───────────────────────╯
+-- ╭─────────────────╮
+-- │ leader mappings │
+-- ╰─────────────────╯
 
 -- Buffer keymaps
 keymap("n","<leader>1","<Cmd>BufferLineGoToBuffer 1<CR>",opts)
@@ -127,26 +129,26 @@ keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
 -- keymap("n",";F","<Cmd>BufferLineMoveNext <CR>",opts)
 
 -- normal mode (easymotion-like)
-vim.api.nvim_set_keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", {noremap=true})
+keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
+keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
+keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
+keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
+keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", {noremap=true})
 
 -- visual mode (easymotion-like)
-vim.api.nvim_set_keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", {noremap=true})
+keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
+keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
+keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
+keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
+keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", {noremap=true})
 
 -- normal mode (sneak-like)
-vim.api.nvim_set_keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
+keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
+keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
 
 -- visual mode (sneak-like)
-vim.api.nvim_set_keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
+keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
+keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
 
 -- Terminal
 keymap("n","<leader>v","<Cmd>ToggleTerm direction=vertical   size=70<CR>",opts)
@@ -156,13 +158,13 @@ keymap("n","<leader>V","<Cmd>ToggleTerm direction=horizontal size=10<CR>",opts)
 keymap("t","<C-x>","<C-\\><C-n>:call WinBufSwap()<cr><Esc><cmd>set number<cr>",opts)
 
 -- Terminal Paste from secondary clipboard
-keymap("n","<leader>p",'"*p',opts)
+keymap("n","<leader>yp",'"*p',opts)
 -- keymap("n","<leader>P",'"*P',opts)
 -- keymap("v","<leader>p",'"*p',opts)
 -- keymap("v","<leader>P",'"*P',opts)
 
 -- Terminal Copy to secondary clipboard
-keymap("n","<leader>y",'"*yg_',opts)
+keymap("n","<leader>yy",'"*yg_',opts)
 -- keymap("n","<leader>Y",'"*yy',opts)
 -- keymap("v","<leader>y",'"*y',opts)
 -- keymap("v","<leader>Y",'"*y',opts)
@@ -172,3 +174,23 @@ keymap("n","<leader>y",'"*yg_',opts)
 keymap("v","<leader>z",":'<,'>fold      <CR>",opts)
 keymap("v","<leader>Z",":'<,'>!column -t<CR>",opts)
 keymap("v","<leader>gw","gw",opts)
+
+-- ╭──────────────────╮
+-- │ Lspsaga mappings │
+-- ╰──────────────────╯
+
+map({"n","v"}, "gsa", "<cmd>Lspsaga code_action<CR>", { silent = true })
+map("n", "gsd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+map("n", "gsf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+map("n", "gsh", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+map("n", "gsn", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+map("n", "gsN", function() require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR }) end, { silent = true })
+map("n", "gso", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+map("n", "gsO", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+map("n", "gsp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
+map("n", "gsP", function() require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, { silent = true })
+map("n", "gsr", "<cmd>Lspsaga open_floaterm ranger<CR>", { silent = true })
+map("n", "gsR", "<cmd>Lspsaga rename<CR>", { silent = true })
+map("n", "gst", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
+map("n", "gsz", "<cmd>LSpsaga outline<CR>",{ silent = true })
+map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
