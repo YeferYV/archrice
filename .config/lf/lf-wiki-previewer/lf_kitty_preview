@@ -1,5 +1,5 @@
 #!/bin/bash
-#https://gist.github.com/Provessor/e4ee757e6c424083ca3c6441fe6ab9ac
+# https://gist.github.com/Provessor/e4ee757e6c424083ca3c6441fe6ab9ac
 
 # FILE="$1"
 W=$2
@@ -26,8 +26,11 @@ function hash_sixel {
 }
 
 function draw_kitty {
-    [[ -z $TMUX ]] && kitty +kitten icat --transfer-mode file --place "${W}x${H}@${X}x${Y}" "$1" ||\
+    [ -e "$LF_UEBERZUG" ] && printf '{"action": "add", "identifier": "preview", "x": %d, "y": %d, "width": %d, "height": %d, "path": "%s"}\n' "$4" "$5" "$2" "$3" "$1" >"$LF_UEBERZUG" ||
+    {
+      [[ -z $TMUX ]] && kitty +kitten icat --transfer-mode file --place "${W}x${H}@${X}x${Y}" "$1" ||
       ( tput cup $((Y)) $((X)) && img2sixel --loop-control=disable --height=400 "$1" ) >$(head -n1 /tmp/sixel-$WEZTERM_PANE)
+    }
 }
 
 function draw_sixel {

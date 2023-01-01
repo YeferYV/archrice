@@ -159,6 +159,7 @@ cmd cmd_redraw_up :{{
   $lf -remote "send $id reload"
   # $lf -remote "send $id up && send $id redraw"
   %wc -l "$fx"
+  &({ declare -Ap add_command=([action]='add' [identifier]='PREVIEW' [x]="55" [y]="1" [width]="110" [height]="110" [path]="$fx"); sleep 3; } | ueberzug layer --parser bash)
 }}
 
 cmd cmd_redraw_down :{{
@@ -168,6 +169,7 @@ cmd cmd_redraw_down :{{
   $lf -remote "send $id reload"
   # $lf -remote "send $id down && send $id redraw"
   %wc -l "$fx"
+  &({ declare -Ap add_command=([action]='add' [identifier]='PREVIEW' [x]="55" [y]="1" [width]="110" [height]="110" [path]="$fx"); sleep 3; } | ueberzug layer --parser bash)
 }}
 
 cmd setbg ${{
@@ -301,6 +303,9 @@ map <a-i> imgcat
 map <a-o> sixel
 map <a-u> !tput cup 0 5 && img2sixel --width $(($(tput cols)*15/2)) $fx
 map <a-p> $wezterm cli split-pane --horizontal -- bash -c "img2sixel --width $(($(tput cols)*4)) $fx && read"
+map <a-l> $({ declare -Ap add_command=([action]="add" [identifier]="PREVIEW" [x]="1" [y]="1" [width]="$(tput cols)" [height]="$(tput lines)" [path]="$fx"); read; } | ueberzug layer --parser bash)
+map <a-h> &(printf 'chafa "%s" && read' $fx  | xargs -I var tmux popup -w 110 -h 37 -x 60 -y 1 -E "var")
+map <a-y> &(printf 'chafa "%s"' $fx  | xargs -I var tmux split-window -h \; send-keys "var" 'Enter')
 
 map <c-j> cmd_redraw_down
 map <c-k> cmd_redraw_up

@@ -3,10 +3,11 @@
 
 # To skip cleanup
 if [ "$1" != "$f" ]; then
-case "$(file -Lb --mime-type -- "$f")" in
-  image/*) exit;;
-esac
+  case "$(file -Lb --mime-type -- "$f")" in
+    image/*) exit;;
+  esac
 fi
 
 # kitty +icat --clear --silent --transfer-mode file
 kitty +icat --clear --transfer-mode file || killall -s SIGWINCH lf
+[ -e "$LF_UEBERZUG" ] && printf '{"action": "remove", "identifier": "preview"}\n' >"$LF_UEBERZUG"

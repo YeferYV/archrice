@@ -175,9 +175,6 @@ bindkey '^[[1;3C'      cdUndoKey
 # [ -z "$RANGERCD" ] && echo "Empty string"; [ -n "$RANGERCD" ] && echo "No-empty string"
 
 lfcd () {
-    # stty echo
-    # zle redisplay
-    # zle kill-whole-line
     tmp="$(mktemp)"
     # ~/.config/lf/lf-wiki-previewer/lf_ueberzug_previewer -last-dir-path="$tmp" "$@" < $TTY      #tty needed by fzf
     ~/.config/lf/lf-wiki-previewer/lf_scrolling_previewer -last-dir-path="$tmp" "$@" < /dev/tty   #tty needed by fzf
@@ -196,6 +193,19 @@ zle -N my-script_lfcd
 bindkey '^o' my-script_lfcd
 bindkey '\eo' 'lfcd'
 [ -n "$LF_CD" ] && unset LF_CD && lfcd $PWD
+
+lfub () {
+    cleanup() { exec 3>&-; rm "$LF_UEBERZUG" >/dev/null; }
+    [ ! -d "$HOME/.cache/lf" ] && mkdir -p "$HOME/.cache/lf";
+    export LF_UEBERZUG="$HOME/.cache/lf/ueberzug-$$";
+    mkfifo "$LF_UEBERZUG";
+    ueberzug layer -s <"$LF_UEBERZUG" &;
+    exec 3>"$LF_UEBERZUG";
+    trap cleanup HUP INT QUIT TERM PWR EXIT;
+    lfcd "$@" 3>&-;
+}
+zle -N lfub
+bindkey '\eu' 'lfub'
 
 ## fzf scripts
 fmzcd () {

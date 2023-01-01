@@ -14,7 +14,7 @@ mod4 + {_,shift + ,ctrl + ,shift + ctrl + ,alt + }Return
 
 # terminal emulator
 mod1 + {_,shift +,ctrl +}Return
-  {kitty,alacritty,cool-retro-term}
+  {kitty,alacritty -e tmux,cool-retro-term}
 
 # dunst close/reopen notification
 ctrl + {_,shift + }Return
