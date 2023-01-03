@@ -153,7 +153,7 @@ cmd cmd_scrollup &{{
 }}
 
 cmd cmd_redraw_up :{{
-	$(echo 0 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
+	$(echo 1 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
   up
   redraw
   $lf -remote "send $id reload"
@@ -163,7 +163,7 @@ cmd cmd_redraw_up :{{
 }}
 
 cmd cmd_redraw_down :{{
-	$(echo 0 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
+	$(echo 1 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
   down
   redraw
   $lf -remote "send $id reload"
