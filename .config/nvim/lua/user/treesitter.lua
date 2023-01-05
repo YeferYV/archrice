@@ -30,115 +30,124 @@ require'nvim-treesitter.configs'.setup {
     }
   },
   textobjects = {
-    select = {
-      enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
-      include_surrounding_whitespace = false,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined here:
-        -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/queries/c/textobjects.scm
-        -- ["aa"] = "@attribute.inner",  -- not supported in c/go/javascript/lua/python/rust
-        -- ["ia"] = "@attribute.inner",  -- not supported in c/go/javascript/lua/python/rust
-        ['aq'] = '@class.outer',         -- not supported in lua
-        ['iq'] = '@class.inner',         -- not supported in lua
-        ['aQ'] = '@conditional.outer',   --     supported in bash
-        ['iQ'] = '@conditional.inner',   --     supported in bash
-        ["ak"] = "@block.outer",
-        ["ik"] = "@block.inner",         -- not supported in c
-        ['aK'] = '@call.outer',
-        ['iK'] = '@call.inner',
-        -- ['aK'] = '@comment.outer',    -- not supported in c/go/javascript/lua/python/rust
-        ["af"] = "@function.outer",      --     supported in bash
-        ["if"] = "@function.inner",      --     supported in bash
-        -- ["aF"] = "@frame.outer",      -- not supported in c/go/javascript/lua/python/rust
-        -- ["iF"] = "@frame.inner",      -- not supported in c/go/javascript/lua/python/rust
-        ['al'] = '@loop.outer',          --     supported in bash
-        ['il'] = '@loop.inner',          --     supported in bash
-        ['aP'] = '@parameter.outer',
-        ['iP'] = '@parameter.inner',
-        -- ["aS"] = "@statement.outer",  -- not supported in c/go/javascript/lua/python/rust
-        -- ["iS"] = "@scopename.inner",  -- not supported in      javascript/lua
-      },
-      -- selection_modes = {
-      --   ['@parameter.outer'] = 'v', -- charwise
-      --   ['@function.outer'] = 'V', -- linewise
-      --   ['@class.outer'] = '<c-v>', -- blockwise
-      -- },
-    },
+    -- select = {
+    --   enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
+    --   include_surrounding_whitespace = false,
+    --   lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+    --   keymaps = {
+    --     -- You can use the capture groups defined here:
+    --     -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/queries/c/textobjects.scm
+    --     -- ["aa"] = "@attribute.inner",  -- not supported in c/go/javascript/lua/python/rust
+    --     -- ["ia"] = "@attribute.inner",  -- not supported in c/go/javascript/lua/python/rust
+    --     ['aq'] = '@call.outer',
+    --     ['iq'] = '@call.inner',
+    --     ['aQ'] = '@class.outer',         -- not supported in lua
+    --     ['iQ'] = '@class.inner',         -- not supported in lua
+    --     ['ag'] = '@comment.inner',       -- not supported in javascript
+    --     ['ig'] = '@comment.outer',       -- not supported in javascript
+    --     ['aG'] = '@conditional.outer',   --     supported in bash
+    --     ['iG'] = '@conditional.inner',   --     supported in bash
+    --     ["aB"] = "@block.outer",
+    --     ["iB"] = "@block.inner",         -- not supported in c
+    --     -- ["af"] = "@frame.outer",      -- not supported in c/go/javascript/lua/python/rust
+    --     -- ["if"] = "@frame.inner",      -- not supported in c/go/javascript/lua/python/rust
+    --     ["aF"] = "@function.outer",      --     supported in bash
+    --     ["iF"] = "@function.inner",      --     supported in bash
+    --     ['aL'] = '@loop.outer',          --     supported in bash
+    --     ['iL'] = '@loop.inner',          --     supported in bash
+    --     ['aP'] = '@parameter.outer',
+    --     ['iP'] = '@parameter.inner',
+    --     -- ["aS"] = "@statement.outer",  -- not supported in c/go/javascript/lua/python/rust
+    --     -- ["iS"] = "@scopename.inner",  -- not supported in      javascript/lua
+    --   },
+    --   -- selection_modes = {
+    --   --   ['@parameter.outer'] = 'v', -- charwise
+    --   --   ['@function.outer'] = 'V', -- linewise
+    --   --   ['@class.outer'] = '<c-v>', -- blockwise
+    --   -- },
+    -- },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']aq'] = '@class.outer',
-        [']aQ'] = '@conditional.outer',
-        [']ak'] = '@block.outer',
-        [']aK'] = '@call.outer',
-        [']af'] = '@function.outer',
-        [']al'] = '@loop.outer',
-        [']aP'] = '@parameter.outer',
-
-        [']iq'] = '@class.inner',
-        [']iQ'] = '@conditional.inner',
-        [']ik'] = '@block.inner',
-        [']iK'] = '@call.inner',
-        [']if'] = '@function.inner',
-        [']il'] = '@loop.inner',
-        [']iP'] = '@parameter.inner',
-        [']]'] = '@parameter.inner',
-      },
-      goto_next_end = {
-        [']eaq'] = '@class.outer',
-        [']eaQ'] = '@conditional.outer',
-        [']eak'] = '@block.outer',
-        [']eaK'] = '@call.outer',
-        [']eaf'] = '@function.outer',
-        [']eal'] = '@loop.outer',
-        [']eaP'] = '@parameter.outer',
-
-        [']eiq'] = '@class.inner',
-        [']eiQ'] = '@conditional.inner',
-        [']eik'] = '@block.inner',
-        [']eiK'] = '@call.inner',
-        [']eif'] = '@function.inner',
-        [']eil'] = '@loop.inner',
-        [']eiP'] = '@parameter.inner',
-      },
       goto_previous_start = {
-        ['[aq'] = '@class.outer',
-        ['[aQ'] = '@conditional.outer',
-        ['[ak'] = '@block.outer',
-        ['[aK'] = '@call.outer',
-        ['[af'] = '@function.outer',
-        ['[al'] = '@loop.outer',
+        ['[aq'] = '@call.outer',
+        ['[aQ'] = '@class.outer',
+        ['[ag'] = '@comment.outer',
+        ['[aG'] = '@conditional.outer',
+        ['[aB'] = '@block.outer',
+        ['[aF'] = '@function.outer',
+        ['[aL'] = '@loop.outer',
         ['[aP'] = '@parameter.outer',
 
-        ['[iq'] = '@class.inner',
-        ['[iQ'] = '@conditional.inner',
-        ['[ik'] = '@block.inner',
-        ['[iK'] = '@call.inner',
-        ['[if'] = '@function.inner',
-        ['[il'] = '@loop.inner',
+        ['[iq'] = '@call.inner',
+        ['[iQ'] = '@class.inner',
+        ['[ig'] = '@comment.inner',
+        ['[iG'] = '@conditional.inner',
+        ['[iB'] = '@block.inner',
+        ['[iF'] = '@function.inner',
+        ['[iL'] = '@loop.inner',
         ['[iP'] = '@parameter.inner',
         ['[['] = '@parameter.inner',
       },
+      goto_next_start = {
+        [']aq'] = '@call.outer',
+        [']aQ'] = '@class.outer',
+        [']ag'] = '@comment.outer',
+        [']aG'] = '@conditional.outer',
+        [']aB'] = '@block.outer',
+        [']aF'] = '@function.outer',
+        [']aL'] = '@loop.outer',
+        [']aP'] = '@parameter.outer',
+
+        [']iq'] = '@call.inner',
+        [']iQ'] = '@class.inner',
+        [']ig'] = '@comment.inner',
+        [']iG'] = '@conditional.inner',
+        [']iB'] = '@block.inner',
+        [']iF'] = '@function.inner',
+        [']iL'] = '@loop.inner',
+        [']iP'] = '@parameter.inner',
+        [']]'] = '@parameter.inner',
+      },
       goto_previous_end = {
-        ['[eaq'] = '@class.outer',
-        ['[eaQ'] = '@conditional.outer',
-        ['[eak'] = '@block.outer',
-        ['[eaK'] = '@call.outer',
-        ['[eaf'] = '@function.outer',
-        ['[eal'] = '@loop.outer',
+        ['[eaq'] = '@call.outer',
+        ['[eaQ'] = '@class.outer',
+        ['[eag'] = '@comment.outer',
+        ['[eaG'] = '@conditional.outer',
+        ['[eaB'] = '@block.outer',
+        ['[eaF'] = '@function.outer',
+        ['[eaL'] = '@loop.outer',
         ['[eaP'] = '@parameter.outer',
 
-        ['[eiq'] = '@class.inner',
-        ['[eiQ'] = '@conditional.inner',
-        ['[eik'] = '@block.inner',
-        ['[eiK'] = '@call.inner',
-        ['[eif'] = '@function.inner',
-        ['[eil'] = '@loop.inner',
+        ['[eiq'] = '@call.inner',
+        ['[eiQ'] = '@class.inner',
+        ['[eig'] = '@comment.inner',
+        ['[eiG'] = '@conditional.inner',
+        ['[eiB'] = '@block.inner',
+        ['[eiF'] = '@function.inner',
+        ['[eiL'] = '@loop.inner',
         ['[eiP'] = '@parameter.inner',
       },
+      goto_next_end = {
+        [']eaq'] = '@call.outer',
+        [']eaQ'] = '@class.outer',
+        [']eag'] = '@comment.outer',
+        [']eaG'] = '@conditional.outer',
+        [']eaB'] = '@block.outer',
+        [']eaF'] = '@function.outer',
+        [']eaL'] = '@loop.outer',
+        [']eaP'] = '@parameter.outer',
+
+        [']eiq'] = '@call.inner',
+        [']eiQ'] = '@class.inner',
+        [']eig'] = '@comment.inner',
+        [']eiG'] = '@conditional.inner',
+        [']eiB'] = '@block.inner',
+        [']eiF'] = '@function.inner',
+        [']eiL'] = '@loop.inner',
+        [']eiP'] = '@parameter.inner',
       },
+    },
     swap = {
       enable = true,
       swap_next = {
@@ -155,6 +164,15 @@ require'nvim-treesitter.configs'.setup {
         ['<leader>lf'] = '@function.outer',
         ['<leader>lc'] = '@class.outer',
       },
+    },
+  },
+  textsubjects = {
+    enable = true,
+    prev_selection = ',', -- (Optional) keymap to select the previous selection
+    keymaps = {
+      ['.'] = 'textsubjects-smart', -- useful for block of comments
+      ['aK'] = 'textsubjects-container-outer',
+      ['iK'] = 'textsubjects-container-inner',
     },
   },
 }

@@ -301,11 +301,11 @@ colors:
   # Normal colors
   normal:
     black:   '#282828'
-    red:     '#cd0000'
+    red:     '#880000'
     green:   '#00cd00'
     yellow:  '#cdcd00'
     blue:    '#5c5cff'
-    magenta: '#880088'
+    magenta: '#885588'
     cyan:    '#7acaca'
     white:   '#ffffff'
 
@@ -313,11 +313,11 @@ colors:
   bright:
     black:   '#4d4d4d'
     red:     '#ff0000'
-    green:   '#00ff00'
+    green:   '#1cff1c'
     yellow:  '#ffff00'
     blue:    '#1c1cff'
-    magenta: '#ff00ff'
-    cyan:    '#00ffff'
+    magenta: '#8844bb'
+    cyan:    '#44ffff'
     white:   '#ff4400'
 
   # Dim colors

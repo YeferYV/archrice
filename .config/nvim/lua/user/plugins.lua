@@ -324,11 +324,19 @@ return require("packer").startup(function(use)
 
   -- Text Objects
 	-- use { 'wellle/targets.vim', commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d", }
-  use { "michaeljsmith/vim-indent-object", commit = "5c5b24c959478929b54a9e831a8e2e651a465965" }
+  -- use { "michaeljsmith/vim-indent-object", commit = "5c5b24c959478929b54a9e831a8e2e651a465965" }
+  -- use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
+  use { "echasnovski/mini.nvim", commit = "1e9e353c5f4075dda2be25b8fe2bff5134b99e41" }
   use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564" }
+  use { "RRethy/nvim-treesitter-textsubjects", commit = "bc047b20768845fd54340eb76272b2cf2f6fa3f3" }
   use { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }
-  use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
   use { "mg979/vim-visual-multi", commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a" }
+  use { "chrisgrieser/nvim-various-textobjs",
+    commit = "2fddc521bd8172dc157c89d2c182983caa898164",
+    config = function ()
+		  require("various-textobjs").setup({ useDefaultKeymaps = true })
+	  end,
+	}
 
 	-- The Interactive Scratchpad (aka playground or quokka-alt)
 	-- use { "metakirby5/codi.vim", commit = "6537ba677a0c7c6c796b195f29077b57fad33716" }

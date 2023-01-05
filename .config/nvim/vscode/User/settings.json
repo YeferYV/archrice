@@ -92,7 +92,7 @@
       "commands": [ "editor.action.refactor" ]
     },
     {
-      "before": ["g","a"],
+      "before": ["g","A"],
       "commands": [ "editor.action.autoFix" ]
     },
     {
@@ -748,7 +748,7 @@
         "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
       },
       {
-        "key": "a",
+        "key": "A",
         "name": "Auto Fix",
         "type": "command",
         "command": "editor.action.autoFix",

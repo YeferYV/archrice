@@ -59,10 +59,10 @@ end
 
 local function lsp_keymaps(bufnr)
 	local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(bufnr,"n","ga",        "<cmd>lua vim.lsp.buf.code_action()<CR>",                                   opts)
+  vim.api.nvim_buf_set_keymap(bufnr,"n","gA",        "<cmd>lua vim.lsp.buf.code_action()<CR>",                                   opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gd",        "<cmd>lua vim.lsp.buf.definition()<CR>",                                    opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gD",        "<cmd>lua vim.lsp.buf.declaration()<CR>",                                   opts)
-  vim.api.nvim_buf_set_keymap(bufnr,"n","gF",        "<cmd>lua vim.lsp.buf.formatting()<CR>",                                    opts)
+  vim.api.nvim_buf_set_keymap(bufnr,"n","gF",        "<cmd>lua vim.lsp.buf.format { async = true }<CR>",                         opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gh",        "<cmd>lua vim.lsp.buf.hover()<CR>",                                         opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gH",        "<cmd>lua vim.lsp.buf.signature_help()<CR>",                                opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gI",        "<cmd>lua vim.lsp.buf.implementation()<CR>",                                opts)
@@ -74,7 +74,7 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gr",        "<cmd>lua vim.lsp.buf.references()<CR>",                                    opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gR",        "<cmd>lua vim.lsp.buf.rename()<CR>",                                        opts)
   vim.api.nvim_buf_set_keymap(bufnr,"n","gt",        "<cmd>lua vim.lsp.buf.type_definition()<CR>",                                     opts)
-	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format { async = true }' ]])
 end
 
 M.on_attach = function(client, bufnr)

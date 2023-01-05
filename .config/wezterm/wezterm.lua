@@ -378,7 +378,7 @@ return {
     -- ansi = {"#111111", "maroon", "green", "olive", "navy", "purple", "teal", "silver"},        -- Intensity Normal font SHELL:{30,37}
     ansi = {"#222222","#bb0000","#008800","#bbbb00","#5555cc","#8855ff","#7acaca","#ffffff"},     -- Intensity Normal font SHELL:{30,37}
     -- brights = {"#1c1c1c", "red", "lime", "yellow", "blue", "fuchsia", "aqua", "white"},        -- Intensity Bold font SHELL:{90,97}
-    brights = {"#7c7c7c","#ff0000","#00ff00","#ffff00","#1c1cff","#880088","#008888","#ff4400"},  -- Intensity Bold font SHELL:{90,97}
+    brights = {"#7c7c7c","#ff0000","#00ff00","#ffff00","#1c1cff","#8844bb","#008888","#ff4400"},  -- Intensity Bold font SHELL:{90,97}
 
     tab_bar = {
       -- The color of the strip that goes along the top of the window

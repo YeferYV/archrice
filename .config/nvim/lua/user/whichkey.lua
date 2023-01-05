@@ -14,7 +14,7 @@ local setup = {
     -- the presets plugin, adds help for a bunch of default keybindings in Neovim
     -- No actual key bindings are created
     presets = {
-      operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+      operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
       motions = true, -- adds help for motions
       text_objects = true, -- help for text objects triggered after entering an operator
       windows = true, -- default bindings on <c-w>
@@ -199,7 +199,7 @@ local mappings = {
 
   l = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+    A = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
     d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Go to Definition" },
     D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Go to Declaration" },
     F = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format" },
@@ -253,7 +253,7 @@ local mappings = {
     name = "Search",
     b = { "<cmd>Telescope buffers initial_mode=normal<cr>", "Buffers" },
     B = { "<cmd>Telescope current_buffer_fuzzy_find theme=ivy<cr>", "Ripgrep" },
-    c = { "<cmd>Telescope colorscheme initial_mode=normal<cr>", "Colorscheme" },
+    c = { "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true, initial_mode='normal'})<cr>", "Colorscheme" },
     C = { "<cmd>Telescope commands<cr>", "Commands" },
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
     f = { "<cmd>Telescope grep_string search= theme=ivy<cr>", "Grep string"},
@@ -409,3 +409,9 @@ local mappings = {
 
 which_key.setup(setup)
 which_key.register(mappings, opts)
+
+-- Disable some operators (like v)
+-- make sure to run this code before calling setup()
+-- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
+-- local presets = require("which-key.plugins.presets")
+-- presets.operators["v"] = nil

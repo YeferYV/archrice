@@ -50,16 +50,14 @@ keymap("t", "<M-Left>", "<C-\\><C-n>:vertical resize -2<CR>", opts)
 keymap("t", "<M-Right>", "<C-\\><C-n>:vertical resize +2<CR>", opts)
 
 -- Navigate buffers
+keymap("n", "<right>", ":bnext<CR>", opts)
+keymap("n", "<left>", ":bprevious<CR>", opts)
 keymap("n", "<Tab>", ":bnext<CR>", opts)
 keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
 keymap("n", "<leader>x", ":bp | bd #<CR>", opts)
 keymap("n", "<leader><Tab>", ":tabnext<CR>", opts)
 keymap("n", "<leader><S-Tab>", ":tabprevious<CR>", opts)
 keymap("n", "<leader>X", ":tabclose<CR>", opts)
-
--- Move text up and down
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Press jk fast to enter NormalMode
 keymap("i", "jk", "<ESC>", opts)
@@ -71,11 +69,11 @@ keymap("i", "kj", "<ESC>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- Move text up and down
+-- Move text up and down autoindented
+-- keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
+-- keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
 keymap("v", "<A-k>", ":m .-2<CR>==", opts)
-
--- Move text up and down
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
@@ -189,3 +187,30 @@ map("n", "gsR", "<cmd>Lspsaga rename<CR>", { silent = true })
 map("n", "gst", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
 map("n", "gsz", "<cmd>LSpsaga outline<CR>",{ silent = true })
 map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
+
+-- ╭──────────────╮
+-- │ Text Objects │
+-- ╰──────────────╯
+
+-- -- Between chars (inline-autojump unsupported) (multiline-autojump unsupported) (like targets.vim)
+-- local chars = { '_', '.', ':', ',', ';', '|', '/', '\\', '*', '+', '%', '`', '?', '=' }
+-- for _,char in ipairs(chars) do
+--   for _,mode in ipairs({ 'x', 'o' }) do
+--     vim.api.nvim_set_keymap(mode, "i" .. char, string.format(':<C-u>normal! T%svt%s<CR>', char, char, char), { noremap = true, silent = true })
+--     vim.api.nvim_set_keymap(mode, "a" .. char, string.format(':<C-u>normal! F%svf%s<CR>', char, char, char), { noremap = true, silent = true })
+--   end
+-- end
+
+-- -- example: `?` for diagnostic textobj
+-- vim.keymap.set({"o", "x"}, "?", function () require("various-textobjs").diagnostic() end)
+--
+-- -- example: `an` for outer number, `in` for inner number
+-- vim.keymap.set({"o", "x"}, "an", function () require("various-textobjs").number(false) end)
+-- vim.keymap.set({"o", "x"}, "in", function () require("various-textobjs").number(true) end)
+--
+-- -- exception: indentation textobj requires two parameters, first for exclusion of the
+-- -- starting border, second for the exclusion of ending border
+-- vim.keymap.set({"o", "x"}, "ii", function () require("various-textobjs").indentation(true, true) end)
+-- vim.keymap.set({"o", "x"}, "ai", function () require("various-textobjs").indentation(false, true) end)
+-- vim.keymap.set({"o", "x"}, "iI", function () require("various-textobjs").indentation(true, true) end)
+-- vim.keymap.set({"o", "x"}, "aI", function () require("various-textobjs").indentation(false, false) end)
