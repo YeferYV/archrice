@@ -76,7 +76,7 @@
         "when": "listFocus && !inputFocus"
     },
     {
-        "key": "l",
+        "key": "o",
         "command": "list.select",
         "when": "listFocus && !inputFocus"
     },
@@ -125,7 +125,7 @@
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
     },
     {
-        "key": "o",
+        "key": "l",
         "command": "vim.remap",
         "args": {
           "commands":[
@@ -441,6 +441,16 @@
     },
     {
         "key": "shift+tab",
+        "command": "workbench.action.previousEditor",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
+    },
+    {
+        "key": "right",
+        "command": "workbench.action.nextEditor",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
+    },
+    {
+        "key": "left",
         "command": "workbench.action.previousEditor",
         "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
     },

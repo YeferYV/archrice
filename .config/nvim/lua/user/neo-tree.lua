@@ -153,7 +153,7 @@ require("neo-tree").setup({
         nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
       },
       ["<cr>"] = "open",
-      ["o"] = "quit_on_open",
+      ["l"] = "quit_on_open",
       ["<esc>"] = "revert_preview",
       -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
       ["P"] = { "toggle_preview", config = { use_float = true } },
@@ -460,8 +460,8 @@ require("neo-tree").setup({
       mappings = {
         ["<bs>"] = "navigate_up",
         ["."] = "set_root",
+        ["o"] = "getchild_open",
         ["h"] = "getparent_closenode",
-        ["l"] = "getchild_open",
         ["H"] = "toggle_hidden",
         ["L"] = "open_unfocus",
         ["i"] = "print_path",
