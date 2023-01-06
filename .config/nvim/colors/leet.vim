@@ -66,7 +66,7 @@ hi   StorageClass                          guifg=#880088  guibg=none     gui=non
 hi   String                                guifg=#ffff00  guibg=none     gui=none
 hi   Structure                             guifg=#880088  guibg=none     gui=none
 hi   Substitute                            guifg=#5555ff  guibg=#ffff00  gui=none
-hi   Tag                                   guifg=#81b38c  guibg=none     gui=none
+hi   Tag                                   guifg=#515171  guibg=none     gui=none
 hi   Title                                 guifg=#5555ff  guibg=none     gui=bold
 hi   Todo                                  guifg=#ff4400  guibg=none     gui=none
 hi   Type                                  guifg=#880088  guibg=none     gui=none
@@ -139,7 +139,7 @@ hi   link @variable                        TSVariable                  " Identif
 hi   link @variable.builtin                TSVariableBuiltin
 
 hi   TSAnnotation                          guifg=#008800  guibg=none     gui=none
-hi   TSAttribute                           guifg=#7acaca  guibg=none     gui=none
+hi   TSAttribute                           guifg=#87a1c5  guibg=none     gui=none
 hi   TSBoolean                             guifg=#1cff1c  guibg=none     gui=none
 hi   TSCharacter                           guifg=#ff4400  guibg=none     gui=none
 hi   TSComment                             guifg=#555555  guibg=none     gui=none
@@ -172,25 +172,25 @@ hi   TSNumber                              guifg=#1cff1c  guibg=none     gui=non
 hi   TSOperator                            guifg=#5555ff  guibg=none     gui=none
 hi   TSParameter                           guifg=#bbbbbb  guibg=none     gui=none
 hi   TSParameterReference                  guifg=#880088  guibg=none     gui=none
-hi   TSProperty                            guifg=#7acaca  guibg=none     gui=none
+hi   TSProperty                            guifg=#87a1c5  guibg=none     gui=none
 hi   TSPunc                                guifg=#e8e8e8  guibg=none     gui=none
-hi   TSPunctBracket                        guifg=#81b38c  guibg=none     gui=none
+hi   TSPunctBracket                        guifg=#515171  guibg=none     gui=none
 hi   TSPunctDelimiter                      guifg=#e8e8e8  guibg=none     gui=none
-hi   TSPunctSpecial                        guifg=#81b38c  guibg=none     gui=none
+hi   TSPunctSpecial                        guifg=#515171  guibg=none     gui=none
 hi   TSRepeat                              guifg=#5555ff  guibg=none     gui=none
 hi   TSStrike                              guifg=none     guibg=none     gui=standout
 hi   TSString                              guifg=#ffff00  guibg=none     gui=none
 hi   TSStringEscape                        guifg=#00ff00  guibg=none     gui=none
 hi   TSStringRegex                         guifg=#008800  guibg=none     gui=none
 hi   TSSymbol                              guifg=#888888  guibg=none     gui=none
-hi   TSTag                                 guifg=#81b38c  guibg=none     gui=none
-hi   TSTagDelimiter                        guifg=#81b38c  guibg=none     gui=none
+hi   TSTag                                 guifg=#515171  guibg=none     gui=none
+hi   TSTagDelimiter                        guifg=#515171  guibg=none     gui=none
 hi   TSText                                guifg=#ff0000  guibg=none     gui=none
 hi   TSTextReference                       guifg=#ffffff  guibg=none     gui=none
 hi   TSTitle                               guifg=#5555ff  guibg=none     gui=bold
 hi   TSType                                guifg=#880088  guibg=none     gui=none
 hi   TSTypeBuiltin                         guifg=#5e81ac  guibg=none     gui=none
-hi   TSURI                                 guifg=#7acaca  guibg=none     gui=bold
+hi   TSURI                                 guifg=#87a1c5  guibg=none     gui=bold
 hi   TSUnderline                           guifg=none     guibg=none     gui=underline
 hi   TSVariable                            guifg=#bbbbbb  guibg=none     gui=none
 hi   TSVariableBuiltin                     guifg=#515171  guibg=none     gui=none

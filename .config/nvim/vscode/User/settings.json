@@ -1631,6 +1631,17 @@
           }
         },
         {
+          "scope": [
+            "punctuation.definition.tag",
+            "entity.name.tag",
+          ],
+          "settings": { "fontStyle": "", "foreground":"#7574a5" }
+        },
+        {
+          "scope": [ "meta.tag", ],
+          "settings": { "fontStyle": "", "foreground":"#cccccc" }
+        },
+        {
           "scope": "constant.language",
           "settings": { "fontStyle": "", "foreground":"#1cff1c" }
         },
@@ -1643,15 +1654,23 @@
           "settings": { "fontStyle": "bold", "foreground":"#ff0000" }
         },
         {
+          "scope": "entity.other.attribute-name",
+          "settings": { "fontStyle": "", "foreground":"#87a1c5" }
+        },
+        {
           "scope": "keyword",
           "settings": { "fontStyle": "bold", "foreground":"#5c5cff" }
+        },
+        {
+          "scope": "keyword.operator",
+          "settings": { "fontStyle": "", "foreground":"#5c5cff" }
         },
         {
           "scope": [
             "support.variable.property",
             "variable.other.property",
           ],
-          "settings": { "fontStyle": "", "foreground":"#648484" }
+          "settings": { "fontStyle": "", "foreground":"#87a1c5" }
         },
         {
           "scope": "storage",
@@ -1680,11 +1699,11 @@
   },
   "workbench.colorCustomizations": {
     "editorBracketHighlight.foreground1" : "#88ff88",
-    "editorBracketHighlight.foreground2" : "#8888ff",
-    "editorBracketHighlight.foreground3" : "#880000",
+    "editorBracketHighlight.foreground2" : "#494e62",
+    "editorBracketHighlight.foreground3" : "#7574a5",
     "editorBracketHighlight.foreground4" : "#44ff44",
     "editorBracketHighlight.foreground5" : "#4444ff",
-    "editorBracketHighlight.foreground6" : "#ff0000",
+    "editorBracketHighlight.foreground6" : "#87a1c5",
     "[Hacker]":{
       "editor.selectionBackground":"#55555555",
       "editor.selectionHighlightBackground":"#33333333",
