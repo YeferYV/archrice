@@ -252,7 +252,6 @@ vim.api.nvim_create_autocmd({ "TermLeave" }, {
   group = hide_terminal_statusline,
   callback = function()
     require('lualine').hide({unhide=true})
-    vim.cmd[[set cursorline]]
     vim.cmd[[hi ExtraWhitespace guibg=red]]
   end,
 })

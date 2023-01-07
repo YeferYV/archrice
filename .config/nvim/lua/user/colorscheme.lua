@@ -32,6 +32,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       BufferLineBackground        = { fg = "#565f89" },
       BufferLineSeparator         = { fg = "#5c5c5c" },
       BufferLineIndicatorSelected = { fg = "#ffffff" },
+      CursorLine                  = { bg = "#0c0c0c" },
       NeoTreeCursorLine           = { bg = "#16161e" },
       NeoTreeGitAdded             = { fg = "#495466" },
       NeoTreeGitConflict          = { fg = "#495466" },
@@ -53,8 +54,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
     local custom_themes = {
       tokyonight = {
-        ["@string"]                = { fg = "#73daca" },
+        ["Comment"]                = { fg = "#565f89", italic = false },
+        ["Keyword"]                = { fg = "#7dcfff", italic = false },
+        ["@keyword"]               = { fg = "#9d7cd8", italic = false },
         ["@field"]                 = { fg = "#7aa2f7" },
+        ["@string"]                = { fg = "#73daca" },
         ["@boolean"]               = { fg = "#1cff1c" },
         ["@number"]                = { fg = "#1cff1c" },
         IndentBlanklineChar        = { fg = "#3b4261" },
