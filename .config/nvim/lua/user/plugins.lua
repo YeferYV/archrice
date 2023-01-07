@@ -70,6 +70,8 @@ return require("packer").startup(function(use)
 	-- use { 'lunarvim/colorschemes'}
 	-- use { 'mountain-theme/Mountain', rtp='vim' }
 	-- use { 'TheNiteCoder/mountaineer.vim' }
+	use { 'olivercederborg/poimandres.nvim' }
+	use { 'folke/tokyonight.nvim'}
 	use({ "NvChad/nvim-colorizer.lua", commit = "760e27df4dd966607e8fb7fd8b6b93e3c7d2e193" })
 	-- :lua base16 = require'base16'; base16(base16.themes.mountain2, true)
 	-- use { 'norcalli/nvim-base16.lua',

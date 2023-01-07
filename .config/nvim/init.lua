@@ -6,7 +6,7 @@
 -- colorschemes
 -- vim.cmd [[ colorscheme lunar2-generated ]]
 -- vim.cmd [[ colorscheme lunar2 ]]
-vim.cmd [[ colorscheme leet]]
+-- vim.cmd [[ colorscheme leet]]
 
 -- Lua
 require "user.autocommands"
@@ -16,6 +16,7 @@ require "user.plugins"
 require "user.aerial"
 require "user.bufferline"
 require "user.colorizer"
+require "user.colorscheme"
 require "user.cmp"
 require "user.cmp-tabnine"
 require "user.dap"
