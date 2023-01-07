@@ -61,6 +61,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         ["@string"]                = { fg = "#73daca" },
         ["@boolean"]               = { fg = "#1cff1c" },
         ["@number"]                = { fg = "#1cff1c" },
+        ["Constant"]               = { fg = "#1cff1c" },
+        ["String"]                 = { fg = "#73daca" },
         IndentBlanklineChar        = { fg = "#3b4261" },
         IndentBlanklineContextChar = { fg = "#7aa2f7" },
         IlluminatedWordText        = { bg = "#080811" },
@@ -81,6 +83,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       },
       poimandres = { -- a table of overrides/changes to the poimandres theme
         ["@comment"]               = { fg = "#3e4041" },
+        ["Comment"]                = { fg = "#a6accd" },
+        ["Visual"]                 = { bg = "#1c1c1c" },
         IndentBlanklineChar        = { fg = "#3b4261" },
         IndentBlanklineContextChar = { fg = "#7aa2f7" },
         IlluminatedWordText        = { bg = "#080811" },
