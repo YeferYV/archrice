@@ -55,12 +55,12 @@ cmp.setup {
     end,
   },
   mapping = {
-    ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i","c"}),
-    ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i","c"}),
+    ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+    ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
     ["<M-k>"] = cmp.mapping.select_prev_item(),
-		["<M-j>"] = cmp.mapping.select_next_item(),
+    ["<M-j>"] = cmp.mapping.select_next_item(),
     ["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
+    ["<C-j>"] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-1),
     ['<C-f>'] = cmp.mapping.scroll_docs(1),
     ['<C-Space>'] = cmp.mapping.complete(),
@@ -172,22 +172,22 @@ cmp.setup {
   -- documentation = {
   --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
   -- },
-   window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
-        completion = { -- rounded border; thin-style scrollbar
-          border = 'rounded',
-          scrollbar = "║",
-          thin_scrollbar = true,
-          -- completeopt = 'menu,menuone,noinsert',
-        },
-        documentation = { -- rounded border; native-style scrollbar
-          border = 'rounded',
-          scrollbar = "║",
-          thin_scrollbar = true,
-          -- winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-        },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+    completion = { -- rounded border; thin-style scrollbar
+      border = 'rounded',
+      scrollbar = "║",
+      thin_scrollbar = true,
+      -- completeopt = 'menu,menuone,noinsert',
     },
+    documentation = { -- rounded border; native-style scrollbar
+      border = 'rounded',
+      scrollbar = "║",
+      thin_scrollbar = true,
+      -- winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+    },
+  },
   experimental = {
     ghost_text = false,
     native_menu = false,

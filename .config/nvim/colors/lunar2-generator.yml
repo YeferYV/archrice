@@ -3,7 +3,6 @@ information:
   background: dark
   author: "Christian Chiarulli <chrisatmachine@gmail.com>"
   howto: "https://github.com/ChristianChiarulli/nvcode-color-schemes.vim"
-
 palette:
   fg: "#ABB2BF"
   # bg: "#252932"
@@ -59,10 +58,8 @@ palette:
 #     "white": "#e5e9f0",
 #     "yellow": "#ebcb8b"
 
-
 highlights:
   Normal: "fg bg"
-
   Comment: "vertsplit - i"
   # Constant: "yellow"
   Constant: "#FF0000"
@@ -99,7 +96,6 @@ highlights:
   Todo: "purple - bi"
   Underlined: "cyan . u"
   Cursor: "cursor_fg cursor_bg"
-
   ColorColumn: "- cursor_grey"
   CursorLineNr: "white - b"
   SignColumn: "- bg"
@@ -144,8 +140,6 @@ highlights:
   WarningMsg: "yellow"
   WildMenu: "black blue"
   EndOfBuffer: "bg"
-
-
   # -- Start Treesitter --
   # Misc
   TSComment: "vertsplit - i"
@@ -231,7 +225,6 @@ highlights:
   htmlTagN: "blue"
   htmlTagName: "blue"
   htmlTitle: "white"
-
   # Markdown (keep consistent with HTML, above)
   markdownBlockquote: "line_grey"
   markdownBold: "dark_yellow - b"
@@ -257,7 +250,6 @@ highlights:
   markdownRule: "line_grey"
   markdownUrl: "cyan - u"
   # -- END Languages --
-
 
   # -- START CoC --
   CocExplorerIndentLine: "line_grey"
@@ -315,35 +307,27 @@ highlights:
   # ToolbarButton: "suvagray - r"
   debugPc: "- cyan"
   debugBreakpoint: "red - r"
-
   GitSignsAdd: "#587C0C"
   GitSignsChange: "#0C7D9D"
   GitSignsDelete: "#94151B"
-
   # LspDiagnosticsUnderlineError: "error_red"
   # LspDiagnosticsUnderlineWarning: "orange"
   # LspDiagnosticsUnderlineInformation: "yellow"
   LspDiagnosticsUnderlineHint: "grey"
-
   LspDiagnosticsSignError: "error_red"
   LspDiagnosticsSignWarning: "warning_orange"
   LspDiagnosticsSignInformation: "info_yellow"
   LspDiagnosticsSignHint: "vivid_blue"
-
   LspDiagnosticsVirtualTextError: "error_red"
   LspDiagnosticsVirtualTextWarning: "warning_orange"
   LspDiagnosticsVirtualTextInformation: "info_yellow"
   LspDiagnosticsVirtualTextHint: "vivid_blue"
-
-
   QuickScopePrimary: "#00C7DF - u"
   QuickScopeSecondary: "#eF5F70 - u"
-
   MatchWord: "- - u"
   MatchParen: "- - u"
   MatchWordCur: "- - u"
   MatchParenCur: "- - u"
-
   NvimTreeImageFile: "purple"
   NvimTreeGitDirty: "git_green"
   NvimTreeGitDeleted: "git_green"
@@ -358,37 +342,31 @@ highlights:
   NvimTreeExecFile: "executable"
   NvimTreeSpecialFile: "info_yellow"
   NvimTreeLspDiagnostics: "warning_orange"
-
   BufferCurrent: "fg bg"
   BufferCurrentIndex: "blue bg"
   BufferCurrentMod: "fg bg"
   BufferCurrentSign: "blue bg"
   BufferCurrentTarget: "red bg b"
-
   BufferVisible: "fg bg"
   BufferVisibleIndex: "fg bg"
   BufferVisibleMod: "fg bg"
   BufferVisibleSign: "fg bg"
   BufferVisibleTarget: "red bg b"
-
   BufferInactive: "gutter_fg_grey bg_inactive"
   BufferInactiveIndex: "gutter_fg_grey bg_inactive"
   BufferInactiveMod: "gutter_fg_grey bg_inactive"
   BufferInactiveSign: "gutter_fg_grey bg_inactive"
   BufferInactiveTarget: "red bg_inactive b"
-
   # BufferTabpages: "blue bg_inactive b"
   # BufferTabpageFill: "gutter_fg_grey bg_inactive"
-
   CodiVirtualText: "#6395EC"
   IndentBlanklineContextChar: "indentlinehighlight"
   DashboardHeader: "#88C0D0"
   DashboardCenter: "orange"
   DashboardFooter: "light_blue"
-# DashboardShortCut:
+  # DashboardShortCut:
 
   WhichKeyFloat: "bg"
-
   # terminal: "bg red green yellow blue magenta cyan silver gray red green yellow blue magenta cyan fg"
   # -- Other junk you can define --
   # Debug

@@ -1,15 +1,15 @@
 local web_devicons_ok, web_devicons = pcall(require, "nvim-web-devicons")
 if not web_devicons_ok then
-	return
+  return
 end
 
 local material_icon_ok, material_icon = pcall(require, "nvim-material-icon")
 if not material_icon_ok then
-	return
+  return
 end
 
 web_devicons.setup({
-	override = material_icon.get_icons(),
+  override = material_icon.get_icons(),
 })
 
 require('bufferline').setup {
@@ -23,8 +23,8 @@ require('bufferline').setup {
     -- and so changing this is NOT recommended, this is intended
     -- as an escape hatch for people who cannot bear it for whatever reason
     indicator = {
-        icon = '▎', -- this should be omitted if indicator style is not 'icon'
-        style = 'icon'  , -- 'icon' | 'underline' | 'none',
+      icon = '▎', -- this should be omitted if indicator style is not 'icon'
+      style = 'icon', -- 'icon' | 'underline' | 'none',
     },
     buffer_close_icon = "",
     modified_icon = "●",

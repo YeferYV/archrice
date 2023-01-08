@@ -1,6 +1,6 @@
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
-  ensure_installed = {"python", "bash", "javascript", "html", "css", "c", "lua"},
+  ensure_installed = { "python", "bash", "javascript", "html", "css", "c", "lua" },
 
   autopairs = {
     enable = true,
@@ -10,15 +10,15 @@ require'nvim-treesitter.configs'.setup {
     use_languagetree = true,
     additional_vim_regex_highlighting = true,
   },
-  indent = { enable = true, disable = { "yaml" } },
+  indent = { enable = true, disable = {} },
   context_commentstring = {
     enable = true,
     enable_autocmd = true,
   },
   incremental_selection = {
-    enable = true,  -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
+    enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
     disable = { "yml" },
-    keymaps = {                       -- mappings for incremental selection (visual mappings)
+    keymaps = { -- mappings for incremental selection (visual mappings)
       -- init_selection = "gnn",         -- maps in normal mode to init the node/scope selection
       -- node_incremental = "grn",       -- increment to the upper named parent
       -- scope_incremental = "grc",      -- increment to the upper scope (as defined in locals.scm)

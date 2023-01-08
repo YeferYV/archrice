@@ -1,10 +1,10 @@
 local status_ok, lualine = pcall(require, "lualine")
 if not status_ok then
-	return
+  return
 end
 
 local hide_in_width = function()
-	return vim.fn.winwidth(0) > 80
+  return vim.fn.winwidth(0) > 80
 end
 
 local colors = {
@@ -22,31 +22,31 @@ local colors = {
 }
 
 local diagnostics = {
-	"diagnostics",
-	sources = { "nvim_diagnostic" },
+  "diagnostics",
+  sources = { "nvim_diagnostic" },
   sections = { 'error', 'warn', 'info', 'hint' },
-	symbols = { error = " ", warn = " " },
-	colored = false,
-	update_in_insert = false,
-	always_visible = true,
+  symbols = { error = " ", warn = " " },
+  colored = false,
+  update_in_insert = false,
+  always_visible = true,
 }
 
 local diff = {
-	"diff",
-	colored = false,
-	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+  "diff",
+  colored = false,
+  symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
   cond = hide_in_width
 }
 
 local branch = {
-	"branch",
-	icons_enabled = true,
-	icon = "",
+  "branch",
+  icons_enabled = true,
+  icon = "",
 }
 
 local location = {
-	"location",
-	padding = 0,
+  "location",
+  padding = 0,
 }
 
 -- cool function for progress
@@ -76,7 +76,7 @@ local show_macro_recording = {
 
 local treesitterIcon = {
   color = { fg = '#224422', gui = 'bold' },
-  function()--
+  function() --
     if next(vim.treesitter.highlighter.active) ~= nil then
       return " "
     end
@@ -107,10 +107,10 @@ local lspServer = {
     local maxClientsToPrint = 3
     local separator = '·'
     for i = 1, math.min(maxClientsToPrint, #clientNames) do
-      msg = msg..(i == 1 and '' or separator)..clientNames[i]
+      msg = msg .. (i == 1 and '' or separator) .. clientNames[i]
     end
     if #clientNames > maxClientsToPrint then
-      msg = msg..separator..'+'..(#clientNames - maxClientsToPrint)
+      msg = msg .. separator .. '+' .. (#clientNames - maxClientsToPrint)
     end
     return msg
   end,
@@ -119,7 +119,8 @@ local lspServer = {
 }
 
 local function path() return vim.fn.fnamemodify(vim.fn.getcwd(), ':~') end
-local function spaces()	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth") end
+
+local function spaces() return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth") end
 
 local neotree_status = {
   color = { fg = '#ff8800', gui = 'none' },
@@ -148,21 +149,21 @@ local toggleterm_status = {
 
 local my_extension = {
   sections = {
-		lualine_a = { branch },
+    lualine_a = { branch },
     -- lualine_b = { 'tabs','mode','filesize'},
     lualine_x = { 'searchcount', neotree_status, toggleterm_status, path },
-		lualine_y = { location },
+    lualine_y = { location },
     lualine_z = { progress }
   },
-  filetypes = {'toggleterm','sp-terminal','vs-terminal','neo-tree'},
-  buftypes = {'terminal'}
+  filetypes = { 'toggleterm', 'sp-terminal', 'vs-terminal', 'neo-tree' },
+  buftypes = { 'terminal' }
 }
 
 lualine.setup({
-	options = {
-		icons_enabled = true,
-		-- theme = "auto",
-		-- theme = "16color",
+  options = {
+    icons_enabled = true,
+    -- theme = "auto",
+    -- theme = "16color",
     theme = {
       -- We are going to use lualine_c an lualine_x as left and
       -- right section. Both are highlighted by c theme .  So we
@@ -180,28 +181,29 @@ lualine.setup({
         c = { fg = colors.gray1, bg = colors.bg },
       },
     },
-		component_separators = { left = "", right = "" },
-		section_separators = { left = "", right = "" },
-		-- disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline","toggleterm", "terminal" },
+    component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
+    -- disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline","toggleterm", "terminal" },
     -- disabled_buftypes = { 'quickfix', 'prompt','terminal' }, -- not working
-		always_divide_middle = true,
-	},
-	sections = {
-		lualine_a = { branch },
-		lualine_b = {},
-		lualine_c = {},
-		lualine_x = { 'searchcount', show_macro_recording, 'diagnostics', treesitterIcon, lspServer,  'filetype' , diff, spaces, "encoding"},
-		lualine_y = { location },
-		lualine_z = { progress } ,
-	},
-	inactive_sections = {
-		lualine_a = {},
-		lualine_b = {},
-		lualine_c = { "filename" },
-		lualine_x = { "location" },
-		lualine_y = {},
-		lualine_z = {},
-	},
-	tabline = {},
-	extensions = { my_extension, 'nvim-dap-ui' },
+    always_divide_middle = true,
+  },
+  sections = {
+    lualine_a = { branch },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = { 'searchcount', show_macro_recording, 'diagnostics', treesitterIcon, lspServer, 'filetype', diff, spaces,
+      "encoding" },
+    lualine_y = { location },
+    lualine_z = { progress },
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { "filename" },
+    lualine_x = { "location" },
+    lualine_y = {},
+    lualine_z = {},
+  },
+  tabline = {},
+  extensions = { my_extension, 'nvim-dap-ui' },
 })

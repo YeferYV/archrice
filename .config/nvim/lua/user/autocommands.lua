@@ -73,7 +73,7 @@ vim.cmd [[
 
   " augroup _lsp_autoformat
   "   autocmd!
-  "   autocmd BufWritePre * lua vim.lsp.buf.formatting()
+  "   autocmd BufWritePre * silent! lua vim.lsp.buf.format()
   " augroup end
 
   augroup _lspsaga_highlights_overwrite
@@ -233,34 +233,35 @@ vim.cmd [[
 -- })
 
 -- _enable_terminal_insert_and_hide_terminal_statusline
-local hide_terminal_statusline = vim.api.nvim_create_augroup("_enable_terminal_insert_and_hide_terminal_statusline", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter","Filetype" }, {
+local hide_terminal_statusline = vim.api.nvim_create_augroup("_enable_terminal_insert_and_hide_terminal_statusline",
+  { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "Filetype" }, {
   group = hide_terminal_statusline,
   pattern = "term://*",
   command = "startinsert"
 })
-vim.api.nvim_create_autocmd( { "TermEnter","TermOpen" }, {
+vim.api.nvim_create_autocmd({ "TermEnter", "TermOpen" }, {
   group = hide_terminal_statusline,
   callback = function()
     -- require('lualine').hide()
     -- vim.cmd[[set nocursorline nonumber statusline=%< | startinsert]]
-    vim.cmd[[set nocursorline nonumber | startinsert]]
-    vim.cmd[[hi ExtraWhitespace guibg=none]]
+    vim.cmd [[set nocursorline nonumber | startinsert]]
+    vim.cmd [[hi ExtraWhitespace guibg=none]]
   end,
 })
 vim.api.nvim_create_autocmd({ "TermLeave" }, {
   group = hide_terminal_statusline,
   callback = function()
-    require('lualine').hide({unhide=true})
-    vim.cmd[[hi ExtraWhitespace guibg=red]]
+    require('lualine').hide({ unhide = true })
+    vim.cmd [[hi ExtraWhitespace guibg=red]]
   end,
 })
 vim.api.nvim_create_autocmd({ "TermClose" }, {
   group = hide_terminal_statusline,
   callback = function()
     if vim.bo.filetype ~= "toggleterm" then
-      vim.cmd[[ call feedkeys("i") ]]
+      vim.cmd [[ call feedkeys("i") ]]
     end
-    vim.cmd[[hi ExtraWhitespace guibg=red]]
+    vim.cmd [[hi ExtraWhitespace guibg=red]]
   end,
 })

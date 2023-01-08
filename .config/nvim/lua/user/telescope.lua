@@ -46,15 +46,15 @@ telescope.setup {
       i = {
         -- FIXED: actions.edit_register
         ["<C-r>"] = function(prompt_bufnr)
-            local selection = require("telescope.actions.state").get_selected_entry()
-            local updated_value = vim.fn.input("Edit [" .. selection.value .. "] ❯ ", selection.content)
+          local selection = require("telescope.actions.state").get_selected_entry()
+          local updated_value = vim.fn.input("Edit [" .. selection.value .. "] ❯ ", selection.content)
 
-            vim.fn.setreg(selection.value:lower(), updated_value)
-            selection.content = updated_value
+          vim.fn.setreg(selection.value:lower(), updated_value)
+          selection.content = updated_value
 
-            require("telescope.actions").close(prompt_bufnr)
-            require("telescope.builtin").resume()
-          end,
+          require("telescope.actions").close(prompt_bufnr)
+          require("telescope.builtin").resume()
+        end,
 
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
@@ -91,15 +91,15 @@ telescope.setup {
       n = {
         -- FIXED: actions.edit_register
         ["<C-r>"] = function(prompt_bufnr)
-            local selection = require("telescope.actions.state").get_selected_entry()
-            local updated_value = vim.fn.input("Edit [" .. selection.value .. "] ❯ ", selection.content)
+          local selection = require("telescope.actions.state").get_selected_entry()
+          local updated_value = vim.fn.input("Edit [" .. selection.value .. "] ❯ ", selection.content)
 
-            vim.fn.setreg(selection.value:lower(), updated_value)
-            selection.content = updated_value
+          vim.fn.setreg(selection.value:lower(), updated_value)
+          selection.content = updated_value
 
-            require("telescope.actions").close(prompt_bufnr)
-            require("telescope.builtin").resume()
-          end,
+          require("telescope.actions").close(prompt_bufnr)
+          require("telescope.builtin").resume()
+        end,
 
         ["q"] = actions.close,
         ["<esc>"] = actions.close,
@@ -121,11 +121,11 @@ telescope.setup {
         ["k"] = actions.move_selection_previous,
         ["l"] = actions.select_default,
         ["J"] = function(prompt_bufnr)
-            action_set.shift_selection(prompt_bufnr, 10)
-          end,
+          action_set.shift_selection(prompt_bufnr, 10)
+        end,
         ["K"] = function(prompt_bufnr)
-            action_set.shift_selection(prompt_bufnr, -10)
-          end,
+          action_set.shift_selection(prompt_bufnr, -10)
+        end,
 
         ["<Down>"] = actions.move_selection_next,
         ["<Up>"] = actions.move_selection_previous,
@@ -174,7 +174,7 @@ telescope.setup {
               default_text = current_picker:_get_prompt()
             }
 
-            local cmd = { "rg", "--files"}
+            local cmd = { "rg", "--files" }
             current_picker:refresh(finders.new_oneshot_job(cmd, opts), {})
           end,
         },
@@ -189,7 +189,7 @@ telescope.setup {
             local opts = {
               default_text = current_picker:_get_prompt(),
               additional_args = function()
-                return {"--hidden"}
+                return { "--hidden" }
               end
             }
             require('telescope.builtin').live_grep(require('telescope.themes').get_ivy(opts))
@@ -212,7 +212,8 @@ telescope.setup {
             local current_picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
             local opts = {
               default_text = current_picker:_get_prompt(),
-              vimgrep_arguments = { 'rg', '--hidden', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', "--glob", "!.git/" },
+              vimgrep_arguments = { 'rg', '--hidden', '--no-heading', '--with-filename', '--line-number', '--column',
+                '--smart-case', "--glob", "!.git/" },
             }
             require('telescope.builtin').grep_string(require('telescope.themes').get_ivy(opts))
           end,
@@ -230,11 +231,11 @@ telescope.setup {
   },
   extensions = {
     fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true,  -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true, -- override the file sorter
+      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      -- the default case_mode is "smart_case"
     }
   },
 }

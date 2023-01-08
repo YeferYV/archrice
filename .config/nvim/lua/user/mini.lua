@@ -39,8 +39,8 @@ require('mini.ai').setup({
       i = '@call.inner',
     }),
     Q = spec_treesitter({
-       a = '@class.outer',
-       i = '@class.inner',
+      a = '@class.outer',
+      i = '@class.inner',
     }),
     g = spec_treesitter({
       a = '@comment.outer',

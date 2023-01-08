@@ -36,8 +36,8 @@ keymap("n", "<C-y>", "<C-i>", opts)
 -- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
 -- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
 -- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
-keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>",opts)
-keymap("x", 'im', "`[o`]<Left>",opts)
+keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>", opts)
+keymap("x", 'im', "`[o`]<Left>", opts)
 
 -- Resize with arrows
 keymap("n", "<M-Up>", ":resize -2<CR>", opts)
@@ -81,21 +81,21 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 keymap("n", "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false })
 
 -- Copilot
-keymap("i", "<C-left>", "<Plug>(copilot-previous)",opts)
-keymap("i", "<C-right>", "<Plug>(copilot-next)",opts)
+keymap("i", "<C-left>", "<Plug>(copilot-previous)", opts)
+keymap("i", "<C-right>", "<Plug>(copilot-next)", opts)
 
 -- Alternative way to quit/write
-keymap("n", "<S-q>", ":q<CR>",opts)
-keymap("n", "<S-r>", ":w<CR>",opts)
+keymap("n", "<S-q>", "<cmd>quit<CR>", opts)
+keymap("n", "<S-r>", "<cmd>lua vim.lsp.buf.format()<cr><cmd>write<cr>", opts)
 
 -- Quick Jump
-keymap("n", "J", "10j",opts)
-keymap("n", "K", "10k",opts)
-keymap("n", "H", "10h",opts)
-keymap("n", "L", "10l",opts)
+keymap("n", "J", "10j", opts)
+keymap("n", "K", "10k", opts)
+keymap("n", "H", "10h", opts)
+keymap("n", "L", "10l", opts)
 
 -- Forward yank/paste
-keymap("n", 'Y', 'yg_',opts)
+keymap("n", 'Y', 'yg_', opts)
 keymap("v", 'P', 'g_P', opts) -- "P" seems unaltered the clipboard
 
 -- Unaltered clipboard
@@ -103,89 +103,91 @@ keymap("v", 'p', '"_dP', opts)
 
 -- Save file as sudo
 -- keymap("c","w!!","execute 'silent! write !sudo tee % >/dev/null' <bar> edit!",opts)
-keymap("c","w!!","w !sudo tee %",opts)
+keymap("c", "w!!", "w !sudo tee %", opts)
 
 -- ╭────────────────╮
 -- │ leader keymaps │
 -- ╰────────────────╯
 
 -- Buffer keymaps
-keymap("n","<leader>1","<Cmd>BufferLineGoToBuffer 1<CR>",opts)
-keymap("n","<leader>2","<Cmd>BufferLineGoToBuffer 2<CR>",opts)
-keymap("n","<leader>3","<Cmd>BufferLineGoToBuffer 3<CR>",opts)
-keymap("n","<leader>4","<Cmd>BufferLineGoToBuffer 4<CR>",opts)
-keymap("n","<leader>5","<Cmd>BufferLineGoToBuffer 5<CR>",opts)
-keymap("n","<leader>6","<Cmd>BufferLineGoToBuffer 6<CR>",opts)
-keymap("n","<leader>7","<Cmd>BufferLineGoToBuffer 7<CR>",opts)
-keymap("n","<leader>8","<Cmd>BufferLineGoToBuffer 8<CR>",opts)
-keymap("n","<leader>9","<Cmd>BufferLineGoToBuffer 9<CR>",opts)
-keymap("n","gy;",":call CycleLastBuffer()<CR>",opts)
-keymap("n","gyl","<C-6>",opts)
-keymap("n","gys","<Cmd>BufferLineCyclePrev <CR>",opts)
-keymap("n","gyf","<Cmd>BufferLineCycleNext <CR>",opts)
-keymap("n","gyS","<Cmd>BufferLineMovePrev <CR>",opts)
-keymap("n","gyF","<Cmd>BufferLineMoveNext <CR>",opts)
+keymap("n", "<leader>1", "<Cmd>BufferLineGoToBuffer 1<CR>", opts)
+keymap("n", "<leader>2", "<Cmd>BufferLineGoToBuffer 2<CR>", opts)
+keymap("n", "<leader>3", "<Cmd>BufferLineGoToBuffer 3<CR>", opts)
+keymap("n", "<leader>4", "<Cmd>BufferLineGoToBuffer 4<CR>", opts)
+keymap("n", "<leader>5", "<Cmd>BufferLineGoToBuffer 5<CR>", opts)
+keymap("n", "<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", opts)
+keymap("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", opts)
+keymap("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", opts)
+keymap("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", opts)
+keymap("n", "gy;", ":call CycleLastBuffer()<CR>", opts)
+keymap("n", "gyl", "<C-6>", opts)
+keymap("n", "gys", "<Cmd>BufferLineCyclePrev <CR>", opts)
+keymap("n", "gyf", "<Cmd>BufferLineCycleNext <CR>", opts)
+keymap("n", "gyS", "<Cmd>BufferLineMovePrev <CR>", opts)
+keymap("n", "gyF", "<Cmd>BufferLineMoveNext <CR>", opts)
 
 -- normal mode (easymotion-like)
-keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
-keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
-keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
-keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
-keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", {noremap=true})
+keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", { noremap = true })
 
 -- visual mode (easymotion-like)
-keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
-keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
-keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", {noremap=true})
-keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", {noremap=true})
-keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", {noremap=true})
+keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", { noremap = true })
 
 -- normal mode (sneak-like)
-keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
-keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
+keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
+keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
 
 -- visual mode (sneak-like)
-keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", {noremap=false})
-keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", {noremap=false})
+keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
+keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
 
 -- Terminal
-keymap("n","<leader>v","<Cmd>ToggleTerm direction=vertical   size=70<CR>",opts)
-keymap("n","<leader>V","<Cmd>ToggleTerm direction=horizontal size=10<CR>",opts)
+keymap("n", "<leader>v", "<Cmd>ToggleTerm direction=vertical   size=70<CR>", opts)
+keymap("n", "<leader>V", "<Cmd>ToggleTerm direction=horizontal size=10<CR>", opts)
 
 -- Window Swap
-keymap("t","<C-x>","<C-\\><C-n>:call WinBufSwap()<cr><Esc><cmd>set number<cr>",opts)
+keymap("t", "<C-x>", "<C-\\><C-n>:call WinBufSwap()<cr><Esc><cmd>set number<cr>", opts)
 
 -- Visual Paste/ForwardPaste from secondary clipboard
-keymap("v","<leader>p",'"*p',opts)
-keymap("v","<leader>P",'g_"*P',opts)
+keymap("v", "<leader>p", '"*p', opts)
+keymap("v", "<leader>P", 'g_"*P', opts)
 
 -- Visual Copy/Append to secondary clipboard
-keymap("v","<leader>y",'"*y',opts)
-keymap("v","<leader>Y",'y:let @* .= @0<cr>',opts)
+keymap("v", "<leader>y", '"*y', opts)
+keymap("v", "<leader>Y", 'y:let @* .= @0<cr>', opts)
 
 -- Visual Fold (Vjzf: create fold, zj/zk: next/previous fold), FormatColumn and FormatComment
-keymap("v","<leader>z",":'<,'>fold      <CR>",opts)
-keymap("v","<leader>Z",":'<,'>!column -t<CR>",opts)
-keymap("v","<leader>gw","gw",opts)
+keymap("v", "<leader>z", ":'<,'>fold      <CR>", opts)
+keymap("v", "<leader>Z", ":'<,'>!column -t<CR>", opts)
+keymap("v", "<leader>gw", "gw", opts)
 
 -- ╭──────────────────╮
 -- │ Lspsaga mappings │
 -- ╰──────────────────╯
 
-map({"n","v"}, "gsa", "<cmd>Lspsaga code_action<CR>", { silent = true })
+map({ "n", "v" }, "gsa", "<cmd>Lspsaga code_action<CR>", { silent = true })
 map("n", "gsd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
 map("n", "gsf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 map("n", "gsh", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 map("n", "gsn", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
-map("n", "gsN", function() require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR }) end, { silent = true })
+map("n", "gsN", function() require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR }) end,
+  { silent = true })
 map("n", "gso", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
 map("n", "gsO", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
 map("n", "gsp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
-map("n", "gsP", function() require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, { silent = true })
+map("n", "gsP", function() require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
+  { silent = true })
 map("n", "gsr", "<cmd>Lspsaga open_floaterm ranger<CR>", { silent = true })
 map("n", "gsR", "<cmd>Lspsaga rename<CR>", { silent = true })
 map("n", "gst", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
-map("n", "gsz", "<cmd>LSpsaga outline<CR>",{ silent = true })
+map("n", "gsz", "<cmd>LSpsaga outline<CR>", { silent = true })
 map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
 
 -- ╭──────────────╮

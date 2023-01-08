@@ -12,7 +12,7 @@ if not dap_ui_status_ok then
   return
 end
 
-dapui.setup{
+dapui.setup {
   layouts = {
     {
       elements = {
