@@ -6,7 +6,7 @@ require("neo-tree").setup({
   enable_git_status = true,
   enable_diagnostics = true,
   sort_case_insensitive = false, -- used when sorting files and directories in the tree
-  sort_function = nil , -- use a custom function for sorting files and directories in the tree
+  sort_function = nil, -- use a custom function for sorting files and directories in the tree
   -- sort_function = function (a,b)
   --       if a.type == b.type then
   --           return a.path > b.path
@@ -25,10 +25,10 @@ require("neo-tree").setup({
     winbar = true, -- toggle to show selector on winbar
     statusline = false, -- toggle to show selector on statusline
     show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
-                                           -- of the top visible node when scrolled down.
+    -- of the top visible node when scrolled down.
     tab_labels = { -- falls back to source_name if nil
-      filesystem = "  Files ",
-      buffers =    "  Bufs ",
+      filesystem = "  File ",
+      buffers = "  Bufs ",
       git_status = "  Git ",
       diagnostics = " 裂Diagnostics ",
     },
@@ -48,7 +48,7 @@ require("neo-tree").setup({
     padding = 0, -- can be int or table
     -- padding = { left = 2, right = 0 },
     -- separator = "▕", -- can be string or table, see below
-     separator = { left = "▏", right= "▕" },
+    separator = { left = "▏", right = "▕" },
     -- separator = { left = "/", right = "\\", override = nil },     -- |/  a  \/  b  \/  c  \...
     -- separator = { left = "/", right = "\\", override = "right" }, -- |/  a  \  b  \  c  \...
     -- separator = { left = "/", right = "\\", override = "left" },  -- |/  a  /  b  /  c  /...
@@ -115,8 +115,8 @@ require("neo-tree").setup({
         -- Change type
         added     = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
         modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-        deleted   = "✖",-- this can only be used in the git_status source
-        renamed   = "",-- this can only be used in the git_status source
+        deleted   = "✖", -- this can only be used in the git_status source
+        renamed   = "", -- this can only be used in the git_status source
         -- Status type
         untracked = "",
         ignored   = "",
@@ -153,7 +153,6 @@ require("neo-tree").setup({
         nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
       },
       ["<cr>"] = "open",
-      ["l"] = "quit_on_open",
       ["<esc>"] = "revert_preview",
       -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
       ["P"] = { "toggle_preview", config = { use_float = true } },
@@ -165,32 +164,32 @@ require("neo-tree").setup({
       ["s"] = false,
       ["S"] = false,
       ["f"] = false,
-      ["fa"] = function() vim.cmd[[normal 0]] vim.cmd[[/ a]] vim.cmd[[normal n]] end,
-      ["fb"] = function() vim.cmd[[normal 0]] vim.cmd[[/ b]] vim.cmd[[normal n]] end,
-      ["fc"] = function() vim.cmd[[normal 0]] vim.cmd[[/ c]] vim.cmd[[normal n]] end,
-      ["fd"] = function() vim.cmd[[normal 0]] vim.cmd[[/ d]] vim.cmd[[normal n]] end,
-      ["fe"] = function() vim.cmd[[normal 0]] vim.cmd[[/ e]] vim.cmd[[normal n]] end,
-      ["ff"] = function() vim.cmd[[normal 0]] vim.cmd[[/ f]] vim.cmd[[normal n]] end,
-      ["fg"] = function() vim.cmd[[normal 0]] vim.cmd[[/ g]] vim.cmd[[normal n]] end,
-      ["fh"] = function() vim.cmd[[normal 0]] vim.cmd[[/ h]] vim.cmd[[normal n]] end,
-      ["fi"] = function() vim.cmd[[normal 0]] vim.cmd[[/ i]] vim.cmd[[normal n]] end,
-      ["fj"] = function() vim.cmd[[normal 0]] vim.cmd[[/ j]] vim.cmd[[normal n]] end,
-      ["fk"] = function() vim.cmd[[normal 0]] vim.cmd[[/ k]] vim.cmd[[normal n]] end,
-      ["fl"] = function() vim.cmd[[normal 0]] vim.cmd[[/ l]] vim.cmd[[normal n]] end,
-      ["fm"] = function() vim.cmd[[normal 0]] vim.cmd[[/ m]] vim.cmd[[normal n]] end,
-      ["fn"] = function() vim.cmd[[normal 0]] vim.cmd[[/ n]] vim.cmd[[normal n]] end,
-      ["fo"] = function() vim.cmd[[normal 0]] vim.cmd[[/ o]] vim.cmd[[normal n]] end,
-      ["fp"] = function() vim.cmd[[normal 0]] vim.cmd[[/ p]] vim.cmd[[normal n]] end,
-      ["fq"] = function() vim.cmd[[normal 0]] vim.cmd[[/ q]] vim.cmd[[normal n]] end,
-      ["fr"] = function() vim.cmd[[normal 0]] vim.cmd[[/ r]] vim.cmd[[normal n]] end,
-      ["fs"] = function() vim.cmd[[normal 0]] vim.cmd[[/ s]] vim.cmd[[normal n]] end,
-      ["ft"] = function() vim.cmd[[normal 0]] vim.cmd[[/ t]] vim.cmd[[normal n]] end,
-      ["fu"] = function() vim.cmd[[normal 0]] vim.cmd[[/ u]] vim.cmd[[normal n]] end,
-      ["fv"] = function() vim.cmd[[normal 0]] vim.cmd[[/ v]] vim.cmd[[normal n]] end,
-      ["fw"] = function() vim.cmd[[normal 0]] vim.cmd[[/ w]] vim.cmd[[normal n]] end,
-      ["fx"] = function() vim.cmd[[normal 0]] vim.cmd[[/ x]] vim.cmd[[normal n]] end,
-      ["fy"] = function() vim.cmd[[normal 0]] vim.cmd[[/ y]] vim.cmd[[normal n]] end,
-      ["fz"] = function() vim.cmd[[normal 0]] vim.cmd[[/ z]] vim.cmd[[normal n]] end,
+      ["fa"] = function() vim.cmd [[normal 0]] vim.cmd [[/ a]] vim.cmd [[normal n]] end,
+      ["fb"] = function() vim.cmd [[normal 0]] vim.cmd [[/ b]] vim.cmd [[normal n]] end,
+      ["fc"] = function() vim.cmd [[normal 0]] vim.cmd [[/ c]] vim.cmd [[normal n]] end,
+      ["fd"] = function() vim.cmd [[normal 0]] vim.cmd [[/ d]] vim.cmd [[normal n]] end,
+      ["fe"] = function() vim.cmd [[normal 0]] vim.cmd [[/ e]] vim.cmd [[normal n]] end,
+      ["ff"] = function() vim.cmd [[normal 0]] vim.cmd [[/ f]] vim.cmd [[normal n]] end,
+      ["fg"] = function() vim.cmd [[normal 0]] vim.cmd [[/ g]] vim.cmd [[normal n]] end,
+      ["fh"] = function() vim.cmd [[normal 0]] vim.cmd [[/ h]] vim.cmd [[normal n]] end,
+      ["fi"] = function() vim.cmd [[normal 0]] vim.cmd [[/ i]] vim.cmd [[normal n]] end,
+      ["fj"] = function() vim.cmd [[normal 0]] vim.cmd [[/ j]] vim.cmd [[normal n]] end,
+      ["fk"] = function() vim.cmd [[normal 0]] vim.cmd [[/ k]] vim.cmd [[normal n]] end,
+      ["fl"] = function() vim.cmd [[normal 0]] vim.cmd [[/ l]] vim.cmd [[normal n]] end,
+      ["fm"] = function() vim.cmd [[normal 0]] vim.cmd [[/ m]] vim.cmd [[normal n]] end,
+      ["fn"] = function() vim.cmd [[normal 0]] vim.cmd [[/ n]] vim.cmd [[normal n]] end,
+      ["fo"] = function() vim.cmd [[normal 0]] vim.cmd [[/ o]] vim.cmd [[normal n]] end,
+      ["fp"] = function() vim.cmd [[normal 0]] vim.cmd [[/ p]] vim.cmd [[normal n]] end,
+      ["fq"] = function() vim.cmd [[normal 0]] vim.cmd [[/ q]] vim.cmd [[normal n]] end,
+      ["fr"] = function() vim.cmd [[normal 0]] vim.cmd [[/ r]] vim.cmd [[normal n]] end,
+      ["fs"] = function() vim.cmd [[normal 0]] vim.cmd [[/ s]] vim.cmd [[normal n]] end,
+      ["ft"] = function() vim.cmd [[normal 0]] vim.cmd [[/ t]] vim.cmd [[normal n]] end,
+      ["fu"] = function() vim.cmd [[normal 0]] vim.cmd [[/ u]] vim.cmd [[normal n]] end,
+      ["fv"] = function() vim.cmd [[normal 0]] vim.cmd [[/ v]] vim.cmd [[normal n]] end,
+      ["fw"] = function() vim.cmd [[normal 0]] vim.cmd [[/ w]] vim.cmd [[normal n]] end,
+      ["fx"] = function() vim.cmd [[normal 0]] vim.cmd [[/ x]] vim.cmd [[normal n]] end,
+      ["fy"] = function() vim.cmd [[normal 0]] vim.cmd [[/ y]] vim.cmd [[normal n]] end,
+      ["fz"] = function() vim.cmd [[normal 0]] vim.cmd [[/ z]] vim.cmd [[normal n]] end,
       ["z"] = "close_all_nodes",
       ["Z"] = "expand_all_nodes",
       ["a"] = {
@@ -297,7 +296,7 @@ require("neo-tree").setup({
             { "clipboard", zindex = 10 },
             { "bufnr", zindex = 10 },
             { "modified", zindex = 20, align = "right" },
-            { "diagnostics",  zindex = 20, align = "right" },
+            { "diagnostics", zindex = 20, align = "right" },
             { "git_status", zindex = 20, align = "right" },
           },
         },
@@ -330,69 +329,73 @@ require("neo-tree").setup({
     },
     find_by_full_path_words = true,
     follow_current_file = true, -- This will find and focus the file in the active buffer every
-                                 -- time the current file is changed while the tree is open.
+    -- time the current file is changed while the tree is open.
     group_empty_dirs = false, -- when true, empty folders will be grouped together
     hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-                                            -- in whatever position is specified in window.position
-                          -- "open_current",  -- netrw disabled, opening a directory opens within the
-                                            -- window like netrw would, regardless of window.position
-                          -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
+    -- in whatever position is specified in window.position
+    -- "open_current",  -- netrw disabled, opening a directory opens within the
+    -- window like netrw would, regardless of window.position
+    -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
     use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
-                                    -- instead of relying on nvim autocmd events.
+    -- instead of relying on nvim autocmd events.
     commands = {
 
       getparent_closenode = function(state)
         local node = state.tree:get_node()
-          if node.type == 'directory' and node:is_expanded() then
-            require'neo-tree.sources.filesystem'.toggle_directory(state, node)
-          else
-            require'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
-          end
-        end,
+        if node.type == 'directory' and node:is_expanded() then
+          require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
+        else
+          require 'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
+        end
+      end,
 
       getchild_open = function(state)
-          local node = state.tree:get_node()
-          if node.type == 'directory' then
-            if not node:is_expanded() then
-              require'neo-tree.sources.filesystem'.toggle_directory(state, node)
-            elseif node:has_children() then
-              require'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
-            end
-          else
-            state.commands["open"](state)
+        local node = state.tree:get_node()
+        if node.type == 'directory' then
+          if not node:is_expanded() then
+            require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
+          elseif node:has_children() then
+            require 'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
           end
-        end,
+        else
+          state.commands["open"](state)
+        end
+      end,
 
       open_tabnew_showbuffer = function(state)
-          state.commands["open_tabnew"](state)
-          vim.cmd("Neotree show")
-          require('bufferline').setup{options={always_show_bufferline=true}}
-        end,
+        state.commands["open_tabnew"](state)
+        vim.cmd("Neotree show")
+        require('bufferline').setup { options = { always_show_bufferline = true } }
+      end,
 
       open_tabdrop_showbuffer = function(state)
-          state.commands["open_tab_drop"](state)
-          vim.cmd("Neotree show")
-          require('bufferline').setup{options={always_show_bufferline=true}}
-        end,
+        state.commands["open_tab_drop"](state)
+        vim.cmd("Neotree show")
+        require('bufferline').setup { options = { always_show_bufferline = true } }
+      end,
 
       open_unfocus = function(state)
-          state.commands["open"](state)
-          vim.cmd("Neotree reveal")
-        end,
+        state.commands["open"](state)
+        vim.cmd("Neotree reveal")
+      end,
 
       print_path = function(state)
-          local node = state.tree:get_node()
-          if node.is_link then
-            print(node.path ..  " ➛ " .. node.link_to)
-          else
-            print (node.path)
-          end
-        end,
-
-      quit_on_open = function (state)
         local node = state.tree:get_node()
-        if require("neo-tree.utils").is_expandable(node) then
-          state.commands["toggle_node"](state)
+        if node.is_link then
+          print(node.path .. " ➛ " .. node.link_to)
+        else
+          print(node.path)
+        end
+      end,
+
+      quit_on_open = function(state)
+        local node = state.tree:get_node()
+        if node.type == 'directory' then
+          if not node:is_expanded() then
+            require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
+          elseif node:has_children() then
+            require 'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
+          end
         else
           state.commands['open'](state)
           state.commands["close_window"](state)
@@ -414,9 +417,9 @@ require("neo-tree").setup({
         require('toggleterm.terminal').Terminal:new({
           cmd = string.format("(img2sixel -w 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
           on_exit = function(term)
-              vim.api.nvim_command("!killall -s SIGWINCH nvim")
-            end,
-        }):toggle(70,"vertical")
+            vim.api.nvim_command("!killall -s SIGWINCH nvim")
+          end,
+        }):toggle(70, "vertical")
       end,
 
       sixel_open_float = function(state)
@@ -426,9 +429,9 @@ require("neo-tree").setup({
           cmd = string.format("(img2sixel -h 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
           direction = "float",
           on_open = function(term)
-              vim.cmd[[ call feedkeys("\<Esc>") ]]
-              vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
-            end,
+            vim.cmd [[ call feedkeys("\<Esc>") ]]
+            vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+          end,
         }):toggle()
       end,
 
@@ -436,15 +439,17 @@ require("neo-tree").setup({
         local node = state.tree:get_node()
         local path = node:get_id()
         require('toggleterm.terminal').Terminal:new({
-          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='95' [y]='1' [width]='70' [height]='70' [path]='%s'); read; } | ueberzug layer --parser bash'", path),
-        }):toggle(70,"vertical")
+          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='95' [y]='1' [width]='70' [height]='70' [path]='%s'); read; } | ueberzug layer --parser bash'"
+            , path),
+        }):toggle(70, "vertical")
       end,
 
       ueberzug_open_float = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
         require('toggleterm.terminal').Terminal:new({
-          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='12' [y]='5' [width]='110' [height]='110' [path]='%s'); read; } | ueberzug layer --parser bash'", path),
+          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='12' [y]='5' [width]='110' [height]='110' [path]='%s'); read; } | ueberzug layer --parser bash'"
+            , path),
           direction = "float",
         }):toggle()
       end,
@@ -452,7 +457,8 @@ require("neo-tree").setup({
       wezterm_open_vertical = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        vim.api.nvim_command(string.format("silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read '", path))
+        vim.api.nvim_command(string.format("silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read '"
+          , path))
       end,
 
     },
@@ -463,6 +469,7 @@ require("neo-tree").setup({
         ["o"] = "getchild_open",
         ["h"] = "getparent_closenode",
         ["H"] = "toggle_hidden",
+        ["l"] = "quit_on_open",
         ["L"] = "open_unfocus",
         ["i"] = "print_path",
         ["O"] = "system_open",
@@ -484,7 +491,7 @@ require("neo-tree").setup({
   },
   buffers = {
     follow_current_file = true, -- This will find and focus the file in the active buffer every
-                                 -- time the current file is changed while the tree is open.
+    -- time the current file is changed while the tree is open.
     group_empty_dirs = true, -- when true, empty folders will be grouped together
     show_unloaded = true,
     window = {
@@ -513,24 +520,24 @@ require("neo-tree").setup({
     {
       event = "neo_tree_buffer_enter",
       handler = function()
-        vim.cmd[[hi Cursor guifg=#5555ff blend=100 | setlocal guicursor=n:Cursor/lCursor]]
-        vim.cmd[[hi Search guifg=#5555ff guibg=#111111]]
+        vim.cmd [[hi Cursor guifg=#5555ff blend=100 | setlocal guicursor=n:Cursor/lCursor]]
+        vim.cmd [[hi Search guifg=#5555ff guibg=#111111]]
       end
     },
     {
       event = "neo_tree_buffer_leave",
       handler = function()
-        vim.cmd[[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
-        vim.cmd[[hi Search guifg=#5555ff guibg=#ffff00]]
-        vim.cmd[[:let @/ = ""]] -- clear highlight
+        vim.cmd [[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
+        vim.cmd [[hi Search guifg=#5555ff guibg=#ffff00]]
+        vim.cmd [[:let @/ = ""]] -- clear highlight
       end
     },
     {
       event = "neo_tree_window_after_close",
       handler = function()
-        vim.cmd[[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
-        vim.cmd[[hi Search guifg=#5555ff guibg=#ffff00]]
-        vim.cmd[[:let @/ = ""]] -- clear highlight
+        vim.cmd [[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
+        vim.cmd [[hi Search guifg=#5555ff guibg=#ffff00]]
+        vim.cmd [[:let @/ = ""]] -- clear highlight
       end
     }
   },
