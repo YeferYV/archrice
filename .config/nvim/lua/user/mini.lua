@@ -23,7 +23,7 @@ require('mini.ai').setup({
     -- l = mapped to last by mini.ai
     -- m = mapped to last-insert by keymaps.lua
     -- n = mapped to number by nvim-various-textobjs
-    -- n = mapped to next by mini.ai
+    -- N = mapped to next by mini.ai
     -- p = mapped to paragraph by nvim
     -- q = alias to '"` by mini.ai
     -- s = mapped to sentence by nvim
@@ -72,7 +72,7 @@ require('mini.ai').setup({
     -- @statement unsupported
     -- @scope unsupported
   },
-  user_textobject_id = false,
+  user_textobject_id = true,
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     -- Main textobject prefixes
@@ -80,8 +80,8 @@ require('mini.ai').setup({
     inside = 'i',
 
     -- Next/last variants
-    around_next = 'an',
-    inside_next = 'in',
+    around_next = 'aN',
+    inside_next = 'iN',
     around_last = 'al',
     inside_last = 'il',
 
@@ -192,4 +192,36 @@ require('mini.indentscope').setup({
   -- Which character to use for drawing scope indicator
   symbol = '',
 
+})
+
+require('mini.surround').setup({
+  -- Add custom surroundings to be used on top of builtin ones. For more
+  -- information with examples, see `:h MiniSurround.config`.
+  custom_surroundings = nil,
+
+  -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
+  highlight_duration = 500,
+
+  -- Module mappings. Use `''` (empty string) to disable one.
+  mappings = {
+    add = 'ys', -- Add surrounding in Normal and Visual modes
+    delete = 'ds', -- Delete surrounding
+    find = 'zf', -- Find surrounding (to the right)
+    find_left = 'zF', -- Find surrounding (to the left)
+    highlight = 'zh', -- Highlight surrounding
+    replace = 'cs', -- Replace surrounding
+    update_n_lines = 'zn', -- Update `n_lines`
+
+    suffix_last = 'l', -- Suffix to search with "prev" method
+    suffix_next = 'N', -- Suffix to search with "next" method
+  },
+
+  -- Number of lines within which surrounding is searched
+  n_lines = 20,
+
+  -- How to search for surrounding (first inside current line, then inside
+  -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
+  -- 'cover_or_nearest', 'next', 'prev', 'nearest'. For more details,
+  -- see `:h MiniSurround.config`.
+  search_method = 'cover',
 })

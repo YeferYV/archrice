@@ -282,26 +282,26 @@ return require("packer").startup(function(use)
 
   -- Surround block of codes
   -- use({ 'tpope/vim-surround', commit = "3d188ed2113431cf8dac77be61b842acb64433d9" })
-  use({
-    "kylechui/nvim-surround",
-    commit = "6cc6b54d3728a17e34bb5c9b9db05c7e5690813d",
-    config = function()
-      require("nvim-surround").setup({
-        -- keymaps = {
-        --   insert          = '<C-g>z',
-        --   insert_line     = '<C-g>Z',
-        --   normal          = 'yz',
-        --   normal_cur      = 'YZ',
-        --   normal_line     = 'yzz',
-        --   normal_cur_line = 'YZZ',
-        --   visual          = 'z',
-        --   visual_line     = 'Z',
-        --   delete          = 'dz',
-        --   change          = 'cz',
-        -- }
-      })
-    end
-  })
+  -- use({
+  --   "kylechui/nvim-surround",
+  --   commit = "6cc6b54d3728a17e34bb5c9b9db05c7e5690813d",
+  --   config = function()
+  --     require("nvim-surround").setup({
+  --       keymaps = {
+  --         insert          = '<C-g>z',
+  --         insert_line     = '<C-g>Z',
+  --         normal          = 'yz',
+  --         normal_cur      = 'YZ',
+  --         normal_line     = 'yzz',
+  --         normal_cur_line = 'YZZ',
+  --         visual          = 'z',
+  --         visual_line     = 'Z',
+  --         delete          = 'dz',
+  --         change          = 'cz',
+  --       }
+  --     })
+  --   end
+  -- })
 
   -- Syntax Hightlighting
   -- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
