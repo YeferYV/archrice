@@ -230,7 +230,7 @@ local mappings = {
     x = { "<cmd>Telescope lsp_incoming_calls initial_mode=normal<cr>", "Telescope incoming calls" },
     X = { "<cmd>Telescope lsp_outgoing_calls initial_mode=normal<cr>", "Telescope outgoing calls" },
     z = { "<cmd>AerialToggle<cr>", "Symbols outline" },
-    Z = { "<cmd>AerialToggle float<cr>", "Symbols outline" },
+    Z = { "<cmd>AerialToggle float<cr>", "Symbols outline (float)" },
   },
 
   p = {

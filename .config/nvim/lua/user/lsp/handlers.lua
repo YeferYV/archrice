@@ -1,5 +1,14 @@
 local M = {}
 
+local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status_cmp_ok then
+  return
+end
+
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+
 M.setup = function()
   local signs = {
     { name = "DiagnosticSignError", text = "" },
@@ -67,11 +76,9 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gH", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gL", '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gn",
-    '<cmd>lua vim.diagnostic.goto_next({                border="rounded"})<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gn", '<cmd>lua vim.diagnostic.goto_next({border="rounded"})<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", opts) -- error diagnostic
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gp",
-    '<cmd>lua vim.diagnostic.goto_prev({                border="rounded"})<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gp", '<cmd>lua vim.diagnostic.goto_prev({border="rounded"})<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
@@ -81,22 +88,19 @@ end
 
 M.on_attach = function(client, bufnr)
 
-  if client.name == "tsserver" then
-    client.server_capabilities.document_formatting = false
-  end
+  -- if client.name == "tsserver" then
+  --   client.server_capabilities.documentFormattingProvider = false
+  -- end
 
-  lsp_keymaps(bufnr)
   lsp_highlight_document(client)
+  lsp_keymaps(bufnr)
+
+  local status_ok, illuminate = pcall(require, "illuminate")
+  if not status_ok then
+    return
+  end
+  illuminate.on_attach(client)
 
 end
-
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_ok then
-  return
-end
-
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 return M
