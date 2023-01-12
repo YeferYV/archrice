@@ -52,7 +52,7 @@
         "key": "Down",
         "command": "vim.remap",
         "args": {
-            "commands":[
+            "commands": [
                 { "command": "list.focusDown" },
                 { "command": "filesExplorer.openFilePreserveFocus" },
             ]
@@ -63,7 +63,7 @@
         "key": "Up",
         "command": "vim.remap",
         "args": {
-            "commands":[
+            "commands": [
                 { "command": "list.focusUp" },
                 { "command": "filesExplorer.openFilePreserveFocus" },
             ]
@@ -84,7 +84,7 @@
         "key": "shift+j",
         "command": "vim.remap",
         "args": {
-            "commands":[
+            "commands": [
                 { "command": "list.focusDown" },
                 { "command": "list.focusDown" },
                 { "command": "list.focusDown" },
@@ -103,7 +103,7 @@
         "key": "shift+k",
         "command": "vim.remap",
         "args": {
-            "commands":[
+            "commands": [
                 { "command": "list.focusUp" },
                 { "command": "list.focusUp" },
                 { "command": "list.focusUp" },
@@ -128,10 +128,10 @@
         "key": "l",
         "command": "vim.remap",
         "args": {
-          "commands":[
-            { "command": "explorer.openAndPassFocus" },
-            { "command": "workbench.action.toggleSidebarVisibility" },
-          ]
+            "commands": [
+                { "command": "explorer.openAndPassFocus" },
+                { "command": "workbench.action.toggleSidebarVisibility" },
+            ]
         },
         "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
     },
@@ -144,10 +144,10 @@
         "key": "v",
         "command": "vim.remap",
         "args": {
-          "commands":[
-            { "command": "explorer.openToSide" },
-            { "command": "workbench.action.toggleSidebarVisibility" },
-          ]
+            "commands": [
+                { "command": "explorer.openToSide" },
+                { "command": "workbench.action.toggleSidebarVisibility" },
+            ]
         },
         "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
     },
@@ -193,7 +193,7 @@
         "command": "vim.remap",
         "when": "inputFocus && vim.mode == 'Insert'",
         "args": {
-            "after": ["<esc>", "h"]
+            "after": [ "<esc>", "h" ]
         }
     },
     {
@@ -201,7 +201,7 @@
         "command": "vim.remap",
         "when": "inputFocus && vim.mode == 'Insert'",
         "args": {
-            "after": ["<esc>", "j"]
+            "after": [ "<esc>", "j" ]
         }
     },
     {
@@ -209,7 +209,7 @@
         "command": "vim.remap",
         "when": "inputFocus && vim.mode == 'Insert'",
         "args": {
-            "after": ["<esc>", "k"]
+            "after": [ "<esc>", "k" ]
         }
     },
     {
@@ -217,7 +217,7 @@
         "command": "vim.remap",
         "when": "inputFocus && vim.mode == 'Insert'",
         "args": {
-            "after": ["<esc>", "l"]
+            "after": [ "<esc>", "l" ]
         }
     },
     {
@@ -225,7 +225,7 @@
         "command": "vim.remap",
         "when": "!terminalFocus",
         "args": {
-            "after": ["<C-6>"]
+            "after": [ "<C-6>" ]
         }
     },
     {
@@ -308,28 +308,28 @@
         "key": "ctrl+alt+left",
         "command": "vim.remap",
         "args": {
-            "after": ["<C-w>", "<"]
+            "after": [ "<C-w>", "<" ]
         }
     },
     {
         "key": "ctrl+alt+down",
         "command": "vim.remap",
         "args": {
-            "after": ["<C-w>", "-"]
+            "after": [ "<C-w>", "-" ]
         }
     },
     {
         "key": "ctrl+alt+up",
         "command": "vim.remap",
         "args": {
-            "after": ["<C-w>", "+"]
+            "after": [ "<C-w>", "+" ]
         }
     },
     {
         "key": "ctrl+alt+right",
         "command": "vim.remap",
         "args": {
-            "after": ["<C-w>", ">"]
+            "after": [ "<C-w>", ">" ]
         }
     },
     {
@@ -447,12 +447,12 @@
     {
         "key": "right",
         "command": "workbench.action.nextEditor",
-        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal' && editorFocus",
     },
     {
         "key": "left",
         "command": "workbench.action.previousEditor",
-        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal' && editorFocus",
     },
     {
         "key": "ctrl+tab",
