@@ -43,6 +43,7 @@ local options = {
   updatetime = 300, -- faster completion (4000ms default)
   virtualedit = "all", -- allow cursor bypass end of line
   visualbell = true, -- visual bell instead of beeping
+  -- whichwrap = "bs<>[]hl", -- which "horizontal" keys are allowed to travel to prev/next line
   wrap = false, -- display lines as one long line
   writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 }
@@ -95,7 +96,6 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
--- vim.cmd "set whichwrap+=<,>,[,],h,l"
-vim.cmd [[set iskeyword+=-]]
--- vim.cmd [[set iskeyword+="│"]]
--- vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
+-- vim.opt.shortmess:append "c" -- don't give |ins-completion-menu| messages
+vim.opt.iskeyword:append "-" -- hyphenated words recognized by searches
+vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
