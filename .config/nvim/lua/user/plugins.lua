@@ -336,7 +336,7 @@ return require("packer").startup(function(use)
   use { "chrisgrieser/nvim-various-textobjs",
     commit = "2fddc521bd8172dc157c89d2c182983caa898164",
     config = function()
-      require("various-textobjs").setup({ useDefaultKeymaps = true })
+      require("various-textobjs").setup({ useDefaultKeymaps = false, lookForwardLines = 30 })
     end,
   }
 

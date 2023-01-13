@@ -194,7 +194,7 @@ map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true
 -- │ Text Objects │
 -- ╰──────────────╯
 
--- -- Between chars (inline-autojump unsupported) (multiline-autojump unsupported) (like targets.vim)
+-- -- Between chars (inline-autojump unsupported) (multiline-autojump unsupported) (next/prev autojump unsupported) (like targets.vim)
 -- local chars = { '_', '.', ':', ',', ';', '|', '/', '\\', '*', '+', '%', '`', '?', '=' }
 -- for _,char in ipairs(chars) do
 --   for _,mode in ipairs({ 'x', 'o' }) do
@@ -203,16 +203,44 @@ map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true
 --   end
 -- end
 
--- -- example: `?` for diagnostic textobj
--- vim.keymap.set({"o", "x"}, "?", function () require("various-textobjs").diagnostic() end)
---
--- -- example: `an` for outer number, `in` for inner number
--- vim.keymap.set({"o", "x"}, "an", function () require("various-textobjs").number(false) end)
--- vim.keymap.set({"o", "x"}, "in", function () require("various-textobjs").number(true) end)
---
--- -- exception: indentation textobj requires two parameters, first for exclusion of the
--- -- starting border, second for the exclusion of ending border
--- vim.keymap.set({"o", "x"}, "ii", function () require("various-textobjs").indentation(true, true) end)
--- vim.keymap.set({"o", "x"}, "ai", function () require("various-textobjs").indentation(false, true) end)
--- vim.keymap.set({"o", "x"}, "iI", function () require("various-textobjs").indentation(true, true) end)
--- vim.keymap.set({"o", "x"}, "aI", function () require("various-textobjs").indentation(false, false) end)
+-- example: `?` for diagnostic textobj
+map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "v!") end)
+map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end)
+map({ "o", "x" }, "|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end)
+map({ "o", "x" }, "r", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vr") end)
+map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() vim.call("repeat#set", "vU") end)
+map({ "o", "x" }, "U", function() require("various-textobjs").url() vim.call("repeat#set", "vU") end)
+
+-- example: `an` for outer number, `in` for inner number
+map({ "o", "x" }, "av", function() require("various-textobjs").value(false) vim.call("repeat#set", "vav") end)
+map({ "o", "x" }, "iv", function() require("various-textobjs").value(true) vim.call("repeat#set", "viv") end)
+map({ "o", "x" }, "ak", function() require("various-textobjs").key(false) vim.call("repeat#set", "vak") end)
+map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.call("repeat#set", "vik") end)
+map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end)
+map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end)
+-- map({ "o", "x" }, "al", function() require("various-textobjs").mdlink(false) end)
+-- map({ "o", "x" }, "il", function() require("various-textobjs").mdlink(true) end)
+-- map({ "o", "x" }, "aC", function() require("various-textobjs").mdFencedCodeBlock(false) end)
+-- map({ "o", "x" }, "iC", function() require("various-textobjs").mdFencedCodeBlock(true) end)
+-- map({ "o", "x" }, "ac", function() require("various-textobjs").cssSelector(false) end)
+-- map({ "o", "x" }, "ic", function() require("various-textobjs").cssSelector(true) end)
+-- map({ "o", "x" }, "a/", function() require("various-textobjs").jsRegex(false) end)
+-- map({ "o", "x" }, "i/", function() require("various-textobjs").jsRegex(true) end)
+-- map({ "o", "x" }, "aD", function() require("various-textobjs").doubleSquareBrackets(false) end)
+-- map({ "o", "x" }, "iD", function() require("various-textobjs").doubleSquareBrackets(true) end)
+map({ "o", "x" }, "aS", function() require("various-textobjs").subword(false) vim.call("repeat#set", "vaS") end)
+map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim.call("repeat#set", "vaS") end)
+-- map({ "o", "x" }, "aP", function() require("various-textobjs").shellPipe(false) end)
+-- map({ "o", "x" }, "iP", function() require("various-textobjs").shellPipe(true) end)
+
+-- FIXME: Repeat not working
+-- exception: indentation textobj requires two parameters, first for exclusion of the
+-- starting border, second for the exclusion of ending border
+map({ "o", "x" }, "ii",
+  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "vii") end)
+map({ "o", "x" }, "ai",
+  function() require("various-textobjs").indentation(false, true) vim.call("repeat#set", "vai") end)
+map({ "o", "x" }, "iI",
+  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "viI") end)
+map({ "o", "x" }, "aI",
+  function() require("various-textobjs").indentation(false, false) vim.call("repeat#set", "vaI") end)
