@@ -153,7 +153,6 @@ return require("packer").startup(function(use)
   use({ "mfussenegger/nvim-dap", commit = "8f396b7836b9bbda9edd9f655f12ca377ae97676" })
   use({ "rcarriga/nvim-dap-ui", commit = "54365d2eb4cb9cfab0371306c6a76c913c5a67e3" })
   use({ "jay-babu/mason-nvim-dap.nvim", commit = "40c9a53c208a2d7e008b27d994ac001fadc7a5a2" })
-  -- use({ "jay-babu/mason-null-ls.nvim", commit = "ab5d99619de2263508abb7fb05ef3a0f24a8d73d" })
 
   -- File Explorer
   use({ "nvim-neo-tree/neo-tree.nvim", commit = "7c6903b05b13c5d4c3882c896a59e6101cb51ea7" })
@@ -217,6 +216,7 @@ return require("packer").startup(function(use)
   -- LSP
   use({ "neovim/nvim-lspconfig", commit = "9f49f35cf04edcf11fc23d849467d51f462be141" }) -- enable LSP
   use({ "jose-elias-alvarez/null-ls.nvim", commit = "a67897283fdb0051ad5c72e840e1845e195b979b" }) -- for formatters and linters
+  use({ "jay-babu/mason-null-ls.nvim", commit = "c4b4a6fe3cb8d8590b831c22b3475166dc9a894e" }) -- autoconfigured formatters
   use({ "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" })
   use({ "glepnir/lspsaga.nvim", commit = "b7b4777369b441341b2dcd45c738ea4167c11c9e", })
   use({
