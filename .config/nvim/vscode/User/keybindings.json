@@ -1,4 +1,5 @@
 [
+    // File Explorer
     {
         "key": "a",
         "command": "explorer.newFile",
@@ -156,10 +157,14 @@
         "command": "workbench.files.action.collapseExplorerFolders",
         "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
     },
+
+    // Show UI
     {
         "key": "alt+space",
         "command": "whichkey.show",
     },
+
+    // References Navigation
     {
         "key": "alt+n",
         "command": "editor.action.wordHighlight.next",
@@ -168,6 +173,8 @@
         "key": "alt+p",
         "command": "editor.action.wordHighlight.prev",
     },
+
+    // Copy Paste
     {
         "key": "alt+c",
         "command": "editor.action.clipboardCopyAction",
@@ -179,19 +186,21 @@
         "when": "!terminalFocus"
     },
     {
-        "key": "alt+v",
-        "command": "workbench.action.terminal.paste",
-        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
-    },
-    {
         "key": "alt+c",
         "command": "workbench.action.terminal.copySelection",
         "when": "terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected"
     },
     {
+        "key": "alt+v",
+        "command": "workbench.action.terminal.paste",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+
+    // Escape Navigation
+    {
         "key": "alt+h",
         "command": "vim.remap",
-        "when": "inputFocus && vim.mode == 'Insert'",
+        "when": "inputFocus && vim.mode == 'Insert' || vim.mode == 'Visual'",
         "args": {
             "after": [ "<esc>", "h" ]
         }
@@ -199,7 +208,7 @@
     {
         "key": "alt+j",
         "command": "vim.remap",
-        "when": "inputFocus && vim.mode == 'Insert'",
+        "when": "inputFocus && !inQuickOpen && vim.mode == 'Insert' || vim.mode == 'Visual'",
         "args": {
             "after": [ "<esc>", "j" ]
         }
@@ -207,7 +216,7 @@
     {
         "key": "alt+k",
         "command": "vim.remap",
-        "when": "inputFocus && vim.mode == 'Insert'",
+        "when": "inputFocus && !inQuickOpen && vim.mode == 'Insert' || vim.mode == 'Visual'",
         "args": {
             "after": [ "<esc>", "k" ]
         }
@@ -215,11 +224,13 @@
     {
         "key": "alt+l",
         "command": "vim.remap",
-        "when": "inputFocus && vim.mode == 'Insert'",
+        "when": "inputFocus && vim.mode == 'Insert' || vim.mode == 'Visual'",
         "args": {
             "after": [ "<esc>", "l" ]
         }
     },
+
+    // Buffer Navigation
     {
         "key": "alt+;",
         "command": "vim.remap",
@@ -238,6 +249,8 @@
         "command": "workbench.action.nextEditor",
         "when": "!terminalFocus",
     },
+
+    // Buffer Move
     {
         "key": "shift+alt+s",
         "command": "workbench.action.moveEditorLeftInGroup",
@@ -248,6 +261,8 @@
         "command": "workbench.action.moveEditorRightInGroup",
         "when": "!terminalFocus",
     },
+
+    // Terminal-Builtin Scrolling
     // {
     //     "key": "alt+d",
     //     "command": "workbench.action.terminal.scrollDown",
@@ -288,6 +303,8 @@
     //     "command": "workbench.action.terminal.scrollToNextCommand",
     //     "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
     // },
+
+    // Find/Search
     {
         "key": "alt+w",
         "command": "-workbench.action.terminal.toggleFindWholeWord",
@@ -298,12 +315,16 @@
         "command": "-workbench.action.terminal.toggleFindRegex",
         "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     },
+
+    // Tasks Runners
     {
         "key": "ctrl+alt+space",
         "command": "workbench.action.tasks.runTask",
         "args": "tmux-copy-mode",
         "when": "terminalFocus"
     },
+
+    // Window Resize
     {
         "key": "ctrl+alt+left",
         "command": "vim.remap",
@@ -332,6 +353,8 @@
             "after": [ "<C-w>", ">" ]
         }
     },
+
+    // Terminal Resize
     {
         "key": "ctrl+alt+left",
         "command": "workbench.action.terminal.resizePaneLeft",
@@ -352,6 +375,8 @@
         "command": "workbench.action.terminal.resizePaneUp",
         "when": "terminalFocus"
     },
+
+    // Window Navigation
     {
         "key": "ctrl+h",
         "command": "workbench.action.navigateLeft",
@@ -372,6 +397,8 @@
         "command": "workbench.action.navigateRight",
         "when": "vim.mode == 'Normal'",
     },
+
+    // Toggle ParameterHints
     {
         "key": "ctrl+h",
         "command": "editor.action.triggerParameterHints",
@@ -384,6 +411,18 @@
         // "when": "editorFocus && parameterHintsVisible"
         "when": "inputFocus && vim.mode == 'Insert'",
     },
+
+    // Completion Navigation
+    {
+        "key": "alt+j",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
+    {
+        "key": "alt+k",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+    },
     {
         "key": "ctrl+j",
         "command": "selectNextSuggestion",
@@ -404,6 +443,8 @@
         "command": "selectPrevSuggestion",
         "when": "!terminalFocus && editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
     },
+
+    // QuickOpen Navigation
     {
         "key": "ctrl+j",
         "command": "workbench.action.quickOpenNavigateNext",
@@ -424,6 +465,8 @@
         "command": "workbench.action.quickOpenNavigatePrevious",
         "when": "!terminalFocus && inQuickOpen"
     },
+
+    // Toggle Completion
     {
         "key": "ctrl+space",
         "command": "editor.action.triggerSuggest",
@@ -434,15 +477,17 @@
         "command": "hideSuggestWidget",
         "when": "suggestWidgetVisible && textInputFocus"
     },
+
+    // Buffer Navigation
     {
         "key": "tab",
         "command": "workbench.action.nextEditor",
-        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal' && editorFocus",
     },
     {
         "key": "shift+tab",
         "command": "workbench.action.previousEditor",
-        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal'",
+        "when": "!terminalFocus && !sideBarFocus && vim.mode == 'Normal' && editorFocus",
     },
     {
         "key": "right",
@@ -462,6 +507,8 @@
         "key": "ctrl+shift+tab",
         "command": "workbench.action.previousEditor"
     },
+
+    // Terminal-Builtin Navigation
     {
         "key": "ctrl+shift+h",
         "command": "workbench.action.terminal.focusPreviousPane",
@@ -482,10 +529,14 @@
         "command": "workbench.action.terminal.focusNextPane",
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     },
+
+    // Debugger Navigation
     {
         "key": "ctrl+alt+d",
         "command": "workbench.extensions.action.debugExtensionHost"
     },
+
+    // Tmux navigation (conflicting keymaps)
     {
         "key": "ctrl+up",
         "command": "-workbench.action.terminal.scrollToPreviousCommand",
@@ -495,5 +546,5 @@
         "key": "ctrl+down",
         "command": "-workbench.action.terminal.scrollToNextCommand",
         "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
-    }
+    },
 ]
