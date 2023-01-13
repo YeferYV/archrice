@@ -246,11 +246,11 @@ return require("packer").startup(function(use)
         " let g:sneak#label_esc = "\<Space>"
         " nnoremap s <Plug>Sneak_s
         " nnoremap S <Plug>Sneak_S
-        " onoremap z <Plug>Sneak_s
+        " onoremap s <Plug>Sneak_s
         " onoremap Z <Plug>Sneak_S
-        " vnoremap z <Plug>Sneak_s
+        " vnoremap s <Plug>Sneak_s
         " vnoremap Z <Plug>Sneak_S
-        " xnoremap z <Plug>Sneak_s
+        " xnoremap s <Plug>Sneak_s
         " xnoremap Z <Plug>Sneak_S
         " map ; <Plug>Sneak_;
         " map , <Plug>Sneak_,
@@ -261,6 +261,13 @@ return require("packer").startup(function(use)
         map \ <Plug>SneakLabel_s
         map \| <Plug>SneakLabel_S
         nmap <expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
+        nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>'
+        omap <Tab> <Plug>SneakLabel_s<cr>
+        omap <S-Tab> <Plug>SneakLabel_S<cr>
+        vmap <Tab> <Plug>SneakLabel_s<cr>
+        vmap <S-Tab> <Plug>SneakLabel_S<cr>
+        xmap <Tab> <Plug>SneakLabel_s<cr>
+        xmap <S-Tab> <Plug>SneakLabel_S<cr>
       ]]
     end,
     requires = {
