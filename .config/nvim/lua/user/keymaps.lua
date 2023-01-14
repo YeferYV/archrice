@@ -20,7 +20,7 @@ vim.g.maplocalleader = " "
 --   command_mode = "c",
 
 -- Jump to last change
-keymap("n", "gl", "`.", opts)
+keymap("n", "gl", "`.", { noremap = true, silent = true, desc = "Jump to last change" })
 
 -- Normal --
 -- Better window navigation
@@ -36,8 +36,8 @@ keymap("n", "<C-y>", "<C-i>", opts)
 -- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
 -- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
 -- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
-keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>", opts)
-keymap("x", 'im', "`[o`]<Left>", opts)
+keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>", { desc = "last change textobj" })
+keymap("x", 'im', "`[o`]<Left>", { desc = "last-change textobj" })
 
 -- Resize with arrows
 keymap("n", "<M-Up>", ":resize -2<CR>", opts)
@@ -95,11 +95,11 @@ keymap("n", "H", "10h", opts)
 keymap("n", "L", "10l", opts)
 
 -- Forward yank/paste
-keymap("n", 'Y', 'yg_', opts)
-keymap("v", 'P', 'g_P', opts) -- "P" seems unaltered the clipboard
+keymap("n", 'Y', 'yg_', { noremap = true, silent = true, desc = "Forward yank" })
+keymap("v", 'P', 'g_P', { noremap = true, silent = true, desc = "Forward Paste" }) -- "P" seems unaltered the clipboard
 
 -- Unaltered clipboard
-keymap("v", 'p', '"_dP', opts)
+keymap("v", 'p', '"_dP', { noremap = true, silent = true, desc = "Paste Unaltered" })
 
 -- Save file as sudo
 -- keymap("c","w!!","execute 'silent! write !sudo tee % >/dev/null' <bar> edit!",opts)
@@ -120,7 +120,7 @@ keymap("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", opts)
 keymap("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", opts)
 keymap("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", opts)
 keymap("n", "gy;", ":call CycleLastBuffer()<CR>", opts)
-keymap("n", "gyl", "<C-6>", opts)
+keymap("n", "gyl", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
 keymap("n", "gys", "<Cmd>BufferLineCyclePrev <CR>", opts)
 keymap("n", "gyf", "<Cmd>BufferLineCycleNext <CR>", opts)
 keymap("n", "gyS", "<Cmd>BufferLineMovePrev <CR>", opts)
@@ -149,24 +149,26 @@ keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
 keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
 
 -- Terminal
-keymap("n", "<leader>v", "<Cmd>ToggleTerm direction=vertical   size=70<CR>", opts)
-keymap("n", "<leader>V", "<Cmd>ToggleTerm direction=horizontal size=10<CR>", opts)
+keymap("n", "<leader>v", "<Cmd>ToggleTerm direction=vertical   size=70<CR>",
+  { noremap = true, silent = true, desc = "ToggleTerm vertical" })
+keymap("n", "<leader>V", "<Cmd>ToggleTerm direction=horizontal size=10<CR>",
+  { noremap = true, silent = true, desc = "ToggleTerm horizontal" })
 
 -- Window Swap
 keymap("t", "<C-x>", "<C-\\><C-n>:call WinBufSwap()<cr><Esc><cmd>set number<cr>", opts)
 
 -- Visual Paste/ForwardPaste from secondary clipboard
-keymap("v", "<leader>p", '"*p', opts)
-keymap("v", "<leader>P", 'g_"*P', opts)
+keymap("v", "<leader>p", '"*p', { noremap = true, silent = true, desc = "Paste Unaltered (second_clip)" })
+keymap("v", "<leader>P", 'g_"*P', { noremap = true, silent = true, desc = "Forward Paste (second_clip)" })
 
 -- Visual Copy/Append to secondary clipboard
-keymap("v", "<leader>y", '"*y', opts)
-keymap("v", "<leader>Y", 'y:let @* .= @0<cr>', opts)
+keymap("v", "<leader>y", '"*y', { noremap = true, silent = true, desc = "Copy (second_clip)" })
+keymap("v", "<leader>Y", 'y:let @* .= @0<cr>', { noremap = true, silent = true, desc = "Copy Append (second_clip)" })
 
 -- Visual Fold (Vjzf: create fold, zj/zk: next/previous fold), FormatColumn and FormatComment
-keymap("v", "<leader>z", ":'<,'>fold      <CR>", opts)
-keymap("v", "<leader>Z", ":'<,'>!column -t<CR>", opts)
-keymap("v", "<leader>gw", "gw", opts)
+keymap("v", "<leader>z", ":'<,'>fold      <CR>", { noremap = true, silent = true, desc = "Fold" })
+keymap("v", "<leader>Z", ":'<,'>!column -t<CR>", { noremap = true, silent = true, desc = "Format Column" })
+keymap("v", "<leader>gw", "gw", { noremap = true, silent = true, desc = "Format Comment" })
 
 -- ╭──────────────────╮
 -- │ Lspsaga mappings │
@@ -204,20 +206,32 @@ map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true
 -- end
 
 -- example: `?` for diagnostic textobj
-map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "v!") end)
-map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end)
-map({ "o", "x" }, "|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end)
-map({ "o", "x" }, "r", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vr") end)
-map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() vim.call("repeat#set", "vU") end)
-map({ "o", "x" }, "U", function() require("various-textobjs").url() vim.call("repeat#set", "vU") end)
+map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "v!") end,
+  { desc = "inner-inner indentation textobj" })
+map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end,
+  { desc = "inner-inner indentation textobj" })
+map({ "o", "x" }, "|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end,
+  { desc = "inner-inner indentation textobj" })
+map({ "o", "x" }, "r", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vr") end,
+  { desc = "inner-inner indentation textobj" })
+map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() vim.call("repeat#set", "vU") end,
+  { desc = "inner-inner indentation textobj" })
+map({ "o", "x" }, "U", function() require("various-textobjs").url() vim.call("repeat#set", "vU") end,
+  { desc = "inner-inner indentation textobj" })
 
 -- example: `an` for outer number, `in` for inner number
-map({ "o", "x" }, "av", function() require("various-textobjs").value(false) vim.call("repeat#set", "vav") end)
-map({ "o", "x" }, "iv", function() require("various-textobjs").value(true) vim.call("repeat#set", "viv") end)
-map({ "o", "x" }, "ak", function() require("various-textobjs").key(false) vim.call("repeat#set", "vak") end)
-map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.call("repeat#set", "vik") end)
-map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end)
-map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end)
+map({ "o", "x" }, "av", function() require("various-textobjs").value(false) vim.call("repeat#set", "vav") end,
+  { desc = "outer value textobj" })
+map({ "o", "x" }, "iv", function() require("various-textobjs").value(true) vim.call("repeat#set", "viv") end,
+  { desc = "inner value textobj" })
+map({ "o", "x" }, "ak", function() require("various-textobjs").key(false) vim.call("repeat#set", "vak") end,
+  { desc = "outer key textobj" })
+map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.call("repeat#set", "vik") end,
+  { desc = "inner key textobj" })
+map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
+  { desc = "outer number textobj" })
+map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
+  { desc = "outer number textobj" })
 -- map({ "o", "x" }, "al", function() require("various-textobjs").mdlink(false) end)
 -- map({ "o", "x" }, "il", function() require("various-textobjs").mdlink(true) end)
 -- map({ "o", "x" }, "aC", function() require("various-textobjs").mdFencedCodeBlock(false) end)
@@ -228,8 +242,10 @@ map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.
 -- map({ "o", "x" }, "i/", function() require("various-textobjs").jsRegex(true) end)
 -- map({ "o", "x" }, "aD", function() require("various-textobjs").doubleSquareBrackets(false) end)
 -- map({ "o", "x" }, "iD", function() require("various-textobjs").doubleSquareBrackets(true) end)
-map({ "o", "x" }, "aS", function() require("various-textobjs").subword(false) vim.call("repeat#set", "vaS") end)
-map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim.call("repeat#set", "vaS") end)
+map({ "o", "x" }, "aS", function() require("various-textobjs").subword(false) vim.call("repeat#set", "vaS") end,
+  { desc = "outer Subword textobj" })
+map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim.call("repeat#set", "vaS") end,
+  { desc = "inner Subword textobj" })
 -- map({ "o", "x" }, "aP", function() require("various-textobjs").shellPipe(false) end)
 -- map({ "o", "x" }, "iP", function() require("various-textobjs").shellPipe(true) end)
 
@@ -237,10 +253,14 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 -- exception: indentation textobj requires two parameters, first for exclusion of the
 -- starting border, second for the exclusion of ending border
 map({ "o", "x" }, "ii",
-  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "vii") end)
+  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "vii") end,
+  { desc = "inner-inner indentation textobj" })
 map({ "o", "x" }, "ai",
-  function() require("various-textobjs").indentation(false, true) vim.call("repeat#set", "vai") end)
+  function() require("various-textobjs").indentation(false, true) vim.call("repeat#set", "vai") end,
+  { desc = "outer-inner indentation textobj" })
 map({ "o", "x" }, "iI",
-  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "viI") end)
+  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "viI") end,
+  { desc = "inner-inner indentation textobj" })
 map({ "o", "x" }, "aI",
-  function() require("various-textobjs").indentation(false, false) vim.call("repeat#set", "vaI") end)
+  function() require("various-textobjs").indentation(false, false) vim.call("repeat#set", "vaI") end,
+  { desc = "outer-outer indentation textobj" })
