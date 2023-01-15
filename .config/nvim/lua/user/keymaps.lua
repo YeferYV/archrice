@@ -249,18 +249,18 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 -- map({ "o", "x" }, "aP", function() require("various-textobjs").shellPipe(false) end)
 -- map({ "o", "x" }, "iP", function() require("various-textobjs").shellPipe(true) end)
 
--- FIXME: Repeat not working
+-- NOTE: Repeat textobj just works
 -- exception: indentation textobj requires two parameters, first for exclusion of the
 -- starting border, second for the exclusion of ending border
-map({ "o", "x" }, "ii",
-  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "vii") end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "ai",
-  function() require("various-textobjs").indentation(false, true) vim.call("repeat#set", "vai") end,
-  { desc = "outer-inner indentation textobj" })
-map({ "o", "x" }, "iI",
-  function() require("various-textobjs").indentation(true, true) vim.call("repeat#set", "viI") end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "aI",
-  function() require("various-textobjs").indentation(false, false) vim.call("repeat#set", "vaI") end,
-  { desc = "outer-outer indentation textobj" })
+-- map({ "o", "x" }, "ii",
+--   function() require("various-textobjs").indentation(true, true) end,
+--   { desc = "inner-inner indentation textobj" })
+-- map({ "o", "x" }, "ai",
+--   function() require("various-textobjs").indentation(false, true) end,
+--   { desc = "outer-inner indentation textobj" })
+-- map({ "o", "x" }, "iI",
+--   function() require("various-textobjs").indentation(true, true) end,
+--   { desc = "inner-inner indentation textobj" })
+-- map({ "o", "x" }, "aI",
+--   function() require("various-textobjs").indentation(false, false) end,
+--   { desc = "outer-outer indentation textobj" })
