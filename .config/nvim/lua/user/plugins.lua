@@ -333,7 +333,7 @@ return require("packer").startup(function(use)
 
   -- Text Objects
   -- use { 'wellle/targets.vim', commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d", }
-  use { "michaeljsmith/vim-indent-object", commit = "5c5b24c959478929b54a9e831a8e2e651a465965" }
+  -- use { "michaeljsmith/vim-indent-object", commit = "5c5b24c959478929b54a9e831a8e2e651a465965" }
   -- use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
   use { "echasnovski/mini.nvim", commit = "1e9e353c5f4075dda2be25b8fe2bff5134b99e41" }
   use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564" }

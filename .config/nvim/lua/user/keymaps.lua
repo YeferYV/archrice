@@ -258,9 +258,9 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 -- map({ "o", "x" }, "ai",
 --   function() require("various-textobjs").indentation(false, true) end,
 --   { desc = "outer-inner indentation textobj" })
--- map({ "o", "x" }, "iI",
---   function() require("various-textobjs").indentation(true, true) end,
---   { desc = "inner-inner indentation textobj" })
--- map({ "o", "x" }, "aI",
---   function() require("various-textobjs").indentation(false, false) end,
---   { desc = "outer-outer indentation textobj" })
+map({ "o", "x" }, "iI",
+  function() require("various-textobjs").indentation(true, true) end,
+  { desc = "inner-inner indentation textobj" })
+map({ "o", "x" }, "aI",
+  function() require("various-textobjs").indentation(false, false) end,
+  { desc = "outer-outer indentation textobj" })
