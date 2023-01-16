@@ -248,8 +248,8 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 -- _vim_indent_object_(repeable_+_vimrepeat)
 vim.cmd [[ let g:indent_object_no_mappings = '1' ]]
 map({ "o", "x" }, "ii", "<Plug>IndentObject-ii", { desc = "IndentObject_ii" })
-map({ "o", "x" }, "ai", "<Plug>IndentObject-ii<cmd>normal oko<cr>", { desc = "IndentObject_ai" })
-map({ "o", "x" }, "iI", "<Plug>IndentObject-ai<cmd>normal ojo<cr>", { desc = "IndentObject_iI" })
+map({ "v", "x" }, "ai", "<Plug>IndentObject-ii<cmd>normal oko<cr>", { desc = "IndentObject_ai" })
+map({ "v", "x" }, "iI", "<Plug>IndentObject-ai<cmd>normal ojo<cr>", { desc = "IndentObject_iI" })
 map({ "o", "x" }, "aI", "<Plug>IndentObject-aI", { desc = "IndentObject_aI" })
 
 -- ╭─────────╮

@@ -165,8 +165,8 @@ require('mini.indentscope').setup({
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     -- Textobjects
-    object_scope = '',
-    object_scope_with_border = '',
+    object_scope = 'iI',
+    object_scope_with_border = 'ai',
 
     -- Motions (jump to respective border line; if not present - body line)
     goto_top = '[ii',
