@@ -19,25 +19,19 @@ vim.g.maplocalleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
--- Jump to last change
-keymap("n", "gl", "`.", { noremap = true, silent = true, desc = "Jump to last change" })
+-- ╭────────────╮
+-- │ Automation │
+-- ╰────────────╯
 
--- Normal --
+-- position navigation (in wezterm <C-i> outputs Tab)
+keymap("n", "<C-y>", "<C-i>", opts)
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-t>", "<C-t>", opts)
-
--- position navigation (in wezterm <C-i> outputs Tab)
-keymap("n", "<C-y>", "<C-i>", opts)
-
--- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
--- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
--- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
-keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>", { desc = "last change textobj" })
-keymap("x", 'im', "`[o`]<Left>", { desc = "last-change textobj" })
 
 -- Resize with arrows
 keymap("n", "<M-Up>", ":resize -2<CR>", opts)
@@ -59,12 +53,6 @@ keymap("n", "<leader><Tab>", ":tabnext<CR>", opts)
 keymap("n", "<leader><S-Tab>", ":tabprevious<CR>", opts)
 keymap("n", "<leader>X", ":tabclose<CR>", opts)
 
--- Press jk fast to enter NormalMode
-keymap("i", "jk", "<ESC>", opts)
-keymap("i", "kj", "<ESC>", opts)
--- keymap("v", "jk", "<ESC>", opts) --slow
--- keymap("v", "kj", "<ESC>", opts) --slow
-
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
@@ -84,7 +72,13 @@ keymap("n", "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false })
 keymap("i", "<C-left>", "<Plug>(copilot-previous)", opts)
 keymap("i", "<C-right>", "<Plug>(copilot-next)", opts)
 
--- Alternative way to quit/write
+-- Quick Escape
+keymap("i", "jk", "<ESC>", opts)
+keymap("i", "kj", "<ESC>", opts)
+-- keymap("v", "jk", "<ESC>", opts) --slow
+-- keymap("v", "kj", "<ESC>", opts) --slow
+
+-- Quick quit/write
 keymap("n", "<S-q>", "<cmd>quit<CR>", opts)
 keymap("n", "<S-r>", "<cmd>lua vim.lsp.buf.format()<cr><cmd>write<cr>", opts)
 
@@ -125,28 +119,6 @@ keymap("n", "gys", "<Cmd>BufferLineCyclePrev <CR>", opts)
 keymap("n", "gyf", "<Cmd>BufferLineCycleNext <CR>", opts)
 keymap("n", "gyS", "<Cmd>BufferLineMovePrev <CR>", opts)
 keymap("n", "gyF", "<Cmd>BufferLineMoveNext <CR>", opts)
-
--- normal mode (easymotion-like)
-keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
-keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
-keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
-keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
-keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", { noremap = true })
-
--- visual mode (easymotion-like)
-keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
-keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
-keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
-keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
-keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", { noremap = true })
-
--- normal mode (sneak-like)
-keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
-keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
-
--- visual mode (sneak-like)
-keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
-keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
 
 -- Terminal
 keymap("n", "<leader>v", "<Cmd>ToggleTerm direction=vertical   size=70<CR>",
@@ -196,7 +168,7 @@ map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true
 -- │ Text Objects │
 -- ╰──────────────╯
 
--- -- Between chars (inline-autojump unsupported) (multiline-autojump unsupported) (next/prev autojump unsupported) (like targets.vim)
+-- _between_chars_(inline-autojump_unsupported)_(multiline-autojump_unsupported)_(next/prev_autojump_unsupported)_(like_targets.vim)
 -- local chars = { '_', '.', ':', ',', ';', '|', '/', '\\', '*', '+', '%', '`', '?', '=' }
 -- for _,char in ipairs(chars) do
 --   for _,mode in ipairs({ 'x', 'o' }) do
@@ -205,21 +177,30 @@ map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true
 --   end
 -- end
 
--- example: `?` for diagnostic textobj
-map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "v!") end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "r", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vr") end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() vim.call("repeat#set", "vU") end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "U", function() require("various-textobjs").url() vim.call("repeat#set", "vU") end,
-  { desc = "inner-inner indentation textobj" })
+-- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
+-- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
+-- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
+keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>", { desc = "last change textobj" })
+keymap("x", 'im', "`[o`]<Left>", { desc = "last-change textobj" })
 
--- example: `an` for outer number, `in` for inner number
+-- _jump_to_last_change
+map({ "n", "o", "x" }, "gl", "`.", { noremap = true, silent = true, desc = "Jump to last change" })
+
+-- _nvim_various_textobjs
+map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "v!") end,
+  { desc = "Diagnostic textobj" })
+map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end,
+  { desc = "nearEoL textobj" })
+map({ "o", "x" }, "|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end,
+  { desc = "ColumnDown textobj" })
+map({ "o", "x" }, "R", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vR") end,
+  { desc = "RestOfParagraph textobj" })
+map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() vim.call("repeat#set", "vU") end,
+  { desc = "EntireBuffer textobj" })
+map({ "o", "x" }, "U", function() require("various-textobjs").url() vim.call("repeat#set", "vU") end,
+  { desc = "Url textobj" })
+
+-- _nvim_various_textobjs: inner-outer
 map({ "o", "x" }, "av", function() require("various-textobjs").value(false) vim.call("repeat#set", "vav") end,
   { desc = "outer value textobj" })
 map({ "o", "x" }, "iv", function() require("various-textobjs").value(true) vim.call("repeat#set", "viv") end,
@@ -249,18 +230,82 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 -- map({ "o", "x" }, "aP", function() require("various-textobjs").shellPipe(false) end)
 -- map({ "o", "x" }, "iP", function() require("various-textobjs").shellPipe(true) end)
 
--- NOTE: Repeat textobj just works
--- exception: indentation textobj requires two parameters, first for exclusion of the
--- starting border, second for the exclusion of ending border
+-- _nvim_various_textobjs: indentation textobj requires two parameters, first for
+-- exclusion of the starting border, second for the exclusion of ending border
 -- map({ "o", "x" }, "ii",
 --   function() require("various-textobjs").indentation(true, true) end,
 --   { desc = "inner-inner indentation textobj" })
 -- map({ "o", "x" }, "ai",
 --   function() require("various-textobjs").indentation(false, true) end,
 --   { desc = "outer-inner indentation textobj" })
-map({ "o", "x" }, "iI",
-  function() require("various-textobjs").indentation(true, true) end,
-  { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "aI",
-  function() require("various-textobjs").indentation(false, false) end,
-  { desc = "outer-outer indentation textobj" })
+-- map({ "o", "x" }, "iI",
+--   function() require("various-textobjs").indentation(true, true) end,
+--   { desc = "inner-inner indentation textobj" })
+-- map({ "o", "x" }, "aI",
+--   function() require("various-textobjs").indentation(false, false) end,
+--   { desc = "outer-outer indentation textobj" })
+
+-- _vim_indent_object_(repeable_+_vimrepeat)
+vim.cmd [[ let g:indent_object_no_mappings = '1' ]]
+map({ "o", "x" }, "ii", "<Plug>IndentObject-ii", { desc = "IndentObject_ii" })
+map({ "o", "x" }, "ai", "<Plug>IndentObject-ii<cmd>normal oko<cr>", { desc = "IndentObject_ai" })
+map({ "o", "x" }, "iI", "<Plug>IndentObject-ai<cmd>normal ojo<cr>", { desc = "IndentObject_iI" })
+map({ "o", "x" }, "aI", "<Plug>IndentObject-aI", { desc = "IndentObject_aI" })
+
+-- ╭─────────╮
+-- │ Motions │
+-- ╰─────────╯
+
+-- _normal_mode_(easymotion-like)
+keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", { noremap = true })
+
+-- _visual_mode_(easymotion-like)
+keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", { noremap = true })
+
+-- _normal_mode_(sneak-like)
+keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
+keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
+
+-- _visual_mode_(sneak-like)
+keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
+keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
+
+vim.cmd [[
+  let g:sneak#prompt = ''
+  " let g:sneak#target_labels = ";sftunq/SFGHLTUNRMQZ?0"
+  " let g:sneak#use_ic_scs = 1
+  " let g:sneak#label = 1
+  " let g:sneak#label_esc = "\<Space>"
+  " nnoremap s <Plug>Sneak_s
+  " nnoremap S <Plug>Sneak_S
+  " onoremap s <Plug>Sneak_s
+  " onoremap Z <Plug>Sneak_S
+  " vnoremap s <Plug>Sneak_s
+  " vnoremap Z <Plug>Sneak_S
+  " xnoremap s <Plug>Sneak_s
+  " xnoremap Z <Plug>Sneak_S
+  " map ; <Plug>Sneak_;
+  " map , <Plug>Sneak_,
+  map f <Plug>Sneak_f
+  map F <Plug>Sneak_F
+  map t <Plug>Sneak_t
+  map T <Plug>Sneak_T
+  map \ <Plug>SneakLabel_s
+  map \| <Plug>SneakLabel_S
+  nmap <expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
+  nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>'
+  omap <Tab> <Plug>SneakLabel_s<cr>
+  omap <S-Tab> <Plug>SneakLabel_S<cr>
+  vmap <Tab> <Plug>SneakLabel_s<cr>
+  vmap <S-Tab> <Plug>SneakLabel_S<cr>
+  xmap <Tab> <Plug>SneakLabel_s<cr>
+  xmap <S-Tab> <Plug>SneakLabel_S<cr>
+]]

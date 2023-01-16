@@ -168,9 +168,9 @@ require 'nvim-treesitter.configs'.setup {
   },
   textsubjects = {
     enable = true,
-    prev_selection = ',', -- (Optional) keymap to select the previous selection
+    prev_selection = 'Q', -- (Optional) keymap to select the previous selection
     keymaps = {
-      ['.'] = 'textsubjects-smart', -- useful for block of comments
+      ['K'] = 'textsubjects-smart', -- useful for block of comments
       ['aK'] = 'textsubjects-container-outer',
       ['iK'] = 'textsubjects-container-inner',
     },
