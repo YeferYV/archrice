@@ -172,9 +172,17 @@ local mappings = {
   },
 
   ["h"] = { "<cmd>noh<cr>", "NoHighlight" },
-  ["e"] = { "<cmd>Neotree toggle left<cr>", "Neotree Toggle" },
-  ["o"] = { "<cmd>Neotree focus<cr>", "Neotree focus" },
-  ["q"] = { "<cmd>Neotree filesystem reveal float<cr>", "Neotree float" },
+  ["e"] = { "<cmd>lua _G.neotree_blend=false<cr><cmd>Neotree toggle left<cr>", "Neotree Toggle" },
+  ["o"] = { "<cmd>lua _G.neotree_blend=true<cr><cmd>Neotree focus<cr>", "Neotree focus" },
+  ["q"] = {
+    function()
+      _G.neotree_blend = true
+      vim.cmd [[Neotree filesystem reveal float]]
+      vim.cmd [[hi NeoTreeTabInactive guibg=none]]
+      vim.cmd [[hi NeoTreeTabSeparatorInactive guibg=none]]
+    end,
+    "Neotree float"
+  },
   ["m"] = { "<cmd>Mason<cr>", "Mason" },
 
   g = {

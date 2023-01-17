@@ -132,13 +132,14 @@ require("neo-tree").setup({
     width = "28",
     popup = { -- settings that apply to float position only
       size = {
-        -- height = "90%",
-        -- width = "40",
         height = "80%",
-        width = "50%",
+        width = "30",
+        -- height = "80%",
+        -- width = "50%",
       },
       -- position = { col = "100%", row = "2" },
-      position = "50%", -- 50% means center it
+      position = { col = "10%", row = "4" },
+      -- position = "50%", -- 50% means center it
       -- you can also specify border here, if you want a different setting from
       -- the global popup_border_style.
     },
@@ -520,7 +521,9 @@ require("neo-tree").setup({
     {
       event = "neo_tree_buffer_enter",
       handler = function()
-        vim.cmd [[hi Cursor guifg=#5555ff blend=100 | setlocal guicursor=n:Cursor/lCursor]]
+        if _G.neotree_blend == true then
+          vim.cmd [[hi Cursor guifg=#5555ff blend=100 | setlocal guicursor=n:Cursor/lCursor]]
+        end
         vim.cmd [[hi Search guifg=#5555ff guibg=#111111]]
       end
     },
