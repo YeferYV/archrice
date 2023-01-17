@@ -65,7 +65,7 @@ if vim.g.neovide == true then
   -- vim.g.neovide_cursor_vfx_particle_speed = 10.0
   -- vim.g.neovide_floating_blur_amount_x = 3.0
   -- vim.g.neovide_floating_blur_amount_y = 3.0
-  -- vim.g.neovide_transparency = 0.7
+  vim.g.neovide_transparency            = 0.7
   vim.g.airline_powerline_fonts         = 1
   vim.g.neovide_confirm_quit            = true
   vim.g.neovide_cursor_animation_length = 0.13

@@ -138,7 +138,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           terminal_color_10 = '#00ff00',
           terminal_color_11 = '#ffff00',
           terminal_color_12 = '#1c1cff',
-          terminal_color_13 = '#880088',
+          terminal_color_13 = '#8844bb',
           terminal_color_14 = '#008888',
           terminal_color_15 = '#ff4400',
         }
