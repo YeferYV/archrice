@@ -74,22 +74,6 @@ if vim.g.neovide == true then
   vim.g.neovide_hide_mouse_when_typing  = true
   vim.g.neovide_no_idle                 = true
   vim.g.neovide_scroll_animation_length = 0.1
-  vim.g.terminal_color_0                = '#ff0000'
-  vim.g.terminal_color_1                = '#bb0000'
-  vim.g.terminal_color_2                = '#008800'
-  vim.g.terminal_color_3                = '#bbbb00'
-  vim.g.terminal_color_4                = '#5555ff'
-  vim.g.terminal_color_5                = '#8800ff'
-  vim.g.terminal_color_6                = '#7acaca'
-  vim.g.terminal_color_7                = '#ffffff'
-  vim.g.terminal_color_8                = '#7c7c7c'
-  vim.g.terminal_color_9                = '#ff0000'
-  vim.g.terminal_color_10               = '#00ff00'
-  vim.g.terminal_color_11               = '#ffff00'
-  vim.g.terminal_color_12               = '#1c1cff'
-  vim.g.terminal_color_13               = '#880088'
-  vim.g.terminal_color_14               = '#008888'
-  vim.g.terminal_color_15               = '#ff4400'
 end
 
 for k, v in pairs(options) do

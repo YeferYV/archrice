@@ -461,7 +461,34 @@ local highlights = {
   LspSagaWinbarTypeParameter = { fg = '#495466' },
 }
 
+-- setting highlights
 for group, conf in pairs(highlights) do
   vim.api.nvim_set_hl(0, group, conf)
 end
+
+-- Terminal colors
+custom_terminal_colors = {
+  terminal_color_0  = '#222222',
+  terminal_color_1  = '#bb0000',
+  terminal_color_2  = '#008800',
+  terminal_color_3  = '#bbbb00',
+  terminal_color_4  = '#5555cc',
+  terminal_color_5  = '#8855ff',
+  terminal_color_6  = '#7acaca',
+  terminal_color_7  = '#ffffff',
+  terminal_color_8  = '#7c7c7c',
+  terminal_color_9  = '#ff0000',
+  terminal_color_10 = '#00ff00',
+  terminal_color_11 = '#ffff00',
+  terminal_color_12 = '#1c1cff',
+  terminal_color_13 = '#8844bb',
+  terminal_color_14 = '#008888',
+  terminal_color_15 = '#ff4400',
+}
+
+-- setting custom_terminal_colors
+for group, conf in pairs(custom_terminal_colors) do
+  vim.g[group] = conf
+end
+
 EOF
