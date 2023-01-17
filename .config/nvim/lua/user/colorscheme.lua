@@ -30,8 +30,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
     local highlights = {
       BufferLineBackground        = { fg = "#565f89" },
-      BufferLineSeparator         = { fg = "#5c5c5c" },
       BufferLineIndicatorSelected = { fg = "#ffffff" },
+      BufferLineModified          = { fg = "#616161" },
+      BufferLineModifiedSelected  = { fg = "#ffffff" },
+      BufferLineModifiedVisible   = { fg = "#a1a1ad" },
+      BufferLineSeparator         = { fg = "#5c5c5c" },
       CursorLine                  = { bg = "#0c0c0c" },
       NeoTreeCursorLine           = { bg = "#16161e" },
       NeoTreeGitAdded             = { fg = "#495466" },
