@@ -149,7 +149,6 @@ local mappings = {
     b = { "<cmd>!bash %<cr>", "Exec with bash" },
     c = { "<cmd>w! | !compiler '<c-r>%'<cr>", "Exec with compiler" },
     p = { "<cmd>!python %<cr>", "Exec with python" },
-    -- o = { "<cmd>!~/.config/bin/i3cmds/opout<cr>", "Output Document" },
     o = { "<cmd>!$HOME/.local/bin/i3cmds/opout %<cr><cr>", "Output Document" },
   },
 
