@@ -402,17 +402,20 @@
     {
         "key": "ctrl+h",
         "command": "editor.action.triggerParameterHints",
-        // "when": "editorFocus && editorHasSignatureHelpProvider"
-        "when": "inputFocus && vim.mode == 'Insert'",
+        "when": "editorFocus && editorHasSignatureHelpProvider && vim.mode == 'Insert'"
     },
     {
         "key": "ctrl+h",
         "command": "closeParameterHints",
-        // "when": "editorFocus && parameterHintsVisible"
-        "when": "inputFocus && vim.mode == 'Insert'",
+        "when": "editorFocus && parameterHintsVisible && vim.mode == 'Insert'"
     },
 
     // Completion Navigation
+    {
+        "key": "alt+l",
+        "command": "acceptSelectedSuggestion",
+        "when": "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus"
+    },
     {
         "key": "alt+j",
         "command": "selectNextSuggestion",

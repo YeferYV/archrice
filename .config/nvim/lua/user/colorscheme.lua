@@ -90,7 +90,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         },
         custom_terminal_colors = {
           terminal_color_0  = '#15161e',
-          terminal_color_1  = '#f7768e',
+          terminal_color_1  = '#db4b4b',
           terminal_color_2  = '#1abc9c',
           terminal_color_3  = '#e0af68',
           terminal_color_4  = '#7aa2f7',
