@@ -145,11 +145,12 @@ local mappings = {
   },
 
   c = {
-    name = "Compile",
+    name = "Compiler",
     b = { "<cmd>!bash %<cr>", "Exec with bash" },
-    p = { "<cmd>!python %<cr>", "Exec with python" },
     c = { "<cmd>w! | !compiler '<c-r>%'<cr>", "Exec with compiler" },
-    -- o = { "<cmd>!opout<cr>", "Output Document" },
+    p = { "<cmd>!python %<cr>", "Exec with python" },
+    -- o = { "<cmd>!~/.config/bin/i3cmds/opout<cr>", "Output Document" },
+    o = { "<cmd>!$HOME/.local/bin/i3cmds/opout %<cr><cr>", "Output Document" },
   },
 
   d = {
@@ -183,7 +184,6 @@ local mappings = {
     end,
     "Neotree float"
   },
-  ["m"] = { "<cmd>Mason<cr>", "Mason" },
 
   g = {
     name = "Git",
@@ -216,8 +216,6 @@ local mappings = {
     F = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
     h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover" },
     H = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature Help" },
-    -- i = { "<cmd>LspInfo<cr>", "Info" },
-    -- I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
     I = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "Go to Implementation" },
     L = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens in current line" },
     n = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Next Diagnostic", },
@@ -260,6 +258,18 @@ local mappings = {
     t = { "<cmd>Lspsaga open_floaterm<cr>", "Open Float Terminal" },
     x = { "<cmd>Lspsaga close_floaterm<CR>", "Close Float Terminal" },
     z = { "<cmd>Lspsaga outline<cr>", "Toggle outline" },
+  },
+
+  P = {
+    name = "Packages",
+    ["c"] = { "<cmd>PackerCompile<cr>", "Packer Compile" },
+    ["i"] = { "<cmd>PackerInstall<cr>", "Packer Install" },
+    ["I"] = { "<cmd>Mason<cr>", "Mason Installer" },
+    ["L"] = { "<cmd>LspInfo<cr>", "Lsp Info" },
+    ["N"] = { "<cmd>NullLsInfo<cr>", "NullLs Info" },
+    ["s"] = { "<cmd>PackerSync<cr>", "Packer Sync" },
+    ["S"] = { "<cmd>PackerStatus<cr>", "Packer Status" },
+    ["u"] = { "<cmd>PackerUpdate<cr>", "Packer Update" },
   },
 
   s = {
