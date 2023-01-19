@@ -51,7 +51,7 @@ export LS_COLORS="tw=30:di=90:ow=94:ln=34"
 
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
-setopt interactive_comments
+setopt interactive_comments  # Solves command not found: '#'
 
 ## History in cache directory:
 HISTSIZE=10000000

@@ -20,13 +20,13 @@ text/plain=visual-studio-code.desktop;nvim.desktop;
 text/x-shellscript=visual-studio-code.desktop;nvim.desktop;
 video/mp4=mpv.desktop;
 video/x-matroska=mpv.desktop;
-
-[Added Associations]
-x-content/audio-player=mpv.desktop;
-x-content/video-dvd=mpv.desktop;
 x-scheme-handler/about=google-chrome.desktop;
 x-scheme-handler/http=google-chrome.desktop;
 x-scheme-handler/https=google-chrome.desktop;
 x-scheme-handler/magnet=freedownloadmanager_torrent.desktop;
 x-scheme-handler/mailto=google-chrome.desktop;
 x-scheme-handler/unknown=google-chrome.desktop;
+
+[Added Associations]
+x-content/audio-player=mpv.desktop;
+x-content/video-dvd=mpv.desktop;

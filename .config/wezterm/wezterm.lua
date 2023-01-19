@@ -40,7 +40,7 @@ return {
   -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
   -- custom_block_glyphs = false,
   -- unicode_version=9 ,
-  -- bold_brightens_ansi_colors = false, -- default true
+  bold_brightens_ansi_colors = false, -- default true -- for i in {0..255}; do; printf "\033[${i};1m color${i}"; done
   window_close_confirmation = "NeverPrompt",
 
   -- window_padding = {left = 8, right = 8, top = 18, bottom = 8},
