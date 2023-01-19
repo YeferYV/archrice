@@ -316,14 +316,6 @@
         "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     },
 
-    // Tasks Runners
-    {
-        "key": "ctrl+alt+space",
-        "command": "workbench.action.tasks.runTask",
-        "args": "tmux-copy-mode",
-        "when": "terminalFocus"
-    },
-
     // Window Resize
     {
         "key": "ctrl+alt+left",
@@ -410,7 +402,20 @@
         "when": "editorFocus && parameterHintsVisible && vim.mode == 'Insert'"
     },
 
-    // Completion Navigation
+    // Tasks Runners
+    {
+        "key": "ctrl+alt+space",
+        "command": "workbench.action.tasks.runTask",
+        "args": "tmux-copy-mode",
+        "when": "terminalFocus"
+    },
+
+    // Completion Navigation (pgdown/pgup scrolls suggestion's preview focused)
+    {
+        "key": "ctrl+shift+space",
+        "command": "toggleSuggestionFocus",
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
     {
         "key": "alt+l",
         "command": "acceptSelectedSuggestion",

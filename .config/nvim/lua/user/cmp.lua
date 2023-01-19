@@ -57,8 +57,8 @@ cmp.setup {
   mapping = {
     ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
     ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
-    ["<M-k>"] = cmp.mapping.select_prev_item(),
-    ["<M-j>"] = cmp.mapping.select_next_item(),
+    ["<M-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+    ["<M-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-j>"] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-1),
@@ -168,7 +168,7 @@ cmp.setup {
     select = false,
   },
   completion = {
-    completeopt = 'menu,menuone,noinsert'
+    completeopt = 'menu,menuone,noinsert' -- autoselect to show the completion preview
   },
   -- documentation = {
   --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },

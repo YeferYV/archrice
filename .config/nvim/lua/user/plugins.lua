@@ -256,9 +256,10 @@ return require("packer").startup(function(use)
         signs = {
           add          = { text = "│" },
           change       = { text = "│" },
-          delete       = { text = "_" },
-          topdelete    = { text = "‾" },
+          delete       = { text = "│" },
+          topdelete    = { text = "契" },
           changedelete = { text = "~" },
+          untracked    = { text = '┆' },
         },
       }
     end,
