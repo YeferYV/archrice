@@ -183,6 +183,9 @@ map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true
 keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>", { desc = "last change textobj" })
 keymap("x", 'im', "`[o`]<Left>", { desc = "last-change textobj" })
 
+-- _git_hunk_(next/prev_autojump_unsupported)
+map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+
 -- _jump_to_last_change
 map({ "n", "o", "x" }, "gl", "`.", { noremap = true, silent = true, desc = "Jump to last change" })
 

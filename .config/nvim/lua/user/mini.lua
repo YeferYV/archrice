@@ -16,6 +16,7 @@ require('mini.ai').setup({
     -- C = mapped to Word-Column by textobj-word-column
     -- D = mapped to doubleSquareBrackets by nvim-various-textobjs
     -- f = mapped to function.call by mini.ai
+    -- h = mapped to select_hunk by gitsign
     -- i = mapped to indentation by mini.indent
     -- I = mapped to Indentation by mini.indent
     -- k = mapped to key by nvim-various-textobjs
