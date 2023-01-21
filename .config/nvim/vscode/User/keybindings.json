@@ -200,7 +200,7 @@
     {
         "key": "alt+h",
         "command": "vim.remap",
-        "when": "inputFocus && vim.mode == 'Insert' || vim.mode == 'Visual'",
+        "when": "inputFocus && vim.mode == 'Insert' || vim.mode == 'Visual' || vim.mode == 'VisualLine' || vim.mode == 'VisualBlock'",
         "args": {
             "after": [ "<esc>", "h" ]
         }
@@ -208,7 +208,7 @@
     {
         "key": "alt+j",
         "command": "vim.remap",
-        "when": "inputFocus && !inQuickOpen && vim.mode == 'Insert' || vim.mode == 'Visual'",
+        "when": "inputFocus && !inQuickOpen && vim.mode == 'Insert' || vim.mode == 'Visual' || vim.mode == 'VisualLine' || vim.mode == 'VisualBlock'",
         "args": {
             "after": [ "<esc>", "j" ]
         }
@@ -216,7 +216,7 @@
     {
         "key": "alt+k",
         "command": "vim.remap",
-        "when": "inputFocus && !inQuickOpen && vim.mode == 'Insert' || vim.mode == 'Visual'",
+        "when": "inputFocus && !inQuickOpen && vim.mode == 'Insert' || vim.mode == 'Visual' || vim.mode == 'VisualLine' || vim.mode == 'VisualBlock'",
         "args": {
             "after": [ "<esc>", "k" ]
         }
@@ -224,7 +224,7 @@
     {
         "key": "alt+l",
         "command": "vim.remap",
-        "when": "inputFocus && vim.mode == 'Insert' || vim.mode == 'Visual'",
+        "when": "inputFocus && vim.mode == 'Insert' || vim.mode == 'Visual' || vim.mode == 'VisualLine' || vim.mode == 'VisualBlock'",
         "args": {
             "after": [ "<esc>", "l" ]
         }
@@ -318,28 +318,28 @@
 
     // Window Resize
     {
-        "key": "ctrl+alt+left",
+        "key": "alt+left",
         "command": "vim.remap",
         "args": {
             "after": [ "<C-w>", "<" ]
         }
     },
     {
-        "key": "ctrl+alt+down",
+        "key": "alt+down",
         "command": "vim.remap",
         "args": {
             "after": [ "<C-w>", "-" ]
         }
     },
     {
-        "key": "ctrl+alt+up",
+        "key": "alt+up",
         "command": "vim.remap",
         "args": {
             "after": [ "<C-w>", "+" ]
         }
     },
     {
-        "key": "ctrl+alt+right",
+        "key": "alt+right",
         "command": "vim.remap",
         "args": {
             "after": [ "<C-w>", ">" ]
@@ -348,22 +348,22 @@
 
     // Terminal Resize
     {
-        "key": "ctrl+alt+left",
+        "key": "alt+left",
         "command": "workbench.action.terminal.resizePaneLeft",
         "when": "terminalFocus"
     },
     {
-        "key": "ctrl+alt+right",
+        "key": "alt+right",
         "command": "workbench.action.terminal.resizePaneRight",
         "when": "terminalFocus"
     },
     {
-        "key": "ctrl+alt+down",
+        "key": "alt+down",
         "command": "workbench.action.terminal.resizePaneDown",
         "when": "terminalFocus"
     },
     {
-        "key": "ctrl+alt+up",
+        "key": "alt+up",
         "command": "workbench.action.terminal.resizePaneUp",
         "when": "terminalFocus"
     },
