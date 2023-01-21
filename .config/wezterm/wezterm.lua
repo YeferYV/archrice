@@ -120,6 +120,9 @@ return {
       { key = "w", mods = "NONE", action = act.CopyMode("MoveForwardWord") },
       { key = "W", mods = "NONE", action = act.CopyMode("MoveForwardWord") },
 
+      { key = "e", mods = "NONE", action = act.CopyMode("MoveForwardWordEnd") },
+      { key = "E", mods = "NONE", action = act.CopyMode("MoveForwardWordEnd") },
+
       { key = "b", mods = "NONE", action = act.CopyMode("MoveBackwardWord") },
       { key = "B", mods = "NONE", action = act.CopyMode("MoveBackwardWord") },
 
@@ -304,7 +307,7 @@ return {
 
     -- quick select
     { key = "o", mods = "CTRL|SHIFT", action = wezterm.action.QuickSelect },
-    { key = "p", mods = "CTRL|SHIFT",
+    { key = "u", mods = "CTRL|SHIFT",
       action = wezterm.action.QuickSelectArgs {
         label = "open url",
         patterns = {
