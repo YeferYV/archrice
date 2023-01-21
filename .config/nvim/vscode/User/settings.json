@@ -1649,7 +1649,7 @@
     "[Hacker]": {
       "textMateRules": [
         {
-          "name": "Punctuation && Comments",
+          "name": "Punctuations && Comments",
           "scope": [
             "comment",
             "comment.block",
@@ -1670,49 +1670,124 @@
           }
         },
         {
-          "scope": [ "punctuation.definition.tag", "entity.name.tag" ],
+          "name": "Constants",
+          "scope": [
+            "constant.language",
+            "constant.numeric"
+          ],
+          "settings": { "fontStyle": "", "foreground": "#1cff1c" }
+        },
+        {
+          "name": "Tags",
+          "scope": [
+            "entity.name.tag",
+            "punctuation.definition.tag"
+          ],
           "settings": { "fontStyle": "", "foreground": "#7574a5" }
         },
         {
-          "scope": [ "meta.tag" ],
+          "scope": [ "meta.tag" ], // tag <p></p>
           "settings": { "fontStyle": "", "foreground": "#cccccc" }
         },
         {
-          "scope": "constant.language",
-          "settings": { "fontStyle": "", "foreground": "#1cff1c" }
-        },
-        {
-          "scope": "constant.numeric",
-          "settings": { "fontStyle": "", "foreground": "#1cff1c" }
-        },
-        {
-          "scope": "entity.name.type",
-          "settings": { "fontStyle": "bold", "foreground": "#ff0000" }
-        },
-        {
-          "scope": "entity.other.attribute-name",
+          "scope": "entity.other.attribute-name", // tag atribute
           "settings": { "fontStyle": "", "foreground": "#87a1c5" }
         },
         {
-          "scope": "keyword",
+          "scope": "keyword", // import, export, default, return
           "settings": { "fontStyle": "bold", "foreground": "#5c5cff" }
         },
         {
-          "scope": "keyword.operator",
+          "scope": "keyword.operator", // =,==, &&, <, > ...
           "settings": { "fontStyle": "", "foreground": "#5c5cff" }
         },
         {
-          "scope": [ "support.variable.property", "variable.other.property" ],
+          "name": "Variables",
+          "scope": [
+            "support.variable.property",
+            "variable.other.property"
+          ],
           "settings": { "fontStyle": "", "foreground": "#87a1c5" }
         },
         {
-          "scope": "storage",
+          "scope": "storage.type.function",
           "settings": { "fontStyle": "", "foreground": "#4141ff" }
         },
+      ]
+    },
+    "[Tokyo Night Dark]": {
+      "textMateRules": [
         {
-          "scope": "support.class.builtin",
-          "settings": { "fontStyle": "bold", "foreground": "#ff0000" }
-        }
+          "name": "Tags",
+          "scope": [
+            "entity.name.tag",
+            "punctuation.definition.tag",
+            "support.class.component.js",
+          ],
+          "settings": { "fontStyle": "", "foreground": "#7574a5" }
+        },
+        {
+          "name": "Constants",
+          "scope": [
+            "constant.language",
+            "constant.numeric",
+          ],
+          "settings": { "fontStyle": "", "foreground": "#1cff1c" }
+        },
+        {
+          "name": "Keywords",
+          "scope": [
+            "keyword.control.export",
+            "keyword.control.default",
+            "keyword.control.flow", //return
+          ],
+          "settings": { "fontStyle": "bold", "foreground": "#6e51a2" }
+        },
+        {
+          "name": "Parameters",
+          "scope": [
+            "variable.parameter",
+            "variable.parameter.function.language.special",
+          ],
+          "settings": { "fontStyle": "", "foreground": "#c0caf5" }
+        },
+        {
+          "scope": "storage.type.function",
+          "settings": { "fontStyle": "", "foreground": "#6382bd" }
+        },
+      ]
+    },
+    "[Poimandres Alternate]": {
+      "textMateRules": [
+        {
+          "name": "Tags",
+          "scope": [
+            "entity.name.tag",
+            "punctuation.definition.tag",
+            "support.class.component.js",
+          ],
+          "settings": { "fontStyle": "", "foreground": "#5DE4C7C0" }
+        },
+        {
+          "scope": "keyword.control.import",
+          "settings": { "fontStyle": "", "foreground": "#a6accd" }
+        },
+        {
+          "name": "Keywords",
+          "scope": [
+            "keyword.control.export",
+            "keyword.control.default",
+          ],
+          "settings": { "fontStyle": "", "foreground": "#91b4d5" }
+        },
+        {
+          "name": "Variables",
+          "scope": [
+            "support.variable.property",
+            "variable.other.property"
+          ],
+          "settings": { "fontStyle": "", "foreground": "#add7ff" }
+        },
       ]
     }
   },
@@ -1738,62 +1813,31 @@
     "editorBracketHighlight.foreground5": "#4444ff",
     "editorBracketHighlight.foreground6": "#87a1c5",
     "[Hacker]": {
+      // "editorCursor.background": "#555555",
+      // "editorCursor.foreground": "#aaaaaa",
+      // "terminalCursor.background": "#000000",
+      // "terminalCursor.foreground": "#ffffff",
+      // "scrollbarSlider.background": "#55555555",
       "editor.selectionBackground": "#55555555",
       "editor.selectionHighlightBackground": "#33333333",
       "editor.wordHighlightStrongBackground": "#33333333",
       "editor.wordHighlightBackground": "#33333333",
       "editorLineNumber.foreground": "#55555555",
-      "editorSuggestWidget.focusHighlightForeground": "#7574d5", // typed(matching) symbols color
-      "editorSuggestWidget.highlightForeground": "#7574d5", // typed(matching) symbols color
-      "editorSuggestWidget.selectedBackground": "#55555555",
-      "list.activeSelectionBackground": "#090909", // explorer
-      "list.focusAndSelectionOutline": "#555555", // explorer
-      "list.focusForeground": "#bbbbbb", // explorer
-      "list.focusBackground": "#181818", // explorer
-      "list.highlightForeground": "#7574d5", // typed(matching) symbols color
-      "list.focusHighlightForeground": "#7574d5", // typed(matching) symbols color
-      "list.inactiveSelectionBackground": "#181818", // explorer
+      "editorSuggestWidget.background": "#0a0b0a", // suggestion background including preview
+      "editorSuggestWidget.border": "#181818", // suggestion border
+      "editorSuggestWidget.focusHighlightForeground": "#7574d5", // suggestion typed(matching) selected
+      "editorSuggestWidget.highlightForeground": "#7574d5", //suggestion typed(matching)
+      "editorSuggestWidget.selectedBackground": "#55555555", // suggestion selected
+      "focusBorder": "#555555", // suggestion preview border
+      "list.activeSelectionBackground": "#090909", // explorer focused opened file
+      "list.activeSelectionForeground": "#5555ff", // explorer focused opened file
+      "list.inactiveSelectionBackground": "#181818", // explorer unfocused opened file
+      "list.focusAndSelectionOutline": "#555555", // explorer focused opened file border
+      "list.focusForeground": "#bbbbbb", // explorer selected fg
+      "list.focusBackground": "#181818", // explorer selected bg
+      "quickInputList.focusForeground": "#bbbbbb",
       "quickInputList.focusBackground": "#55555555",
       "sideBar.background": "#0a0b0a",
-      "terminal.ansiBlack": "#222222",
-      "terminal.ansiBlue": "#5555cc",
-      "terminal.ansiCyan": "#7acaca",
-      "terminal.ansiGreen": "#008800",
-      "terminal.ansiMagenta": "#8855ff",
-      "terminal.ansiRed": "#bb0000",
-      "terminal.ansiWhite": "#ffffff",
-      "terminal.ansiYellow": "#bbbb00"
-    },
-    "[Mountain]": {
-      "activityBar.background": "#131313",
-      "breadcrumb.foreground": "#535353",
-      "editorGroupHeader.tabsBackground": "#181818",
-      "editorLineNumber.activeForeground": "#f0f0f0",
-      "editorLineNumber.foreground": "#373737",
-      "editorSuggestWidget.background": "#0f0f0f", // widget bg
-      "editorSuggestWidget.border": "#535353",
-      "editorSuggestWidget.focusHighlightForeground": "#746f91", // typed(matching) symbols color
-      "editorSuggestWidget.highlightForeground": "#746f91", // typed(matching) symbols color
-      "editorSuggestWidget.selectedBackground": "#1c1c1c",
-      "list.activeSelectionBackground": "#090909",
-      "list.focusAndSelectionOutline": "#555555",
-      "list.focusBackground": "#181818",
-      "list.inactiveSelectionBackground": "#181818",
-      "sideBar.background": "#090909",
-      "sideBar.foreground": "#A1A1A1",
-      "statusBar.background": "#212121",
-      "statusBar.foreground": "#cccccc",
-      "tab.activeBackground": "#0f0f0f",
-      "tab.inactiveForeground": "#535353",
-      // "editorCursor.background": "#555555",
-      // "editorCursor.foreground": "#aaaaaa",
-      // "scrollbarSlider.background": "#373737",
-      // "statusBar.background" : "#131313",
-      // "statusBar.debuggingBackground": "#263238",
-      // "statusBar.foreground" : "#818181",
-      // "statusBar.noFolderBackground" : "#212121",
-      "terminalCursor.background": "#000000",
-      "terminalCursor.foreground": "#ffffff",
       "terminal.foreground": "#b3b3b3",
       "terminal.background": "#000000",
       "terminal.ansiBlack": "#222222",
@@ -1813,6 +1857,20 @@
       "terminal.ansiBrightWhite": "#ff4400",
       "terminal.ansiBrightYellow": "#ffff00",
       "terminal.selectionBackground": "#4d52f8"
+    },
+    "[Tokyo Night Dark][Poimandres Alternate]": {
+      // "focusBorder": "#3d59a1", // suggestion preview border
+      // "focusBorder": "#394b70", // suggestion preview border
+      // "focusBorder": "#3b4261", // suggestion preview border
+      // "focusBorder": "#506d9b", // suggestion preview border
+      // "focusBorder": "#545c7e", // suggestion preview border
+      // "focusBorder": "#6382bd", // suggestion preview border
+      // "focusBorder": "#414868", // suggestion preview border
+      "focusBorder": "#33467c", // suggestion preview border
+      "list.activeSelectionBackground": "#0a0a0d", // explorer focused opened file
+      "list.activeSelectionForeground": "#2ac3de", // explorer focused opened file
+      "quickInputList.focusBackground": "#1c1d29",
+      "quickInputList.focusForeground": "#c0caf5",
     }
   },
   "debug.inlineValues": "on",
