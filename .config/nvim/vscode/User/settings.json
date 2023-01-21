@@ -1722,9 +1722,20 @@
           "scope": [
             "entity.name.tag",
             "punctuation.definition.tag",
-            "support.class.component.js",
           ],
           "settings": { "fontStyle": "", "foreground": "#7574a5" }
+        },
+        {
+          "scope": "support.class.component.js", // <component></component>
+          "settings": { "fontStyle": "bold", "foreground": "#6e51a2" }
+        },
+        {
+          "scope": "variable.other.readwrite.alias", // import <variable>
+          "settings": { "fontStyle": "", "foreground": "#6e51a2" }
+        },
+        {
+          "scope": "entity.other.attribute-name", // tag atribute
+          "settings": { "fontStyle": "", "foreground": "#91b4d5" }
         },
         {
           "name": "Constants",
@@ -1741,7 +1752,7 @@
             "keyword.control.default",
             "keyword.control.flow", //return
           ],
-          "settings": { "fontStyle": "bold", "foreground": "#6e51a2" }
+          "settings": { "fontStyle": "", "foreground": "#9d7cd8" }
         },
         {
           "name": "Parameters",
@@ -1753,7 +1764,7 @@
         },
         {
           "scope": "storage.type.function",
-          "settings": { "fontStyle": "", "foreground": "#6382bd" }
+          "settings": { "fontStyle": "bold", "foreground": "#6e51a2" }
         },
       ]
     },
@@ -1764,9 +1775,20 @@
           "scope": [
             "entity.name.tag",
             "punctuation.definition.tag",
-            "support.class.component.js",
           ],
-          "settings": { "fontStyle": "", "foreground": "#5DE4C7C0" }
+          "settings": { "fontStyle": "", "foreground": "#515171" }
+        },
+        {
+          "scope": "support.class.component.js", // <component></component>
+          "settings": { "fontStyle": "", "foreground": "#5de4c7" }
+        },
+        // {
+        //   "scope": "variable.other.readwrite.alias", // import <variable>
+        //   "settings": { "fontStyle": "", "foreground": "#5fb3a1" }
+        // },
+        {
+          "scope": "entity.other.attribute-name", // tag atribute
+          "settings": { "fontStyle": "italic", "foreground": "#91b4d5" }
         },
         {
           "scope": "keyword.control.import",

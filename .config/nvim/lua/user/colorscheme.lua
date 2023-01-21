@@ -30,6 +30,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end
 
     local highlights = {
+      BufferLineBufferSelected    = { fg = "#ffffff", bold = true },
       BufferLineBackground        = { fg = "#565f89" },
       BufferLineIndicatorSelected = { fg = "#ffffff" },
       BufferLineModified          = { fg = "#616161" },
@@ -63,10 +64,19 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           ["Comment"]                = { fg = "#565f89", italic = false },
           ["Keyword"]                = { fg = "#7dcfff", italic = false },
           ["@keyword"]               = { fg = "#9d7cd8", italic = false },
+          ["@keyword.function"]      = { fg = "#6e51a2" },
           ["@field"]                 = { fg = "#7aa2f7" },
           ["@string"]                = { fg = "#73daca" },
           ["@boolean"]               = { fg = "#1cff1c" },
           ["@number"]                = { fg = "#1cff1c" },
+          ["@punctuation"]           = { fg = "#e8e8e8" },
+          ["@punctuation.bracket"]   = { fg = "#515171" },
+          ["@punctuation.delimiter"] = { fg = "#e8e8e8" },
+          ["@punctuation.special"]   = { fg = "#515171" },
+          ["@tag"]                   = { fg = "#515171" },
+          ["@tag.attribute"]         = { fg = "#91b4d5" },
+          ["@tag.delimiter"]         = { fg = "#515171" },
+          ["@constructor"]           = { fg = "#6e51a2" },
           ["Constant"]               = { fg = "#1cff1c" },
           ["String"]                 = { fg = "#73daca" },
           GitSignsAdd                = { fg = "#1abc9c" },
@@ -112,6 +122,14 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       },
       poimandres = {
         custom_colorscheme = { -- a table of overrides/changes to the poimandres theme
+          ["@punctuation"]           = { fg = "#e8e8e8" },
+          ["@punctuation.bracket"]   = { fg = "#515171" },
+          ["@punctuation.delimiter"] = { fg = "#e8e8e8" },
+          ["@punctuation.special"]   = { fg = "#515171" },
+          ["@tag"]                   = { fg = "#515171" },
+          ["@tag.attribute"]         = { fg = "#91b4d5" },
+          ["@tag.delimiter"]         = { fg = "#515171" },
+          ["@constructor"]           = { fg = "#5de4c7" },
           ["@comment"]               = { fg = "#3e4041" },
           ["Comment"]                = { fg = "#a6accd" },
           ["Visual"]                 = { bg = "#1c1c1c" },
