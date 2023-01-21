@@ -1859,18 +1859,23 @@
       "terminal.selectionBackground": "#4d52f8"
     },
     "[Tokyo Night Dark][Poimandres Alternate]": {
-      // "focusBorder": "#3d59a1", // suggestion preview border
-      // "focusBorder": "#394b70", // suggestion preview border
-      // "focusBorder": "#3b4261", // suggestion preview border
-      // "focusBorder": "#506d9b", // suggestion preview border
-      // "focusBorder": "#545c7e", // suggestion preview border
-      // "focusBorder": "#6382bd", // suggestion preview border
-      // "focusBorder": "#414868", // suggestion preview border
       "focusBorder": "#33467c", // suggestion preview border
       "list.activeSelectionBackground": "#0a0a0d", // explorer focused opened file
       "list.activeSelectionForeground": "#2ac3de", // explorer focused opened file
       "quickInputList.focusBackground": "#1c1d29",
       "quickInputList.focusForeground": "#c0caf5",
+    },
+    "[poimandres-noitalics][poimandres-storm][Tokyo Night Ported Nvim][Tokyo Night]": { // transparent background
+      "activityBar.background": "#0c0c0c",
+      "breadcrumb.background": "#0c0c0c",
+      "editor.background": "#0c0c0c",
+      "editorGroupHeader.tabsBackground": "#0c0c0c",
+      "editorGutter.background": "#0c0c0c",
+      "editorSuggestWidget.background": "#0c0c0c",
+      "quickInput.background": "#0c0c0c",
+      "sideBar.background": "#0c0c0c",
+      "statusBar.background": "#0c0c0c",
+      "tab.inactiveBackground": "#0c0c0c",
     }
   },
   "debug.inlineValues": "on",
