@@ -67,6 +67,8 @@ hi   String                                guifg=#ffff00  guibg=none     gui=non
 hi   Structure                             guifg=#880088  guibg=none     gui=none
 hi   Substitute                            guifg=#5555ff  guibg=#ffff00  gui=none
 hi   Tag                                   guifg=#515171  guibg=none     gui=none
+hi   TermCursor                            guifg=#000000  guibg=#ffffff  gui=NONE
+hi   TermCursorNC                          guifg=#ffffff  guibg=#3c3c3c  gui=NONE
 hi   Title                                 guifg=#5555ff  guibg=none     gui=bold
 hi   Todo                                  guifg=#ff4400  guibg=none     gui=none
 hi   Type                                  guifg=#880088  guibg=none     gui=none

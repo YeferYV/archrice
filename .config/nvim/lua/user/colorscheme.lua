@@ -30,6 +30,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end
 
     local highlights = {
+      TermCursor                  = { fg = "#1a1b26", bg = "#c0caf5" },
+      TermCursorNC                = { fg = "#c0caf5", bg = "#3c3c3c" },
       BufferLineBufferSelected    = { fg = "#ffffff", bold = true },
       BufferLineBackground        = { fg = "#565f89" },
       BufferLineIndicatorSelected = { fg = "#ffffff" },
