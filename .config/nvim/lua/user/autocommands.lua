@@ -252,15 +252,14 @@ vim.api.nvim_create_autocmd({ "TermLeave" }, {
   group = hide_terminal_statusline,
   callback = function()
     require('lualine').hide({ unhide = true })
-    vim.cmd [[hi ExtraWhitespace guibg=red]]
   end,
 })
 vim.api.nvim_create_autocmd({ "TermClose" }, {
   group = hide_terminal_statusline,
   callback = function()
-    if vim.bo.filetype ~= "toggleterm" then
-      vim.cmd [[ call feedkeys("i") ]]
+    if vim.bo.filetype == "sp-terminal" or vim.bo.filetype == "vs-terminal" or vim.bo.filetype == "tab-terminal" then
+      -- vim.cmd [[ call feedkeys("i") ]]
+      vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
     end
-    vim.cmd [[hi ExtraWhitespace guibg=red]]
   end,
 })

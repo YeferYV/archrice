@@ -46,6 +46,12 @@ keymap("t", "<M-Right>", "<C-\\><C-n>:vertical resize +2<CR>", opts)
 -- Navigate buffers
 keymap("n", "<right>", ":bnext<CR>", opts)
 keymap("n", "<left>", ":bprevious<CR>", opts)
+keymap("n", "<Home>", ":tabprevious<CR>", opts)
+keymap("n", "<End>", ":tabnext<CR>", opts)
+keymap("n", "<Insert>", ":tabnext #<CR>", opts)
+keymap("t", "<Home>", "<C-\\><C-n>:tabprevious<CR>", opts)
+keymap("t", "<End>", "<C-\\><C-n>:tabnext<CR>", opts)
+keymap("t", "<Insert>", "<C-\\><C-n>:tabnext #<CR>", opts)
 keymap("n", "<Tab>", ":bnext<CR>", opts)
 keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
 keymap("n", "<leader>x", ":bp | bd #<CR>", opts)
@@ -147,7 +153,11 @@ keymap("v", "<leader>gw", "gw", { noremap = true, silent = true, desc = "Format 
 -- ╰──────────────────╯
 
 map({ "n", "v" }, "gsa", "<cmd>Lspsaga code_action<CR>", { silent = true })
+map("n", "gsb", "<cmd>Lspsaga show_buf_diagnostics<CR>", { silent = true })
+map("n", "gsc", "<cmd>Lspsaga incoming_calls<CR>")
+map("n", "gsC", "<cmd>Lspsaga outgoing_calls<CR>")
 map("n", "gsd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+map("n", "gsD", "<cmd>Lspsaga goto_definition<CR>", { silent = true })
 map("n", "gsf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 map("n", "gsh", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 map("n", "gsn", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
@@ -158,11 +168,10 @@ map("n", "gsO", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
 map("n", "gsp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
 map("n", "gsP", function() require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
   { silent = true })
-map("n", "gsr", "<cmd>Lspsaga open_floaterm ranger<CR>", { silent = true })
+map("n", "gsr", "<cmd>Lspsaga term_toggle ranger<CR>", { silent = true })
 map("n", "gsR", "<cmd>Lspsaga rename<CR>", { silent = true })
-map("n", "gst", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
 map("n", "gsz", "<cmd>LSpsaga outline<CR>", { silent = true })
-map("t", "<C-x>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
+map({ "n", "t" }, "<C-x>", "<cmd>Lspsaga term_toggle<CR>")
 
 -- ╭──────────────╮
 -- │ Text Objects │

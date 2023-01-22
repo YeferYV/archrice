@@ -37,6 +37,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       BufferLineModifiedSelected  = { fg = "#ffffff" },
       BufferLineModifiedVisible   = { fg = "#a1a1ad" },
       BufferLineSeparator         = { fg = "#5c5c5c" },
+      BufferLineTabSelected       = { fg = "#80a0ff" },
+      BufferLineTab               = { fg = "#5c5c5c" },
       CursorLine                  = { bg = "#0c0c0c" },
       NeoTreeCursorLine           = { bg = "#16161e" },
       NeoTreeGitAdded             = { fg = "#495466" },
@@ -93,13 +95,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           TelescopeSelection         = { bg = "#080811" },
           TelescopeSelectionCaret    = { bg = "#080811" },
           WinSeparator               = { fg = "#565f89" },
-          rainbowcol2                = { fg = "#89ddff" },
-          rainbowcol1                = { fg = "#2ac3de" },
-          rainbowcol3                = { fg = "#7dcfff" },
-          rainbowcol4                = { fg = "#1abc9c" },
-          rainbowcol5                = { fg = "#7aa2f7" },
-          rainbowcol6                = { fg = "#bb9af7" },
-          rainbowcol7                = { fg = "#9d7cd8" }
         },
         custom_terminal_colors = {
           terminal_color_0  = '#15161e',
