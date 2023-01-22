@@ -116,27 +116,54 @@ super + shift + {s,f}
 	bspc desktop -s {prev,next}.local
 
 # no/reset gaps size
-super + bracket{left,right}
+super + bracketleft
 	{ \
-		bspc config window_gap -1 & bspc config border_width 1; \
+		bspc config window_gap 0 & bspc config border_width 1; \
+	, bspc config window_gap 12 & bspc config border_width 1; \
+	}
+
+# no/reset gaps size
+super + bracketright
+	{ \
+		bspc config window_gap 0 & bspc config border_width 2; \
 	, bspc config window_gap 12 & bspc config border_width 2; \
 	}
 
 # Increase/descrease gap size
 super + shift + bracket{left,right}
+	bspc config window_gap $(($(bspc config window_gap) {+,-} 1))
+
+# Increase/descrease gap size
+super + ctrl + bracket{left,right}
 	bspc config window_gap $(($(bspc config window_gap) {+,-} 2))
 
 # toggle node border
-super + {apostrophe,backslash}
+super + apostrophe
+	bspc config -n focused border_width {0,1}
+
+# toggle node border
+super + backslash
 	bspc config -n focused border_width {0,2}
 
 # toggle desktop border
-super + shift + {apostrophe,backslash}
+super + shift + apostrophe
+  bspc config -d focused border_width {0,1}
+
+# toggle desktop border
+super + shift + backslash
   bspc config -d focused border_width {0,2}
 
 # toggle singleton border
-super + ctrl + {apostrophe,backslash}
+super + ctrl + apostrophe
   bspc config borderless_singleton {true,false}
+
+# toggle singleton border
+super + ctrl + backslash
+	{ \
+		bspc config window_gap -1 & bspc config border_width 1; \
+	, bspc config window_gap 12 & bspc config border_width 2; \
+	}
+
 
 # rofi drun
 super + ctrl + d
