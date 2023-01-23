@@ -166,7 +166,7 @@ return require("packer").startup(function(use)
   use { "jose-elias-alvarez/null-ls.nvim", commit = "a67897283fdb0051ad5c72e840e1845e195b979b" } -- for formatters and linters
   use { "jay-babu/mason-null-ls.nvim", commit = "c4b4a6fe3cb8d8590b831c22b3475166dc9a894e" } -- autoconfigured formatters
   use { "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" }
-  use { "glepnir/lspsaga.nvim", commit = "b7b4777369b441341b2dcd45c738ea4167c11c9e", }
+  use { "glepnir/lspsaga.nvim", commit = "c5c11457c3b1c29075dd16deb2bb92340600aace", }
   use {
     "williamboman/mason.nvim",
     commit = "22129c714fcb0acd2cebba77980e6461a2c69d6b",

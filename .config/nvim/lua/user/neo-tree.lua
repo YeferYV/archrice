@@ -366,13 +366,13 @@ require("neo-tree").setup({
       open_tabnew_showbuffer = function(state)
         state.commands["open_tabnew"](state)
         vim.cmd("Neotree show")
-        require('bufferline').setup { options = { always_show_bufferline = true } }
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
       end,
 
       open_tabdrop_showbuffer = function(state)
         state.commands["open_tab_drop"](state)
         vim.cmd("Neotree show")
-        require('bufferline').setup { options = { always_show_bufferline = true } }
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
       end,
 
       open_unfocus = function(state)

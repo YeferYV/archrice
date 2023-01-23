@@ -1,138 +1,181 @@
-local saga = require("lspsaga")
-saga.init_lsp_saga({
-  -- Options with default value
-  -- "single" | "double" | "rounded" | "bold" | "plus"
-  border_style = "single",
-  --the range of 0 for fully opaque window (disabled) to 100 for fully
-  --transparent background. Values between 0-30 are typically most useful.
-  saga_winblend = 0,
-  -- when cursor in saga window you config these to move
-  move_in_saga = { prev = '<C-p>', next = '<C-n>' },
-  -- Error, Warn, Info, Hint
-  -- use emoji like
-  -- { "🙀", "😿", "😾", "😺" }
-  -- or
-  -- { "😡", "😥", "😤", "😐" }
-  -- and diagnostic_header can be a function type
-  -- must return a string and when diagnostic_header
-  -- is function type it will have a param `entry`
-  -- entry is a table type has these filed
-  -- { bufnr, code, col, end_col, end_lnum, lnum, message, severity, source }
-  diagnostic_header = { " ", " ", " ", "ﴞ " },
-  -- preview lines above of lsp_finder
-  preview_lines_above = 0,
-  -- preview lines of lsp_finder and definition preview
-  max_preview_lines = 10,
-  -- use emoji lightbulb in default
-  code_action_icon = "💡",
-  -- if true can press number to execute the codeaction in codeaction window
-  code_action_num_shortcut = true,
-  -- same as nvim-lightbulb but async
-  code_action_lightbulb = {
-    enable = true,
-    enable_in_insert = true,
-    cache_code_action = true,
-    sign = true,
-    update_time = 150,
-    sign_priority = 20,
-    virtual_text = true,
+require("lspsaga").setup({
+
+  -- Default Options
+  preview = {
+    lines_above = 0,
+    lines_below = 10,
   },
-  -- finder icons
-  finder_icons = {
-    def = '  ',
-    ref = '諭 ',
-    link = '  ',
+  scroll_preview = {
+    scroll_down = '<C-f>',
+    scroll_up = '<C-b>',
   },
-  -- finder do lsp request timeout
-  -- if your project is big enough or your server very slow
-  -- you may need to increase this value
-  finder_request_timeout = 1500,
-  finder_action_keys = {
-    open = { 'o', '<CR>' },
+  request_timeout = 2000,
+
+  -- :Lspsaga lsp_finder
+  finder = {
+    edit = { 'o', '<CR>' },
     vsplit = 's',
     split = 'i',
     tabe = 't',
     quit = { 'q', '<ESC>' },
   },
-  code_action_keys = {
-    quit = 'q',
-    exec = '<CR>',
-  },
-  definition_action_keys = {
+
+  -- :Lspsaga peek_definition
+  definition = {
     edit = '<C-c>o',
     vsplit = '<C-c>v',
     split = '<C-c>i',
     tabe = '<C-c>t',
     quit = 'q',
+    close = '<Esc>',
   },
-  rename_action_quit = '<C-c>',
-  rename_in_select = true,
-  -- show symbols in winbar must nightly
-  -- in_custom mean use lspsaga api to get symbols
-  -- and set it to your custom winbar or some winbar plugins.
-  -- if in_cusomt = true you must set in_enable to false
-  symbol_in_winbar = {
-    in_custom = false,
+
+  -- :Lspsaga code_action
+  code_action = {
+    num_shortcut = true,
+    keys = {
+      -- string |table type
+      quit = 'q',
+      exec = '<CR>',
+    },
+  },
+
+  -- Lightbulb
+  lightbulb = {
     enable = true,
-    separator = ' ',
-    show_file = true,
-    -- define how to customize filename, eg: %:., %
-    -- if not set, use default value `%:t`
-    -- more information see `vim.fn.expand` or `expand`
-    -- ## only valid after set `show_file = true`
-    file_formatter = "",
-    click_support = false,
+    enable_in_insert = true,
+    sign = true,
+    sign_priority = 40,
+    virtual_text = true,
   },
-  -- show outline
-  show_outline = {
+
+  -- :Lspsaga diagnostic_jump_next
+  diagnostic = {
+    show_code_action = true,
+    show_source = true,
+    jump_num_shortcut = true,
+    keys = {
+      exec_action = 'o',
+      quit = 'q',
+      go_action = 'g'
+    },
+  },
+
+  -- :Lspsaga rename
+  rename = {
+    quit = '<C-c>',
+    exec = '<CR>',
+    mark = 'x',
+    confirm = '<CR>',
+    in_select = true,
+  },
+
+  -- :Lspsaga outline
+  outline = {
     win_position = 'right',
-    --set special filetype win that outline window split.like NvimTree neotree
-    -- defx, db_ui
     win_with = '',
     win_width = 30,
-    auto_enter = true,
+    show_detail = true,
     auto_preview = true,
-    virt_text = '│',
-    jump_key = 'o',
-    -- auto refresh when change buffer
     auto_refresh = true,
+    auto_close = true,
+    custom_sort = nil,
+    keys = {
+      jump = 'o',
+      expand_collapse = 'u',
+      quit = 'q',
+    },
   },
-  -- custom lsp kind (vscode kinds)
-  -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
-  custom_kind = {
-    File          = { ' ', '#495466' },
-    Module        = { ' ', '#495466' },
-    Namespace     = { ' ', '#495466' },
-    Package       = { ' ', '#495466' },
-    Class         = { ' ', '#495466' },
-    Method        = { ' ', '#495466' },
-    Property      = { ' ', '#495466' },
-    Field         = { ' ', '#495466' },
-    Constructor   = { ' ', '#495466' },
-    Enum          = { '了', '#495466' },
-    Interface     = { ' ', '#495466' },
-    Function      = { ' ', '#495466' },
-    Variable      = { ' ', '#495466' },
-    Constant      = { ' ', '#495466' },
-    String        = { ' ', '#495466' },
-    Number        = { ' ', '#495466' },
-    Boolean       = { ' ', '#495466' },
-    Array         = { ' ', '#495466' },
-    Object        = { ' ', '#495466' },
-    Key           = { ' ', '#495466' },
-    Null          = { ' ', '#495466' },
-    EnumMember    = { ' ', '#495466' },
-    Struct        = { ' ', '#495466' },
-    Event         = { ' ', '#495466' },
-    Operator      = { ' ', '#495466' },
-    TypeParameter = { ' ', '#495466' },
-    TypeAlias     = { ' ', '#495466' },
-    Parameter     = { ' ', '#495466' },
-    StaticMethod  = { 'ﴂ ', '#495466' },
-    Macro         = { ' ', '#495466' },
+
+  -- :Lspsaga incoming_calls
+  callhierarchy = {
+    show_detail = false,
+    keys = {
+      edit = 'e',
+      vsplit = 's',
+      split = 'i',
+      tabe = 't',
+      jump = 'o',
+      quit = 'q',
+      expand_collapse = 'u',
+    },
   },
-  -- if you don't use nvim-lspconfig you must pass your server name and
-  -- the related filetypes into this table
-  -- like server_filetype_map = { metals = { "sbt", "scala" } }
-  server_filetype_map = {},
+
+  -- Winbar
+  symbol_in_winbar = {
+    enable = true,
+    separator = ' ',
+    hide_keyword = true,
+    show_file = true,
+    folder_level = 1,
+    respect_root = false,
+    color_mode = true,
+  },
+
+  -- UI
+  ui = {
+    -- currently only round theme
+    theme = 'round',
+    -- this option only work in neovim 0.9
+    title = true,
+    -- border type can be single,double,rounded,solid,shadow.
+    border = 'rounded',
+    winblend = 0,
+    expand = '',
+    collapse = '',
+    preview = ' ',
+    code_action = '💡',
+    diagnostic = '🐞',
+    incoming = ' ',
+    outgoing = ' ',
+    colors = {
+      --float window normal background color
+      normal_bg = 'none',
+      --title background color
+      title_bg = '#afd700',
+      red = '#e95678',
+      magenta = '#b33076',
+      orange = '#FF8700',
+      yellow = '#f7bb3b',
+      green = '#afd700',
+      cyan = '#36d0e0',
+      blue = '#61afef',
+      purple = '#CBA6F7',
+      white = '#d1d4cf',
+      black = '#1c1c19',
+    },
+    kind = {
+      File          = { ' ', '#495466' },
+      Module        = { ' ', '#495466' },
+      Namespace     = { ' ', '#495466' },
+      Package       = { ' ', '#495466' },
+      Class         = { ' ', '#495466' },
+      Method        = { ' ', '#495466' },
+      Property      = { ' ', '#495466' },
+      Field         = { ' ', '#495466' },
+      Constructor   = { ' ', '#495466' },
+      Enum          = { '了', '#495466' },
+      Interface     = { ' ', '#495466' },
+      Function      = { ' ', '#495466' },
+      Variable      = { ' ', '#495466' },
+      Constant      = { ' ', '#495466' },
+      String        = { ' ', '#495466' },
+      Number        = { ' ', '#495466' },
+      Boolean       = { ' ', '#495466' },
+      Array         = { ' ', '#495466' },
+      Object        = { ' ', '#495466' },
+      Key           = { ' ', '#495466' },
+      Null          = { ' ', '#495466' },
+      EnumMember    = { ' ', '#495466' },
+      Struct        = { ' ', '#495466' },
+      Event         = { ' ', '#495466' },
+      Operator      = { ' ', '#495466' },
+      TypeParameter = { ' ', '#495466' },
+      TypeAlias     = { ' ', '#495466' },
+      Parameter     = { ' ', '#495466' },
+      StaticMethod  = { 'ﴂ ', '#495466' },
+      Macro         = { ' ', '#495466' },
+    },
+  },
+
 })
