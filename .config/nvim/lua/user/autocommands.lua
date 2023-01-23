@@ -1,4 +1,4 @@
--- vim:ft=vim:ts=2:sw=2:sts=2
+-- vim:ft=lua:ts=2:sw=2:sts=2
 
 vim.cmd [[
   " augroup _alpha
@@ -234,11 +234,11 @@ vim.cmd [[
 -- _enable_terminal_insert_and_hide_terminal_statusline
 local hide_terminal_statusline = vim.api.nvim_create_augroup("_enable_terminal_insert_and_hide_terminal_statusline",
   { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter", "Filetype" }, {
-  group = hide_terminal_statusline,
-  pattern = "term://*",
-  command = "startinsert"
-})
+-- vim.api.nvim_create_autocmd({ "BufEnter", "Filetype" }, {
+--   group = hide_terminal_statusline,
+--   pattern = "term://*",
+--   command = "startinsert"
+-- })
 vim.api.nvim_create_autocmd({ "TermEnter", "TermOpen" }, {
   group = hide_terminal_statusline,
   callback = function()
@@ -248,12 +248,12 @@ vim.api.nvim_create_autocmd({ "TermEnter", "TermOpen" }, {
     vim.cmd [[hi ExtraWhitespace guibg=none]]
   end,
 })
-vim.api.nvim_create_autocmd({ "TermLeave" }, {
-  group = hide_terminal_statusline,
-  callback = function()
-    require('lualine').hide({ unhide = true })
-  end,
-})
+-- vim.api.nvim_create_autocmd({ "TermLeave" }, {
+--   group = hide_terminal_statusline,
+--   callback = function()
+--     require('lualine').hide({ unhide = true })
+--   end,
+-- })
 vim.api.nvim_create_autocmd({ "TermClose" }, {
   group = hide_terminal_statusline,
   callback = function()
@@ -263,3 +263,11 @@ vim.api.nvim_create_autocmd({ "TermClose" }, {
     end
   end,
 })
+
+-- _auto_nohlsearch
+vim.on_key(function(char)
+  if vim.fn.mode() == "n" then
+    local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
+    if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
+  end
+end, vim.api.nvim_create_namespace "auto_hlsearch")
