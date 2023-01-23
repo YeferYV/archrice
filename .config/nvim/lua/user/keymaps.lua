@@ -74,9 +74,15 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 -- Replace all
 keymap("n", "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false })
 
--- Copilot
-keymap("i", "<C-left>", "<Plug>(copilot-previous)", opts)
-keymap("i", "<C-right>", "<Plug>(copilot-next)", opts)
+-- Intellisense
+-- map("i", "<C-h>", "<Plug>(copilot-dismiss)", { expr = true })
+-- map("i", "<C-j>", "<Plug>(copilot-next)", { expr = true })
+-- map("i", "<C-k>", "<Plug>(copilot-previous)", { expr = true })
+-- map("i", "<C-l>", function() return vim.fn['copilot#Accept']() end, { expr = true })
+map('i', '<c-h>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+map('i', '<c-j>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+map('i', '<c-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+map('i', '<c-l>', function() return vim.fn['codeium#Accept']() end, { expr = true })
 
 -- Quick Escape
 keymap("i", "jk", "<ESC>", opts)

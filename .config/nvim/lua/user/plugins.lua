@@ -159,7 +159,8 @@ return require("packer").startup(function(use)
   -- Intellisense
   -- use {'tzachar/cmp-tabnine', commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = 'powershell ./install.ps1'}
   use { "tzachar/cmp-tabnine", commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = "./install.sh" }
-  use { "github/copilot.vim", commit = "5a411d19ce7334ab10ba12516743fc25dad363fa" }
+  -- use { "github/copilot.vim", commit = "5a411d19ce7334ab10ba12516743fc25dad363fa" }
+  use { "Exafunction/codeium.vim", commit = "fe0349a7f01d373d3811bd820588f3883a7ca03a" }
 
   -- LSP
   use { "neovim/nvim-lspconfig", commit = "9f49f35cf04edcf11fc23d849467d51f462be141" } -- enable LSP
