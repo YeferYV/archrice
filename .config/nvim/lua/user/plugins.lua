@@ -160,14 +160,15 @@ return require("packer").startup(function(use)
   -- use {'tzachar/cmp-tabnine', commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = 'powershell ./install.ps1'}
   use { "tzachar/cmp-tabnine", commit = "851fbcc8ee54bdb93f9482e13b5fc31b50012422", run = "./install.sh" }
   -- use { "github/copilot.vim", commit = "5a411d19ce7334ab10ba12516743fc25dad363fa" }
-  use { "Exafunction/codeium.vim", commit = "fe0349a7f01d373d3811bd820588f3883a7ca03a" }
+  use { "Exafunction/codeium.vim", commit = "cf3bbfa52658fa4380ea2bb764493356f04768c3" }
 
   -- LSP
   use { "neovim/nvim-lspconfig", commit = "9f49f35cf04edcf11fc23d849467d51f462be141" } -- enable LSP
   use { "jose-elias-alvarez/null-ls.nvim", commit = "a67897283fdb0051ad5c72e840e1845e195b979b" } -- for formatters and linters
   use { "jay-babu/mason-null-ls.nvim", commit = "c4b4a6fe3cb8d8590b831c22b3475166dc9a894e" } -- autoconfigured formatters
+  use { "b0o/SchemaStore.nvim", commit = "384af0bc8c572a4153348236a90f7e8313cad330" } -- jsonls schema completions
   use { "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" }
-  use { "glepnir/lspsaga.nvim", commit = "c5c11457c3b1c29075dd16deb2bb92340600aace", }
+  use { "glepnir/lspsaga.nvim", commit = "c5c11457c3b1c29075dd16deb2bb92340600aace" }
   use {
     "williamboman/mason.nvim",
     commit = "22129c714fcb0acd2cebba77980e6461a2c69d6b",
