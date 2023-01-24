@@ -37,11 +37,11 @@ return require("packer").startup(function(use)
 
   -- Automation
   -- use { 'tpope/vim-commentary', commit = "e87cd90dc09c2a203e13af9704bd0ef79303d755" }
-  use {
-    "numToStr/Comment.nvim",
-    commit = "5f01c1a89adafc52bf34e3bf690f80d9d726715d",
-    config = function() require("Comment").setup() end,
-  }
+  -- use {
+  --   "numToStr/Comment.nvim",
+  --   commit = "5f01c1a89adafc52bf34e3bf690f80d9d726715d",
+  --   config = function() require("Comment").setup() end,
+  -- }
   use {
     "JoosepAlviste/nvim-ts-context-commentstring",
     commit = "32d9627123321db65a4f158b72b757bcaef1a3f4",
@@ -199,7 +199,7 @@ return require("packer").startup(function(use)
   -- use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
   -- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
   use { "baysmith/vim-indent-object", commit = "f8034c3235a3ba4e39503f2af511957bb01530fe" }
-  use { "echasnovski/mini.nvim", commit = "1e9e353c5f4075dda2be25b8fe2bff5134b99e41" }
+  use { "echasnovski/mini.nvim", commit = "81a575e0c51d4607bf6690f12906c7590d961717" }
   use { "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" }
   use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564" }
   use { "RRethy/nvim-treesitter-textsubjects", commit = "bc047b20768845fd54340eb76272b2cf2f6fa3f3" }

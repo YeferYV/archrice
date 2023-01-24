@@ -262,6 +262,7 @@ local mappings = {
   P = {
     name = "Packages",
     ["c"] = { "<cmd>PackerCompile<cr>", "Packer Compile" },
+    ["C"] = { "<cmd>PackerClean<cr>", "Packer Clean" },
     ["i"] = { "<cmd>PackerInstall<cr>", "Packer Install" },
     ["I"] = { "<cmd>Mason<cr>", "Mason Installer" },
     ["L"] = { "<cmd>LspInfo<cr>", "Lsp Info" },
