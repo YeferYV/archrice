@@ -271,3 +271,18 @@ vim.on_key(function(char)
     if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
   end
 end, vim.api.nvim_create_namespace "auto_hlsearch")
+
+-- -- _json_to_jsonc
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
+--   -- pattern = "*.json",
+--   -- command = "set ft=jsonc"
+--   callback = function()
+--     if vim.fn.expand('%:p:h:t') == "User" then
+--       if vim.fn.expand('%:t') == "settings.json" or
+--           vim.fn.expand('%:t') == "keybindings.json" or
+--           vim.fn.expand('%:t') == "tasks.json" then
+--         vim.bo.filetype = "jsonc"
+--       end
+--     end
+--   end,
+-- })
