@@ -95,7 +95,8 @@ end
 -- see https://github.com/akinsho/toggleterm.nvim/issues/66
 local temp_path = "/tmp/lfpickerpath"
 local lfpicker = Terminal:new({
-  cmd = "lf -selection-path " .. temp_path,
+  -- cmd = string.format("lf -selection-path %s %s", temp_path, vim.api.nvim_buf_get_name(0)),
+  cmd = "lf -selection-path " .. temp_path .. " " .. vim.api.nvim_buf_get_name(0),
   direction = "float",
   on_close = function()
     local file = io.open(temp_path, "r")
