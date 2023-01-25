@@ -195,20 +195,24 @@ map({ "n", "t" }, "<C-x>", "<cmd>Lspsaga term_toggle<CR>")
 -- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
 -- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
 -- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
-keymap("o", 'im', "<cmd>normal! `[v`]<Left><cr>", { desc = "last change textobj" })
-keymap("x", 'im', "`[o`]<Left>", { desc = "last-change textobj" })
+keymap("o", 'gm', "<cmd>normal! `[v`]<Left><cr>", { desc = "Last change textobj" })
+keymap("x", 'gm', "`[o`]<Left>", { desc = "Last change textobj" })
 
 -- _git_hunk_(next/prev_autojump_unsupported)
-map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Git hunk textobj" })
 
 -- _jump_to_last_change
-map({ "n", "o", "x" }, "gl", "`.", { noremap = true, silent = true, desc = "Jump to last change" })
+map({ "n", "o", "x" }, "gl", "`.", { desc = "Jump to last change" })
+
+-- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
+map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { desc = "RestOfComment textobj" })
+map({ "x" }, 'gk', ':<C-u>normal "zygcgv<cr>', { desc = "Comment textobj" })
 
 -- _nvim_various_textobjs
 map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "v!") end,
   { desc = "Diagnostic textobj" })
 map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end,
-  { desc = "nearEoL textobj" })
+  { desc = "nearEoL textobj" }) -- conflicts with visual until search-next workaround: gn
 map({ "o", "x" }, "|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end,
   { desc = "ColumnDown textobj" })
 map({ "o", "x" }, "R", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vR") end,
