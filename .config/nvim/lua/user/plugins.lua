@@ -237,7 +237,7 @@ return require("packer").startup(function(use)
   use { "akinsho/toggleterm.nvim", commit = "3ba683827c623affb4d9aa518e97b34db2623093" }
   use { "nvim-telescope/telescope-file-browser.nvim", commit = "304508fb7bea78e3c0eeddd88c4837501e403ae8" }
   use { "nvim-telescope/telescope.nvim",
-    commit = "cabf991b1d3996fa6f3232327fc649bbdf676496",
+    commit = "dce1156ca103b8222e4abbfc63f9c6887abf5ec6",
     requires = {
       { "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" },
       { "nvim-telescope/telescope-fzf-native.nvim", commit = "ae9d95da9ff5669eb8e35f758fbf385b3e2fb7cf", run = "make" }
