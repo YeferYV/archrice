@@ -58,6 +58,7 @@ vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comm
 
 -- _global_options
 vim.g.codeium_no_map_tab = true
+vim.g.indent_object_ignore_blank_line = false
 
 -- neovide
 if vim.g.neovide == true then

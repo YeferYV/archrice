@@ -260,19 +260,20 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 -- map({ "o", "x" }, "ai",
 --   function() require("various-textobjs").indentation(false, true) end,
 --   { desc = "outer-inner indentation textobj" })
-map({ "o" }, "iI",
-  function() require("various-textobjs").indentation(true, true) end,
-  { desc = "inner-inner indentation textobj" })
+-- map({ "o" }, "iI",
+--   function() require("various-textobjs").indentation(true, true) end,
+--   { desc = "inner-inner indentation textobj" })
 -- map({ "o", "x" }, "aI",
 --   function() require("various-textobjs").indentation(false, false) end,
 --   { desc = "outer-outer indentation textobj" })
 
--- _vim_indent_object_(repeable_+_vimrepeat)
-vim.cmd [[ let g:indent_object_no_mappings = '1' ]]
-map({ "o", "x" }, "ii", "<Plug>IndentObject-ii", { desc = "IndentObject_ii" })
-map({ "x" }, "ai", "<Plug>IndentObject-ii<cmd>normal oko<cr>", { desc = "IndentObject_ai" })
-map({ "x" }, "iI", "<Plug>IndentObject-ai<cmd>normal ojo<cr>", { desc = "IndentObject_iI" })
-map({ "o", "x" }, "aI", "<Plug>IndentObject-aI", { desc = "IndentObject_aI" })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "*",
+  callback = function()
+    map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { desc = "MiniIndentscope_iI" })
+    map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { desc = "MiniIndentscope_aI" })
+  end
+})
 
 -- ╭─────────╮
 -- │ Motions │

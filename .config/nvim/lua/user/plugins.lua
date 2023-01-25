@@ -198,7 +198,7 @@ return require("packer").startup(function(use)
   -- use { 'wellle/targets.vim', commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d", }
   -- use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
   -- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
-  use { "baysmith/vim-indent-object", commit = "f8034c3235a3ba4e39503f2af511957bb01530fe" }
+  use { "paraduxos/vim-indent-object", branch = "new_branch", commit = "2408bf0d2d54f70e6cd9cfcb558bd43283bf5003" }
   use { "echasnovski/mini.nvim", commit = "81a575e0c51d4607bf6690f12906c7590d961717" }
   use { "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" }
   use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "98476e7364821989ab9b500e4d20d9ae2c5f6564" }
