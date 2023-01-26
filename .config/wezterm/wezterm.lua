@@ -306,7 +306,7 @@ return {
     },
 
     -- quick select
-    { key = "o", mods = "CTRL|SHIFT", action = wezterm.action.QuickSelect },
+    { key = "q", mods = "CTRL|SHIFT", action = wezterm.action.QuickSelect },
     { key = "u", mods = "CTRL|SHIFT",
       action = wezterm.action.QuickSelectArgs {
         label = "open url",

@@ -220,7 +220,7 @@ local mappings = {
     o = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Errors" },
     p = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Prev Diagnostic", },
     q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "QuickFix LocList" },
-    Q = { "<cmd>Telescope loclist<cr>", "Telescope QuickFix LocList" },
+    Q = { "<cmd>Telescope loclist initial_mode=normal<cr>", "Telescope QuickFix LocList" },
     r = { "<cmd>lua vim.lsp.buf.references()<cr>", "Go to References" },
     R = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Telescope Document Symbols" },
@@ -290,8 +290,8 @@ local mappings = {
     -- O = { "<cmd>lua require'telescope'.extensions.file_browser.file_browser({path = vim.fn.expand('%:p:h')})<cr>",
     --   "Open FileBrowser (cwd)" },
     p = { "<cmd>Telescope projects<cr>", "Projects" },
-    q = { "<cmd>Telescope quickfix<cr>", "Telescope QuickFix" },
-    Q = { "<cmd>Telescope quickfixhistory<cr>", "Telescope QuickFix History" },
+    q = { "<cmd>Telescope quickfixhistory initial_mode=normal<cr>", "Telescope QuickFix History" },
+    Q = { "<cmd>Telescope quickfix initial_mode=normal<cr>", "Telescope QuickFix" },
     r = { "<cmd>Telescope oldfiles initial_mode=normal<cr>", "Open Recent File" },
     R = { "<cmd>Telescope registers initial_mode=normal<cr>", "Registers" },
     s = { "<cmd>Telescope grep_string<cr>", "Grep string under cursor" },
@@ -308,6 +308,7 @@ local mappings = {
     },
     ["+"] = { "<cmd>Telescope builtin previewer=false initial_mode=normal<cr>", "More" },
     ["/"] = { "<cmd>Telescope find_files theme=ivy hidden=true<cr>", "Find files" },
+    [";"] = { "<cmd>Telescope jumplist theme=ivy initial_mode=normal<cr>", "Jump List" },
     ["'"] = { "<cmd>Telescope marks theme=ivy initial_mode=normal<cr>", "Marks" },
   },
 
@@ -377,6 +378,7 @@ local mappings = {
     },
     w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
     W = { "<cmd>set winbar=  <cr>", "disable winbar" },
+    [";"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
   },
 
   w = {

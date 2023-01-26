@@ -24,7 +24,7 @@ vim.g.maplocalleader = " "
 -- ╰────────────╯
 
 -- position navigation (in wezterm <C-i> outputs Tab)
-keymap("n", "<C-y>", "<C-i>", opts)
+keymap("n", "<C-I>", "<C-i>", opts) -- <C-UpperCase> is the same as <C-LowerCase>
 
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -44,6 +44,10 @@ keymap("t", "<M-Left>", "<C-\\><C-n>:vertical resize -2<CR>", opts)
 keymap("t", "<M-Right>", "<C-\\><C-n>:vertical resize +2<CR>", opts)
 
 -- Navigate buffers
+keymap("n", "]q", ":cnext<CR>", opts)
+keymap("n", "[q", ":cprevious<CR>", opts)
+keymap("n", "]l", ":lnext<CR>", opts)
+keymap("n", "[l", ":lprevious<CR>", opts)
 keymap("n", "<right>", ":bnext<CR>", opts)
 keymap("n", "<left>", ":bprevious<CR>", opts)
 keymap("n", "<Home>", ":tabprevious<CR>", opts)

@@ -62,7 +62,7 @@ vim.g.indent_object_ignore_blank_line = false
 
 -- neovide
 if vim.g.neovide == true then
-  options.guifont = { "FiraCode Nerd Font:h10" }
+  vim.opt.guifont = { "FiraCode Nerd Font:h10" }
   vim.api.nvim_set_keymap("n", "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>",
     { silent = true })
   vim.api.nvim_set_keymap("n", "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>",
