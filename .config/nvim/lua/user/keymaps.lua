@@ -267,6 +267,7 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 --   function() require("various-textobjs").indentation(false, false) end,
 --   { desc = "outer-outer indentation textobj" })
 
+-- _vim_indent_object_(visualrepeatable_+_vimrepeat)
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = "*",
   callback = function()

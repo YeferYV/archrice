@@ -10,7 +10,7 @@ require 'nvim-treesitter.configs'.setup {
     use_languagetree = true,
     additional_vim_regex_highlighting = true,
   },
-  indent = { enable = true, disable = {} },
+  indent = { enable = true, disable = { "python" } },
   context_commentstring = {
     enable = true,
     enable_autocmd = false,
