@@ -269,10 +269,13 @@ hi   BufferLineIndicatorVisible            guifg=#5c5c5c  guibg=none  gui=none
 
 "--  Borders
 " hi   link TelescopeBorder                  FloatBorder  " default Normal
-" hi   link ToggleTermFloatBorder            FloatBorder  " default Normal
 " hi   link DapUIFloatBorder                 FloatBorder  " default Normal
 hi   link LspInfoBorder                    FloatBorder
 hi   link WhichKeyBorder                   FloatBorder
+hi   link SagaBorder                       FloatBorder
+hi   link SagaNormal                       Normal
+hi   link TerminalBorder                   FloatBorder
+hi   link TerminalNormal                   Normal
 
 "--  Cmp
 hi   link CmpItemAbbr                      NormalFloat

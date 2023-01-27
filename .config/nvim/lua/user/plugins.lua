@@ -69,65 +69,9 @@ return require("packer").startup(function(use)
   }
 
   -- ColorSchemes
-  -- use { 'ChristianChiarulli/nvcode-color-schemes.vim'}
-  -- use { 'lunarvim/colorschemes'}
-  -- use { 'mountain-theme/Mountain', rtp='vim' }
-  -- use { 'TheNiteCoder/mountaineer.vim' }
   use { 'olivercederborg/poimandres.nvim' }
   use { 'folke/tokyonight.nvim' }
   use { "NvChad/nvim-colorizer.lua", commit = "760e27df4dd966607e8fb7fd8b6b93e3c7d2e193" }
-  -- :lua base16 = require'base16'; base16(base16.themes.mountain2, true)
-  -- use { 'norcalli/nvim-base16.lua',
-  --   config = function() local base16 = require('base16')
-  --     base16.themes["mountain2"] = {
-  --        base00 = "0f0f0f";
-  --        base01 = "151515";
-  --        base02 = "191919";
-  --        base03 = "222222";
-  --        base04 = "535353";
-  --        base05 = "d8d8d8";
-  --        base06 = "e6e6e6";
-  --        base07 = "f0f0f0";
-  --        base08 = "b18f91";
-  --        base09 = "d8bb92";
-  --        base0A = "b1ae8f";
-  --        base0B = "8aac8b";
-  --        base0C = "91b2b3";
-  --        base0D = "a5a0c2";
-  --        base0E = "ac8aac";
-  --        base0F = "b39193";
-  --     }
-  --   end
-  -- }
-  -- use { 'Mofiqul/dracula.nvim',
-  --   config = function() vim.g.dracula_colors = {
-  --       bg = "#000000",
-  --       fg = "#ffffff",
-  --       selection = "#111111",
-  --       comment = "#555555",
-  --       red = "#bb0000",
-  --       orange = "#1c1cff",
-  --       yellow = "#ffff00",
-  --       green = "#00ff00",
-  --       purple = "#8855ff",
-  --       cyan = "#7acaca",
-  --       pink = "#ff0000",
-  --       bright_red = "#ff0000",
-  --       bright_green = "#008800",
-  --       bright_yellow = "#bbbb00",
-  --       bright_blue = "#5555ff",
-  --       bright_magenta = "#880088",
-  --       bright_cyan = "#008888",
-  --       bright_white = "#FFFFFF",
-  --       menu = "#000000",
-  --       visual = "#555555",
-  --       gutter_fg = "#1c1cff",
-  --       nontext = "#000000",
-  --       white = "#cccccc",
-  --       black = "#222222",
-  --     }
-  --   end
-  -- }
 
   -- cmp-plugins
   -- use { 'hrsh7th/nvim-cmp', branch = "border-window" } -- The completion plugin

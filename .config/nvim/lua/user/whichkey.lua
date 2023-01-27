@@ -378,6 +378,7 @@ local mappings = {
     },
     w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
     W = { "<cmd>set winbar=  <cr>", "disable winbar" },
+    z = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
     [";"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
   },
 
