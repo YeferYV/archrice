@@ -19,6 +19,7 @@ hi   CursorLine                            guifg=none     guibg=#0c0c0c  gui=non
 hi   CursorLineFold                        guifg=#444444  guibg=none     gui=none
 hi   CursorLineNr                          guifg=#cccccc  guibg=none     gui=none
 hi   CursorLineSign                        guifg=none     guibg=none     gui=none
+hi   CurSearch                             guifg=#ffff00  guibg=#5555ff  gui=none
 hi   Debug                                 guifg=#ff4400  guibg=none     gui=none
 hi   Define                                guifg=#1c1cff  guibg=none     gui=none
 hi   Delimiter                             guifg=#7574a5  guibg=none     gui=none
@@ -43,12 +44,13 @@ hi   Macro                                 guifg=#1c1cff  guibg=none     gui=non
 hi   MatchParen                            guifg=#000000  guibg=#1cff1c  gui=none
 hi   NonText                               guifg=#000000  guibg=none     gui=none
 hi   Normal                                guifg=none     guibg=none     gui=none
+hi   NormalFloat                           guifg=#888888  guibg=none     gui=none
 hi   Number                                guifg=#1cff1c  guibg=none     gui=none
 hi   Operator                              guifg=#5555ff  guibg=none     gui=none
-hi   Pmenu                                 guifg=#888888  guibg=none     gui=none
+hi   Pmenu                                 guifg=#444444  guibg=none     gui=none
 hi   PmenuSbar                             guifg=#ff0000  guibg=none     gui=none
 hi   PmenuSel                              guifg=none     guibg=#1c1c1c  gui=none
-hi   PmenuThumb                            guifg=none     guibg=#555555  gui=none
+hi   PmenuThumb                            guifg=#0000ff  guibg=#1c1c1c  gui=none
 hi   PreProc                               guifg=#1c1cff  guibg=none     gui=none
 hi   Question                              guifg=#00ff00  guibg=none     gui=none
 hi   QuickFixLine                          guifg=#00ff00  guibg=none     gui=none
@@ -266,18 +268,18 @@ hi   BufferLineIndicatorSelected           guifg=#ffffff  guibg=none  gui=none
 hi   BufferLineIndicatorVisible            guifg=#5c5c5c  guibg=none  gui=none
 
 "--  Borders
-" hi   link TelescopeBorder                  FloatBorder  -- default Normal
-" hi   link ToggleTermFloatBorder            FloatBorder  -- default Normal
-" hi   link DapUIFloatBorder                 FloatBorder  -- default Normal
+" hi   link TelescopeBorder                  FloatBorder  " default Normal
+" hi   link ToggleTermFloatBorder            FloatBorder  " default Normal
+" hi   link DapUIFloatBorder                 FloatBorder  " default Normal
 hi   link LspInfoBorder                    FloatBorder
 hi   link WhichKeyBorder                   FloatBorder
 
 "--  Cmp
-hi   link CmpItemAbbr                      Pmenu
-hi   link CmpItemAbbrMatch                 WildMenu     " guifg=#4141ad
-hi   link CmpItemAbbrMatchFuzzyDefault     PmenuSbar
-hi   link CmpItemKind                      PmenuSbar    " guifg=#7574a5
-hi   link CmpItemMenu                      Comment
+hi   link CmpItemAbbr                      NormalFloat
+hi   link CmpItemAbbrMatch                 WildMenu       " guifg=#4141ad
+hi   link CmpItemAbbrMatchFuzzyDefault     PmenuThumb
+hi   link CmpItemKind                      PmenuSbar      " guifg=#7574a5
+hi   link CmpItemMenu                      Pmenu
 hi   link CmpItemMenuDefault               FloatBorder
 
 "--  git

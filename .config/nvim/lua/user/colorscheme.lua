@@ -9,14 +9,14 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
     local hl_groups = {
       "EndOfBuffer",
-      "FloatBorder",
+      -- "FloatBorder",
       "MsgArea",
       "NeoTreeNormal",
       "NeoTreeNormalNC",
       "Normal",
       "NormalNC",
-      "NormalFloat",
-      "Pmenu",
+      -- "NormalFloat",
+      -- "Pmenu",
       "SignColumn",
       "TelescopeBorder",
       "TelescopeNormal",
@@ -84,6 +84,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       NeoTreeGitStaged            = { fg = "#495466" },
       NeoTreeRootName             = { fg = "#7aa2f7" },
       NeoTreeTabActive            = { fg = "#c0caf5" },
+      -- NormalFloat                 = { fg = "#888888" },
+      -- FloatBorder                 = { fg = "#444444" },
+      -- CmpItemAbbr                 = { fg = "#888888" },
+      -- Pmenu                       = { fg = "#444444" },
       Winbar                      = { fg = "#495466" },
       WinbarNC                    = { fg = "#495466" },
     }

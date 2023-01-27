@@ -186,7 +186,7 @@ cmp.setup {
       border = 'rounded',
       scrollbar = "║",
       thin_scrollbar = true,
-      -- winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+      winhighlight = "Normal:Normal,NormalFloat:NormalFloat,FloatBorder:FloatBorder,CursorLine:Visual,Search:None"
     },
   },
   experimental = {
