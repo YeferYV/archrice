@@ -46,11 +46,14 @@ return require("packer").startup(function(use)
     "JoosepAlviste/nvim-ts-context-commentstring",
     commit = "32d9627123321db65a4f158b72b757bcaef1a3f4",
   }
-  -- use {
-  --   "windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
-  --   commit = "99f696339266c22e7313d6a85a95bd538c3fc226",
-  --   config = function() require("nvim-autopairs").setup() end,
-  -- }
+  use {
+    "windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
+    commit = "99f696339266c22e7313d6a85a95bd538c3fc226",
+    config = function()
+      require("nvim-autopairs").setup()
+      require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+    end,
+  }
   use {
     "windwp/nvim-ts-autotag", -- To autoclose and autorename tags
     commit = "fdefe46c6807441460f11f11a167a2baf8e4534b",

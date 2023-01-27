@@ -1639,6 +1639,8 @@
   "editor.fontSize": 13,
   "editor.fontWeight": 400,
   "editor.formatOnSave": false,
+  // "editor.guides.bracketPairs": true,
+  // "editor.guides.bracketPairsHorizontal": true,
   // "editor.lineHeight": 1.4,
   "editor.inlineSuggest.enabled": true,
   "editor.minimap.enabled": false,
@@ -1930,7 +1932,6 @@
   "window.menuBarVisibility": "toggle",
   "wolf.logErrors": true,
   "wolf.pythonPath": "/usr/bin/python",
-  "workbench.colorTheme": "Hacker",
   // "workbench.editor.enablePreviewFromQuickOpen": true,
   // "workbench.editor.enablePreview": false,
   "workbench.editor.untitled.hint": "hidden",
@@ -1938,4 +1939,5 @@
   "workbench.folderLabelColor": "#ff0000",
   "workbench.panel.defaultLocation": "right",
   "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Hacker"
 }
