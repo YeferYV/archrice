@@ -90,6 +90,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       TerminalNormal              = { fg = "NONE", bg = "NONE" },
       Normal                      = { fg = "NONE", bg = "NONE" },
       NormalNC                    = { fg = "NONE", bg = "NONE" },
+      TelescopeResultsNormal      = { fg = "#9c9c9c" },
       NormalFloat                 = { fg = "#888888" },
       FloatBorder                 = { fg = "#444444" },
       CmpItemAbbr                 = { fg = "#888888" },
