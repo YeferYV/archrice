@@ -191,6 +191,7 @@ require("neo-tree").setup({
       ["fx"] = function() vim.cmd [[normal 0]] vim.cmd [[/ x]] vim.cmd [[normal n]] end,
       ["fy"] = function() vim.cmd [[normal 0]] vim.cmd [[/ y]] vim.cmd [[normal n]] end,
       ["fz"] = function() vim.cmd [[normal 0]] vim.cmd [[/ z]] vim.cmd [[normal n]] end,
+      ["f/"] = function() vim.cmd [[normal 0]] vim.cmd [[/\v( | )]] vim.cmd [[normal n]] end,
       ["z"] = "close_all_nodes",
       ["Z"] = "expand_all_nodes",
       ["a"] = {
@@ -201,22 +202,22 @@ require("neo-tree").setup({
         }
       },
       ["A"] = "add_directory", -- also accepts the optional config.show_path option like "add".
-      ["d"] = "delete",
-      ["r"] = "rename",
-      ["y"] = "copy_to_clipboard",
-      ["x"] = "cut_to_clipboard",
-      ["p"] = "paste_from_clipboard",
       ["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
+      ["C"] = "close_node",
       -- ["c"] = {
       --  "copy",
       --  config = {
       --    show_path = "none" -- "none", "relative", "absolute"
       --  }
       --}
-      ["C"] = "close_node",
+      ["d"] = "delete",
       ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
+      ["p"] = "paste_from_clipboard",
       ["q"] = "close_window",
+      ["r"] = "rename",
       ["R"] = "refresh",
+      ["x"] = "cut_to_clipboard",
+      ["y"] = "copy_to_clipboard",
       ["?"] = "show_help",
       ["<"] = "prev_source",
       [">"] = "next_source",
@@ -344,7 +345,7 @@ require("neo-tree").setup({
       getparent_closenode = function(state)
         local node = state.tree:get_node()
         if node.type == 'directory' and node:is_expanded() then
-          require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
+          state.commands.toggle_node(state)
         else
           require 'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
         end
@@ -354,7 +355,7 @@ require("neo-tree").setup({
         local node = state.tree:get_node()
         if node.type == 'directory' then
           if not node:is_expanded() then
-            require 'neo-tree.sources.filesystem'.toggle_directory(state, node)
+            state.commands.toggle_node(state)
           elseif node:has_children() then
             require 'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
           end
