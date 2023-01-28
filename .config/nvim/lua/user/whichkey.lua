@@ -99,19 +99,54 @@ local mappings = {
 
   b = {
     name = "Buffer",
-    b = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_cursor{previewer=false, initial_mode='insert'})<cr>",
-      "Telescope Buffer cursor-theme" },
-    B = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer=false, initial_mode='normal'})<cr>",
-      "Telescope Buffer" },
+    b = {
+      function()
+        require('telescope.builtin').buffers(
+          require('telescope.themes').get_cursor {
+            previewer = false,
+            initial_mode = 'insert'
+          })
+      end,
+      "Telescope Buffer cursor-theme"
+    },
+    B = {
+      function()
+        require('telescope.builtin').buffers(
+          require('telescope.themes').get_dropdown {
+            previewer = false,
+            initial_mode = 'normal'
+          })
+      end,
+      "Telescope Buffer"
+    },
     C = { "<cmd>%bd|e#|bd#<cr>", "Close others Buffers" },
     s = { "<cmd>BufferLineCyclePrev<cr>", "Previous Buffer" },
     f = { "<cmd>BufferLineCycleNext<cr>", "Next Buffer" },
     S = { "<cmd>BufferLineMovePrev<cr>", "Move to Previous Buffer" },
     F = { "<cmd>BufferLineMoveNext<cr>", "Move to Next Buffer" },
-    t = { "<cmd>enew<cr> <cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "New buffer" },
-    T = { "<cmd>setlocal nobuflisted<cr><cmd>bprevious<cr><cmd>tabe #<cr><cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>",
-      "buffer to Tab" },
-    -- T = { "<cmd>bufdo | :setlocal nobuflisted | :b# | :tabe # | :lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "buffers to Tab" },
+    t = {
+      function()
+        vim.cmd [[enew]]
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "New buffer"
+    },
+    T = {
+      function()
+        vim.cmd [[setlocal nobuflisted]]
+        vim.cdm [[bprevious]]
+        vim.cmd [[tabe #]]
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "buffer to Tab"
+    },
+    -- T = {
+    --   function()
+    --     vim.cmd [[bufdo | :setlocal nobuflisted | :b# | :tabe # ]]
+    --     require('bufferline').setup { options = { always_show_bufferline = true } }
+    --   end,
+    --   "buffers to Tab"
+    -- },
     v = { "<cmd>vertical ball<cr>", "Buffers to vertical windows" },
     V = { "<cmd>belowright ball<cr>", "Buffers to horizontal windows" },
     x = { "<cmd>:bp | bd #<cr>", "Close Buffer" },
@@ -125,7 +160,13 @@ local mappings = {
     p = { "<cmd>tabprevious<cr>", "Previous Tab" },
     N = { "<cmd>+tabmove<cr>", "move tab to next tab" },
     P = { "<cmd>-tabmove<cr>", "move tab to previous tab" },
-    t = { "<cmd>tabnew <cr> <cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "New Tab" },
+    t = {
+      function()
+        vim.cmd [[tabnew]]
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "New Tab"
+    },
     x = { "<cmd>tabclose<cr>", "Close Tab" },
     -- ["!"] = { "<cmd>tabmove 0<cr>", "move to #1 tab" },
     -- ["("] = { "<cmd>tabmove $<cr>", "move to last tab" },
@@ -167,7 +208,12 @@ local mappings = {
   },
 
   ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+    function()
+      require('telescope.builtin').find_files(
+        require('telescope.themes').get_dropdown {
+          previewer = false
+        })
+    end,
     "Find Files",
   },
 
@@ -186,9 +232,14 @@ local mappings = {
 
   g = {
     name = "Git",
-    g = { "<cmd>lua _LAZYGIT_TOGGLE() require('bufferline').setup{options={ offsets = {{ filetype = 'neo-tree', padding = 1 }}}}<cr>",
-      "Tab Lazygit" },
-    G = { "<cmd>lua _LAZYGIT_FLOAT_TOGGLE()<cr>", "Float Lazygit" },
+    g = {
+      function()
+        _LAZYGIT_TOGGLE()
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "Tab Lazygit"
+    },
+    G = { function() _LAZYGIT_FLOAT_TOGGLE() end, "Float Lazygit" },
     L = { "<cmd>terminal lazygit<cr><cmd>set ft=tab-terminal<cr>", "Buffer Lazygit" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
@@ -246,13 +297,21 @@ local mappings = {
     f = { "<cmd>Lspsaga lsp_finder<cr>", "Finder" },
     h = { "<cmd>Lspsaga hover_doc<cr>", "Hover" },
     n = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostics" },
-    N = { function() require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR }) end,
-      "Next Error" },
+    N = {
+      function()
+        require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+      end,
+      "Next Error"
+    },
     o = { "<cmd>Lspsaga show_line_diagnostics<cr>", "Show Line Diagnostics" },
     O = { "<cmd>Lspsaga show_cursor_diagnostics<cr>", "Show Cursor Diagnostics" },
     p = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostics" },
-    P = { function() require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
-      "Prev Error" },
+    P = {
+      function()
+        require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+      end,
+      "Prev Error"
+    },
     r = { "<cmd>Lspsaga term_toggle ranger<cr>", "Ranger" },
     R = { "<cmd>Lspsaga rename<cr>", "Rename" },
     t = { "<cmd>Lspsaga term_toggle<cr>", "Toggle Terminal" },
@@ -276,8 +335,12 @@ local mappings = {
     name = "Search",
     b = { "<cmd>Telescope buffers initial_mode=normal<cr>", "Buffers" },
     B = { "<cmd>Telescope current_buffer_fuzzy_find theme=ivy<cr>", "Ripgrep" },
-    c = { "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true, initial_mode='normal'})<cr>",
-      "Colorscheme" },
+    c = {
+      function()
+        require('telescope.builtin').colorscheme({ enable_preview = true, initial_mode = 'normal' })
+      end,
+      "Colorscheme"
+    },
     C = { "<cmd>Telescope commands<cr>", "Commands" },
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
     f = { "<cmd>Telescope grep_string search= theme=ivy<cr>", "Grep string" },
@@ -287,8 +350,12 @@ local mappings = {
     H = { "<cmd>Telescope highlights<cr>", "Find Highlights" },
     m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
     o = { "<cmd>Telescope file_browser initial_mode=normal<cr>", "Open File Browser" },
-    -- O = { "<cmd>lua require'telescope'.extensions.file_browser.file_browser({path = vim.fn.expand('%:p:h')})<cr>",
-    --   "Open FileBrowser (cwd)" },
+    -- O = {
+    --   function()
+    --     require 'telescope'.extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') })
+    --   end,
+    --   "Open FileBrowser (cwd)"
+    -- },
     p = { "<cmd>Telescope projects<cr>", "Projects" },
     q = { "<cmd>Telescope quickfixhistory initial_mode=normal<cr>", "Telescope QuickFix History" },
     Q = { "<cmd>Telescope quickfix initial_mode=normal<cr>", "Telescope QuickFix" },
@@ -318,16 +385,32 @@ local mappings = {
     --   u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
     --   t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
     --   p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
-    B = { "<C-w>T<cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "Terminal to Tab" },
-    e = { ":lua vim.cmd[[tabnew|terminal]] vim.cmd[[startinsert | set ft=tab-terminal nonumber ]] require('bufferline').setup{options={always_show_bufferline=true}}<CR>",
-      "Tab Terminal" },
-    E = { ":lua vim.cmd[[ToggleTerm direction=tab]] require('bufferline').setup{options={always_show_bufferline=true}}<CR>",
-      "Tab ToggleTerm" },
+    B = {
+      function()
+        vim.cmd [[ wincmd T ]]
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "Terminal to Tab"
+    },
+    e = {
+      function()
+        vim.cmd [[tabnew|terminal]]
+        vim.cmd [[startinsert | set ft=tab-terminal nonumber ]]
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "Tab Terminal"
+    },
+    E = {
+      function()
+        vim.cmd [[ToggleTerm direction=tab]]
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "Tab ToggleTerm"
+    },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float ToggleTerm" },
     l = { "<cmd>lua _LF_TOGGLE()<cr>", "lf" },
     t = { "<cmd>ToggleTerm <cr>", "Toggle ToggleTerm" },
-    T = { ":lua vim.cmd[[terminal]] vim.cmd[[startinsert | set ft=tab-terminal nonumber]]<CR>",
-      "Buffer terminal" },
+    T = { function() vim.cmd [[terminal]] vim.cmd [[startinsert | set ft=tab-terminal nonumber]] end, "Buffer terminal" },
     -- H = { "<cmd>split +te  | resize 10          | setlocal ft=sp-terminal nonumber noruler laststatus=3 cmdheight=0 | startinsert<cr>", "Horizontal terminal (status-hidden)" },
     -- V = { "<cmd>vsplit +te | vertical resize 80 | setlocal ft=vs-terminal nonumber noruler laststatus=0 cmdheight=1 | startinsert<cr>", "Vertical terminal (status-hidden)" },
     H = { "<cmd>split +te | resize 10 | setlocal ft=sp-terminal<cr>", "Horizontal terminal" },
@@ -345,11 +428,30 @@ local mappings = {
   u = {
     name = "UI Toggle",
     ["0"] = { "<cmd>set showtabline=0<cr>", "Close Buffer Status" },
-    ["1"] = { "<cmd>lua require('bufferline').setup{options={ offsets = { { filetype = 'neo-tree', padding = 1 } }}}<cr>",
-      "Enable Buffer offset" },
-    ["2"] = { "<cmd>lua require('bufferline').setup{options={ offsets = {}}}<cr>", "Disable Buffer offset" },
-    b = { "<cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>", "Show Buffer Status" },
-    B = { "<cmd>lua require('bufferline').setup{options={always_show_bufferline=false}}<cr>", "Hide Buffer Status" },
+    ["1"] = {
+      function()
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "Enable Buffer offset"
+    },
+    ["2"] = {
+      function()
+        require('bufferline').setup { options = { offsets = {} } }
+      end,
+      "Disable Buffer offset"
+    },
+    b = {
+      function()
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "Show Buffer Status"
+    },
+    B = {
+      function()
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "Hide Buffer Status"
+    },
     -- c = { "<cmd>Codi<cr>", "Codi Start"},
     -- C = { "<cmd>Codi!<cr>", "Codi Stop" },
     c = { "<cmd>set cmdheight=1<cr>", "enable cmdheight" },
@@ -402,8 +504,14 @@ local mappings = {
     S = { "<cmd>-wincmd x<cr>", "window Swap CCW (same parent node)" },
     r = { "<C-w>r", "Rotate CW (same parent node)" },
     R = { "<C-w>R", "Rotate CCW (same parent node)" },
-    T = { "<cmd>setlocal nobuflisted<cr><C-w>T<cmd>lua require('bufferline').setup{options={always_show_bufferline=true}}<cr>",
-      "window to Tab" },
+    T = {
+      function()
+        vim.cmd [[ setlocal nobuflisted ]]
+        vim.cmd [[ wincmd T ]]
+        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+      end,
+      "window to Tab"
+    },
     v = { "<cmd>vsplit<cr>", "split vertical" },
     V = { "<cmd>split<cr>", "split horizontal" },
     w = { "<cmd>new<cr>", "New horizontal window" },
