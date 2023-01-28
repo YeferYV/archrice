@@ -29,7 +29,7 @@ hi   ErrorMsg                              guifg=#ff0000  guibg=none     gui=non
 hi   Exception                             guifg=#bb0000  guibg=none     gui=none
 hi   ExtraWhitespace                       guifg=none     guibg=#ff0000  gui=none
 hi   Float                                 guifg=#008888  guibg=none     gui=none
-hi   FloatBorder                           guifg=#444444  guibg=none     gui=none
+hi   FloatBorder                           guifg=#444444  guibg=none     gui=none  " Second cmp window Border
 hi   FoldColumn                            guifg=none     guibg=none     gui=none
 hi   Folded                                guifg=none     guibg=#444444  gui=none
 hi   Function                              guifg=#008800  guibg=none     gui=none
@@ -44,13 +44,13 @@ hi   Macro                                 guifg=#1c1cff  guibg=none     gui=non
 hi   MatchParen                            guifg=#000000  guibg=#1cff1c  gui=none
 hi   NonText                               guifg=#000000  guibg=none     gui=none
 hi   Normal                                guifg=none     guibg=none     gui=none
-hi   NormalFloat                           guifg=#888888  guibg=none     gui=none
+hi   NormalFloat                           guifg=#888888  guibg=none     gui=none  " Second cmp window fg-bg
 hi   Number                                guifg=#1cff1c  guibg=none     gui=none
 hi   Operator                              guifg=#5555ff  guibg=none     gui=none
-hi   Pmenu                                 guifg=#444444  guibg=none     gui=none
-hi   PmenuSbar                             guifg=#ff0000  guibg=none     gui=none
-hi   PmenuSel                              guifg=none     guibg=#1c1c1c  gui=none
-hi   PmenuThumb                            guifg=#0000ff  guibg=#1c1c1c  gui=none
+hi   Pmenu                                 guifg=#444444  guibg=none     gui=none           " First cmp window Border
+hi   PmenuSbar                             guifg=#ff4400  guibg=none     gui=strikethrough  " cmp scrollbar?
+hi   PmenuSel                              guifg=none     guibg=#1c1c1c  gui=none           " cmp selected Item
+hi   PmenuThumb                            guifg=none     guibg=#1c1c1c  gui=none           " cmp scrollbar icon
 hi   PreProc                               guifg=#1c1cff  guibg=none     gui=none
 hi   Question                              guifg=#00ff00  guibg=none     gui=none
 hi   QuickFixLine                          guifg=#00ff00  guibg=none     gui=none
@@ -268,8 +268,8 @@ hi   BufferLineIndicatorSelected           guifg=#ffffff  guibg=none  gui=none
 hi   BufferLineIndicatorVisible            guifg=#5c5c5c  guibg=none  gui=none
 
 "--  Borders
-" hi   link TelescopeBorder                  FloatBorder  " default Normal
-" hi   link DapUIFloatBorder                 FloatBorder  " default Normal
+hi   link TelescopeBorder                  FloatBorder  " default Normal
+hi   link DapUIFloatBorder                 FloatBorder  " default Normal
 hi   link LspInfoBorder                    FloatBorder
 hi   link WhichKeyBorder                   FloatBorder
 hi   link SagaBorder                       FloatBorder
@@ -278,12 +278,18 @@ hi   link TerminalBorder                   FloatBorder
 hi   link TerminalNormal                   Normal
 
 "--  Cmp
-hi   link CmpItemAbbr                      NormalFloat
-hi   link CmpItemAbbrMatch                 WildMenu       " guifg=#4141ad
-hi   link CmpItemAbbrMatchFuzzyDefault     PmenuThumb
-hi   link CmpItemKind                      PmenuSbar      " guifg=#7574a5
-hi   link CmpItemMenu                      Pmenu
-hi   link CmpItemMenuDefault               FloatBorder
+hi   link CmpItemAbbr                      NormalFloat    " First window fg/bg
+hi   link CmpItemAbbrDefault               NormalFloat    " First window fg/bg
+hi   link CmpItemAbbrMatch                 WildMenu       " First Match
+hi   link CmpItemAbbrMatchDefault          WildMenu       " First Match
+hi   link CmpItemAbbrMatchFuzzy            WildMenu       " Second Match
+hi   link CmpItemAbbrMatchFuzzyDefault     WildMenu       " Second Match
+hi   link CmpItemKind                      WildMenu       " First icons
+hi   link CmpItemKindDefault               WildMenu       " First icons
+hi   link CmpItemMenu                      FloatBorder    " Second Icons
+hi   link CmpItemMenuDefault               FloatBorder    " Second Icons
+hi   link CmpItemAbbrDeprecated            PmenuSbar
+hi   link CmpItemAbbrDeprecatedDefault     PmenuSbar
 
 "--  git
 hi   GitSignsAdd                           guifg=#005500  guibg=none     gui=none

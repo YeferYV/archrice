@@ -124,7 +124,7 @@ require("lspsaga").setup({
     expand = '',
     collapse = '',
     preview = ' ',
-    code_action = '💡',
+    code_action = '', -- 💡
     diagnostic = '🐞',
     incoming = ' ',
     outgoing = ' ',

@@ -94,6 +94,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       FloatBorder                 = { fg = "#444444" },
       CmpItemAbbr                 = { fg = "#888888" },
       Pmenu                       = { fg = "#444444" },
+      TelescopeBorder             = { fg = "#171922" },
+      TelescopeTitle              = { fg = "#303340" },
+      WhichKeyBorder              = { fg = "#171922" },
       Winbar                      = { fg = "#495466" },
       WinbarNC                    = { fg = "#495466" },
     }
@@ -182,6 +185,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           LspReferenceRead           = { bg = "#080811" },
           LspReferenceText           = { bg = "#080811" },
           LspReferenceWrite          = { bg = "#080811" },
+          PmenuSel                   = { bg = "#1c1c1c" },
           TelescopeSelection         = { bg = "#080811" },
           TelescopeSelectionCaret    = { bg = "#080811" },
           WinSeparator               = { fg = "#565f89" },
