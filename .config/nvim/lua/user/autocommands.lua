@@ -265,12 +265,25 @@ vim.api.nvim_create_autocmd({ "TermClose" }, {
 })
 
 -- _auto_nohlsearch
-vim.on_key(function(char)
-  if vim.fn.mode() == "n" then
-    local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
-    if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
-  end
-end, vim.api.nvim_create_namespace "auto_hlsearch")
+local M = {}
+
+M.EnableAutoNoHighlightSearch = function()
+  vim.on_key(function(char)
+    if vim.fn.mode() == "n" then
+      local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
+      if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
+    end
+  end, vim.api.nvim_create_namespace "auto_hlsearch")
+end
+
+M.DisableAutoNoHighlightSearch = function()
+  vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"])
+  vim.cmd [[ set hlsearch ]]
+end
+
+M.EnableAutoNoHighlightSearch() -- autostart
+
+return M
 
 -- -- _json_to_jsonc
 -- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
