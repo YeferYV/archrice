@@ -122,6 +122,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           ["@punctuation.bracket"]   = { fg = "#515171" },
           ["@punctuation.delimiter"] = { fg = "#e8e8e8" },
           ["@punctuation.special"]   = { fg = "#515171" },
+          ["@parameter"]             = { fg = "#e4f0fb" },
+          ["@variable"]              = { fg = "#e4f0fb" },
           ["@tag"]                   = { fg = "#515171" },
           ["@tag.attribute"]         = { fg = "#91b4d5" },
           ["@tag.delimiter"]         = { fg = "#515171" },
@@ -145,9 +147,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         },
         custom_terminal_colors = {
           terminal_color_0  = '#15161e',
-          terminal_color_1  = '#db4b4b',
+          terminal_color_1  = '#ff4422',
           terminal_color_2  = '#1abc9c',
-          terminal_color_3  = '#e0af68',
+          terminal_color_3  = '#fffac2',
           terminal_color_4  = '#7aa2f7',
           terminal_color_5  = '#bb9af7',
           terminal_color_6  = '#7dcfff',
@@ -159,7 +161,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           terminal_color_12 = '#1c1cff',
           terminal_color_13 = '#8844bb',
           terminal_color_14 = '#008888',
-          terminal_color_15 = '#ff4400',
+          terminal_color_15 = '#673232',
         }
       },
       poimandres = {
@@ -193,13 +195,13 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         },
         custom_terminal_colors = {
           terminal_color_0  = '#171922',
-          terminal_color_1  = '#d0679d',
+          terminal_color_1  = '#ff4422',
           terminal_color_2  = '#5de4c7',
           terminal_color_3  = '#fffac2',
           terminal_color_4  = '#add7ff',
           terminal_color_5  = '#fcc5e9',
           terminal_color_6  = '#89ddff',
-          terminal_color_7  = '#ffffff',
+          terminal_color_7  = '#E4F0FB',
           terminal_color_8  = '#506477',
           terminal_color_9  = '#ff0000',
           terminal_color_10 = '#00ff00',
@@ -207,7 +209,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           terminal_color_12 = '#1c1cff',
           terminal_color_13 = '#8844bb',
           terminal_color_14 = '#008888',
-          terminal_color_15 = '#ff4400',
+          terminal_color_15 = '#673232',
         }
       },
     }

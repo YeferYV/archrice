@@ -7,11 +7,11 @@ gui:
     inactiveBorderColor:
       - "#2c2c2c"
     selectedLineBgColor:
-      - "#1c1c1c"
+      - "#0c0c0c"
     selectedRangeBgColor:
-      - "#1c1c1c"
+      - "#0c0c0c"
     defaultFgColor:
-      - "#1c1c1c"
+      - "#2c2c2c"
 
 git:
   parseEmoji: true
