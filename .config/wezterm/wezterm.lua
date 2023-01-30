@@ -73,15 +73,7 @@ return {
         { family = "TerminessTTF Nerd Font" },
         { family = "Font Awesome 6 Free Solid" },
       },
-        -- { stretch = "Normal", weight = "Bold", foreground = "#452121" } -- gen: #452121 + #ff0000
-        -- { stretch = "Normal", weight = "Bold", foreground = "#4e1f1f" } -- gen: #452121 + #ff0000
-        -- { stretch = "Normal", weight = "Bold", foreground = "#452525" } -- var: #452121
-        -- { stretch = "Normal", weight = "Bold", foreground = "#452c2c" } -- var: #452121
-        -- { stretch = "Normal", weight = "Bold", foreground = "#562323" } -- gen: #2c2c2c + #ff0000
-        -- { stretch = "Normal", weight = "Bold", foreground = "#612121" } -- gen: #2c2c2c + #ff0000
-        -- { stretch = "Normal", weight = "Bold", foreground = "#5d2d2d" } -- gen: #5d2d2d + #ff0000
-        -- { stretch = "Normal", weight = "Bold", foreground = "#673232" }-- gen: #5d2d2d + #ff0000
-        { stretch = "Normal", weight = "Bold", foreground = "#ff4400" }
+        { stretch = "Normal", weight = "Bold", foreground = "#ffffff" }
       ),
     },
     {
@@ -383,13 +375,15 @@ return {
   -- color_scheme = "Retro",
   colors = {
     -- SHELL: for i in $(seq 256); do echo $(lua <<<"print('\27[${i}mReadydone${i}')"); done
+    foreground = "#a0a0a0",
+    background = "#000000",
     cursor_bg = "#ffffff",
     cursor_fg = "#000000",
     -- cursor_border = "#0000ff",
     -- ansi = {"#111111", "maroon", "green", "olive", "navy", "purple", "teal", "silver"},        -- Intensity Normal font SHELL:{30,37}
-    ansi = { "#222222", "#990000", "#009900", "#999900", "#5555cc", "#8855ff", "#5DE4C7", "#ffffff" }, -- Intensity Normal font SHELL:{30,37}
+    ansi = { "#222222", "#990000", "#009900", "#999900", "#5555cc", "#8855ff", "#5FB3A1", "#a0a0a0" }, -- Intensity Normal font SHELL:{30,37}
     -- brights = {"#1c1c1c", "red", "lime", "yellow", "blue", "fuchsia", "aqua", "white"},        -- Intensity Bold font SHELL:{90,97}
-    brights = { "#7c7c7c", "#ff0000", "#00ff00", "#ffff00", "#1c1cff", "#8844bb", "#5FB3A1", "#ff4400" }, -- Intensity Bold font SHELL:{90,97}
+    brights = { "#6c6c6c", "#ff0000", "#00ff00", "#ffff00", "#1c1cff", "#8844bb", "#5DE4C7", "#ffffff" }, -- Intensity Bold font SHELL:{90,97}
 
     tab_bar = {
       -- The color of the strip that goes along the top of the window
