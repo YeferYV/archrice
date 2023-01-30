@@ -80,7 +80,8 @@ return {
         -- { stretch = "Normal", weight = "Bold", foreground = "#562323" } -- gen: #2c2c2c + #ff0000
         -- { stretch = "Normal", weight = "Bold", foreground = "#612121" } -- gen: #2c2c2c + #ff0000
         -- { stretch = "Normal", weight = "Bold", foreground = "#5d2d2d" } -- gen: #5d2d2d + #ff0000
-        { stretch = "Normal", weight = "Bold", foreground = "#673232" }-- gen: #5d2d2d + #ff0000
+        -- { stretch = "Normal", weight = "Bold", foreground = "#673232" }-- gen: #5d2d2d + #ff0000
+        { stretch = "Normal", weight = "Bold", foreground = "#ff4400" }
       ),
     },
     {
@@ -386,9 +387,9 @@ return {
     cursor_fg = "#000000",
     -- cursor_border = "#0000ff",
     -- ansi = {"#111111", "maroon", "green", "olive", "navy", "purple", "teal", "silver"},        -- Intensity Normal font SHELL:{30,37}
-    ansi = { "#222222", "#bb0000", "#008800", "#bbbb00", "#5555cc", "#8855ff", "#7acaca", "#ffffff" }, -- Intensity Normal font SHELL:{30,37}
+    ansi = { "#222222", "#990000", "#009900", "#999900", "#5555cc", "#8855ff", "#5DE4C7", "#ffffff" }, -- Intensity Normal font SHELL:{30,37}
     -- brights = {"#1c1c1c", "red", "lime", "yellow", "blue", "fuchsia", "aqua", "white"},        -- Intensity Bold font SHELL:{90,97}
-    brights = { "#7c7c7c", "#ff0000", "#00ff00", "#ffff00", "#1c1cff", "#8844bb", "#008888", "#673232" }, -- Intensity Bold font SHELL:{90,97}
+    brights = { "#7c7c7c", "#ff0000", "#00ff00", "#ffff00", "#1c1cff", "#8844bb", "#5FB3A1", "#ff4400" }, -- Intensity Bold font SHELL:{90,97}
 
     tab_bar = {
       -- The color of the strip that goes along the top of the window

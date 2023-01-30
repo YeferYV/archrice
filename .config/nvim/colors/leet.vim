@@ -482,12 +482,12 @@ end
 -- Terminal colors
 custom_terminal_colors = {
   terminal_color_0  = '#222222',
-  terminal_color_1  = '#bb0000',
-  terminal_color_2  = '#008800',
-  terminal_color_3  = '#bbbb00',
+  terminal_color_1  = '#990000',
+  terminal_color_2  = '#009900',
+  terminal_color_3  = '#999900',
   terminal_color_4  = '#5555cc',
   terminal_color_5  = '#8855ff',
-  terminal_color_6  = '#7acaca',
+  terminal_color_6  = '#5DE4C7',
   terminal_color_7  = '#ffffff',
   terminal_color_8  = '#7c7c7c',
   terminal_color_9  = '#ff0000',
@@ -495,7 +495,7 @@ custom_terminal_colors = {
   terminal_color_11 = '#ffff00',
   terminal_color_12 = '#1c1cff',
   terminal_color_13 = '#8844bb',
-  terminal_color_14 = '#008888',
+  terminal_color_14 = '#5FB3A1',
   terminal_color_15 = '#ff4400',
 }
 
