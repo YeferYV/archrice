@@ -75,8 +75,9 @@ keymap("v", "<A-k>", ":m .-2<CR>==", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
--- Replace all
-keymap("n", "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false })
+-- Replace all/visual_selected
+map({ "n" }, "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false })
+map({ "x" }, "<C-s>", ":s//g<Left><Left>", { noremap = true, silent = false })
 
 -- Intellisense
 -- map("i", "<C-h>", "<Plug>(copilot-dismiss)", { expr = true })
@@ -202,6 +203,9 @@ map({ "n", "t" }, "<C-x>", "<cmd>Lspsaga term_toggle<CR>")
 keymap("o", 'gm', "<cmd>normal! `[v`]<Left><cr>", { desc = "Last change textobj" })
 keymap("x", 'gm', "`[o`]<Left>", { desc = "Last change textobj" })
 
+-- _replace_textobj_(repeable_with_cgn_+_dotrepeat_supported)
+map({ 'x' }, 'gr', '"zy:s/<C-r>z//g<Left><Left>', { desc = "Replace textobj" })
+
 -- _git_hunk_(next/prev_autojump_unsupported)
 map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Git hunk textobj" })
 
@@ -217,7 +221,7 @@ map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.c
   { desc = "Diagnostic textobj" })
 map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end,
   { desc = "nearEoL textobj" }) -- conflicts with visual until search-next workaround: gn
-map({ "o", "x" }, "|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end,
+map({ "o", "x" }, "g|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end,
   { desc = "ColumnDown textobj" })
 map({ "o", "x" }, "R", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vR") end,
   { desc = "RestOfParagraph textobj" })

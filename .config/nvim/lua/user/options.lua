@@ -84,4 +84,8 @@ if vim.g.neovide == true then
   vim.g.neovide_hide_mouse_when_typing  = true
   vim.g.neovide_no_idle                 = true
   vim.g.neovide_scroll_animation_length = 0.1
+  vim.g.neovide_padding_top             = 5
+  vim.g.neovide_padding_left            = 5
+  vim.g.neovide_padding_right           = 5
+  vim.g.neovide_padding_bottom          = 1
 end

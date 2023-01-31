@@ -25,7 +25,7 @@ require 'nvim-treesitter.configs'.setup {
       -- node_decremental = "grm",       -- decrement to the previous node
       init_selection = '<c-space>',
       node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
+      scope_incremental = '<c-i>',
       node_decremental = '<c-h>', -- showkey -a <c-backspace> outputs ^H
     }
   },
