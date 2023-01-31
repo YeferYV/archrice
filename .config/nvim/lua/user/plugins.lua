@@ -183,6 +183,7 @@ return require("packer").startup(function(use)
   -- TUI
   use { "akinsho/toggleterm.nvim", commit = "3ba683827c623affb4d9aa518e97b34db2623093" }
   use { "nvim-telescope/telescope-file-browser.nvim", commit = "304508fb7bea78e3c0eeddd88c4837501e403ae8" }
+  use { "AckslD/nvim-neoclip.lua" }
   use { "nvim-telescope/telescope.nvim",
     commit = "dce1156ca103b8222e4abbfc63f9c6887abf5ec6",
     requires = {

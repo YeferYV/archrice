@@ -349,6 +349,7 @@ local mappings = {
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     H = { "<cmd>Telescope highlights<cr>", "Find Highlights" },
     m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+    n = { "<cmd>Telescope neoclip initial_mode=normal<cr>", "NeoClip" },
     o = { "<cmd>Telescope file_browser initial_mode=normal<cr>", "Open File Browser" },
     -- O = {
     --   function()
