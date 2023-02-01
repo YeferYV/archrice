@@ -14,6 +14,7 @@ require('illuminate').configure({
   -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
   filetypes_denylist = {
     'neo-tree',
+    'alpha',
   },
   -- min_count_to_highlight: minimum number of matches required to perform highlighting
   min_count_to_highlight = 1,

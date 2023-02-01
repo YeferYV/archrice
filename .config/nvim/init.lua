@@ -12,6 +12,7 @@
 require "user.autocommands"
 require "user.options"
 require "user.plugins"
+require "user.alpha"
 require "user.aerial"
 require "user.bufferline"
 require "user.colorizer"

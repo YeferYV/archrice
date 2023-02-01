@@ -150,7 +150,7 @@ local mappings = {
     v = { "<cmd>vertical ball<cr>", "Buffers to vertical windows" },
     V = { "<cmd>belowright ball<cr>", "Buffers to horizontal windows" },
     x = { "<cmd>:bp | bd #<cr>", "Close Buffer" },
-    [";"] = { "<cmd>buffer #", "Recent buffer" },
+    [";"] = { "<cmd>buffer #<cr>", "Recent buffer" },
   },
 
   [";"] = {
