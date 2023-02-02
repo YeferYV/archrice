@@ -93,16 +93,13 @@ end
 
 -- see https://github.com/akinsho/toggleterm.nvim/issues/66
 local temp_path = "/tmp/lfpickerpath"
+
 local lfpicker = Terminal:new({
-  -- cmd = string.format("lf -selection-path %s %s", temp_path, vim.api.nvim_buf_get_name(0)),
   cmd = "lf -selection-path " .. temp_path .. " " .. vim.api.nvim_buf_get_name(0),
-  direction = "float",
   on_close = function()
     local file = io.open(temp_path, "r")
-    if file ~= nil
-    then
+    if file ~= nil then
       vim.cmd("set number")
-      -- vim.cmd("edit " .. file:read("*a"))
       vim.cmd("vsplit " .. file:read("*a"))
       file:close()
       os.remove(temp_path)
@@ -112,4 +109,21 @@ local lfpicker = Terminal:new({
 
 function _LF_TOGGLE()
   lfpicker:toggle()
+end
+
+local lfpickertab = Terminal:new({
+  cmd = "lf -selection-path " .. temp_path .. " " .. vim.api.nvim_buf_get_name(0),
+  on_close = function()
+    local file = io.open(temp_path, "r")
+    if file ~= nil then
+      vim.cmd("set number")
+      vim.cmd("tabnew " .. file:read("*a") .. " | tabclose #")
+      file:close()
+      os.remove(temp_path)
+    end
+  end
+})
+
+function _LF_TAB_TOGGLE()
+  lfpickertab:toggle()
 end

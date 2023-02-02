@@ -19,7 +19,7 @@ dashboard.section.buttons.val = {
   dashboard.button("n", " " .. " New File", ":enew<cr>"),
   dashboard.button("m", " " .. " Bookmarks", ":Telescope marks initial_mode=normal<cr>"),
   dashboard.button("b", " " .. " File Browser", ":Telescope file_browser initial_mode=normal<cr>"),
-  dashboard.button("l", " " .. " Explorer", ":lua _LF_TOGGLE()<cr>"),
+  dashboard.button("l", " " .. " Explorer", ":lua _LF_TAB_TOGGLE()<cr>"),
 }
 local function footer()
   return ""

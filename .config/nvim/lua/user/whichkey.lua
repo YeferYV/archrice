@@ -431,7 +431,12 @@ local mappings = {
     ["0"] = { "<cmd>set showtabline=0<cr>", "Close Buffer Status" },
     ["1"] = {
       function()
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        require('bufferline').setup {
+          options = {
+            offsets = { { filetype = 'neo-tree', padding = 1 } },
+            show_close_icon = false
+          }
+        }
       end,
       "Enable Buffer offset"
     },
