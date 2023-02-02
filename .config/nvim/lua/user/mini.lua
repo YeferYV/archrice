@@ -16,7 +16,6 @@ require('mini.ai').setup({
     -- C = mapped to Word-Column by textobj-word-column
     -- D = mapped to doubleSquareBrackets by nvim-various-textobjs
     -- f = mapped to function.call by mini.ai
-    -- h = mapped to select_hunk by gitsign
     -- i = mapped to indentation by mini.indent
     -- I = mapped to Indentation by mini.indent
     -- k = mapped to key by nvim-various-textobjs
@@ -28,7 +27,7 @@ require('mini.ai').setup({
     -- p = mapped to paragraph by nvim
     -- q = alias to '"` by mini.ai
     -- s = mapped to sentence by nvim
-    -- S = mapped to Subword by nvim
+    -- S = mapped to Subword by nvim-various-textobjs
     -- t = mapped to tag by mini.ai
     -- U = mapped to url by nvim-various-textobjs
     -- v = mapped to value by nvim-various-textobjs

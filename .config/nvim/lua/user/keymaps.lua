@@ -159,6 +159,10 @@ keymap("v", "<leader>z", ":'<,'>fold      <CR>", { noremap = true, silent = true
 keymap("v", "<leader>Z", ":'<,'>!column -t<CR>", { noremap = true, silent = true, desc = "Format Column" })
 keymap("v", "<leader>gw", "gw", { noremap = true, silent = true, desc = "Format Comment" })
 
+-- Visual increment/decrement numbers
+keymap("v", "<leader>gi", "g<C-a>", { noremap = true, silent = true, desc = "Increment numbers" })
+keymap("v", "<leader>gd", "g<C-x>", { noremap = true, silent = true, desc = "Decrement numbers" })
+
 -- ╭──────────────────╮
 -- │ Lspsaga mappings │
 -- ╰──────────────────╯
@@ -289,26 +293,26 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 -- ╰─────────╯
 
 -- _normal_mode_(easymotion-like)
-keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
-keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>J", "<cmd>HopWordAC<CR>", { noremap = true })
+keymap("n", "<Leader><Leader>K", "<cmd>HopWordBC<CR>", { noremap = true })
 keymap("n", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
 keymap("n", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
 keymap("n", "<Leader><Leader>/", "<cmd>HopPattern<CR>", { noremap = true })
 
 -- _visual_mode_(easymotion-like)
-keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", { noremap = true })
-keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>J", "<cmd>HopWordAC<CR>", { noremap = true })
+keymap("v", "<Leader><Leader>K", "<cmd>HopWordBC<CR>", { noremap = true })
 keymap("v", "<Leader><Leader>j", "<cmd>HopLineStartAC<CR>", { noremap = true })
 keymap("v", "<Leader><Leader>k", "<cmd>HopLineStartBC<CR>", { noremap = true })
 keymap("v", "<Leader><Leader>/", "<cmd>HoPattern<CR>", { noremap = true })
 
 -- _normal_mode_(sneak-like)
-keymap("n", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
-keymap("n", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
+keymap("n", "<Leader><Leader>z", "<cmd>HopChar2AC<CR>", { noremap = false })
+keymap("n", "<Leader><Leader>Z", "<cmd>HopChar2BC<CR>", { noremap = false })
 
 -- _visual_mode_(sneak-like)
-keymap("v", "<Leader><Leader>s", "<cmd>HopChar2AC<CR>", { noremap = false })
-keymap("v", "<Leader><Leader>S", "<cmd>HopChar2BC<CR>", { noremap = false })
+keymap("v", "<Leader><Leader>z", "<cmd>HopChar2AC<CR>", { noremap = false })
+keymap("v", "<Leader><Leader>Z", "<cmd>HopChar2BC<CR>", { noremap = false })
 
 vim.cmd [[
   let g:sneak#prompt = ''
@@ -330,8 +334,8 @@ vim.cmd [[
   map F <Plug>Sneak_F
   map t <Plug>Sneak_t
   map T <Plug>Sneak_T
-  map \ <Plug>SneakLabel_s
-  map \| <Plug>SneakLabel_S
+  map <space><space>s <Plug>SneakLabel_s
+  map <space><space>S <Plug>SneakLabel_S
   nmap <expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
   nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>'
   omap <Tab> <Plug>SneakLabel_s<cr>
@@ -341,3 +345,19 @@ vim.cmd [[
   xmap <Tab> <Plug>SneakLabel_s<cr>
   xmap <S-Tab> <Plug>SneakLabel_S<cr>
 ]]
+
+vim.g.columnmove_no_default_key_mappings = true
+map({ "n", "o", "x" }, "<leader><leader>f", "<Plug>(columnmove-f)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>t", "<Plug>(columnmove-t)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>F", "<Plug>(columnmove-F)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>T", "<Plug>(columnmove-T)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>;", "<Plug>(columnmove-;)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>,", "<Plug>(columnmove-,)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>w", "<Plug>(columnmove-w)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>b", "<Plug>(columnmove-b)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>e", "<Plug>(columnmove-e)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>ge", "<Plug>(columnmove-ge)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>W", "<Plug>(columnmove-W)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>B", "<Plug>(columnmove-B)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>E", "<Plug>(columnmove-E)<cr>", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>gE", "<Plug>(columnmove-gE)<cr>", { silent = true })
