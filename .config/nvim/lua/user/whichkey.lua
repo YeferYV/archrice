@@ -235,7 +235,12 @@ local mappings = {
     g = {
       function()
         _LAZYGIT_TOGGLE()
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        require('bufferline').setup {
+          options = {
+            offsets = { { filetype = 'neo-tree', padding = 1 } },
+            show_close_icon = false
+          }
+        }
       end,
       "Tab Lazygit"
     },
@@ -442,7 +447,7 @@ local mappings = {
     },
     ["2"] = {
       function()
-        require('bufferline').setup { options = { offsets = {} } }
+        require('bufferline').setup { options = { offsets = {} }, show_close_icon = false }
       end,
       "Disable Buffer offset"
     },
@@ -471,6 +476,18 @@ local mappings = {
     L = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
     n = { "<cmd>Neotree show<cr>", "Neotree show" },
     N = { "<cmd>Neotree close<cr>", "Neotree close" },
+    r = {
+      function()
+        _RESTO_TOGGLE()
+        require('bufferline').setup {
+          options = {
+            offsets = { { filetype = 'neo-tree', padding = 1 } },
+            show_close_icon = false
+          }
+        }
+      end,
+      "Rest Client"
+    },
     s = { "<cmd>call ToggleStatusLIne()<cr>", "Toggle StatusBar" },
     u = {
       function()

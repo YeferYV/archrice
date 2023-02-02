@@ -91,6 +91,11 @@ function _PYTHON_TOGGLE()
   python:toggle()
 end
 
+local resto = Terminal:new({ cmd = "resto", direction = "tab", hidden = true })
+function _RESTO_TOGGLE()
+  resto:toggle()
+end
+
 -- see https://github.com/akinsho/toggleterm.nvim/issues/66
 local temp_path = "/tmp/lfpickerpath"
 
