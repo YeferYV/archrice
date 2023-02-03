@@ -283,6 +283,35 @@ end
 
 M.EnableAutoNoHighlightSearch() -- autostart
 
+-- _goto_indent_repeatable
+M.GoToParentIndent = function()
+  local ok, start = require("indent_blankline.utils").get_current_context(
+    vim.g.indent_blankline_context_patterns,
+    vim.g.indent_blankline_use_treesitter_scope
+  )
+  if ok then
+    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
+    vim.cmd [[normal! _]]
+  end
+end
+
+local My_count = 0
+
+M.GoToParentIndent_Repeat = function()
+  My_count = 0
+  vim.go.operatorfunc = "v:lua.GoToParentIndent_Callback"
+  return "g@l"
+end
+
+function GoToParentIndent_Callback()
+  My_count = My_count + 1
+  if My_count >= 2 then
+    vim.cmd [[ normal 0 ]]
+  end
+  M.GoToParentIndent()
+  -- print("Count: " .. My_count)
+end
+
 return M
 
 -- -- _json_to_jsonc

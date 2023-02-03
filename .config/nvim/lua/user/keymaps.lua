@@ -350,8 +350,8 @@ vim.cmd [[
 -- _nvim-treesitter-textobjs_repeatable
 -- ensure ; goes forward and , goes backward regardless of the last direction
 local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
-vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { desc = "Next TS textobj" })
+map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { desc = "Prev TS textobj" })
 
 -- _sneak_repeatable
 vim.cmd [[ command SneakForward execute "normal \<Plug>Sneak_;" ]]
@@ -360,26 +360,27 @@ local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ SneakForward ]] end,
   function() vim.cmd [[ SneakBackward ]] end
 )
-vim.keymap.set({ "n", "x", "o" }, "<BS>", next_sneak)
-vim.keymap.set({ "n", "x", "o" }, "<S-BS>", prev_sneak)
+map({ "n", "x", "o" }, "<BS>", next_sneak, { desc = "Next SneakForward" })
+map({ "n", "x", "o" }, "<S-BS>", prev_sneak, { desc = "Prev SneakForward" })
 
 -- _gitsigns_chunck_repeatable
 -- make sure forward function comes first
 -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
 local gs = require("gitsigns")
 local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
-vim.keymap.set({ "n", "x", "o" }, "]h", next_hunk_repeat)
-vim.keymap.set({ "n", "x", "o" }, "[h", prev_hunk_repeat)
+map({ "n", "x", "o" }, "]h", next_hunk_repeat, { desc = "Next GitHunk" })
+map({ "n", "x", "o" }, "[h", prev_hunk_repeat, { desc = "Prev GitHunk" })
 
 -- _goto_quotes_repeatable
 local next_quote, prev_quote = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal viNu ]] vim.cmd [[ call feedkeys("") ]] end,
   function() vim.cmd [[ normal vilu ]] vim.cmd [[ call feedkeys("") ]] end
 )
-vim.keymap.set({ "n", "x", "o" }, "]u", next_quote)
-vim.keymap.set({ "n", "x", "o" }, "[u", prev_quote)
+map({ "n", "x", "o" }, "]u", next_quote, { desc = "Next Quote" })
+map({ "n", "x", "o" }, "[u", prev_quote, { desc = "Prev Quote" })
 
 -- _columnmove_repeatable
+vim.g.columnmove_strict_wbege = 0 -- skips inner-paragraph whitespaces for wbege
 vim.g.columnmove_no_default_key_mappings = true
 map({ "n", "o", "x" }, "<leader><leader>f", "<Plug>(columnmove-f)", { silent = true })
 map({ "n", "o", "x" }, "<leader><leader>t", "<Plug>(columnmove-t)", { silent = true })
@@ -390,33 +391,67 @@ local next_columnmove, prev_columnmove = ts_repeat_move.make_repeatable_move_pai
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-;)" ]] end,
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-,)" ]] end
 )
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>;", next_columnmove)
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>,", prev_columnmove)
+map({ "n", "x", "o" }, "<leader><leader>;", next_columnmove, { desc = "Next ColumnMove_;" })
+map({ "n", "x", "o" }, "<leader><leader>,", prev_columnmove, { desc = "Prev ColumnMove_," })
 
 local next_columnmove_w, prev_columnmove_b = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-w)" ]] end,
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-b)" ]] end
 )
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>w", next_columnmove_w)
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>b", prev_columnmove_b)
+map({ "n", "x", "o" }, "<leader><leader>w", next_columnmove_w, { desc = "Next ColumnMove_w" })
+map({ "n", "x", "o" }, "<leader><leader>b", prev_columnmove_b, { desc = "Prev ColumnMove_b" })
 
 local next_columnmove_e, prev_columnmove_ge = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-e)" ]] end,
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-ge)" ]] end
 )
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>e", next_columnmove_e)
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>ge", prev_columnmove_ge)
+map({ "n", "x", "o" }, "<leader><leader>e", next_columnmove_e, { desc = "Next ColumnMove_e" })
+map({ "n", "x", "o" }, "<leader><leader>ge", prev_columnmove_ge, { desc = "Prev ColumnMove_ge" })
 
 local next_columnmove_W, prev_columnmove_B = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-W)" ]] end,
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-B)" ]] end
 )
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>W", next_columnmove_W)
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>B", prev_columnmove_B)
+map({ "n", "x", "o" }, "<leader><leader>W", next_columnmove_W, { desc = "Next ColumnMove_W" })
+map({ "n", "x", "o" }, "<leader><leader>B", prev_columnmove_B, { desc = "Prev ColumnMove_B" })
 
 local next_columnmove_E, prev_columnmove_gE = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-E)" ]] end,
   function() vim.cmd [[ execute "normal \<Plug>(columnmove-gE)" ]] end
 )
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>E", next_columnmove_E)
-vim.keymap.set({ "n", "x", "o" }, "<leader><leader>gE", prev_columnmove_gE)
+map({ "n", "x", "o" }, "<leader><leader>E", next_columnmove_E, { desc = "Next ColumnMove_E" })
+map({ "n", "x", "o" }, "<leader><leader>gE", prev_columnmove_gE, { desc = "Prev ColumnMove_gE" })
+
+-- _jump_blankline_repeatable
+local next_blankline, prev_blankline = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal } ]] end,
+  function() vim.cmd [[ normal { ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>}", next_blankline, { desc = "Next Blankline" })
+map({ "n", "x", "o" }, "<leader><leader>{", prev_blankline, { desc = "Prev Blankline" })
+
+-- _jump_indent_repeatable
+local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal vii_ ]] vim.cmd [[ call feedkeys("") ]] end,
+  function() vim.cmd [[ normal viio_ ]] vim.cmd [[ call feedkeys("") ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>]", next_indent, { desc = "Next Indent" })
+map({ "n", "x", "o" }, "<leader><leader>[", prev_indent, { desc = "Prev Indent" })
+
+-- _jump_paragraph_repeatable
+local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal ) ]] end,
+  function() vim.cmd [[ normal ( ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { desc = "Next Paragraph" })
+map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { desc = "Prev Paragraph" })
+
+-- _goto_indent_repeatable
+-- vim.keymap.set("n", "<leader>uu", require("user.autocommands").GoToParentIndent_Repeat, { expr = true })
+-- vim.keymap.set("n", "<leader>uu",
+--   function()
+--     require("user.autocommands").GoToParentIndent()
+--     vim.call("repeat#set", "k uu")
+--   end,
+--   { desc = "Jump to current_context" }
+-- )

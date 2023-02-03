@@ -143,7 +143,7 @@ local mappings = {
     -- T = {
     --   function()
     --     vim.cmd [[bufdo | :setlocal nobuflisted | :b# | :tabe # ]]
-    --     require('bufferline').setup { options = { always_show_bufferline = true } }
+    --     require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
     --   end,
     --   "buffers to Tab"
     -- },
@@ -433,7 +433,7 @@ local mappings = {
 
   u = {
     name = "UI Toggle",
-    ["0"] = { "<cmd>set showtabline=0<cr>", "Close Buffer Status" },
+    ["0"] = { "<cmd>set showtabline=0<cr>", "Hide Buffer" },
     ["1"] = {
       function()
         require('bufferline').setup {
@@ -447,21 +447,37 @@ local mappings = {
     },
     ["2"] = {
       function()
-        require('bufferline').setup { options = { offsets = {} }, show_close_icon = false }
+        require('bufferline').setup {
+          options = {
+            offsets = {},
+            show_close_icon = false
+          }
+        }
       end,
       "Disable Buffer offset"
     },
     b = {
       function()
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        require('bufferline').setup {
+          options = {
+            offsets = { { filetype = 'neo-tree', padding = 1 } },
+            show_close_icon = false
+          }
+        }
       end,
-      "Show Buffer Status"
+      "Show Buffer"
     },
     B = {
       function()
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        require('bufferline').setup {
+          options = {
+            offsets = { { filetype = 'neo-tree', padding = 1 } },
+            show_close_icon = false,
+            always_show_bufferline = false,
+          }
+        }
       end,
-      "Hide Buffer Status"
+      "Hide Buffer (if < 2)" -- "Reset Buffer"
     },
     -- c = { "<cmd>Codi<cr>", "Codi Start"},
     -- C = { "<cmd>Codi!<cr>", "Codi Stop" },
@@ -489,19 +505,14 @@ local mappings = {
       "Rest Client"
     },
     s = { "<cmd>call ToggleStatusLIne()<cr>", "Toggle StatusBar" },
-    u = {
-      function()
-        local ok, start = require("indent_blankline.utils").get_current_context(
-          vim.g.indent_blankline_context_patterns,
-          vim.g.indent_blankline_use_treesitter_scope
-        )
-        if ok then
-          vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-          vim.cmd [[normal! _]]
-        end
-      end,
-      "Jump to current_context",
-    },
+    -- u = {
+    --   function()
+    --     require("user.autocommands").GoToParentIndent()
+    --     vim.call("repeat#set", "k uu")
+    --   end,
+    --   "Jump to current_context",
+    -- },
+    u = { require("user.autocommands").GoToParentIndent_Repeat, "Jump to current_context", expr = true }, -- No "()" disables autorun at startup
     w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
     W = { "<cmd>set winbar=  <cr>", "disable winbar" },
     z = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
