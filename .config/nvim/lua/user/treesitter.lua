@@ -148,6 +148,11 @@ require 'nvim-treesitter.configs'.setup {
         [']eiP'] = '@parameter.inner',
       },
     },
+    -- selection_modes = {
+    --   ['@parameter.outer'] = 'v', -- charwise
+    --   ['@function.outer'] = 'V', -- linewise
+    --   ['@class.outer'] = '<c-v>', -- blockwise
+    -- },
     swap = {
       enable = true,
       swap_next = {

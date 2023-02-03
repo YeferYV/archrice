@@ -266,18 +266,10 @@ map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim
 
 -- _nvim_various_textobjs: indentation textobj requires two parameters, first for
 -- exclusion of the starting border, second for the exclusion of ending border
--- map({ "o", "x" }, "ii",
---   function() require("various-textobjs").indentation(true, true) end,
---   { desc = "inner-inner indentation textobj" })
--- map({ "o", "x" }, "ai",
---   function() require("various-textobjs").indentation(false, true) end,
---   { desc = "outer-inner indentation textobj" })
--- map({ "o" }, "iI",
---   function() require("various-textobjs").indentation(true, true) end,
---   { desc = "inner-inner indentation textobj" })
--- map({ "o", "x" }, "aI",
---   function() require("various-textobjs").indentation(false, false) end,
---   { desc = "outer-outer indentation textobj" })
+-- map({ "o", "x" }, "ii", function() require("various-textobjs").indentation(true, true) end, { desc = "inner-inner indentation textobj" })
+-- map({ "o", "x" }, "ai", function() require("various-textobjs").indentation(false, true) end, { desc = "outer-inner indentation textobj" })
+-- map({ "o", "x" }, "iI", function() require("various-textobjs").indentation(true, true) end, { desc = "inner-inner indentation textobj" })
+-- map({ "o", "x" }, "aI", function() require("various-textobjs").indentation(false, false) end, { desc = "outer-outer indentation textobj" })
 
 -- _vim_indent_object_(visualrepeatable_+_vimrepeat)
 vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -336,8 +328,8 @@ vim.cmd [[
   map T <Plug>Sneak_T
   map <space><space>s <Plug>SneakLabel_s
   map <space><space>S <Plug>SneakLabel_S
-  nmap <expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
-  nmap <expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>'
+  nmap <silent><expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
+  nmap <silent><expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>'
   omap <Tab> <Plug>SneakLabel_s<cr>
   omap <S-Tab> <Plug>SneakLabel_S<cr>
   vmap <Tab> <Plug>SneakLabel_s<cr>
@@ -361,3 +353,43 @@ map({ "n", "o", "x" }, "<leader><leader>W", "<Plug>(columnmove-W)<cr>", { silent
 map({ "n", "o", "x" }, "<leader><leader>B", "<Plug>(columnmove-B)<cr>", { silent = true })
 map({ "n", "o", "x" }, "<leader><leader>E", "<Plug>(columnmove-E)<cr>", { silent = true })
 map({ "n", "o", "x" }, "<leader><leader>gE", "<Plug>(columnmove-gE)<cr>", { silent = true })
+
+-- ╭────────────╮
+-- │ Repeatable │
+-- ╰────────────╯
+
+-- _nvim-treesitter-textobjs_repeatable
+-- ensure ; goes forward and , goes backward regardless of the last direction
+local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+-- _sneak_repeatable
+-- local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
+--   function() vim.cmd [[ execute "normal \<Plug>Sneak_;" ]] end,
+--   function() vim.cmd [[ execute "normal \<Plug>Sneak_," ]] end
+-- )
+vim.cmd [[ command SneakForward execute "normal \<Plug>Sneak_;" ]]
+vim.cmd [[ command SneakBackward execute "normal \<Plug>Sneak_," ]]
+local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ SneakForward ]] end,
+  function() vim.cmd [[ SneakBackward ]] end
+)
+vim.keymap.set({ "n", "x", "o" }, "<BS>", next_sneak)
+vim.keymap.set({ "n", "x", "o" }, "<S-BS>", prev_sneak)
+
+-- _gitsigns_chunck_repeatable
+-- make sure forward function comes first
+-- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
+local gs = require("gitsigns")
+local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
+vim.keymap.set({ "n", "x", "o" }, "]h", next_hunk_repeat)
+vim.keymap.set({ "n", "x", "o" }, "[h", prev_hunk_repeat)
+
+-- _goto_quotes_repeatable
+local next_quote, prev_quote = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal viNu ]] vim.cmd [[ call feedkeys("") ]] end,
+  function() vim.cmd [[ normal vilu ]] vim.cmd [[ call feedkeys("") ]] end
+)
+vim.keymap.set({ "n", "x", "o" }, "]u", next_quote)
+vim.keymap.set({ "n", "x", "o" }, "[u", prev_quote)
