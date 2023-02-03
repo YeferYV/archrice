@@ -280,6 +280,11 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end
 })
 
+-- _vim-textobj-space
+vim.g.textobj_space_no_default_key_mappings = true
+map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { desc = "Space textobj" })
+map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { desc = "Space textobj" })
+
 -- ╭─────────╮
 -- │ Motions │
 -- ╰─────────╯

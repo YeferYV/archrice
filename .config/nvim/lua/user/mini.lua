@@ -27,6 +27,7 @@ require('mini.ai').setup({
     -- N = mapped to next by mini.ai
     -- p = mapped to paragraph by nvim
     -- q = alias to '"` by mini.ai
+    -- r = mapped to space-textobj by vim-textobj-space
     -- s = mapped to sentence by nvim
     -- S = mapped to Subword by nvim-various-textobjs
     -- t = mapped to tag by mini.ai
