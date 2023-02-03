@@ -343,22 +343,6 @@ vim.cmd [[
   xmap <S-Tab> <Plug>SneakLabel_S<cr>
 ]]
 
-vim.g.columnmove_no_default_key_mappings = true
-map({ "n", "o", "x" }, "<leader><leader>f", "<Plug>(columnmove-f)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>t", "<Plug>(columnmove-t)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>F", "<Plug>(columnmove-F)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>T", "<Plug>(columnmove-T)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>;", "<Plug>(columnmove-;)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>,", "<Plug>(columnmove-,)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>w", "<Plug>(columnmove-w)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>b", "<Plug>(columnmove-b)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>e", "<Plug>(columnmove-e)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>ge", "<Plug>(columnmove-ge)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>W", "<Plug>(columnmove-W)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>B", "<Plug>(columnmove-B)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>E", "<Plug>(columnmove-E)<cr>", { silent = true })
-map({ "n", "o", "x" }, "<leader><leader>gE", "<Plug>(columnmove-gE)<cr>", { silent = true })
-
 -- ╭────────────╮
 -- │ Repeatable │
 -- ╰────────────╯
@@ -370,10 +354,6 @@ vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
 vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 
 -- _sneak_repeatable
--- local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
---   function() vim.cmd [[ execute "normal \<Plug>Sneak_;" ]] end,
---   function() vim.cmd [[ execute "normal \<Plug>Sneak_," ]] end
--- )
 vim.cmd [[ command SneakForward execute "normal \<Plug>Sneak_;" ]]
 vim.cmd [[ command SneakBackward execute "normal \<Plug>Sneak_," ]]
 local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
@@ -398,3 +378,45 @@ local next_quote, prev_quote = ts_repeat_move.make_repeatable_move_pair(
 )
 vim.keymap.set({ "n", "x", "o" }, "]u", next_quote)
 vim.keymap.set({ "n", "x", "o" }, "[u", prev_quote)
+
+-- _columnmove_repeatable
+vim.g.columnmove_no_default_key_mappings = true
+map({ "n", "o", "x" }, "<leader><leader>f", "<Plug>(columnmove-f)", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>t", "<Plug>(columnmove-t)", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>F", "<Plug>(columnmove-F)", { silent = true })
+map({ "n", "o", "x" }, "<leader><leader>T", "<Plug>(columnmove-T)", { silent = true })
+
+local next_columnmove, prev_columnmove = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-;)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-,)" ]] end
+)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>;", next_columnmove)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>,", prev_columnmove)
+
+local next_columnmove_w, prev_columnmove_b = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-w)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-b)" ]] end
+)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>w", next_columnmove_w)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>b", prev_columnmove_b)
+
+local next_columnmove_e, prev_columnmove_ge = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-e)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-ge)" ]] end
+)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>e", next_columnmove_e)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>ge", prev_columnmove_ge)
+
+local next_columnmove_W, prev_columnmove_B = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-W)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-B)" ]] end
+)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>W", next_columnmove_W)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>B", prev_columnmove_B)
+
+local next_columnmove_E, prev_columnmove_gE = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-E)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(columnmove-gE)" ]] end
+)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>E", next_columnmove_E)
+vim.keymap.set({ "n", "x", "o" }, "<leader><leader>gE", prev_columnmove_gE)
