@@ -10,6 +10,7 @@ require('mini.ai').setup({
   custom_textobjects = {
 
     -- a = mapped to args by mini.ai
+    -- A = mapped to WholeBuffer by mini.ai(custom_textobjects)
     -- b = alias to )]} by mini.ai
     -- B = alias to ]} by nvim
     -- c = mapped to word-column by textobj-word-column
@@ -29,6 +30,7 @@ require('mini.ai').setup({
     -- s = mapped to sentence by nvim
     -- S = mapped to Subword by nvim-various-textobjs
     -- t = mapped to tag by mini.ai
+    -- u = mapped to uotes by mini.ai(custom_textobjects)
     -- U = mapped to url by nvim-various-textobjs
     -- v = mapped to value by nvim-various-textobjs
     -- w = mapped to word by nvim
@@ -71,7 +73,32 @@ require('mini.ai').setup({
     -- @frame unsupported
     -- @statement unsupported
     -- @scope unsupported
+
+    -- Tweak argument textobject
+    a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }), -- brackets = { '%b()', '%b[]', '%b{}' },
+
+    -- Disable brackets alias in favor of builtin block textobject
+    -- b = false,
+    -- b = { { '%b()', '%b[]', '%b{}' }, '^.().*().$' },
+
+    -- Quotes/uotes
+    u = { { "%b''", '%b""', '%b``' }, '^.().*().$' },
+
+    -- Now `vax` should select `xxx` and `vix` - middle `x`
+    -- x = { 'x()x()x' },
+
+    -- Whole buffer
+    A = function()
+      local from = { line = 1, col = 1 }
+      local to = {
+        line = vim.fn.line('$'),
+        col = math.max(vim.fn.getline('$'):len(), 1)
+      }
+      return { from = from, to = to }
+    end,
+
   },
+
   user_textobject_id = true,
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
