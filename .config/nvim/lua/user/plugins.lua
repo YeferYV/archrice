@@ -150,6 +150,7 @@ return require("packer").startup(function(use)
   use { "echasnovski/mini.nvim", commit = "81a575e0c51d4607bf6690f12906c7590d961717" }
   use { "kana/vim-textobj-user", commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933" }
   use { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" }
+  use { "tkhren/vim-textobj-numeral", commit = "264883112b4a34fdd81b29d880f04f3f6437814d" }
   use { "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" }
   use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "249d90a84df63f3ffff65fcc06a45d58415672de" }
   use { "RRethy/nvim-treesitter-textsubjects", commit = "bc047b20768845fd54340eb76272b2cf2f6fa3f3" }
@@ -157,7 +158,7 @@ return require("packer").startup(function(use)
   use { "mg979/vim-visual-multi", commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a" }
   use {
     "chrisgrieser/nvim-various-textobjs",
-    commit = "2fddc521bd8172dc157c89d2c182983caa898164",
+    commit = "7915b4567dbf3542652e3ada6f9660bfa81d94f7",
     config = function() require("various-textobjs").setup { useDefaultKeymaps = false, lookForwardLines = 30 } end,
   }
   -- Surround block of codes
@@ -202,7 +203,7 @@ return require("packer").startup(function(use)
   use { "lewis6991/impatient.nvim", commit = "d3dd30ff0b811756e735eb9020609fa315bfbbcc" }
   use { "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" }
   use { "ahmedkhalf/project.nvim", commit = "685bc8e3890d2feb07ccf919522c97f7d33b94e4" }
-  use { "folke/which-key.nvim", commit = "61553aeb3d5ca8c11eea8be6eadf478062982ac9" }
+  use { "folke/which-key.nvim", commit = "684e96c5e8477f1ee9b3f2e9a12d802fd12c5531" }
   use {
     "lewis6991/gitsigns.nvim",
     commit = "d076301a634198e0ae3efee3b298fc63c055a871",

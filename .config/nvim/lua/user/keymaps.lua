@@ -208,7 +208,7 @@ keymap("o", 'gm', "<cmd>normal! `[v`]<Left><cr>", { desc = "Last change textobj"
 keymap("x", 'gm', "`[o`]<Left>", { desc = "Last change textobj" })
 
 -- _replace_textobj_(repeable_with_cgn_+_dotrepeat_supported)
-map({ 'x' }, 'gr', '"zy:s/<C-r>z//g<Left><Left>', { desc = "Replace textobj" })
+map({ 'x' }, 'gs', '"zy:s/<C-r>z//g<Left><Left>', { desc = "Replace textobj" })
 
 -- _git_hunk_(next/prev_autojump_unsupported)
 map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Git hunk textobj" })
@@ -217,21 +217,23 @@ map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Git hunk tex
 map({ "n", "o", "x" }, "gl", "`.", { desc = "Jump to last change" })
 
 -- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
-map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { desc = "RestOfComment textobj" })
 map({ "x" }, 'gk', ':<C-u>normal "zygcgv<cr>', { desc = "Comment textobj" })
+map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { desc = "RestOfComment textobj" })
 
 -- _nvim_various_textobjs
-map({ "o", "x" }, "!", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "v!") end,
+map({ "o", "x" }, "gd", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "vgd") end,
   { desc = "Diagnostic textobj" })
-map({ "o", "x" }, "n", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vn") end,
+map({ "o", "x" }, "gL", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vgL") end,
   { desc = "nearEoL textobj" }) -- conflicts with visual until search-next workaround: gn
-map({ "o", "x" }, "g|", function() require("various-textobjs").column() vim.call("repeat#set", "v|") end,
+map({ "o", "x" }, "g|", function() require("various-textobjs").column() vim.call("repeat#set", "vg|") end,
   { desc = "ColumnDown textobj" })
-map({ "o", "x" }, "R", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vR") end,
+map({ "o", "x" }, "gr", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vgr") end,
   { desc = "RestOfParagraph textobj" })
-map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() vim.call("repeat#set", "vU") end,
+map({ "o", "x" }, "gR", function() require("various-textobjs").restOfIndentation() vim.call("repeat#set", "vgR") end,
+  { desc = "restOfIndentation textobj" })
+map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() end,
   { desc = "EntireBuffer textobj" })
-map({ "o", "x" }, "U", function() require("various-textobjs").url() vim.call("repeat#set", "vU") end,
+map({ "o", "x" }, "gu", function() require("various-textobjs").url() vim.call("repeat#set", "vgu") end,
   { desc = "Url textobj" })
 
 -- _nvim_various_textobjs: inner-outer
@@ -284,6 +286,11 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.g.textobj_space_no_default_key_mappings = true
 map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { desc = "Space textobj" })
 map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { desc = "Space textobj" })
+
+-- _vim-textobj-numeral
+vim.g.textobj_numeral_no_default_key_mappings = true
+map({ "o", "x" }, "ix", "<Plug>(textobj-numeral-hex-i)", { desc = "Hex textobj" })
+map({ "o", "x" }, "ax", "<Plug>(textobj-numeral-hex-a)", { desc = "Hex textobj" })
 
 -- ╭─────────╮
 -- │ Motions │
@@ -368,16 +375,16 @@ map({ "n", "x", "o" }, "<S-BS>", prev_sneak, { desc = "Prev SneakForward" })
 -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
 local gs = require("gitsigns")
 local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
-map({ "n", "x", "o" }, "]h", next_hunk_repeat, { desc = "Next GitHunk" })
-map({ "n", "x", "o" }, "[h", prev_hunk_repeat, { desc = "Prev GitHunk" })
+map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { desc = "Next GitHunk" })
+map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { desc = "Prev GitHunk" })
 
 -- _goto_quotes_repeatable
 local next_quote, prev_quote = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal viNu ]] vim.cmd [[ call feedkeys("") ]] end,
   function() vim.cmd [[ normal vilu ]] vim.cmd [[ call feedkeys("") ]] end
 )
-map({ "n", "x", "o" }, "]u", next_quote, { desc = "Next Quote" })
-map({ "n", "x", "o" }, "[u", prev_quote, { desc = "Prev Quote" })
+map({ "n", "x", "o" }, "gnu", next_quote, { desc = "Next Quote" })
+map({ "n", "x", "o" }, "gpu", prev_quote, { desc = "Prev Quote" })
 
 -- _columnmove_repeatable
 vim.g.columnmove_strict_wbege = 0 -- skips inner-paragraph whitespaces for wbege
@@ -446,12 +453,31 @@ local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { desc = "Next Paragraph" })
 map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { desc = "Prev Paragraph" })
 
--- _goto_indent_repeatable
--- vim.keymap.set("n", "<leader>uu", require("user.autocommands").GoToParentIndent_Repeat, { expr = true })
--- vim.keymap.set("n", "<leader>uu",
---   function()
---     require("user.autocommands").GoToParentIndent()
---     vim.call("repeat#set", "k uu")
---   end,
---   { desc = "Jump to current_context" }
--- )
+-- _vim-textobj-numeral_(goto_repeatable)
+local next_inner_hex, prev_inner_hex = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-hex-n)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-hex-p)" ]] end
+)
+map({ "n", "x", "o" }, "gnx", next_inner_hex, { desc = "Next Inner Hex" })
+map({ "n", "x", "o" }, "gpx", prev_inner_hex, { desc = "Prev Inner Hex" })
+
+local next_inner_numeral, prev_inner_numeral = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-n)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-p)" ]] end
+)
+map({ "n", "x", "o" }, "gnn", next_inner_numeral, { desc = "Next Inner Number" })
+map({ "n", "x", "o" }, "gpn", prev_inner_numeral, { desc = "Prev Inner Number" })
+
+local next_around_hex, prev_around_hex = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-hex-N)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-hex-P)" ]] end
+)
+map({ "n", "x", "o" }, "gNx", next_around_hex, { desc = "Next Around Hex" })
+map({ "n", "x", "o" }, "gPx", prev_around_hex, { desc = "Prev Around Hex" })
+
+local next_around_numeral, prev_around_numeral = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]] end,
+  function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-P)" ]] end
+)
+map({ "n", "x", "o" }, "gNn", next_around_numeral, { desc = "Next Around Number" })
+map({ "n", "x", "o" }, "gPn", prev_around_numeral, { desc = "Prev Around Number" })
