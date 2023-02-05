@@ -312,6 +312,28 @@ function GoToParentIndent_Callback()
   -- print("Count: " .. My_count)
 end
 
+M.FeedKeysCorrectly = function(keys)
+  local feedableKeys = vim.api.nvim_replace_termcodes(keys, true, false, true)
+  vim.api.nvim_feedkeys(feedableKeys, "n", true)
+end
+
+M.HorzIncrement = function()
+  vim.cmd [[ normal "zyan ]]
+  vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
+  vim.cmd [[ normal van"zp ]]
+  M.FeedKeysCorrectly('<C-a>')
+end
+
+M.HorzDecrement = function()
+  vim.cmd [[ normal "zyan ]]
+  vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
+  vim.cmd [[ normal van"zp ]]
+  M.FeedKeysCorrectly('<C-x>')
+end
+
+-- vim.api.nvim_create_user_command("IncrementV", function() return vim.fn['Increment']('j', 1) end, { expr = true })
+-- vim.api.nvim_create_user_command("IncrementV", "Increment('j', 1)", { expr = true })
+
 return M
 
 -- -- _json_to_jsonc

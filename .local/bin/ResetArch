@@ -19,7 +19,7 @@ set -eu
 # comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base-devel|sort) > installedpackages
 
 #-- Pacman configs
-[ $(id -u) == 0 ] && printf "\e[1;31mRun it as unprivileged user(wheel group), sudo command needed\e[0m\n" >&2 && exit 1
+[ "$(id -u)" == 0 ] && printf "\e[1;31mRun it as unprivileged user(wheel group), sudo command needed\e[0m\n" >&2 && exit 1
 sudo sed -i '33s/#//' /etc/pacman.conf
 sudo sed -i '37s/#//' /etc/pacman.conf
 sudo pacman-key --init
@@ -202,6 +202,11 @@ true | yay -Scc
 # nodejs-how2
 # notcurses
 # novnc
+# neovim-catppuccin-git
+# neovim-material-git
+# neovim-moonlight-git
+# neovim-nebulous-git
+# neovim-nordic-git
 # obs-studio
 # os-prober
 # pavucontrol
@@ -242,6 +247,8 @@ true | yay -Scc
 # ueberzug
 # unrar
 # urxvt-perls
+# vim-aquarium
+# vim-dracula
 # vimv-git
 # vscodium-bin
 # vscodium-bin-marketplace

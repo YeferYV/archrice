@@ -186,7 +186,7 @@ map("n", "gsP", function() require("lspsaga.diagnostic").goto_prev({ severity = 
 map("n", "gsr", "<cmd>Lspsaga term_toggle ranger<CR>", { silent = true })
 map("n", "gsR", "<cmd>Lspsaga rename<CR>", { silent = true })
 map("n", "gsz", "<cmd>LSpsaga outline<CR>", { silent = true })
-map({ "n", "t" }, "<C-x>", "<cmd>Lspsaga term_toggle<CR>")
+map({ "n", "t" }, "<M-x>", "<cmd>Lspsaga term_toggle<CR>")
 
 -- ╭──────────────╮
 -- │ Text Objects │
@@ -245,10 +245,10 @@ map({ "o", "x" }, "ak", function() require("various-textobjs").key(false) vim.ca
   { desc = "outer key textobj" })
 map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.call("repeat#set", "vik") end,
   { desc = "inner key textobj" })
-map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
-  { desc = "outer number textobj" })
-map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
-  { desc = "outer number textobj" })
+-- map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
+--   { desc = "outer number textobj" })
+-- map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
+--   { desc = "outer number textobj" })
 -- map({ "o", "x" }, "al", function() require("various-textobjs").mdlink(false) end)
 -- map({ "o", "x" }, "il", function() require("various-textobjs").mdlink(true) end)
 -- map({ "o", "x" }, "aC", function() require("various-textobjs").mdFencedCodeBlock(false) end)
@@ -288,9 +288,9 @@ map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { desc = "Space textobj" })
 map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { desc = "Space textobj" })
 
 -- _vim-textobj-numeral
-vim.g.textobj_numeral_no_default_key_mappings = true
-map({ "o", "x" }, "ix", "<Plug>(textobj-numeral-hex-i)", { desc = "Hex textobj" })
-map({ "o", "x" }, "ax", "<Plug>(textobj-numeral-hex-a)", { desc = "Hex textobj" })
+-- vim.g.textobj_numeral_no_default_key_mappings = true
+-- map({ "o", "x" }, "ix", "<Plug>(textobj-numeral-hex-i)", { desc = "Hex textobj" })
+-- map({ "o", "x" }, "ax", "<Plug>(textobj-numeral-hex-a)", { desc = "Hex textobj" })
 
 -- ╭─────────╮
 -- │ Motions │
@@ -453,6 +453,14 @@ local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { desc = "Next Paragraph" })
 map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { desc = "Prev Paragraph" })
 
+-- _jump_paragraph_repeatable
+local next_startline, prev_startline = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal + ]] end,
+  function() vim.cmd [[ normal - ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>+", next_startline, { desc = "Next StartLine" })
+map({ "n", "x", "o" }, "<leader><leader>-", prev_startline, { desc = "Prev StartLine" })
+
 -- _vim-textobj-numeral_(goto_repeatable)
 local next_inner_hex, prev_inner_hex = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ execute "normal \<Plug>(textobj-numeral-hex-n)" ]] end,
@@ -481,3 +489,17 @@ local next_around_numeral, prev_around_numeral = ts_repeat_move.make_repeatable_
 )
 map({ "n", "x", "o" }, "gNn", next_around_numeral, { desc = "Next Around Number" })
 map({ "n", "x", "o" }, "gPn", prev_around_numeral, { desc = "Prev Around Number" })
+
+local vert_increment, vert_decrement = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal "zyanjvan"zp ]] require("user.autocommands").FeedKeysCorrectly('<C-a>') end,
+  function() vim.cmd [[ normal "zyanjvan"zp ]] require("user.autocommands").FeedKeysCorrectly('<C-x>') end
+)
+map({ "n" }, "g+", vert_increment, { desc = "Vert Increment" })
+map({ "n" }, "g-", vert_decrement, { desc = "Vert Decrement" })
+
+local horz_increment, horz_decrement = ts_repeat_move.make_repeatable_move_pair(
+  require("user.autocommands").HorzIncrement,
+  require("user.autocommands").HorzDecrement
+)
+map({ "n" }, "gn+", horz_increment, { desc = "Horz increment" })
+map({ "n" }, "gn-", horz_decrement, { desc = "Horz Decrement" })
