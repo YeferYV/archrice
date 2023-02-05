@@ -207,9 +207,6 @@ map({ "n", "t" }, "<M-x>", "<cmd>Lspsaga term_toggle<CR>")
 keymap("o", 'gm', "<cmd>normal! `[v`]<Left><cr>", { desc = "Last change textobj" })
 keymap("x", 'gm', "`[o`]<Left>", { desc = "Last change textobj" })
 
--- _replace_textobj_(repeable_with_cgn_+_dotrepeat_supported)
-map({ 'x' }, 'gs', '"zy:s/<C-r>z//g<Left><Left>', { desc = "Replace textobj" })
-
 -- _git_hunk_(next/prev_autojump_unsupported)
 map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Git hunk textobj" })
 
@@ -219,6 +216,13 @@ map({ "n", "o", "x" }, "gl", "`.", { desc = "Jump to last change" })
 -- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
 map({ "x" }, 'gk', ':<C-u>normal "zygcgv<cr>', { desc = "Comment textobj" })
 map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { desc = "RestOfComment textobj" })
+
+-- _search_textobj_(dot-repeat_supported)
+map({ "o", "x" }, "gs", "gn", { noremap = true, desc = "Next search textobj" })
+map({ "o", "x" }, "gS", "gN", { noremap = true, desc = "Prev search textobj" })
+
+-- _replace_textobj_(repeable_with_cgs_+_dotrepeat_supported)
+map({ 'x' }, 'g/', '"zy:s/<C-r>z//g<Left><Left>', { desc = "Replace textobj" })
 
 -- _nvim_various_textobjs
 map({ "o", "x" }, "gd", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "vgd") end,
