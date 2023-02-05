@@ -245,10 +245,10 @@ map({ "o", "x" }, "ak", function() require("various-textobjs").key(false) vim.ca
   { desc = "outer key textobj" })
 map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.call("repeat#set", "vik") end,
   { desc = "inner key textobj" })
--- map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
---   { desc = "outer number textobj" })
--- map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
---   { desc = "outer number textobj" })
+map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
+  { desc = "outer number textobj" })
+map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
+  { desc = "outer number textobj" })
 -- map({ "o", "x" }, "al", function() require("various-textobjs").mdlink(false) end)
 -- map({ "o", "x" }, "il", function() require("various-textobjs").mdlink(true) end)
 -- map({ "o", "x" }, "aC", function() require("various-textobjs").mdFencedCodeBlock(false) end)
@@ -288,9 +288,9 @@ map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { desc = "Space textobj" })
 map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { desc = "Space textobj" })
 
 -- _vim-textobj-numeral
--- vim.g.textobj_numeral_no_default_key_mappings = true
--- map({ "o", "x" }, "ix", "<Plug>(textobj-numeral-hex-i)", { desc = "Hex textobj" })
--- map({ "o", "x" }, "ax", "<Plug>(textobj-numeral-hex-a)", { desc = "Hex textobj" })
+vim.g.textobj_numeral_no_default_key_mappings = true
+map({ "o", "x" }, "ix", "<Plug>(textobj-numeral-hex-i)", { desc = "Hex textobj" })
+map({ "o", "x" }, "ax", "<Plug>(textobj-numeral-hex-a)", { desc = "Hex textobj" })
 
 -- ╭─────────╮
 -- │ Motions │
@@ -498,8 +498,8 @@ map({ "n" }, "g+", vert_increment, { desc = "Vert Increment" })
 map({ "n" }, "g-", vert_decrement, { desc = "Vert Decrement" })
 
 local horz_increment, horz_decrement = ts_repeat_move.make_repeatable_move_pair(
-  require("user.autocommands").HorzIncrement,
-  require("user.autocommands").HorzDecrement
+  function() vim.cmd [[ IncrementHorz ]] end,
+  function() vim.cmd [[ DecrementHorz ]] end
 )
 map({ "n" }, "gn+", horz_increment, { desc = "Horz increment" })
 map({ "n" }, "gn-", horz_decrement, { desc = "Horz Decrement" })

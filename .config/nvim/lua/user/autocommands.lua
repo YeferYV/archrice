@@ -317,22 +317,22 @@ M.FeedKeysCorrectly = function(keys)
   vim.api.nvim_feedkeys(feedableKeys, "n", true)
 end
 
-M.HorzIncrement = function()
+function HorzIncrement()
   vim.cmd [[ normal "zyan ]]
   vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
   vim.cmd [[ normal van"zp ]]
   M.FeedKeysCorrectly('<C-a>')
 end
 
-M.HorzDecrement = function()
+function HorzDecrement()
   vim.cmd [[ normal "zyan ]]
   vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
   vim.cmd [[ normal van"zp ]]
   M.FeedKeysCorrectly('<C-x>')
 end
 
--- vim.api.nvim_create_user_command("IncrementV", function() return vim.fn['Increment']('j', 1) end, { expr = true })
--- vim.api.nvim_create_user_command("IncrementV", "Increment('j', 1)", { expr = true })
+vim.api.nvim_create_user_command("IncrementHorz", HorzIncrement, {})
+vim.api.nvim_create_user_command("DecrementHorz", HorzDecrement, {})
 
 return M
 
