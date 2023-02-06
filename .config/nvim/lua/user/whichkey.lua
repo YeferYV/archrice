@@ -355,6 +355,8 @@ local mappings = {
     H = { "<cmd>Telescope highlights<cr>", "Find Highlights" },
     m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
     n = { "<cmd>Telescope neoclip initial_mode=normal<cr>", "NeoClip" },
+    N = { "<cmd>Telescope notify initial_mode=normal<cr>", "Search notifications" },
+    O = { "<cmd>lua require('notify').history()<cr>", "History notifications" },
     o = { "<cmd>Telescope file_browser initial_mode=normal<cr>", "Open File Browser" },
     -- O = {
     --   function()
