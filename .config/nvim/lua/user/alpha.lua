@@ -10,6 +10,7 @@ dashboard.section.header.val = {
   [[<ﾓ ｯ     The Matrixｬｯ   ﾀ   ﾐ   3]],
   [[ﾁｬ }   ｮ    ､  6ｴ  ﾘ､   4   ﾄ   ｧ]],
   [[7ﾖ 7        ﾎ  ｶﾊ  1ｲ   ﾀ   °   <]],
+  [[ ]],
 }
 dashboard.section.buttons.val = {
   dashboard.button("p", " " .. " Find Project", ":Telescope projects initial_mode=normal<cr>"),
@@ -20,6 +21,7 @@ dashboard.section.buttons.val = {
   dashboard.button("m", " " .. " Bookmarks", ":Telescope marks initial_mode=normal<cr>"),
   dashboard.button("b", " " .. " File Browser", ":Telescope file_browser initial_mode=normal<cr>"),
   dashboard.button("l", " " .. " Explorer", ":lua _LF_TAB_TOGGLE()<cr>"),
+  dashboard.button("s", " " .. " Last Session", ":SessionManager load_last_session<cr>"),
 }
 local function footer()
   return ""

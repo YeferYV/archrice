@@ -204,6 +204,21 @@ return require("packer").startup(function(use)
   use { "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" }
   use { "ahmedkhalf/project.nvim", commit = "685bc8e3890d2feb07ccf919522c97f7d33b94e4" }
   use { "folke/which-key.nvim", commit = "684e96c5e8477f1ee9b3f2e9a12d802fd12c5531" }
+  -- use { "HUAHUAI23/telescope-session.nvim", config = function() require("telescope").load_extension("xray23") end }
+  -- use { "nvim-telescope/telescope-ui-select.nvim", config = function() require("telescope").load_extension("ui-select") end }
+  use { "stevearc/dressing.nvim",
+    commit = "db716a0f1279f79a886c0e0b6ab3c3d5ffdb42fe",
+    config = function() require("dressing").setup {
+        input = { win_options = { winblend = 0 } },
+        select = { telescope = require('telescope.themes').get_dropdown { initial_mode = 'normal' }
+        }
+      }
+    end
+  }
+  use { "Shatur/neovim-session-manager",
+    commit = "e7a2cbf56b5fd3a223f2774b535499fc62eca6ef",
+    config = function() require("session_manager").setup { autoload_mode = "disabled" } end
+  }
   use {
     "lewis6991/gitsigns.nvim",
     commit = "d076301a634198e0ae3efee3b298fc63c055a871",

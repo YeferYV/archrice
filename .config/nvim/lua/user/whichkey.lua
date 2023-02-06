@@ -385,6 +385,15 @@ local mappings = {
     ["'"] = { "<cmd>Telescope marks theme=ivy initial_mode=normal<cr>", "Marks" },
   },
 
+  S = {
+    name = "Session",
+    l = { "<cmd>SessionManager! load_last_session<cr>", "Load last session" },
+    s = { "<cmd>SessionManager! save_current_session<cr>", "Save this session" },
+    d = { "<cmd>SessionManager! delete_session<cr>", "Delete session" },
+    f = { "<cmd>SessionManager! load_session<cr>", "Search sessions" },
+    ["."] = { "<cmd>SessionManager! load_current_dir_session<cr>", "Load current directory session" },
+  },
+
   t = {
     name = "Terminal",
     --   n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
