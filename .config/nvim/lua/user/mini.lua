@@ -183,13 +183,13 @@ require('mini.comment').setup({
   mappings = {
     -- Toggle comment (like `gcip` - comment inner paragraph) for both
     -- Normal and Visual modes
-    comment = 'gc',
+    comment = '',
 
     -- Toggle comment on current line
-    comment_line = 'gcc',
+    comment_line = '',
 
     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
-    textobject = 'gc',
+    textobject = '',
   },
   -- Hook functions to be executed at certain stage of commenting
   hooks = {

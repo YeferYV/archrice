@@ -214,8 +214,10 @@ map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Git hunk tex
 map({ "n", "o", "x" }, "gl", "`.", { desc = "Jump to last change" })
 
 -- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
-map({ "x" }, 'gk', ':<C-u>normal "zygcgv<cr>', { desc = "Comment textobj" })
+map({ "o" }, 'gk', '<Cmd>lua MiniComment.textobject()<CR>', { desc = "BlockComment textobj" })
+map({ "x" }, 'gk', ':<C-u>normal "zygkgv<cr>', { desc = "BlockComment textobj" })
 map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { desc = "RestOfComment textobj" })
+map({ "x" }, 'gC', ':<C-u>normal "zygcgv<cr>', { desc = "WholeComment textobj" })
 
 -- _search_textobj_(dot-repeat_supported)
 map({ "o", "x" }, "gs", "gn", { noremap = true, desc = "Next search textobj" })

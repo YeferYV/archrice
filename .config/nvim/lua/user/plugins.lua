@@ -36,7 +36,7 @@ return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim", commit = "dcd2f380bb49ec2dfe208f186236dd366434a4d5" })
 
   -- Automation
-  -- use { 'tpope/vim-commentary', commit = "e87cd90dc09c2a203e13af9704bd0ef79303d755" }
+  use { 'tpope/vim-commentary', commit = "e87cd90dc09c2a203e13af9704bd0ef79303d755" }
   -- use {
   --   "numToStr/Comment.nvim",
   --   commit = "5f01c1a89adafc52bf34e3bf690f80d9d726715d",
