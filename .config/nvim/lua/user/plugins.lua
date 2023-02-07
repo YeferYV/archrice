@@ -205,13 +205,6 @@ return require("packer").startup(function(use)
   use { "ahmedkhalf/project.nvim", commit = "685bc8e3890d2feb07ccf919522c97f7d33b94e4" }
   use { "folke/which-key.nvim", commit = "684e96c5e8477f1ee9b3f2e9a12d802fd12c5531" }
   use { "mrjones2014/smart-splits.nvim", commit = "fdd158ce7554dc830fb86e0fe952cd9476cdf726" }
-  use { "rcarriga/nvim-notify",
-    commit = "bdd647f61a05c9b8a57c83b78341a0690e9c29d7",
-    config = function() require("notify").setup({ stages = "fade" })
-      require("telescope").load_extension("notify")
-      vim.notify = require("notify")
-    end
-  }
   -- use { "HUAHUAI23/telescope-session.nvim", config = function() require("telescope").load_extension("xray23") end }
   -- use { "nvim-telescope/telescope-ui-select.nvim", config = function() require("telescope").load_extension("ui-select") end }
   use { "stevearc/dressing.nvim",
@@ -243,10 +236,26 @@ return require("packer").startup(function(use)
       }
     end,
   }
-  use({ "folke/noice.nvim",
-    commit = "a83b5fb9e24ecb220fa1255a9b7957dcd7b22783",
-    requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
-  })
+  -- use { "rcarriga/nvim-notify",
+  --   commit = "bdd647f61a05c9b8a57c83b78341a0690e9c29d7",
+  --   config = function() require("notify").setup({ stages = "fade" })
+  --     require("telescope").load_extension("notify")
+  --     vim.notify = require("notify")
+  --   end
+  -- }
+  -- use({ "folke/noice.nvim",
+  --   commit = "a83b5fb9e24ecb220fa1255a9b7957dcd7b22783",
+  --   config = function()
+  --     require("noice").setup({
+  --       messages = { view_search = false },
+  --       presets = {
+  --         bottom_search = true, -- use a classic bottom cmdline for search
+  --         command_palette = true, -- position the cmdline and popupmenu together
+  --         lsp_doc_border = true, -- add a border to hover docs and signature help
+  --       },
+  --     })
+  --   end
+  -- })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
