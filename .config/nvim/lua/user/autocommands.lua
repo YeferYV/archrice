@@ -1,5 +1,9 @@
 -- vim:ft=lua:ts=2:sw=2:sts=2
 
+local cmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+local create_command = vim.api.nvim_create_user_command
+
 vim.cmd [[
   " augroup _alpha
   "   autocmd!
@@ -213,8 +217,8 @@ vim.cmd [[
 ]]
 
 -- -- _toogle_neotree_cursor
--- local toogle_neotree_cursor = vim.api.nvim_create_augroup("_toogle_neotree_cursor", { clear = true })
--- vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
+-- local toogle_neotree_cursor = augroup("_toogle_neotree_cursor", { clear = true })
+-- cmd({"BufEnter","Filetype"}, {
 --   group = toogle_neotree_cursor,
 --   callback = function()
 --     if vim.bo.filetype ~= "neo-tree" then
@@ -222,7 +226,7 @@ vim.cmd [[
 --     end
 --   end,
 -- })
--- vim.api.nvim_create_autocmd({"BufEnter","Filetype"}, {
+-- cmd({"BufEnter","Filetype"}, {
 --   group = toogle_neotree_cursor,
 --   callback = function()
 --     if vim.bo.filetype == "neo-tree" then
@@ -232,14 +236,15 @@ vim.cmd [[
 -- })
 
 -- _enable_terminal_insert_and_hide_terminal_statusline
-local hide_terminal_statusline = vim.api.nvim_create_augroup("_enable_terminal_insert_and_hide_terminal_statusline",
-  { clear = true })
--- vim.api.nvim_create_autocmd({ "BufEnter", "Filetype" }, {
+local hide_terminal_statusline = augroup("_enable_terminal_insert_and_hide_terminal_statusline", { clear = true })
+
+-- cmd({ "BufEnter", "Filetype" }, {
 --   group = hide_terminal_statusline,
 --   pattern = "term://*",
 --   command = "startinsert"
 -- })
-vim.api.nvim_create_autocmd({ "TermEnter", "TermOpen" }, {
+
+cmd({ "TermEnter", "TermOpen" }, {
   group = hide_terminal_statusline,
   callback = function()
     -- require('lualine').hide()
@@ -248,18 +253,45 @@ vim.api.nvim_create_autocmd({ "TermEnter", "TermOpen" }, {
     vim.cmd [[hi ExtraWhitespace guibg=none]]
   end,
 })
--- vim.api.nvim_create_autocmd({ "TermLeave" }, {
+
+-- cmd({ "TermLeave" }, {
 --   group = hide_terminal_statusline,
 --   callback = function()
 --     require('lualine').hide({ unhide = true })
 --   end,
 -- })
-vim.api.nvim_create_autocmd({ "TermClose" }, {
+
+-- _autoclose_tab-terminal_if_last_window
+cmd({ "TermClose" }, {
   group = hide_terminal_statusline,
   callback = function()
-    if vim.bo.filetype == "sp-terminal" or vim.bo.filetype == "vs-terminal" or vim.bo.filetype == "tab-terminal" then
-      -- vim.cmd [[ call feedkeys("i") ]]
-      vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
+    local type = vim.bo.filetype
+
+    -- if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" then
+    --   -- vim.cmd [[ call feedkeys("i") ]]
+    --   vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
+    -- end
+    -- if type == "tab-terminal" then
+    --   M.FeedKeysCorrectly("<esc><esc>:close<cr>")
+    -- end
+
+    -- if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" or type == "tab-terminal" then
+    --   vim.cmd [[ call feedkeys(":close") ]]
+    --   M.FeedKeysCorrectly("<cr>")
+    -- end
+
+    if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" or type == "tab-terminal" then
+      -- _close_if_last_window
+      vim.cmd [[
+        if len(getbufinfo({'buflisted':1})) == 1
+          call feedkeys(":close")
+          let key = nvim_replace_termcodes("<CR>", v:true, v:false, v:true)
+          call nvim_feedkeys(key, 'n', v:false)
+        endif
+      ]]
+
+      -- vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
+      vim.cmd [[ call feedkeys("") ]]
     end
   end,
 })
@@ -331,13 +363,11 @@ function HorzDecrement()
   M.FeedKeysCorrectly('<C-x>')
 end
 
-vim.api.nvim_create_user_command("IncrementHorz", HorzIncrement, {})
-vim.api.nvim_create_user_command("DecrementHorz", HorzDecrement, {})
-
-return M
+create_command("IncrementHorz", HorzIncrement, {})
+create_command("DecrementHorz", HorzDecrement, {})
 
 -- -- _json_to_jsonc
--- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
+-- cmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
 --   -- pattern = "*.json",
 --   -- command = "set ft=jsonc"
 --   callback = function()
