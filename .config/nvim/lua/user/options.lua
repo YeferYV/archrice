@@ -17,7 +17,7 @@ local options = {
   guifont = "monospace:h17", -- the font used in graphical neovim applications
   hlsearch = true, -- highlight all matches on previous search pattern
   ignorecase = true, -- ignore case in search patterns
-  lazyredraw = true, -- lazily redraw screen
+  -- lazyredraw = true, -- lazily redraw screen
   laststatus = 3, -- laststatus=3 global status line (line between splits)
   mouse = "a", -- allow the mouse to be used in neovim
   number = true, -- set numbered lines

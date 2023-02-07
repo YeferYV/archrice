@@ -242,6 +242,10 @@ return require("packer").startup(function(use)
       }
     end,
   }
+  use({ "folke/noice.nvim",
+    commit = "a83b5fb9e24ecb220fa1255a9b7957dcd7b22783",
+    requires = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify", }
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
