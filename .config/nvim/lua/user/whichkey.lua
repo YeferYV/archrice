@@ -402,32 +402,38 @@ local mappings = {
     --   u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
     --   t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
     --   p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
-    B = {
+    ["<TAB>"] = {
       function()
         vim.cmd [[ wincmd T ]]
         require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
       end,
       "Terminal to Tab"
     },
-    e = {
+    b = {
+      function()
+        vim.cmd [[terminal]]
+        vim.cmd [[startinsert | set ft=tab-terminal nonumber]]
+      end,
+      "Buffer terminal"
+    },
+    B = {
       function()
         vim.cmd [[tabnew|terminal]]
         vim.cmd [[startinsert | set ft=tab-terminal nonumber ]]
         require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
       end,
-      "Tab Terminal"
+      "Buffer Terminal (Tab)"
     },
-    E = {
+    f = { "<cmd>ToggleTerm direction=float<cr>", "Float ToggleTerm" },
+    l = { "<cmd>lua _LF_TOGGLE()<cr>", "lf" },
+    t = { "<cmd>ToggleTerm <cr>", "Toggle ToggleTerm" },
+    T = {
       function()
         vim.cmd [[ToggleTerm direction=tab]]
         require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
       end,
       "Tab ToggleTerm"
     },
-    f = { "<cmd>ToggleTerm direction=float<cr>", "Float ToggleTerm" },
-    l = { "<cmd>lua _LF_TOGGLE()<cr>", "lf" },
-    t = { "<cmd>ToggleTerm <cr>", "Toggle ToggleTerm" },
-    T = { function() vim.cmd [[terminal]] vim.cmd [[startinsert | set ft=tab-terminal nonumber]] end, "Buffer terminal" },
     -- H = { "<cmd>split +te  | resize 10          | setlocal ft=sp-terminal nonumber noruler laststatus=3 cmdheight=0 | startinsert<cr>", "Horizontal terminal (status-hidden)" },
     -- V = { "<cmd>vsplit +te | vertical resize 80 | setlocal ft=vs-terminal nonumber noruler laststatus=0 cmdheight=1 | startinsert<cr>", "Vertical terminal (status-hidden)" },
     H = { "<cmd>split +te | resize 10 | setlocal ft=sp-terminal<cr>", "Horizontal terminal" },

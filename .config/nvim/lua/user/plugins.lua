@@ -204,6 +204,7 @@ return require("packer").startup(function(use)
   use { "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" }
   use { "ahmedkhalf/project.nvim", commit = "685bc8e3890d2feb07ccf919522c97f7d33b94e4" }
   use { "folke/which-key.nvim", commit = "684e96c5e8477f1ee9b3f2e9a12d802fd12c5531" }
+  use { "mrjones2014/smart-splits.nvim", commit = "fdd158ce7554dc830fb86e0fe952cd9476cdf726" }
   use { "rcarriga/nvim-notify",
     commit = "bdd647f61a05c9b8a57c83b78341a0690e9c29d7",
     config = function() require("notify").setup({ stages = "fade" })

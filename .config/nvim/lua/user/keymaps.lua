@@ -31,17 +31,12 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
-keymap("n", "<C-t>", "<C-t>", opts)
 
 -- Resize with arrows
-keymap("n", "<M-Up>", ":resize -2<CR>", opts)
-keymap("n", "<M-Down>", ":resize +2<CR>", opts)
-keymap("n", "<M-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<M-Right>", ":vertical resize +2<CR>", opts)
-keymap("t", "<M-Up>", "<C-\\><C-n>:resize -2<CR>", opts)
-keymap("t", "<M-Down>", "<C-\\><C-n>:resize +2<CR>", opts)
-keymap("t", "<M-Left>", "<C-\\><C-n>:vertical resize -2<CR>", opts)
-keymap("t", "<M-Right>", "<C-\\><C-n>:vertical resize +2<CR>", opts)
+map({ 'n', 't' }, '<M-Left>', require('smart-splits').resize_left)
+map({ 'n', 't' }, '<M-Down>', require('smart-splits').resize_down)
+map({ 'n', 't' }, '<M-Up>', require('smart-splits').resize_up)
+map({ 'n', 't' }, '<M-Right>', require('smart-splits').resize_right)
 
 -- Navigate buffers
 keymap("n", "]q", ":cnext<CR>", opts)
