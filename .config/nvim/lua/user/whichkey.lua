@@ -425,7 +425,7 @@ local mappings = {
       "Buffer Terminal (Tab)"
     },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float ToggleTerm" },
-    l = { "<cmd>lua _LF_TOGGLE()<cr>", "lf" },
+    l = { "<cmd>lua _LF_TOGGLE(vim.api.nvim_buf_get_name(0),'vsplit')<cr>", "lf" },
     t = { "<cmd>ToggleTerm <cr>", "Toggle ToggleTerm" },
     T = {
       function()

@@ -98,37 +98,21 @@ end
 
 -- see https://github.com/akinsho/toggleterm.nvim/issues/66
 local temp_path = "/tmp/lfpickerpath"
-
-local lfpicker = Terminal:new({
-  cmd = "lf -selection-path " .. temp_path .. " " .. vim.api.nvim_buf_get_name(0),
-  on_close = function()
-    local file = io.open(temp_path, "r")
-    if file ~= nil then
-      vim.cmd("set number")
-      vim.cmd("vsplit " .. file:read("*a"))
-      file:close()
-      os.remove(temp_path)
+function _LF_TOGGLE(dir, openmode)
+  Terminal:new({
+    cmd = "lf -selection-path " .. temp_path .. " " .. dir,
+    on_close = function()
+      local file = io.open(temp_path, "r")
+      if file ~= nil then
+        vim.opt.number = true
+        if openmode == 'tabnew' then
+          vim.cmd("tabnew " .. file:read("*a") .. " | tabclose #")
+        else
+          vim.cmd(openmode .. file:read("*a"))
+        end
+        file:close()
+        os.remove(temp_path)
+      end
     end
-  end
-})
-
-function _LF_TOGGLE()
-  lfpicker:toggle()
-end
-
-local lfpickertab = Terminal:new({
-  cmd = "lf -selection-path " .. temp_path .. " " .. vim.api.nvim_buf_get_name(0),
-  on_close = function()
-    local file = io.open(temp_path, "r")
-    if file ~= nil then
-      vim.cmd("set number")
-      vim.cmd("tabnew " .. file:read("*a") .. " | tabclose #")
-      file:close()
-      os.remove(temp_path)
-    end
-  end
-})
-
-function _LF_TAB_TOGGLE()
-  lfpickertab:toggle()
+  }):toggle()
 end
