@@ -529,7 +529,7 @@ local mappings = {
     --   end,
     --   "Jump to current_context",
     -- },
-    -- u = { require("user.autocommands").GoToParentIndent_Repeat, "Jump to current_context", expr = true }, -- No "()" disables autorun at startup
+    u = { require("user.autocommands").GoToParentIndent_Repeat, "Jump to current_context", expr = true }, -- No "()" disables autorun at startup
     w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
     W = { "<cmd>set winbar=  <cr>", "disable winbar" },
     z = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },

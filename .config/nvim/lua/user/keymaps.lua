@@ -387,6 +387,14 @@ local next_quote, prev_quote = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "gnu", next_quote, { desc = "Next Quote" })
 map({ "n", "x", "o" }, "gpu", prev_quote, { desc = "Prev Quote" })
 
+-- _goto_function_definition_repeatable
+local next_funcdefinition, prev_funcdefinition = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal vaNf ]] vim.cmd [[ call feedkeys("") ]] end,
+  function() vim.cmd [[ normal valf ]] vim.cmd [[ call feedkeys("") ]] end
+)
+map({ "n", "x", "o" }, "gnf", next_funcdefinition, { desc = "Next FuncDefinition" })
+map({ "n", "x", "o" }, "gpf", prev_funcdefinition, { desc = "Prev FuncDefinition" })
+
 -- _columnmove_repeatable
 vim.g.columnmove_strict_wbege = 0 -- skips inner-paragraph whitespaces for wbege
 vim.g.columnmove_no_default_key_mappings = true

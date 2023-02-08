@@ -380,3 +380,5 @@ create_command("DecrementHorz", HorzDecrement, {})
 --     end
 --   end,
 -- })
+
+return M
