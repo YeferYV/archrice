@@ -473,6 +473,7 @@ local mappings = {
       end,
       "Disable Buffer offset"
     },
+    a = { "<cmd>Alpha<cr>", "Open Alpha" },
     b = {
       function()
         require('bufferline').setup {

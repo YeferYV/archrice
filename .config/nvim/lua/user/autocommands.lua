@@ -1,5 +1,6 @@
 -- vim:ft=lua:ts=2:sw=2:sts=2
 
+local M = {}
 local cmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local create_command = vim.api.nvim_create_user_command
@@ -265,39 +266,25 @@ cmd({ "TermEnter", "TermOpen" }, {
 cmd({ "TermClose" }, {
   group = hide_terminal_statusline,
   callback = function()
+
     local type = vim.bo.filetype
-
-    -- if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" then
-    --   -- vim.cmd [[ call feedkeys("i") ]]
-    --   vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
-    -- end
-    -- if type == "tab-terminal" then
-    --   M.FeedKeysCorrectly("<esc><esc>:close<cr>")
-    -- end
-
-    -- if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" or type == "tab-terminal" then
-    --   vim.cmd [[ call feedkeys(":close") ]]
-    --   M.FeedKeysCorrectly("<cr>")
-    -- end
-
     if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" or type == "tab-terminal" then
-      -- _close_if_last_window
-      vim.cmd [[
-        if len(getbufinfo({'buflisted':1})) == 1
-          call feedkeys(":close")
-          let key = nvim_replace_termcodes("<CR>", v:true, v:false, v:true)
-          call nvim_feedkeys(key, 'n', v:false)
-        endif
-      ]]
 
-      -- vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
+      -- if number of buffers of the current tab is equal to 1 (last window)
+      if #vim.fn.getbufinfo({ buflisted = 1 }) == 1 then
+        -- M.FeedKeysCorrectly("<esc><esc>:close<cr>")
+        vim.cmd [[ call feedkeys("\<Esc>\<Esc>:close\<CR>") ]]
+      end
+
+      -- confirm terminal-exit-code by pressing <esc>
       vim.cmd [[ call feedkeys("") ]]
+
+      -- alternatively close the buffer instead of confirming
+      -- vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
+
     end
   end,
 })
-
--- _auto_nohlsearch
-local M = {}
 
 M.EnableAutoNoHighlightSearch = function()
   vim.on_key(function(char)
@@ -315,7 +302,6 @@ end
 
 M.EnableAutoNoHighlightSearch() -- autostart
 
--- _goto_indent_repeatable
 M.GoToParentIndent = function()
   local ok, start = require("indent_blankline.utils").get_current_context(
     vim.g.indent_blankline_context_patterns,
