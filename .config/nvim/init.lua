@@ -9,6 +9,7 @@
 -- vim.cmd [[ colorscheme leet]]
 
 -- Lua
+require "impatient"
 require "user.autocommands"
 require "user.options"
 require "user.plugins"
@@ -21,7 +22,6 @@ require "user.cmp"
 require "user.cmp-tabnine"
 require "user.dap"
 require "user.illuminate"
-require "user.impatient"
 require "user.indentline"
 require "user.lsp"
 require "user.lspsaga"
