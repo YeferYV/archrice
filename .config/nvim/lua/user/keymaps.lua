@@ -53,10 +53,10 @@ keymap("t", "<End>", "<C-\\><C-n>:tabnext<CR>", opts)
 keymap("t", "<Insert>", "<C-\\><C-n>:tabnext #<CR>", opts)
 keymap("n", "<Tab>", ":bnext<CR>", opts)
 keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
-keymap("n", "<leader>x", ":bp | bd #<CR>", opts)
+keymap("n", "<leader>x", ":bp | bd #<CR>", { desc = "Close Buffer" })
 keymap("n", "<leader><Tab>", ":tabnext<CR>", opts)
 keymap("n", "<leader><S-Tab>", ":tabprevious<CR>", opts)
-keymap("n", "<leader>X", ":tabclose<CR>", opts)
+keymap("n", "<leader>X", ":tabclose<CR>", { desc = "Close Tab" })
 
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)

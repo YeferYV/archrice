@@ -91,7 +91,6 @@ local mappings = {
   ["9"] = "which_key_ignore",
   ["v"] = "which_key_ignore", -- vertical ToggleTerm
   ["V"] = "which_key_ignore", -- horizontal ToggleTerm
-  ["x"] = "which_key_ignore", -- Close Current Buffer
   ["<Tab>"] = { "which_key_ignore" },
   ["<S-Tab>"] = { "which_key_ignore" },
 
@@ -104,7 +103,7 @@ local mappings = {
         require('telescope.builtin').buffers(
           require('telescope.themes').get_cursor {
             previewer = false,
-            initial_mode = 'insert'
+            initial_mode = 'normal'
           })
       end,
       "Telescope Buffer cursor-theme"
@@ -114,7 +113,7 @@ local mappings = {
         require('telescope.builtin').buffers(
           require('telescope.themes').get_dropdown {
             previewer = false,
-            initial_mode = 'normal'
+            initial_mode = 'insert'
           })
       end,
       "Telescope Buffer"
@@ -499,17 +498,38 @@ local mappings = {
     },
     -- c = { "<cmd>Codi<cr>", "Codi Start"},
     -- C = { "<cmd>Codi!<cr>", "Codi Stop" },
-    c = { "<cmd>set cmdheight=1<cr>", "enable cmdheight" },
-    C = { "<cmd>set cmdheight=0<cr>", "disable cmdheight" },
-    g = { "<cmd>hi Normal guifg=none guibg=#0b0b0b<cr>", "enable background" },
-    G = { "<cmd>hi Normal guifg=none guibg=none   <cr>", "disable background" },
+    c = {
+      function()
+        local cmdheight = vim.opt.cmdheight:get()
+        if cmdheight == 0 then
+          vim.opt.cmdheight = 1
+        else
+          vim.opt.cmdheight = 0
+        end
+      end
+      , "Toggle cmdheight"
+    },
+    C = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
+    G = {
+      function()
+        if vim.g.ToggleNormal == nil then
+          vim.api.nvim_set_hl(0, "Normal", { bg = "#0b0b0b" })
+          vim.g.ToggleNormal = true
+        else
+          vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+          vim.g.ToggleNormal = nil
+        end
+      end
+      , "Toggle Background"
+    },
     h = { function() require('user.autocommands').EnableAutoNoHighlightSearch() end, "Disable AutoNoHighlightSearch" },
     H = { function() require('user.autocommands').DisableAutoNoHighlightSearch() end, "Enable AutoNoHighlightSearch" },
-    i = { "<cmd>IndentBlanklineToggle<cr>", "Toggle IndentBlankline" },
+    I = { "<cmd>IndentBlanklineToggle<cr>", "Toggle IndentBlankline" },
     l = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
     L = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
-    n = { "<cmd>Neotree show<cr>", "Neotree show" },
-    N = { "<cmd>Neotree close<cr>", "Neotree close" },
+    -- n = { "<cmd>Neotree show<cr>", "Neotree show" },
+    -- N = { "<cmd>Neotree close<cr>", "Neotree close" },
+    p = { function() vim.opt.paste = not vim.opt.paste:get() end, "Toggle Paste Mode" },
     r = {
       function()
         _RESTO_TOGGLE()
@@ -522,7 +542,19 @@ local mappings = {
       end,
       "Rest Client"
     },
-    s = { "<cmd>call ToggleStatusLIne()<cr>", "Toggle StatusBar" },
+    s = {
+      function()
+        local laststatus = vim.opt.laststatus:get()
+        if laststatus == 0 then
+          vim.opt.laststatus = 2
+        elseif laststatus == 2 then
+          vim.opt.laststatus = 3
+        elseif laststatus == 3 then
+          vim.opt.laststatus = 0
+        end
+      end
+      , "Toggle StatusBar"
+    },
     -- u = {
     --   function()
     --     require("user.autocommands").GoToParentIndent()
@@ -531,9 +563,8 @@ local mappings = {
     --   "Jump to current_context",
     -- },
     u = { require("user.autocommands").GoToParentIndent_Repeat, "Jump to current_context", expr = true }, -- No "()" disables autorun at startup
-    w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
-    W = { "<cmd>set winbar=  <cr>", "disable winbar" },
-    z = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
+    -- w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
+    -- W = { "<cmd>set winbar=  <cr>", "disable winbar" },
     [";"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
   },
 

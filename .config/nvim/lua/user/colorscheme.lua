@@ -198,6 +198,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           IlluminatedWordText        = { bg = "#080811" },
           IlluminatedWordRead        = { bg = "#080811" },
           IlluminatedWordWrite       = { bg = "#080811" },
+          NotifyBackground           = { bg = "#000000" },
           LspReferenceRead           = { bg = "#080811" },
           LspReferenceText           = { bg = "#080811" },
           LspReferenceWrite          = { bg = "#080811" },

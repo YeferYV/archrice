@@ -152,29 +152,6 @@ vim.cmd [[
   " tnoremap <C-x> <C-\><C-n>:call WinBufSwap()<CR><Esc>
 ]]
 
--- toggle status line
-vim.cmd [[
-  let s:hidden_all = 0
-  function! ToggleStatusLIne()
-    if s:hidden_all  == 0
-      let s:hidden_all = 1
-      set noruler
-      set laststatus=0
-      set cmdheight=3
-      set noshowcmd
-      " set nonumber
-    else
-      let s:hidden_all = 0
-      set ruler
-      set laststatus=3
-      set cmdheight=2
-      set showcmd
-      " set number
-    endif
-  endfunction
-  " nnoremap <silent> <C-z> :call ToggleStatusLIne()<CR>
-]]
-
 -- Window Buffer Swap
 vim.cmd [[
   function! WinBufSwap()
