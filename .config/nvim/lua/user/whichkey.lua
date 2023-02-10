@@ -509,6 +509,19 @@ local mappings = {
       end
       , "Toggle cmdheight"
     },
+    d = {
+      function()
+        local function bool2str(bool) return bool and "on" or "off" end
+
+        if vim.g.diagnostics_enabled then
+          vim.g.diagnostics_enabled = false
+        else
+          vim.g.diagnostics_enabled = true
+        end
+        vim.diagnostic.config(require("user.lsp.handlers").setup(bool2str(vim.g.diagnostics_enabled)))
+      end,
+      "Toggle Diagnostics"
+    },
     C = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
     G = {
       function()

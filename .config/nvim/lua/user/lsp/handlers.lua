@@ -9,7 +9,7 @@ M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
-M.setup = function()
+M.setup = function(diagnostic_status)
   local signs = {
     { name = "DiagnosticSignError", text = "" },
     { name = "DiagnosticSignWarn", text = "" },
@@ -22,24 +22,30 @@ M.setup = function()
   end
 
   local config = {
-    virtual_text = true,
-    signs = {
-      active = signs,
+    off = {
+      underline = false,
+      virtual_text = false,
+      signs = false,
+      update_in_insert = false,
     },
-    update_in_insert = true,
-    underline = true,
-    severity_sort = true,
-    float = {
-      focusable = true,
-      style = "minimal",
-      border = "rounded",
-      source = "always",
-      header = "",
-      prefix = "",
-    },
+    on = {
+      virtual_text = true,
+      signs = { active = signs, },
+      update_in_insert = true,
+      underline = true,
+      severity_sort = true,
+      float = {
+        focusable = true,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      },
+    }
   }
 
-  vim.diagnostic.config(config)
+  vim.diagnostic.config(config[diagnostic_status])
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
