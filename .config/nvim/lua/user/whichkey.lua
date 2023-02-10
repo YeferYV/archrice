@@ -537,6 +537,21 @@ local mappings = {
     },
     h = { function() require('user.autocommands').EnableAutoNoHighlightSearch() end, "Disable AutoNoHighlightSearch" },
     H = { function() require('user.autocommands').DisableAutoNoHighlightSearch() end, "Enable AutoNoHighlightSearch" },
+    i = {
+      function()
+        local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")
+        if input_avail then
+          local indent = tonumber(input)
+          if not indent or indent == 0 then return end
+          vim.bo.expandtab = (indent > 0) -- local to buffer
+          indent = math.abs(indent)
+          vim.bo.tabstop = indent -- local to buffer
+          vim.bo.softtabstop = indent -- local to buffer
+          vim.bo.shiftwidth = indent -- local to buffer
+        end
+      end,
+      "Change Indent Setting"
+    },
     I = { "<cmd>IndentBlanklineToggle<cr>", "Toggle IndentBlankline" },
     l = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
     L = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
