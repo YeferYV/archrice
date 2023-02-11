@@ -371,6 +371,22 @@ local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<BS>", next_sneak, { desc = "Next SneakForward" })
 map({ "n", "x", "o" }, "<S-BS>", prev_sneak, { desc = "Prev SneakForward" })
 
+-- _goto_diagnostic_repeatable
+local next_diagnostic, prev_diagnostic = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.diagnostic.goto_next({ border = "rounded" }) end,
+  function() vim.diagnostic.goto_prev({ border = "rounded" }) end
+)
+map({ "n", "x", "o" }, "gnd", next_diagnostic, { desc = "Next Diagnostic" })
+map({ "n", "x", "o" }, "gpd", prev_diagnostic, { desc = "Prev Diagnostic" })
+
+-- _goto_function_definition_repeatable
+local next_funcdefinition, prev_funcdefinition = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal vaNf ]] vim.cmd [[ call feedkeys("") ]] end,
+  function() vim.cmd [[ normal valf ]] vim.cmd [[ call feedkeys("") ]] end
+)
+map({ "n", "x", "o" }, "gnf", next_funcdefinition, { desc = "Next FuncDefinition" })
+map({ "n", "x", "o" }, "gpf", prev_funcdefinition, { desc = "Prev FuncDefinition" })
+
 -- _gitsigns_chunck_repeatable
 -- make sure forward function comes first
 -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
@@ -386,14 +402,6 @@ local next_quote, prev_quote = ts_repeat_move.make_repeatable_move_pair(
 )
 map({ "n", "x", "o" }, "gnu", next_quote, { desc = "Next Quote" })
 map({ "n", "x", "o" }, "gpu", prev_quote, { desc = "Prev Quote" })
-
--- _goto_function_definition_repeatable
-local next_funcdefinition, prev_funcdefinition = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal vaNf ]] vim.cmd [[ call feedkeys("") ]] end,
-  function() vim.cmd [[ normal valf ]] vim.cmd [[ call feedkeys("") ]] end
-)
-map({ "n", "x", "o" }, "gnf", next_funcdefinition, { desc = "Next FuncDefinition" })
-map({ "n", "x", "o" }, "gpf", prev_funcdefinition, { desc = "Prev FuncDefinition" })
 
 -- _columnmove_repeatable
 vim.g.columnmove_strict_wbege = 0 -- skips inner-paragraph whitespaces for wbege
@@ -462,7 +470,7 @@ local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { desc = "Next Paragraph" })
 map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { desc = "Prev Paragraph" })
 
--- _jump_paragraph_repeatable
+-- _jump_startofline_repeatable
 local next_startline, prev_startline = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal + ]] end,
   function() vim.cmd [[ normal - ]] end
