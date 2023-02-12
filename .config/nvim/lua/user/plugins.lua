@@ -152,7 +152,7 @@ return require("packer").startup(function(use)
   use { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" }
   use { "tkhren/vim-textobj-numeral", commit = "264883112b4a34fdd81b29d880f04f3f6437814d" }
   use { "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" }
-  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "249d90a84df63f3ffff65fcc06a45d58415672de" }
+  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "13edf91f47c91b390bb00e1df2f7cc1ca250af3a" }
   use { "RRethy/nvim-treesitter-textsubjects", commit = "bc047b20768845fd54340eb76272b2cf2f6fa3f3" }
   use { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }
   use { "mg979/vim-visual-multi", commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a" }

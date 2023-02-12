@@ -326,8 +326,18 @@ function HorzDecrement()
   M.FeedKeysCorrectly('<C-x>')
 end
 
+function ShowBufferline()
+  require('bufferline').setup {
+    options = {
+      offsets = { { filetype = 'neo-tree', padding = 1 } },
+      show_close_icon = false
+    }
+  }
+end
+
 create_command("IncrementHorz", HorzIncrement, {})
 create_command("DecrementHorz", HorzDecrement, {})
+create_command("BufferlineShow", ShowBufferline, {})
 
 -- -- _json_to_jsonc
 -- cmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {

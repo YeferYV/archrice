@@ -105,7 +105,7 @@ function _LF_TOGGLE(dir, openmode)
       local file = io.open(temp_path, "r")
       if file ~= nil then
         vim.opt.number = true
-        if openmode == 'tabnew' then
+        if openmode == 'tabreplace' then
           vim.cmd("tabnew " .. file:read("*a") .. " | tabclose #")
         else
           vim.cmd(openmode .. file:read("*a"))

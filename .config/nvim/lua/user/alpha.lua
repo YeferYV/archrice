@@ -20,7 +20,7 @@ dashboard.section.buttons.val = {
   dashboard.button("n", " " .. " New File", ":enew<cr>"),
   dashboard.button("m", " " .. " Bookmarks", ":Telescope marks initial_mode=normal<cr>"),
   dashboard.button("b", " " .. " File Browser", ":Telescope file_browser initial_mode=normal<cr>"),
-  dashboard.button("l", " " .. " Explorer", ":lua _LF_TOGGLE(vim.api.nvim_buf_get_name(0),'tabnew')<cr>"),
+  dashboard.button("l", " " .. " Explorer", ":lua _LF_TOGGLE(vim.api.nvim_buf_get_name(0),'tabreplace')<cr>"),
   dashboard.button("s", " " .. " Last Session", ":SessionManager load_last_session<cr>"),
 }
 local function footer()

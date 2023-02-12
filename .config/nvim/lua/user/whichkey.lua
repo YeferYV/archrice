@@ -125,24 +125,24 @@ local mappings = {
     F = { "<cmd>BufferLineMoveNext<cr>", "Move to Next Buffer" },
     t = {
       function()
-        vim.cmd [[enew]]
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ enew ]]
+        vim.cmd [[ BufferlineShow ]]
       end,
       "New buffer"
     },
     T = {
       function()
-        vim.cmd [[setlocal nobuflisted]]
-        vim.cdm [[bprevious]]
-        vim.cmd [[tabe #]]
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ setlocal nobuflisted ]]
+        vim.cmd [[ bprevious ]]
+        vim.cmd [[ tabe # ]]
+        vim.cmd [[ BufferlineShow ]]
       end,
       "buffer to Tab"
     },
     -- T = {
     --   function()
-    --     vim.cmd [[bufdo | :setlocal nobuflisted | :b# | :tabe # ]]
-    --     require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+    --     vim.cmd [[ bufdo | :setlocal nobuflisted | :b# | :tabe # ]]
+    --     vim.cmd [[ BufferlineShow ]]
     --   end,
     --   "buffers to Tab"
     -- },
@@ -161,8 +161,8 @@ local mappings = {
     P = { "<cmd>-tabmove<cr>", "move tab to previous tab" },
     t = {
       function()
-        vim.cmd [[tabnew]]
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ tabnew ]]
+        vim.cmd [[ BufferlineShow ]]
       end,
       "New Tab"
     },
@@ -222,9 +222,9 @@ local mappings = {
   ["q"] = {
     function()
       _G.neotree_blend = true
-      vim.cmd [[Neotree filesystem reveal float]]
-      vim.cmd [[hi NeoTreeTabInactive guibg=none]]
-      vim.cmd [[hi NeoTreeTabSeparatorInactive guibg=none]]
+      vim.cmd [[ Neotree filesystem reveal float ]]
+      vim.cmd [[ hi NeoTreeTabInactive guibg=none ]]
+      vim.cmd [[ hi NeoTreeTabSeparatorInactive guibg=none ]]
     end,
     "Neotree float"
   },
@@ -234,12 +234,7 @@ local mappings = {
     g = {
       function()
         _LAZYGIT_TOGGLE()
-        require('bufferline').setup {
-          options = {
-            offsets = { { filetype = 'neo-tree', padding = 1 } },
-            show_close_icon = false
-          }
-        }
+        vim.cmd [[ BufferlineShow ]]
       end,
       "Tab Lazygit"
     },
@@ -404,32 +399,50 @@ local mappings = {
     ["<TAB>"] = {
       function()
         vim.cmd [[ wincmd T ]]
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ BufferlineShow ]]
       end,
       "Terminal to Tab"
     },
     b = {
       function()
-        vim.cmd [[terminal]]
-        vim.cmd [[startinsert | set ft=buf-terminal nonumber]]
+        vim.cmd [[ terminal ]]
+        vim.cmd [[ startinsert | set ft=buf-terminal nonumber ]]
       end,
-      "Buffer terminal"
+      "Buffer terminal (TabSame)"
     },
     B = {
       function()
-        vim.cmd [[tabnew|terminal]]
-        vim.cmd [[startinsert | set ft=tab-terminal nonumber ]]
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ tabnew|terminal ]]
+        vim.cmd [[ startinsert | set ft=tab-terminal nonumber ]]
+        vim.cmd [[ BufferlineShow ]]
       end,
-      "Buffer Terminal (Tab)"
+      "Buffer Terminal (TabNew)"
     },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float ToggleTerm" },
-    l = { "<cmd>lua _LF_TOGGLE(vim.api.nvim_buf_get_name(0),'vsplit')<cr>", "lf" },
+    l = {
+      function()
+        _LF_TOGGLE(vim.api.nvim_buf_get_name(0), 'vsplit')
+      end,
+      "lf (TabSame)"
+    },
+    L = {
+      function()
+        _LF_TOGGLE(vim.api.nvim_buf_get_name(0), 'tabnew')
+        vim.cmd [[ BufferlineShow ]]
+      end,
+      "lf (TabNew)"
+    },
+    r = {
+      function()
+        _LF_TOGGLE(vim.api.nvim_buf_get_name(0), 'tabreplace')
+      end,
+      "lf (TabReplace)"
+    },
     t = { "<cmd>ToggleTerm <cr>", "Toggle ToggleTerm" },
     T = {
       function()
-        vim.cmd [[ToggleTerm direction=tab]]
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ ToggleTerm direction=tab ]]
+        vim.cmd [[ BufferlineShow ]]
       end,
       "Tab ToggleTerm"
     },
@@ -450,17 +463,7 @@ local mappings = {
   u = {
     name = "UI Toggle",
     ["0"] = { "<cmd>set showtabline=0<cr>", "Hide Buffer" },
-    ["1"] = {
-      function()
-        require('bufferline').setup {
-          options = {
-            offsets = { { filetype = 'neo-tree', padding = 1 } },
-            show_close_icon = false
-          }
-        }
-      end,
-      "Enable Buffer offset"
-    },
+    ["1"] = { "<cmd>BufferlineShow<cr>", "Enable Buffer offset" },
     ["2"] = {
       function()
         require('bufferline').setup {
@@ -472,18 +475,9 @@ local mappings = {
       end,
       "Disable Buffer offset"
     },
-    a = { "<cmd>Alpha<cr>", "Open Alpha" },
-    b = {
-      function()
-        require('bufferline').setup {
-          options = {
-            offsets = { { filetype = 'neo-tree', padding = 1 } },
-            show_close_icon = false
-          }
-        }
-      end,
-      "Show Buffer"
-    },
+    a = { "<cmd>Alpha<cr>", "Alpha (TabSame)" },
+    A = { "<cmd>tabnew | Alpha<cr>", "Alpha (TabNew)" },
+    b = { "<cmd>BufferlineShow<cr>", "Show Buffer" },
     B = {
       function()
         require('bufferline').setup {
@@ -543,11 +537,11 @@ local mappings = {
         if input_avail then
           local indent = tonumber(input)
           if not indent or indent == 0 then return end
-          vim.bo.expandtab = (indent > 0) -- local to buffer
+          vim.bo.expandtab = (indent > 0)
           indent = math.abs(indent)
-          vim.bo.tabstop = indent -- local to buffer
-          vim.bo.softtabstop = indent -- local to buffer
-          vim.bo.shiftwidth = indent -- local to buffer
+          vim.bo.tabstop = indent
+          vim.bo.softtabstop = indent
+          vim.bo.shiftwidth = indent
         end
       end,
       "Change Indent Setting"
@@ -561,12 +555,7 @@ local mappings = {
     r = {
       function()
         _RESTO_TOGGLE()
-        require('bufferline').setup {
-          options = {
-            offsets = { { filetype = 'neo-tree', padding = 1 } },
-            show_close_icon = false
-          }
-        }
+        vim.cmd [[ BufferlineShow ]]
       end,
       "Rest Client"
     },
@@ -619,7 +608,7 @@ local mappings = {
       function()
         vim.cmd [[ setlocal nobuflisted ]]
         vim.cmd [[ wincmd T ]]
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ BufferlineShow ]]
       end,
       "window to Tab"
     },
