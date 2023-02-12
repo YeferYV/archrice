@@ -130,7 +130,7 @@ local mappings = {
       end,
       "New buffer"
     },
-    T = {
+    ["<TAB>"] = {
       function()
         vim.cmd [[ setlocal nobuflisted ]]
         vim.cmd [[ bprevious ]]

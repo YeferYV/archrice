@@ -162,7 +162,8 @@ keymap("v", "<leader>gd", "g<C-x>", { noremap = true, silent = true, desc = "Dec
 -- │ Lspsaga mappings │
 -- ╰──────────────────╯
 
-map({ "n", "v" }, "gsa", "<cmd>Lspsaga code_action<CR>", { silent = true })
+map("v", "gza", "<cmd>Lspsaga code_action<CR>", { silent = true })
+map("n", "gsa", "<cmd>Lspsaga code_action<CR>", { silent = true })
 map("n", "gsb", "<cmd>Lspsaga show_buf_diagnostics<CR>", { silent = true })
 map("n", "gsc", "<cmd>Lspsaga incoming_calls<CR>")
 map("n", "gsC", "<cmd>Lspsaga outgoing_calls<CR>")

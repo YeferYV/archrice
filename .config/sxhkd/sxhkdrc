@@ -540,7 +540,8 @@ super + {_,shift +} r
 
 # browser
 super + {_,shift +} w
-  { google-chrome-stable --process-per-site, killall chrome}
+  { google-chrome-stable --process-per-tab, killall chrome}
+  # { google-chrome-stable --process-per-site, killall chrome}
 
 # toggle background
 super + alt + ctrl + w

@@ -11,72 +11,73 @@ export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\
 # export PS1="[\w]\$ "
 
 #-- Default programs:
+# export NEOVIDE_MULTIGRID=true
 # export TERM="xterm-256color"
-export SHELL="$(which zsh)"
+export BAT_THEME="base16"
+export BROWSER="google-chrome-stable"
 export EDITOR="nvim"
-export VISUAL="nvim"
 export OPENER="xdg-open"
 export PAGER="less"
-export BAT_THEME="base16"
-export TERMINAL="wezterm"
-export BROWSER="google-chrome-stable"
-export SWALLOWER="bspswap"
-export SURFRAW_text_browser='w3m -sixel'
+export SHELL="$(which zsh)"
 export SURFRAW_graphical=no
-# export NEOVIDE_MULTIGRID=true
+export SURFRAW_text_browser='w3m -sixel'
+export SWALLOWER="bspswap"
+export TERMINAL="wezterm"
+export VIM="/usr/share/nvim"
+export VISUAL="nvim"
 
 #-- ~/Clean-up:
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-# export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/.xinitrc"
-# export XSERVERRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/.xserverrc"
-# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
-export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
-export LESSHISTFILE="-"
-# export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
-export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
-export STARSHIP_CONFIG="$HOME/.config/zsh/starship.toml"
-export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-# export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcompdump"
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#555555"
 # export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-# export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
 # export DRI_PRIME=1 #Dedicated GPU as default
 # export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
 # export GPG_TTY=$(tty)
-export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
-export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
-export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+# export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
+# export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
+# export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/.xinitrc"
+# export XSERVERRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/.xserverrc"
+# export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcompdump"
 export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
-export IPYTHONDIR="${XDG_CONFIG_HOME:-$HOME/.config}/ipython"
-export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
-export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
-export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export CHTSH_CONF="${XDG_CONFIG_HOME:-$HOME/.config}/cht.sh/cht.sh.conf"
-export NPM_CONFIG_PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/npm"
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
+export IPYTHONDIR="${XDG_CONFIG_HOME:-$HOME/.config}/ipython"
+export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
+export LESSHISTFILE="-"
 export LESSKEYIN="${XDG_CONFIG_HOME:-$HOME/.config}/shell/lesskey"
 export MPLAYER_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/mplayer"
+export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
+export NPM_CONFIG_PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/npm"
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export STARSHIP_CONFIG="$HOME/.config/zsh/starship.toml"
+export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
+export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#555555"
 
 #-- Other program settings:
-export YT_API_KEY="AIzaSyDWLUg9KCJ6CAw2KXIsQTcOzMZRXOQ7OC0"
-# export LOCALE_ARCHIVE="/lib/locale/locale-archive"
-export DICS="/usr/share/stardict/dic/"
-export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
-export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
-export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
-export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
-export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
-export DEBIAN_FRONTEND=noninteractive
 # export CACA_DRIVER=ncurses
 # export FZF_COMPLETION_TRIGGER=''
 # export FZF_DEFAULT_OPTS="--layout=reverse --height 40% --border"
+# export LOCALE_ARCHIVE="/lib/locale/locale-archive" # nix locale
+export AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
+export DEBIAN_FRONTEND=noninteractive
+export DICS="/usr/share/stardict/dic/"
 export FZF_DEFAULT_OPTS="--multi --color='hl:#cccc00,hl+:#cccc00'"
+export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
+export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
+export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+export YT_API_KEY="AIzaSyDWLUg9KCJ6CAw2KXIsQTcOzMZRXOQ7OC0"
+export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 
 # export LESS="-R --use-color --LINE-NUMBERS --color=Nk" #causes manpages badformatting
 export LESS='-RS'
