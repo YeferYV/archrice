@@ -27,8 +27,8 @@ sudo pacman-key --populate
 sudo pacman -Sy  --noconfirm archlinux-keyring
 sudo pacman -Syu --noconfirm base-devel git
 
-#-- Neovim version 0.8.1
-sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.8.1/nvim.appimage && sudo chmod +x /usr/local/bin/nvim
+#-- Neovim version 0.8.3
+sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.8.3/nvim.appimage && sudo chmod +x /usr/local/bin/nvim
 
 #-- yay
 git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
@@ -37,7 +37,6 @@ makepkg -si --noconfirm
 
 #-- Packages excluded on docker
 [ ! -e /.dockerenv ] && yes | yay -S --noconfirm \
-bedstead \
 broadcom-wl \
 bspwm \
 btrfs-progs \
@@ -48,7 +47,6 @@ dragon-drop \
 dunst \
 exfat-utils \
 festival-us \
-ttf-firacode-nerd \
 fuse2 \
 gnome-keyring \
 google-chrome \
@@ -67,8 +65,6 @@ mpd \
 mpv-mpris \
 ncmpcpp \
 network-manager-applet \
-noto-fonts \
-noto-fonts-emoji \
 ntfs-3g \
 picom \
 pipewire \
@@ -84,8 +80,6 @@ snapper-rollback \
 sxhkd \
 sxiv \
 touchcursor-linux-git \
-ttf-font-awesome \
-ttf-terminus-nerd \
 ttf-unifont \
 unclutter \
 xcape \

@@ -97,11 +97,11 @@ sudo -s -- <<===
 #======================= Btrfs snapshot ======================#
 
 [ "${BTRFS_SNAPSHOT:-}" == true ] && {
-  [ $(id -u) != 0 ] && echo "\e[1;33mRun it as root user at root's folder\e[0m\n" >&2 && exit 1
+  [ "$(id -u)" != 0 ] && echo "\e[1;33mRun it as root user at root's folder\e[0m\n" >&2 && exit 1
   printf "\n\e[1;33m Btrfs snapshot \e[0m\n"
   pacman -Syu --noconfirm btrfs-progs snapper
   mkdir /mnt/@
-  mount -o subvolid=5 /dev/${SDX2:-vda2} /mnt/@
+  mount -o subvolid=5 /dev/"${SDX2:-vda2}" /mnt/@
   # mv /mnt/@root /mnt/@
   btrfs su get-default /mnt/@
   btrfs su set-default /mnt/@
@@ -113,15 +113,15 @@ sudo -s -- <<===
   snapper -c home create-config /home
   snapper -c root create -d "base-install"
   snapper -c home create -d "base-install"
-  btrfs su snapshot / /.snapshots/backup-$(date +%y-%m-%d)-snapper-base-install
-  btrfs su snapshot /home /home/.snapshots/backup-$(date +%y-%m-%d)-snapper-base-install
+  btrfs su snapshot / /.snapshots/backup-"$(date +%y-%m-%d)"-snapper-base-install
+  btrfs su snapshot /home /home/.snapshots/backup-"$(date +%y-%m-%d)"-snapper-base-install
 }
 
 #==================== ResetArch snapshot =====================#
 
 [ "${RESETARCH_SNAPSHOT:-}" == true ] && {
   printf "\n\e[1;33m ReseArch snapshot \e[0m\n"
-  sudo -u $USER -s -- ./ResetArch
+  sudo -u "$USER" -s -- ./ResetArch
   # sudo snapper -c root create -d "after-ResetArch"
   # sudo snapper -c home create -d "after-ResetArch"
 }
@@ -129,46 +129,113 @@ sudo -s -- <<===
 #================== Post-Install (dotfiles) ==================#
 
 printf "\n\e[1;33m Post-Install (dotfiles) \e[0m\n"
-sudo -u $USER -s -- <<===
+sudo -u "$USER" -s -- <<===
   set -eu
-  [ ! -e /home/$USER/.config ] && mkdir -p /home/$USER/.config
-  [ ! -e /home/$USER/.local ] && mkdir -p /home/$USER/.local
-  sudo mkdir -p /home/dtfls/yydtfls
-  # git clone --depth=1 https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
-  sudo cp -r ../../../dotfiles /home/dtfls/yydtfls/dotfiles
-  sudo chown -R $USER:$USER /home/dtfls
-  cd /home/dtfls/yydtfls/dotfiles
-  stow --restow --verbose --target=/home/$USER/.config .config
-  stow --restow --verbose --target=/home/$USER/.local .local
-  mkdir -p /home/$USER/.local/share/mpd
-  # systemctl --user enable mpd
-  # systemctl --user enable pulseaudio-x11
-  # systemctl --user enable touchcursor
-  # mpc --port=6601 update
-  ln -s /home/$USER/.config/shell/profile /home/$USER/.zprofile
-  ln -s /home/$USER/.config/x11/.xinitrc /home/$USER/.xinitrc
-  [ ! -e /etc/X11/xorg.conf.d/ ] && sudo mkdir -p /etc/X11/xorg.conf.d/
-  sudo cp /home/$USER/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
-  sudo cp /home/$USER/.config/wallhaven-4lokdp.jpg /home/$USER/.local/share/bg
-  sudo chsh --shell /usr/bin/zsh $USER
-  [ -x "$(command -v crontab)" ] && crontab /home/$USER/.local/bin/cron/lowbatnotificationcron
 
-  # 3270 font
-  mkdir -p "$HOME"/.local/share/fonts
-  git clone --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
-  cd nerd-fonts
-  git sparse-checkout add patched-fonts/3270
-  cp -r patched-fonts/3270 "$HOME"/.local/share/fonts/
+  # Dotfiles:
+  install_dotfiles() {
+    [ ! -e /home/$USER/.config ] && mkdir -p /home/$USER/.config
+    [ ! -e /home/$USER/.local ] && mkdir -p /home/$USER/.local
+    sudo mkdir -p /home/dtfls/yydtfls
+    # git clone --depth=1 https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
+    sudo cp -r ../../../dotfiles /home/dtfls/yydtfls/dotfiles
+    sudo chown -R $USER:$USER /home/dtfls
+    cd /home/dtfls/yydtfls/dotfiles
+    stow --restow --verbose --target=/home/$USER/.config .config
+    stow --restow --verbose --target=/home/$USER/.local .local
+    ln -s /home/$USER/.config/shell/profile /home/$USER/.zprofile
+    ln -s /home/$USER/.config/x11/.xinitrc /home/$USER/.xinitrc
+  }
 
-  # sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-  # sudo grub-mkconfig -o /boot/grub/grub.cfg
-  # sudo systemctl enable NetworkManager
-  # sudo systemctl enable cronie
+  # Install Fonts:
+  install_fonts() {
+    [ ! -e "$HOME"/.local/share/fonts ] && mkdir -p "$HOME"/.local/share/fonts
 
-  # neovim plugins
-  set +eu # disable exit on error (spoiler nvim still outputs errors)
-  git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-  ( APPIMAGE_EXTRACT_AND_RUN=1 nvim -u ~/.config/nvim/lua/user/plugins.lua --headless -c "autocmd User PackerComplete quitall" -c "PackerSync" )
+    # Nerd-Fonts:
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
+    cd nerd-fonts
+    git sparse-checkout add patched-fonts/3270
+    git sparse-checkout add patched-fonts/CascadiaCode
+    git sparse-checkout add patched-fonts/FiraCode
+    git sparse-checkout add patched-fonts/Terminus
+    cp -r patched-fonts/3270 "$HOME"/.local/share/fonts/
+    cp -r patched-fonts/CascadiaCode "$HOME"/.local/share/fonts/
+    cp -r patched-fonts/FiraCode "$HOME"/.local/share/fonts/
+    cp -r patched-fonts/Terminus "$HOME"/.local/share/fonts/
+    cd ..
+
+    # Font-Awesome:
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/FortAwesome/Font-Awesome
+    cd Font-Awesome
+    git sparse-checkout add otfs
+    git sparse-checkout add webfonts
+    mkdir "$HOME"/.local/share/fonts/Font-Awesome
+    cp -r otfs/ "$HOME"/.local/share/fonts/Font-Awesome/
+    cp -r webfonts/ "$HOME"/.local/share/fonts/Font-Awesome/
+    cd ..
+
+    # Noto Sans/Serif/Mono:
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/notofonts/notofonts.github.io
+    cd notofonts.github.io
+    git sparse-checkout add fonts/NotoSans/googlefonts
+    git sparse-checkout add fonts/NotoSansMono/googlefonts
+    git sparse-checkout add fonts/NotoSerif/googlefonts
+    mkdir "$HOME"/.local/share/fonts/NotoSans
+    mkdir "$HOME"/.local/share/fonts/NotoSansMono
+    mkdir "$HOME"/.local/share/fonts/NotoSerif
+    cp -r fonts/NotoSans/googlefonts "$HOME"/.local/share/fonts/NotoSans/
+    cp -r fonts/NotoSansMono/googlefonts "$HOME"/.local/share/fonts/NotoSansMono/
+    cp -r fonts/NotoSerif/googlefonts "$HOME"/.local/share/fonts/NotoSerif/
+    cd ..
+
+    # Noto Color-Emoji:
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/googlefonts/noto-emoji
+    cd noto-emoji
+    git sparse-checkout add fonts
+    mkdir "$HOME"/.local/share/fonts/Noto-Emoji
+    cp fonts/NotoColorEmoji.ttf "$HOME"/.local/share/fonts/Noto-Emoji/
+    cd ..
+
+    # Bedstead Font:
+    curl -LO https://bjh21.me.uk/bedstead/bedstead-002.004.zip
+    unzip bedstead-002.004.zip -d "$HOME"/.local/share/fonts/
+  }
+
+  # install_root_configs (){
+  #   sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+  #   sudo grub-mkconfig -o /boot/grub/grub.cfg
+  #   sudo systemctl enable NetworkManager
+  #   sudo systemctl enable cronie
+  # }
+
+  # User Configs:
+  install_configs (){
+    mkdir -p /home/$USER/.local/share/mpd
+    # systemctl --user enable mpd
+    # systemctl --user enable pulseaudio-x11
+    # systemctl --user enable touchcursor
+    # mpc --port=6601 update
+    [ ! -e /etc/X11/xorg.conf.d/ ] && sudo mkdir -p /etc/X11/xorg.conf.d/
+    sudo cp /home/$USER/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
+    sudo cp /home/$USER/.config/wallhaven-4lokdp.jpg /home/$USER/.local/share/bg
+    sudo chsh --shell /usr/bin/zsh $USER
+    [ -x "$(command -v crontab)" ] && crontab /home/$USER/.local/bin/cron/lowbatnotificationcron
+    rm -rf {nerd-fonts,Font-Awesome,notofonts.github.io,noto-emoji,bedstead-002.004.zip}
+  }
+
+
+  # Neovim Plugins:
+  install_neovim_plugins() {
+    set +eu # disable exit on error (spoiler nvim still outputs errors)
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    ( APPIMAGE_EXTRACT_AND_RUN=1 nvim -u ~/.config/nvim/lua/user/plugins.lua --headless -c "autocmd User PackerComplete quitall" -c "PackerSync" )
+  }
+
+  # Main:
+  install_dotfiles        || echo "$(tput -T ansi setaf 1) install_dotfiles failed"
+  install_fonts           || echo "$(tput -T ansi setaf 1) install_nerdfonts failed"
+  install_configs         || echo "$(tput -T ansi setaf 1) install_configs failed"
+  install_neovim_plugins  || echo "$(tput -T ansi setaf 1) install_neovim_plugins failed"
 ===
 
 #===================== RiceArch snapshot =====================#
