@@ -503,6 +503,7 @@ local mappings = {
       end
       , "Toggle cmdheight"
     },
+    C = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
     d = {
       function()
         local function bool2str(bool) return bool and "on" or "off" end
@@ -516,7 +517,6 @@ local mappings = {
       end,
       "Toggle Diagnostics"
     },
-    C = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
     G = {
       function()
         if vim.g.ToggleNormal == nil then
@@ -552,6 +552,7 @@ local mappings = {
     -- n = { "<cmd>Neotree show<cr>", "Neotree show" },
     -- N = { "<cmd>Neotree close<cr>", "Neotree close" },
     p = { function() vim.opt.paste = not vim.opt.paste:get() end, "Toggle Paste Mode" },
+    o = { "<cmd>Legendary<cr>", "Open Legendary" },
     r = {
       function()
         _RESTO_TOGGLE()
@@ -604,7 +605,7 @@ local mappings = {
     S = { "<cmd>-wincmd x<cr>", "window Swap CCW (same parent node)" },
     r = { "<C-w>r", "Rotate CW (same parent node)" },
     R = { "<C-w>R", "Rotate CCW (same parent node)" },
-    T = {
+    ["<TAB>"] = {
       function()
         vim.cmd [[ setlocal nobuflisted ]]
         vim.cmd [[ wincmd T ]]
@@ -648,6 +649,7 @@ local mappings = {
   },
 }
 
+require('legendary').setup({ which_key = { auto_register = true } })
 which_key.setup(setup)
 which_key.register(mappings, opts)
 
