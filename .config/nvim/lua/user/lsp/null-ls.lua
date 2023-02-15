@@ -1,4 +1,7 @@
-local mason_null_ls = require "mason-null-ls"
+local mason_null_ls_status_ok, mason_null_ls = pcall(require, "mason-null-ls")
+if not mason_null_ls_status_ok then
+  return
+end
 mason_null_ls.setup({ automatic_setup = true })
 
 local null_ls_status_ok, null_ls = pcall(require, "null-ls")

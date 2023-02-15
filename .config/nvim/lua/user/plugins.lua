@@ -114,7 +114,7 @@ return require("packer").startup(function(use)
   use { "jose-elias-alvarez/null-ls.nvim", commit = "a67897283fdb0051ad5c72e840e1845e195b979b" } -- for formatters and linters
   use { "jay-babu/mason-null-ls.nvim", commit = "c4b4a6fe3cb8d8590b831c22b3475166dc9a894e" } -- autoconfigured formatters
   use { "b0o/SchemaStore.nvim", commit = "384af0bc8c572a4153348236a90f7e8313cad330" } -- jsonls schema completions
-  use { "RRethy/vim-illuminate", commit = "a6d0b28ea7d6b9d139374be1f94a16bd120fcda3" }
+  use { "RRethy/vim-illuminate", commit = "49062ab1dd8fec91833a69f0a1344223dd59d643" }
   use { "glepnir/lspsaga.nvim", commit = "c5c11457c3b1c29075dd16deb2bb92340600aace" }
   use {
     "williamboman/mason.nvim",

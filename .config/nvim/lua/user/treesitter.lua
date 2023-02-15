@@ -1,4 +1,9 @@
-require 'nvim-treesitter.configs'.setup {
+local status_ok, configs = pcall(require, "nvim-treesitter.configs")
+if not status_ok then
+  return
+end
+
+configs.setup {
   -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
   ensure_installed = { "python", "bash", "javascript", "json", "html", "css", "c", "lua" },
 

@@ -12,7 +12,12 @@ web_devicons.setup({
   override = material_icon.get_icons(),
 })
 
-require('bufferline').setup {
+local status_ok, bufferline = pcall(require, "bufferline")
+if not status_ok then
+  return
+end
+
+bufferline.setup {
   options = {
     numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
     close_command = "bp | bd #", -- can be a string | function, see "Mouse actions"

@@ -1,4 +1,9 @@
-require("aerial").setup({
+local status_ok, aerial = pcall(require, "aerial")
+if not status_ok then
+  return
+end
+
+aerial.setup({
   -- Priority list of preferred backends for aerial.
   -- This can be a filetype map (see :help aerial-filetype-map)
   backends = { "lsp", "treesitter", "markdown", "man" },

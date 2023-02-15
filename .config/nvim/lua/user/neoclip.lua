@@ -1,4 +1,9 @@
-require('neoclip').setup({
+local status_ok, neoclip = pcall(require, "neoclip")
+if not status_ok then
+  return
+end
+
+neoclip.setup({
   history = 1000,
   enable_persistent_history = false,
   length_limit = 1048576,

@@ -247,7 +247,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 vim.opt.fillchars = "eob: "
 
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+local status_ok, _ = pcall(vim.cmd.colorscheme, colorscheme)
 if not status_ok then
-  return
+  vim.cmd[[ colorscheme leet ]]
 end

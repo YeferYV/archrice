@@ -1,8 +1,13 @@
+local status_ok, illuminate = pcall(require, "illuminate")
+if not status_ok then
+  return
+end
+
 vim.keymap.set({ 'n', 'x', 'o' }, '<a-n>', '<cmd>lua require"illuminate".goto_next_reference(wrap)<cr>')
 vim.keymap.set({ 'n', 'x', 'o' }, '<a-p>', '<cmd>lua require"illuminate".goto_prev_reference(wrap)<cr>')
 vim.keymap.set({ 'n', 'x', 'o' }, '<a-i>', '<cmd>lua require"illuminate".textobj_select()<cr>')
 
-require('illuminate').configure({
+illuminate.configure({
   -- providers: provider used to get references in the buffer, ordered by priority
   providers = {
     'lsp',

@@ -8,13 +8,17 @@
 -- vim.cmd [[ colorscheme lunar2 ]]
 -- vim.cmd [[ colorscheme leet]]
 
--- Lua
-require "impatient"
+-- impatient at startup
+local status_ok, impatient = pcall(require, "impatient")
+if status_ok then
+  impatient.enable_profile()
+end
+
 require "user.autocommands"
 require "user.options"
 require "user.plugins"
-require "user.alpha"
 require "user.aerial"
+require "user.alpha"
 require "user.bufferline"
 require "user.colorizer"
 require "user.colorscheme"
@@ -34,4 +38,9 @@ require "user.telescope"
 require "user.toggleterm"
 require "user.treesitter"
 require "user.whichkey"
-require "user.keymaps"
+
+-- protected calls for ":lua require(...)<cr>"
+local status_ok, _ = pcall(require, "user.keymaps")
+if not status_ok then
+  return
+end

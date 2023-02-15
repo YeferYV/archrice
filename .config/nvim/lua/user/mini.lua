@@ -1,9 +1,11 @@
-local ok, mini_ai = pcall(require, 'mini.ai')
-if not ok then return end
+local status_ok, mini_ai = pcall(require, 'mini.ai')
+if not status_ok then
+  return
+end
 
 local spec_treesitter = mini_ai.gen_spec.treesitter
 
-require('mini.ai').setup({
+mini_ai.setup({
 
   -- Table with textobject id as fields, textobject specification as values.
   -- Also use this to disable builtin textobjects. See |MiniAi.config|.
