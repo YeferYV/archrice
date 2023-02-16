@@ -247,10 +247,16 @@ cmd({ "TermClose" }, {
     local type = vim.bo.filetype
     if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" or type == "tab-terminal" then
 
-      -- if number of buffers of the current tab is equal to 1 (last window)
-      if #vim.fn.getbufinfo({ buflisted = 1 }) == 1 then
-        -- M.FeedKeysCorrectly("<esc><esc>:close<cr>")
-        vim.cmd [[ call feedkeys("\<Esc>\<Esc>:close\<CR>") ]]
+      -- if number of tabs is equal to 1 (last tab)
+      if #vim.api.nvim_list_tabpages() == 1 then
+        vim.cmd [[ Alpha ]]
+        vim.cmd [[ bd # ]]
+      else
+        -- if number of buffers of the current tab is equal to 1 (last window)
+        if #vim.fn.getbufinfo({ buflisted = 1 }) == 1 then
+          -- M.FeedKeysCorrectly("<esc><esc>:close<cr>")
+          vim.cmd [[ call feedkeys("\<Esc>\<Esc>:close\<CR>") ]]
+        end
       end
 
       -- confirm terminal-exit-code by pressing <esc>
@@ -266,7 +272,8 @@ cmd({ "TermClose" }, {
 M.EnableAutoNoHighlightSearch = function()
   vim.on_key(function(char)
     if vim.fn.mode() == "n" then
-      local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
+      local new_hlsearch = vim.tbl_contains({ "<Up>", "<Down>", "<CR>", "n", "N", "*", "#", "?", "/" },
+        vim.fn.keytrans(char))
       if vim.opt.hlsearch:get() ~= new_hlsearch then vim.cmd [[ noh ]] end
     end
   end, vim.api.nvim_create_namespace "auto_hlsearch")

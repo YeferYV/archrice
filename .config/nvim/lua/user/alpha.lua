@@ -5,6 +5,7 @@ end
 
 local dashboard = require "alpha.themes.dashboard"
 dashboard.section.header.val = {
+  [[ ]],
   [[ﾎﾌ ｯ     ｦ  ｩ  ~ｷ  ":   ﾝ   ｫ   ｷ]],
   [[ｩﾘ ,     ﾒ  `  ﾝｷ  ｧﾒ   ﾙ   ﾚ   |]],
   [[<ﾓ ｯ     The Matrixｬｯ   ﾀ   ﾐ   3]],
@@ -21,6 +22,10 @@ dashboard.section.buttons.val = {
   dashboard.button("m", " " .. " Bookmarks", ":Telescope marks initial_mode=normal<cr>"),
   dashboard.button("b", " " .. " File Browser", ":Telescope file_browser initial_mode=normal<cr>"),
   dashboard.button("l", " " .. " Explorer", ":lua _LF_TOGGLE(vim.api.nvim_buf_get_name(0),'tabreplace')<cr>"),
+  dashboard.button("t", " " .. " Terminal",
+    ":lua vim.cmd[[ tabedit | terminal ]] vim.cmd[[ tabclose # ]] vim.cmd[[ set ft=tab-terminal nonumber laststatus=0 ]]<cr>"),
+  dashboard.button("T", " " .. " Tmux",
+    ":lua vim.cmd[[ tabnew | terminal tmux ]] vim.cmd[[ tabclose # ]] vim.cmd[[ set ft=tab-terminal nonumber laststatus=0 ]]<cr>"),
   dashboard.button("s", " " .. " Last Session", ":SessionManager load_last_session<cr>"),
 }
 local function footer()
