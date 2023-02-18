@@ -19,7 +19,7 @@ return {
       --   },
       -- },
       format = {
-        enable = false,
+        enable = true,
         -- Put format options here
         -- NOTE: the value should be STRING!!
         -- https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/lua.template.editorconfig

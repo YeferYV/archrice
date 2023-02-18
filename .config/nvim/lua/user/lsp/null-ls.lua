@@ -43,6 +43,7 @@ local null_sources = {}
 
 -- _stylua_config_if_installed
 for _, package in ipairs(mason_registry.get_installed_packages()) do
+  -- :lua vim.pretty_print(require("mason-registry").get_installed_packages())
   -- :lua =require("mason-registry").get_installed_packages()[1].name
   if package.name == "stylua" then
     table.insert(
@@ -52,7 +53,7 @@ for _, package in ipairs(mason_registry.get_installed_packages()) do
           "--indent-width=2",
           "--indent-type=Spaces",
           "--call-parentheses=None",
-          "--collapse-simple-statement=Never",
+          "--collapse-simple-statement=Always",
           -- "--quote-style=ForceSingle",
           -- "--quote-style=AutoPreferDouble"
         },
