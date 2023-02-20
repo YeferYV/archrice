@@ -5,6 +5,8 @@ local cmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local create_command = vim.api.nvim_create_user_command
 
+------------------------------------------------------------------------------------------------------------------------
+
 vim.cmd [[
   " augroup _alpha
   "   autocmd!
@@ -111,6 +113,8 @@ vim.cmd [[
 
 ]]
 
+------------------------------------------------------------------------------------------------------------------------
+
 -- Last Active Tab
 vim.cmd [[
   function! LastActiveTab()
@@ -194,6 +198,8 @@ vim.cmd [[
   " nmap <silent> <C-x> :call DoWindowSwap()<CR>
 ]]
 
+------------------------------------------------------------------------------------------------------------------------
+
 -- -- _toogle_neotree_cursor
 -- local toogle_neotree_cursor = augroup("_toogle_neotree_cursor", { clear = true })
 -- cmd({"BufEnter","Filetype"}, {
@@ -212,6 +218,8 @@ vim.cmd [[
 --     end
 --   end,
 -- })
+
+------------------------------------------------------------------------------------------------------------------------
 
 -- _enable_terminal_insert_and_hide_terminal_statusline
 local hide_terminal_statusline = augroup("_enable_terminal_insert_and_hide_terminal_statusline", { clear = true })
@@ -269,6 +277,8 @@ cmd({ "TermClose" }, {
   end,
 })
 
+------------------------------------------------------------------------------------------------------------------------
+
 M.EnableAutoNoHighlightSearch = function()
   vim.on_key(function(char)
     if vim.fn.mode() == "n" then
@@ -286,6 +296,15 @@ end
 
 M.EnableAutoNoHighlightSearch() -- autostart
 
+------------------------------------------------------------------------------------------------------------------------
+
+M.FeedKeysCorrectly = function(keys)
+  local feedableKeys = vim.api.nvim_replace_termcodes(keys, true, false, true)
+  vim.api.nvim_feedkeys(feedableKeys, "n", true)
+end
+
+------------------------------------------------------------------------------------------------------------------------
+
 M.GoToParentIndent = function()
   local ok, start = require("indent_blankline.utils").get_current_context(
     vim.g.indent_blankline_context_patterns,
@@ -297,27 +316,37 @@ M.GoToParentIndent = function()
   end
 end
 
-local My_count = 0
+------------------------------------------------------------------------------------------------------------------------
 
-M.GoToParentIndent_Repeat = function()
-  My_count = 0
-  vim.go.operatorfunc = "v:lua.GoToParentIndent_Callback"
-  return "g@l"
+function GotoTextObj_Callback()
+  require("user.autocommands").FeedKeysCorrectly(vim.g.dotargs)
 end
 
-function GoToParentIndent_Callback()
-  My_count = My_count + 1
-  if My_count >= 2 then
-    vim.cmd [[ normal 0 ]]
-  end
-  M.GoToParentIndent()
-  -- print("Count: " .. My_count)
+M.GotoTextObj = function(action)
+  vim.g.dotargs = action
+  vim.o.operatorfunc = 'v:lua.GotoTextObj_Callback'
+  return "g@"
 end
 
-M.FeedKeysCorrectly = function(keys)
-  local feedableKeys = vim.api.nvim_replace_termcodes(keys, true, false, true)
-  vim.api.nvim_feedkeys(feedableKeys, "n", true)
+------------------------------------------------------------------------------------------------------------------------
+
+_G.WhichKeyRepeat_Callback = function()
+  if vim.g.dotkeys ~= nil then require("user.autocommands").FeedKeysCorrectly(vim.g.dotprekeys) end
+  if vim.g.dotfn ~= "" then vim.cmd(vim.g.dotcmd) end
+  if vim.g.dotkeys ~= nil then require("user.autocommands").FeedKeysCorrectly(vim.g.dotpostkeys) end
 end
+
+M.WhichkeyRepeat = function(command, prekeys, postkeys)
+  vim.g.dotcmd = command
+  vim.g.dotprekeys = prekeys
+  vim.g.dotpostkeys = postkeys
+  vim.o.operatorfunc = 'v:lua.WhichKeyRepeat_Callback'
+  vim.cmd.normal { "g@l", bang = true }
+end
+
+-- vim.keymap.set('n', "g.", function() M.WhichkeyRepeat("WhichKey <leader>gp") end)
+
+------------------------------------------------------------------------------------------------------------------------
 
 function HorzIncrement()
   vim.cmd [[ normal "zyan ]]
@@ -345,6 +374,8 @@ end
 create_command("IncrementHorz", HorzIncrement, {})
 create_command("DecrementHorz", HorzDecrement, {})
 create_command("BufferlineShow", ShowBufferline, {})
+
+------------------------------------------------------------------------------------------------------------------------
 
 -- -- _json_to_jsonc
 -- cmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {

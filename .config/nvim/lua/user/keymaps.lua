@@ -197,6 +197,12 @@ map({ "n", "t" }, "<M-x>", "<cmd>Lspsaga term_toggle<CR>")
 --   end
 -- end
 
+-- _goto_textobj_(dotrepeat)
+map('n', "g.", function() return require('user.autocommands').GotoTextObj("") end,
+  { expr = true, desc = "Goto end of TextObj" })
+map('n', "g:", function() return require('user.autocommands').GotoTextObj(":normal `[v`]<cr><esc>") end,
+  { expr = true, desc = "Goto start of TextObj" })
+
 -- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
 -- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
 -- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
@@ -249,8 +255,8 @@ map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.cal
   { desc = "inner key textobj" })
 map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
   { desc = "outer number textobj" })
-map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
-  { desc = "outer number textobj" })
+-- map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
+--   { desc = "inner number textobj" })
 -- map({ "o", "x" }, "al", function() require("various-textobjs").mdlink(false) end)
 -- map({ "o", "x" }, "il", function() require("various-textobjs").mdlink(true) end)
 -- map({ "o", "x" }, "aC", function() require("various-textobjs").mdFencedCodeBlock(false) end)

@@ -3,6 +3,8 @@ if not status_ok then
   return
 end
 
+local cmd = require("user.autocommands")
+
 local setup = {
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
@@ -580,7 +582,15 @@ local mappings = {
     --   end,
     --   "Jump to current_context",
     -- },
-    u = { require("user.autocommands").GoToParentIndent_Repeat, "Jump to current_context", expr = true }, -- No "()" disables autorun at startup
+    u = {
+      function()
+        cmd.WhichkeyRepeat(
+          "lua require('user.autocommands').GoToParentIndent()",
+          ":normal 0<cr>"
+        )
+      end,
+      "Jump to current_context",
+    },
     -- w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
     -- W = { "<cmd>set winbar=  <cr>", "disable winbar" },
     [";"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
