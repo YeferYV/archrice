@@ -3,8 +3,6 @@ if not status_ok then
   return
 end
 
-local cmd = require("user.autocommands")
-
 local setup = {
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
@@ -196,15 +194,15 @@ local mappings = {
 
   d = {
     name = "Debugger",
-    b = { function() cmd.WhichkeyRepeat("lua require'dap'.toggle_breakpoint()") end, "Toggle Breakpoint" },
-    c = { function() cmd.WhichkeyRepeat("lua require'dap'.continue()") end, "Continue" },
-    i = { function() cmd.WhichkeyRepeat("lua require'dap'.step_into()") end, "Step Into" },
-    o = { function() cmd.WhichkeyRepeat("lua require'dap'.step_over()") end, "Step Over" },
-    O = { function() cmd.WhichkeyRepeat("lua require'dap'.step_out()") end, "Step Out" },
-    l = { function() cmd.WhichkeyRepeat("lua require'dap'.run_last()") end, "Run last" },
-    s = { function() cmd.WhichkeyRepeat("lua require'dapui'.toggle()") end, "Start/Toggle Dapui" },
-    S = { function() cmd.WhichkeyRepeat("lua require'dap'.terminate()") end, "Stop" },
-    t = { function() cmd.WhichkeyRepeat("lua require'dap'.repl.toggle()") end, "Toggle Repl" },
+    b = { function() WhichkeyRepeat("lua require'dap'.toggle_breakpoint()") end, "Toggle Breakpoint" },
+    c = { function() WhichkeyRepeat("lua require'dap'.continue()") end, "Continue" },
+    i = { function() WhichkeyRepeat("lua require'dap'.step_into()") end, "Step Into" },
+    o = { function() WhichkeyRepeat("lua require'dap'.step_over()") end, "Step Over" },
+    O = { function() WhichkeyRepeat("lua require'dap'.step_out()") end, "Step Out" },
+    l = { function() WhichkeyRepeat("lua require'dap'.run_last()") end, "Run last" },
+    s = { function() WhichkeyRepeat("lua require'dapui'.toggle()") end, "Start/Toggle Dapui" },
+    S = { function() WhichkeyRepeat("lua require'dap'.terminate()") end, "Stop" },
+    t = { function() WhichkeyRepeat("lua require'dap'.repl.toggle()") end, "Toggle Repl" },
   },
 
   ["f"] = {
@@ -242,15 +240,15 @@ local mappings = {
     },
     G = { function() _LAZYGIT_FLOAT_TOGGLE() end, "Float Lazygit" },
     L = { "<cmd>terminal lazygit<cr><cmd>set ft=tab-terminal<cr>", "Buffer Lazygit" },
-    j = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.next_hunk()") end, "Next Hunk" },
-    k = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.prev_hunk()") end, "Prev Hunk" },
-    l = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.blame_line()") end, "Blame" },
-    p = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.preview_hunk()") end, "Preview Hunk" },
-    r = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.reset_hunk()") end, "Reset Hunk" },
-    R = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.reset_buffer()") end, "Reset Buffer" },
-    s = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.stage_hunk()") end, "Stage Hunk" },
-    u = { function() cmd.WhichkeyRepeat("lua require 'gitsigns'.undo_stage_hunk()") end, "Undo Stage Hunk" },
-    d = { function() cmd.WhichkeyRepeat("Gitsigns diffthis HEAD") end, "Diff", },
+    j = { function() WhichkeyRepeat("lua require 'gitsigns'.next_hunk()") end, "Next Hunk" },
+    k = { function() WhichkeyRepeat("lua require 'gitsigns'.prev_hunk()") end, "Prev Hunk" },
+    l = { function() WhichkeyRepeat("lua require 'gitsigns'.blame_line()") end, "Blame" },
+    p = { function() WhichkeyRepeat("lua require 'gitsigns'.preview_hunk()") end, "Preview Hunk" },
+    r = { function() WhichkeyRepeat("lua require 'gitsigns'.reset_hunk()") end, "Reset Hunk" },
+    R = { function() WhichkeyRepeat("lua require 'gitsigns'.reset_buffer()") end, "Reset Buffer" },
+    s = { function() WhichkeyRepeat("lua require 'gitsigns'.stage_hunk()") end, "Stage Hunk" },
+    u = { function() WhichkeyRepeat("lua require 'gitsigns'.undo_stage_hunk()") end, "Undo Stage Hunk" },
+    d = { function() WhichkeyRepeat("Gitsigns diffthis HEAD") end, "Diff", },
     o = { "<cmd>Telescope git_status initial_mode=normal<cr>", "Open Changed File" },
     b = { "<cmd>Telescope git_branches initial_mode=normal<cr>", "Checkout Branch" },
     c = { "<cmd>Telescope git_commits initial_mode=normal<cr>", "Checkout Commit" },
@@ -258,27 +256,27 @@ local mappings = {
 
   l = {
     name = "LSP",
-    A = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.code_action()") end, "Code Action" },
+    A = { function() WhichkeyRepeat("lua vim.lsp.buf.code_action()") end, "Code Action" },
     c = { "<cmd>Telescope lsp_incoming_calls initial_mode=normal<cr>", "Telescope incoming calls" },
     C = { "<cmd>Telescope lsp_outgoing_calls initial_mode=normal<cr>", "Telescope outgoing calls" },
-    d = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.definition()") end, "Goto Definition" },
-    D = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.declaration()") end, "Goto Declaration" },
-    F = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.format()") end, "Format" },
-    h = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.hover()") end, "Hover" },
-    H = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.signature_help()") end, "Signature" },
-    I = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.implementation()") end, "Goto Implementation" },
-    L = { function() cmd.WhichkeyRepeat("lua vim.lsp.codelens.run()") end, "CodeLens" },
-    n = { function() cmd.WhichkeyRepeat("lua vim.diagnostic.goto_next()") end, "Next Diagnostic", },
-    o = { function() cmd.WhichkeyRepeat("lua vim.diagnostic.open_float()") end, "Open Diagnostic" },
-    p = { function() cmd.WhichkeyRepeat("lua vim.diagnostic.goto_prev()") end, "Prev Diagnostic", },
-    q = { function() cmd.WhichkeyRepeat("lua vim.diagnostic.setloclist()") end, "Diagnostic List" },
+    d = { function() WhichkeyRepeat("lua vim.lsp.buf.definition()") end, "Goto Definition" },
+    D = { function() WhichkeyRepeat("lua vim.lsp.buf.declaration()") end, "Goto Declaration" },
+    F = { function() WhichkeyRepeat("lua vim.lsp.buf.format()") end, "Format" },
+    h = { function() WhichkeyRepeat("lua vim.lsp.buf.hover()") end, "Hover" },
+    H = { function() WhichkeyRepeat("lua vim.lsp.buf.signature_help()") end, "Signature" },
+    I = { function() WhichkeyRepeat("lua vim.lsp.buf.implementation()") end, "Goto Implementation" },
+    L = { function() WhichkeyRepeat("lua vim.lsp.codelens.run()") end, "CodeLens" },
+    n = { function() WhichkeyRepeat("lua vim.diagnostic.goto_next()") end, "Next Diagnostic", },
+    o = { function() WhichkeyRepeat("lua vim.diagnostic.open_float()") end, "Open Diagnostic" },
+    p = { function() WhichkeyRepeat("lua vim.diagnostic.goto_prev()") end, "Prev Diagnostic", },
+    q = { function() WhichkeyRepeat("lua vim.diagnostic.setloclist()") end, "Diagnostic List" },
     Q = { "<cmd>Telescope loclist initial_mode=normal<cr>", "Telescope QuickFix LocList" },
-    r = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.references()") end, "References" },
-    R = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.rename()") end, "Rename" },
+    r = { function() WhichkeyRepeat("lua vim.lsp.buf.references()") end, "References" },
+    R = { function() WhichkeyRepeat("lua vim.lsp.buf.rename()") end, "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Telescope Document Symbols" },
     S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Telescope Dynamic Workspace Symbols", },
     T = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Telescope Workspace Symbols", },
-    t = { function() cmd.WhichkeyRepeat("lua vim.lsp.buf.type_definition()") end, "Goto TypeDefinition" },
+    t = { function() WhichkeyRepeat("lua vim.lsp.buf.type_definition()") end, "Goto TypeDefinition" },
     v = { "<cmd>Telescope diagnostics<cr>", "Telescope View Diagnostics", },
     V = { "<cmd>Telescope lsp_references initial_mode=normal<cr>", "Telescope View References" },
     w = { "<cmd>Telescope lsp_implementations initial_mode=normal<cr>", "Telescope View Implementations" },
@@ -289,34 +287,34 @@ local mappings = {
 
   p = {
     name = "Peek LspSaga",
-    a = { function() cmd.WhichkeyRepeat("Lspsaga code_action") end, "Code Action" },
-    b = { function() cmd.WhichkeyRepeat("Lspsaga show_buf_diagnostics") end, "Show Buf Diagnostics" },
-    c = { function() cmd.WhichkeyRepeat("Lspsaga incoming_calls") end, "Incomming Calls" },
-    C = { function() cmd.WhichkeyRepeat("Lspsaga outgoing_calls") end, "outgoing Calls" },
-    d = { function() cmd.WhichkeyRepeat("Lspsaga peek_definition") end, "Peek Definition" },
-    D = { function() cmd.WhichkeyRepeat("Lspsaga goto_definition") end, "Peek Definition" },
-    f = { function() cmd.WhichkeyRepeat("Lspsaga lsp_finder") end, "Finder" },
-    h = { function() cmd.WhichkeyRepeat("Lspsaga hover_doc") end, "Hover" },
-    n = { function() cmd.WhichkeyRepeat("Lspsaga diagnostic_jump_next") end, "Next Diagnostics" },
+    a = { function() WhichkeyRepeat("Lspsaga code_action") end, "Code Action" },
+    b = { function() WhichkeyRepeat("Lspsaga show_buf_diagnostics") end, "Show Buf Diagnostics" },
+    c = { function() WhichkeyRepeat("Lspsaga incoming_calls") end, "Incomming Calls" },
+    C = { function() WhichkeyRepeat("Lspsaga outgoing_calls") end, "outgoing Calls" },
+    d = { function() WhichkeyRepeat("Lspsaga peek_definition") end, "Peek Definition" },
+    D = { function() WhichkeyRepeat("Lspsaga goto_definition") end, "Peek Definition" },
+    f = { function() WhichkeyRepeat("Lspsaga lsp_finder") end, "Finder" },
+    h = { function() WhichkeyRepeat("Lspsaga hover_doc") end, "Hover" },
+    n = { function() WhichkeyRepeat("Lspsaga diagnostic_jump_next") end, "Next Diagnostics" },
     N = {
       function()
-        cmd.WhichKeyRepeat('require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })')
+        WhichkeyRepeat('require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })')
       end,
       "Next Error"
     },
-    o = { function() cmd.WhichkeyRepeat("Lspsaga show_line_diagnostics") end, "Show Line Diagnostics" },
-    O = { function() cmd.WhichkeyRepeat("Lspsaga show_cursor_diagnostics") end, "Show Cursor Diagnostics" },
-    p = { function() cmd.WhichkeyRepeat("Lspsaga diagnostic_jump_prev") end, "Prev Diagnostics" },
+    o = { function() WhichkeyRepeat("Lspsaga show_line_diagnostics") end, "Show Line Diagnostics" },
+    O = { function() WhichkeyRepeat("Lspsaga show_cursor_diagnostics") end, "Show Cursor Diagnostics" },
+    p = { function() WhichkeyRepeat("Lspsaga diagnostic_jump_prev") end, "Prev Diagnostics" },
     P = {
       function()
-        cmd.WhichKeyRepeat('require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })')
+        WhichkeyRepeat('require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })')
       end,
       "Prev Error"
     },
-    r = { function() cmd.WhichkeyRepeat("Lspsaga term_toggle ranger") end, "Ranger" },
-    R = { function() cmd.WhichkeyRepeat("Lspsaga rename") end, "Rename" },
-    t = { function() cmd.WhichkeyRepeat("Lspsaga term_toggle") end, "Toggle Terminal" },
-    z = { function() cmd.WhichkeyRepeat("Lspsaga outline") end, "Toggle outline" },
+    r = { function() WhichkeyRepeat("Lspsaga term_toggle ranger") end, "Ranger" },
+    R = { function() WhichkeyRepeat("Lspsaga rename") end, "Rename" },
+    t = { function() WhichkeyRepeat("Lspsaga term_toggle") end, "Toggle Terminal" },
+    z = { function() WhichkeyRepeat("Lspsaga outline") end, "Toggle outline" },
   },
 
   P = {
@@ -577,16 +575,16 @@ local mappings = {
     },
     -- u = {
     --   function()
-    --     require("user.autocommands").GoToParentIndent()
-    --     vim.call("repeat#set", "k uu")
+    --     GoToParentIndent()
+    --     vim.call("repeat#set", "0 uu")
     --   end,
     --   "Jump to current_context",
     -- },
     u = {
       function()
-        cmd.WhichkeyRepeat(
-          "lua require('user.autocommands').GoToParentIndent()",
-          ":normal 0<cr>"
+        WhichkeyRepeat(
+          "normal! 0",
+          "lua GoToParentIndent()"
         )
       end,
       "Jump to current_context",

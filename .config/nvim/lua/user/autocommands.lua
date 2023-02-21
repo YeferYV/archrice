@@ -1,7 +1,7 @@
 -- vim:ft=lua:ts=2:sw=2:sts=2
 
 local M = {}
-local cmd = vim.api.nvim_create_autocmd
+local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local create_command = vim.api.nvim_create_user_command
 
@@ -230,7 +230,7 @@ local hide_terminal_statusline = augroup("_enable_terminal_insert_and_hide_termi
 --   command = "startinsert"
 -- })
 
-cmd({ "TermEnter", "TermOpen" }, {
+autocmd({ "TermEnter", "TermOpen" }, {
   group = hide_terminal_statusline,
   callback = function()
     -- require('lualine').hide()
@@ -248,7 +248,7 @@ cmd({ "TermEnter", "TermOpen" }, {
 -- })
 
 -- _autoclose_tab-terminal_if_last_window
-cmd({ "TermClose" }, {
+autocmd({ "TermClose" }, {
   group = hide_terminal_statusline,
   callback = function()
 
@@ -262,7 +262,7 @@ cmd({ "TermClose" }, {
       else
         -- if number of buffers of the current tab is equal to 1 (last window)
         if #vim.fn.getbufinfo({ buflisted = 1 }) == 1 then
-          -- M.FeedKeysCorrectly("<esc><esc>:close<cr>")
+          -- FeedKeysCorrectly("<esc><esc>:close<cr>")
           vim.cmd [[ call feedkeys("\<Esc>\<Esc>:close\<CR>") ]]
         end
       end
@@ -298,14 +298,14 @@ M.EnableAutoNoHighlightSearch() -- autostart
 
 ------------------------------------------------------------------------------------------------------------------------
 
-M.FeedKeysCorrectly = function(keys)
+_G.FeedKeysCorrectly = function(keys)
   local feedableKeys = vim.api.nvim_replace_termcodes(keys, true, false, true)
   vim.api.nvim_feedkeys(feedableKeys, "n", true)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 
-M.GoToParentIndent = function()
+_G.GoToParentIndent = function()
   local ok, start = require("indent_blankline.utils").get_current_context(
     vim.g.indent_blankline_context_patterns,
     vim.g.indent_blankline_use_treesitter_scope
@@ -319,10 +319,10 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 
 function GotoTextObj_Callback()
-  require("user.autocommands").FeedKeysCorrectly(vim.g.dotargs)
+  FeedKeysCorrectly(vim.g.dotargs)
 end
 
-M.GotoTextObj = function(action)
+_G.GotoTextObj = function(action)
   vim.g.dotargs = action
   vim.o.operatorfunc = 'v:lua.GotoTextObj_Callback'
   return "g@"
@@ -330,21 +330,19 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
-_G.WhichKeyRepeat_Callback = function()
-  if vim.g.dotkeys ~= nil then require("user.autocommands").FeedKeysCorrectly(vim.g.dotprekeys) end
-  if vim.g.dotfn ~= "" then vim.cmd(vim.g.dotcmd) end
-  if vim.g.dotkeys ~= nil then require("user.autocommands").FeedKeysCorrectly(vim.g.dotpostkeys) end
+function WhichKeyRepeat_Callback()
+  if vim.g.dotfirstcmd ~= nil then vim.cmd(vim.g.dotfirstcmd) end
+  if vim.g.dotsecondcmd ~= nil then vim.cmd(vim.g.dotsecondcmd) end
+  if vim.g.dotthirdcmd ~= nil then vim.cmd(vim.g.dotthirdcmd) end
 end
 
-M.WhichkeyRepeat = function(command, prekeys, postkeys)
-  vim.g.dotcmd = command
-  vim.g.dotprekeys = prekeys
-  vim.g.dotpostkeys = postkeys
+_G.WhichkeyRepeat = function(firstcmd, secondcmd, thirdcmd)
+  vim.g.dotfirstcmd = firstcmd
+  vim.g.dotsecondcmd = secondcmd
+  vim.g.dotthirdcmd = thirdcmd
   vim.o.operatorfunc = 'v:lua.WhichKeyRepeat_Callback'
   vim.cmd.normal { "g@l", bang = true }
 end
-
--- vim.keymap.set('n', "g.", function() M.WhichkeyRepeat("WhichKey <leader>gp") end)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -352,14 +350,14 @@ function HorzIncrement()
   vim.cmd [[ normal "zyan ]]
   vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
   vim.cmd [[ normal van"zp ]]
-  M.FeedKeysCorrectly('<C-a>')
+  FeedKeysCorrectly('<C-a>')
 end
 
 function HorzDecrement()
   vim.cmd [[ normal "zyan ]]
   vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
   vim.cmd [[ normal van"zp ]]
-  M.FeedKeysCorrectly('<C-x>')
+  FeedKeysCorrectly('<C-x>')
 end
 
 function ShowBufferline()

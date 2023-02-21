@@ -198,10 +198,8 @@ map({ "n", "t" }, "<M-x>", "<cmd>Lspsaga term_toggle<CR>")
 -- end
 
 -- _goto_textobj_(dotrepeat)
-map('n', "g.", function() return require('user.autocommands').GotoTextObj("") end,
-  { expr = true, desc = "Goto end of TextObj" })
-map('n', "g:", function() return require('user.autocommands').GotoTextObj(":normal `[v`]<cr><esc>") end,
-  { expr = true, desc = "Goto start of TextObj" })
+map('n', "g.", function() return GotoTextObj("") end, { expr = true, desc = "StartOf TextObj" })
+map('n', "g:", function() return GotoTextObj(":normal `[v`]<cr><esc>") end, { expr = true, desc = "EndOf TextObj" })
 
 -- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
 -- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
@@ -255,8 +253,8 @@ map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.cal
   { desc = "inner key textobj" })
 map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
   { desc = "outer number textobj" })
--- map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
---   { desc = "inner number textobj" })
+map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
+  { desc = "inner number textobj" })
 -- map({ "o", "x" }, "al", function() require("various-textobjs").mdlink(false) end)
 -- map({ "o", "x" }, "il", function() require("various-textobjs").mdlink(true) end)
 -- map({ "o", "x" }, "aC", function() require("various-textobjs").mdFencedCodeBlock(false) end)
@@ -515,8 +513,8 @@ map({ "n", "x", "o" }, "gNn", next_around_numeral, { desc = "Next Around Number"
 map({ "n", "x", "o" }, "gPn", prev_around_numeral, { desc = "Prev Around Number" })
 
 local vert_increment, vert_decrement = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal "zyanjvan"zp ]] require("user.autocommands").FeedKeysCorrectly('<C-a>') end,
-  function() vim.cmd [[ normal "zyanjvan"zp ]] require("user.autocommands").FeedKeysCorrectly('<C-x>') end
+  function() vim.cmd [[ normal "zyanjvan"zp ]] FeedKeysCorrectly('<C-a>') end,
+  function() vim.cmd [[ normal "zyanjvan"zp ]] FeedKeysCorrectly('<C-x>') end
 )
 map({ "n" }, "g+", vert_increment, { desc = "Vert Increment" })
 map({ "n" }, "g-", vert_decrement, { desc = "Vert Decrement" })
