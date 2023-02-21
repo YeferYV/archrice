@@ -73,22 +73,35 @@ local function lsp_highlight_document(client)
 end
 
 local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gA", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gF", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gH", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gL", '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
+  -- local opts = { noremap = true, silent = true }
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gnd", '<cmd>lua vim.diagnostic.goto_next({border="rounded"})<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", opts) -- error diagnostic
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gpd", '<cmd>lua vim.diagnostic.goto_prev({border="rounded"})<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gA", "<cmd>lua vim.lsp.buf.code_action()<CR>",
+    { desc = "Code Action", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>",
+    { desc = "Goto Definition", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>",
+    { desc = "Goto Declaration", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gF", "<cmd>lua vim.lsp.buf.format { async = true }<CR>",
+    { desc = "Format", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>",
+    { desc = "Hover", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gH", "<cmd>lua vim.lsp.buf.signature_help()<CR>",
+    { desc = "Signature", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>",
+    { desc = "Goto Implementation", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gL", '<cmd>lua vim.lsp.codelens.run()<CR>',
+    { desc = "Codelens", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>",
+    { desc = "Open Diagnotic", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gq", "<cmd>lua vim.diagnostic.setloclist()<CR>",
+    { desc = "Diagnotic List", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>",
+    { desc = "References", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>",
+    { desc = "Rename", silent = true })
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+    { desc = "Goto TypeDefinition", silent = true })
   vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format { async = false }' ]])
 end
 
