@@ -128,11 +128,15 @@
       "commands": [ "workbench.action.navigateToLastEditLocation" ]
     },
     {
-      "before": [ "g", "n" ],
+      "before": [ "g","n","h" ],
+      "commands": [ "editor.action.marker.nextChange" ]
+    },
+    {
+      "before": [ "g", "n", "m" ],
       "commands": [ "editor.action.marker.next" ]
     },
     {
-      "before": [ "g", "N" ],
+      "before": [ "g", "n","M" ],
       "commands": [ "editor.action.marker.nextInFiles" ]
     },
     {
@@ -140,15 +144,23 @@
       "commands": [ "workbench.actions.view.problems" ]
     },
     {
-      "before": [ "g", "p" ],
+      "before": ["g","O"],
+      "commands": [ "outline.focus" ]
+    },
+    {
+      "before": [ "g","p","h" ],
+      "commands": [ "editor.action.marker.previousChange" ]
+    },
+    {
+      "before": [ "g", "p","m" ],
       "commands": [ "editor.action.marker.prev" ]
     },
     {
-      "before": [ "g", "P" ],
+      "before": [ "g", "p","M" ],
       "commands": [ "editor.action.marker.prevInFiles" ]
     },
     {
-      "before": [ "g", "Q" ],
+      "before": [ "g", "q" ],
       "commands": [ "editor.action.quickFix" ]
     },
     {
@@ -157,7 +169,15 @@
     },
     {
       "before": [ "g", "R" ],
-      "commands": [ "editor.action.rename" ]
+      "commands": [ "editor.action.Rename" ]
+    },
+    {
+      "before": ["g","s"],
+      "commands": [ "workbench.action.gotoSymbol" ]
+    },
+    {
+      "before": ["g","S"],
+      "commands": [ "workbench.action.showAllSymbols" ]
     },
     {
       "before": [ "g", "t" ],
@@ -168,29 +188,17 @@
       "commands": [ "editor.action.formatDocument" ]
     },
     {
-      "before": [ "g", "v" ],
+      "before": [ "g", "V" ],
       "commands": [ "references-view.find" ]
     }
-    // {
-    //   "before": ["g","o"],
-    //   "commands": [ "outline.focus" ]
-    // },
-    // {
-    //   "before": ["g","s"],
-    //   "commands": [ "workbench.action.gotoSymbol" ]
-    // },
-    // {
-    //   "before": ["g","S"],
-    //   "commands": [ "workbench.action.showAllSymbols" ]
-    // },
-    // {
-    //   "before": ["g","["],
-    //   "commands": [ "editor.action.marker.previousChange" ]
-    // },
-    // {
-    //   "before": ["g","]"],
-    //   "commands": [ "editor.action.marker.nextChange" ]
-    // },
+    {
+      "before": [ "g", "W" ],
+      "commands": [ "references-view.findImplementations" ]
+    }
+    {
+      "before": [ "g", "z" ],
+      "commands": [ "references-view.showCallHierarchy" ]
+    }
     // {
     //   "before": ["<leader>", "e"],
     //   "commands": [ "workbench.action.toggleSidebarVisibility","workbench.view.explorer" ]
@@ -773,7 +781,7 @@
           "key": "F",
           "name": "Format",
           "type": "command",
-          "command": "editor.action.formatDocument",
+          "command": "editor.action.format",
           "when": "editorHasDocumentFormattingProvider && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
         },
         {
@@ -794,6 +802,12 @@
           "type": "command",
           "command": "editor.action.goToImplementation",
           "when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
+        },
+        {
+          "key": "l",
+          "name": "Jump to last change",
+          "type": "command",
+          "command": "workbench.action.navigateToLastEditLocation",
         },
         {
           "key": "n",
@@ -881,14 +895,14 @@
           "command": "editor.action.formatDocument"
         },
         {
-          "key": "v",
+          "key": "V",
           "name": "View All References",
           "type": "command",
           "command": "references-view.find",
           "when": "editorHasReferenceProvider"
         },
         {
-          "key": "V",
+          "key": "W",
           "name": "View All Implementations",
           "type": "command",
           "command": "references-view.findImplementations"
@@ -1611,6 +1625,28 @@
           "command": "workbench.userDataSync.actions.showLog"
         }
       ]
+    },
+    {
+      "key": "z",
+      "name": "folding...",
+      "type": "bindings",
+      "bindings": [
+        {
+          "key": "f",
+          "name": "Fold",
+          "command": "editor.fold"
+        },
+        {
+          "key": "u",
+          "name": "Unfold",
+          "command": "editor.unfold"
+        },
+        {
+          "key": "t",
+          "name": "Toggle Fold",
+          "command": "editor.toggleFold"
+        },
+      ]
     }
   ],
 
@@ -1646,6 +1682,7 @@
   // "editor.guides.bracketPairs": true,
   // "editor.guides.bracketPairsHorizontal": true,
   // "editor.lineHeight": 1.4,
+  "editor.linkedEditing": true,
   "editor.inlineSuggest.enabled": true,
   "editor.minimap.enabled": false,
   "editor.renderLineHighlight": "none",

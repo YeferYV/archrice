@@ -416,19 +416,21 @@
         "command": "toggleSuggestionFocus",
         "when": "suggestWidgetVisible && textInputFocus"
     },
-    {
-        "key": "ctrl+h",
-        "command": "codeium.toggleEnable",
-        "when": "inlineSuggestionVisible && vim.mode == 'Insert'"
-    },
+    // {
+    //     "key": "ctrl+h",
+    //     "command": "codeium.toggleEnable",
+    //     "when": "inlineSuggestionVisible && vim.mode == 'Insert'"
+    // },
     {
         "key": "ctrl+j",
-        "command": "codeium.showNextCompletion",
+        // "command": "codeium.showNextCompletion",
+        "command": "editor.action.inlineSuggest.showNext",
         "when": "inlineSuggestionVisible && vim.mode == 'Insert'"
     },
     {
         "key": "ctrl+k",
-        "command": "codeium.showPreviousCompletion",
+        // "command": "codeium.showPreviousCompletion",
+        "command": "editor.action.inlineSuggest.showPrevious",
         "when": "inlineSuggestionVisible && vim.mode == 'Insert'"
     },
     {
