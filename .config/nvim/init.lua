@@ -9,8 +9,8 @@
 -- vim.cmd [[ colorscheme leet]]
 
 -- impatient at startup
-local status_ok, impatient = pcall(require, "impatient")
-if status_ok then
+local impatient_status_ok, impatient = pcall(require, "impatient")
+if impatient_status_ok then
   impatient.enable_profile()
 end
 
@@ -40,7 +40,7 @@ require "user.treesitter"
 require "user.whichkey"
 
 -- protected calls for ":lua require(...)<cr>"
-local status_ok, _ = pcall(require, "user.keymaps")
-if not status_ok then
+local keymaps_status_ok, _ = pcall(require, "user.keymaps")
+if not keymaps_status_ok then
   return
 end

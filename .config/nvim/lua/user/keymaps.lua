@@ -125,12 +125,12 @@ keymap("n", "<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", opts)
 keymap("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", opts)
 keymap("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", opts)
 keymap("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", opts)
-keymap("n", "gy;", ":call CycleLastBuffer()<CR>", opts)
-keymap("n", "gyl", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
-keymap("n", "gys", "<Cmd>BufferLineCyclePrev <CR>", opts)
-keymap("n", "gyf", "<Cmd>BufferLineCycleNext <CR>", opts)
-keymap("n", "gyS", "<Cmd>BufferLineMovePrev <CR>", opts)
-keymap("n", "gyF", "<Cmd>BufferLineMoveNext <CR>", opts)
+keymap("n", "gb;", ":call CycleLastBuffer()<CR>", opts)
+keymap("n", "gbl", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
+keymap("n", "gbs", "<Cmd>BufferLineCyclePrev <CR>", opts)
+keymap("n", "gbf", "<Cmd>BufferLineCycleNext <CR>", opts)
+keymap("n", "gbS", "<Cmd>BufferLineMovePrev <CR>", opts)
+keymap("n", "gbF", "<Cmd>BufferLineMoveNext <CR>", opts)
 
 -- Terminal
 keymap("n", "<leader>v", "<Cmd>ToggleTerm direction=vertical   size=70<CR>",
@@ -173,12 +173,12 @@ map("n", "gsf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 map("n", "gsh", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 map("n", "gsn", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
 map("n", "gsN", function() require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR }) end,
-  { silent = true })
+  { silent = true, desc = "Lspsaga Next Error" })
 map("n", "gso", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
 map("n", "gsO", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
 map("n", "gsp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
 map("n", "gsP", function() require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
-  { silent = true })
+  { silent = true, desc = "Lspsaga Prev Error" })
 map("n", "gsr", "<cmd>Lspsaga term_toggle ranger<CR>", { silent = true })
 map("n", "gsR", "<cmd>Lspsaga rename<CR>", { silent = true })
 map("n", "gsz", "<cmd>LSpsaga outline<CR>", { silent = true })
@@ -297,6 +297,29 @@ map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { desc = "Space textobj" })
 vim.g.textobj_numeral_no_default_key_mappings = true
 map({ "o", "x" }, "ix", "<Plug>(textobj-numeral-hex-i)", { desc = "Hex textobj" })
 map({ "o", "x" }, "ax", "<Plug>(textobj-numeral-hex-a)", { desc = "Hex textobj" })
+
+-- _clipboard_textobj
+vim.cmd [[
+  let g:EasyClipUseCutDefaults = 0
+  let g:EasyClipEnableBlackHoleRedirect = 0
+  nmap gx "_d
+  nmap gxx "_dd
+  xmap gx "_d
+
+  let g:EasyClipUseYankDefaults = 0
+  nmap <silent> gy <plug>SubstituteOverMotionMap
+  nmap gyy <plug>SubstituteLine
+  xmap gy <plug>XEasyClipPaste
+
+  let g:EasyClipUsePasteDefaults = 0
+  nmap gY <plug>G_EasyClipPasteBefore
+  xmap gY <Plug>XG_EasyClipPaste
+
+  let g:EasyClipUsePasteToggleDefaults = 0
+  nmap gz <plug>EasyClipSwapPasteForward
+  nmap gZ <plug>EasyClipSwapPasteBackwards
+
+]]
 
 -- ╭─────────╮
 -- │ Motions │

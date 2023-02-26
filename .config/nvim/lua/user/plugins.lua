@@ -156,6 +156,7 @@ return require("packer").startup(function(use)
   use { "RRethy/nvim-treesitter-textsubjects", commit = "bc047b20768845fd54340eb76272b2cf2f6fa3f3" }
   use { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }
   use { "mg979/vim-visual-multi", commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a" }
+  use { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df" }
   use {
     "chrisgrieser/nvim-various-textobjs",
     commit = "7915b4567dbf3542652e3ada6f9660bfa81d94f7",
