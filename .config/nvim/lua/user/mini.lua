@@ -84,8 +84,17 @@ mini_ai.setup({
     -- b = false,
     -- b = { { '%b()', '%b[]', '%b{}' }, '^.().*().$' },
 
-    -- Quotes/uotes
-    u = { { "%b''", '%b""', '%b``' }, '^.().*().$' },
+    -- _key_value_textobj :help mini.ai (line 300)
+    -- the pattern .- matches any sequence of characters (except newline characters) (including whitespaces)
+    k = { '^%s*()().*()%f[%s]%s*() .?.?[=:]' }, -- %f[%s] -> to stop .* and ensure to start %s
+    v = { { '[=:] ()%s*().-%s*()[;,]()', '[=:] ()%s*().*()().$' } }, -- Pattern in double curly bracket equals fallback
+
+    -- _quotes/uotes
+    u = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
+
+    -- _number/hexadecimalcolor_textobj
+    n = { '[-+]?()%f[%d]%d+()%.?%d*' }, -- %f[%d] to make jumping to next group of number instead of next digit
+    x = { '#()%x%x%x%x%x%x()' },
 
     -- Now `vax` should select `xxx` and `vix` - middle `x`
     -- x = { 'x()x()x' },

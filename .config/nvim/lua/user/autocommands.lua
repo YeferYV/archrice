@@ -346,20 +346,6 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function HorzIncrement()
-  vim.cmd [[ normal "zyan ]]
-  vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
-  vim.cmd [[ normal van"zp ]]
-  FeedKeysCorrectly('<C-a>')
-end
-
-function HorzDecrement()
-  vim.cmd [[ normal "zyan ]]
-  vim.cmd [[ execute "normal \<Plug>(textobj-numeral-N)" ]]
-  vim.cmd [[ normal van"zp ]]
-  FeedKeysCorrectly('<C-x>')
-end
-
 function ShowBufferline()
   require('bufferline').setup {
     options = {
@@ -369,8 +355,6 @@ function ShowBufferline()
   }
 end
 
-create_command("IncrementHorz", HorzIncrement, {})
-create_command("DecrementHorz", HorzDecrement, {})
 create_command("BufferlineShow", ShowBufferline, {})
 
 ------------------------------------------------------------------------------------------------------------------------
