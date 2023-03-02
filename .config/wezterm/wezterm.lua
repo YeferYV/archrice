@@ -185,6 +185,7 @@ return {
         act.CopyMode("MoveDown"),
         act.CopyMode("MoveDown"),
         act.CopyMode("MoveDown"),
+        act.CopyMode("MoveDown"),
       },
       },
       { key = "K", mods = "NONE", action = act.Multiple {
