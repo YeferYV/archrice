@@ -39,43 +39,18 @@ mini_ai.setup({
     -- w = mapped to word by nvim
     -- W = mapped to Word by nvim
 
-    q = spec_treesitter({
-      a = '@call.outer',
-      i = '@call.inner',
-    }),
-    Q = spec_treesitter({
-      a = '@class.outer',
-      i = '@class.inner',
-    }),
-    g = spec_treesitter({
-      a = '@comment.outer',
-      i = '@comment.inner',
-    }),
-    G = spec_treesitter({
-      a = '@conditional.outer',
-      i = '@conditional.inner',
-    }),
-    B = spec_treesitter({
-      a = '@block.outer',
-      i = '@block.inner',
-    }),
-    F = spec_treesitter({
-      a = '@function.outer',
-      i = '@function.inner',
-    }),
-    L = spec_treesitter({
-      a = '@loop.outer',
-      i = '@loop.inner',
-    }),
-    P = spec_treesitter({
-      a = '@parameter.outer',
-      i = '@parameter.inner',
-    }),
-
-    -- @atribute unsupported
-    -- @frame unsupported
-    -- @statement unsupported
-    -- @scope unsupported
+    q = spec_treesitter({ a = '@call.outer', i = '@call.inner', }),
+    Q = spec_treesitter({ a = '@class.outer', i = '@class.inner', }),
+    g = spec_treesitter({ a = '@comment.outer', i = '@comment.inner', }),
+    G = spec_treesitter({ a = '@conditional.outer', i = '@conditional.inner', }),
+    B = spec_treesitter({ a = '@block.outer', i = '@block.inner', }),
+    F = spec_treesitter({ a = '@function.outer', i = '@function.inner', }),
+    L = spec_treesitter({ a = '@loop.outer', i = '@loop.inner', }),
+    P = spec_treesitter({ a = '@parameter.outer', i = '@parameter.inner', }),
+    R = spec_treesitter({ a = '@return.outer', i = '@return.inner', }),
+    ["="] = spec_treesitter({ a = '@assignment.rhs', i = '@assignment.lhs', }),
+    ["+"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
+    ["z"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
 
     -- Tweak argument textobject
     a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }), -- brackets = { '%b()', '%b[]', '%b{}' },

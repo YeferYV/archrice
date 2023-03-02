@@ -666,6 +666,66 @@ require('legendary').setup({ which_key = { auto_register = true } })
 which_key.setup(setup)
 which_key.register(mappings, opts)
 
+local mini_textobj = {
+  q = '@call',
+  Q = '@class',
+  g = '@comment',
+  G = '@conditional',
+  B = '@block',
+  F = '@function',
+  L = '@loop',
+  P = '@parameter',
+  R = '@return',
+  ["="] = '@assignment.side',
+  ["+"] = '@assignment.whole',
+  ['a'] = 'Function Parameters',
+  ['A'] = 'Whole Buffer',
+  ['b'] = 'Alias )]}',
+  ['f'] = 'Function Definition',
+  ['k'] = 'Key',
+  ['n'] = 'Number',
+  ['p'] = 'Paragraph',
+  ['s'] = 'Sentence',
+  ['t'] = 'Tag',
+  ['u'] = 'Alias "\'`',
+  ['v'] = 'Value',
+  ['w'] = 'Word',
+  ['x'] = 'Hex',
+  ['?'] = 'Prompt',
+  ['('] = 'Same as )',
+  ['['] = 'Same as ]',
+  ['{'] = 'Same as }',
+  ['<'] = 'Same as >',
+  ['"'] = 'punctuations...',
+  ["'"] = 'punctuations...',
+  ["`"] = 'punctuations...',
+  ['.'] = 'punctuations...',
+  [','] = 'punctuations...',
+  [';'] = 'punctuations...',
+  ['-'] = 'punctuations...',
+  ['_'] = 'punctuations...',
+  ['/'] = 'punctuations...',
+  ['|'] = 'punctuations...',
+  ['&'] = 'punctuations...',
+  -- `!@#$%^&*()_+-=[]{};'\:"|,./<>?
+}
+
+which_key.register({
+  mode = { "o", "x" },
+  ["i"] = mini_textobj,
+  ["il"] = { name = "+Last", mini_textobj },
+  ["iN"] = { name = "+Next", mini_textobj },
+  ["a"] = mini_textobj,
+  ["al"] = { name = "+Last", mini_textobj },
+  ["aN"] = { name = "+Next", mini_textobj },
+})
+
+which_key.register({
+  mode = { "n" },
+  ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around" }, mini_textobj),
+  ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around" }, mini_textobj),
+})
+
 -- Disable some operators (like v)
 -- make sure to run this code before calling setup()
 -- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
