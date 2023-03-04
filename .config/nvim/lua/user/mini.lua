@@ -61,13 +61,14 @@ mini_ai.setup({
 
     -- _key_value_textobj :help mini.ai (line 300)
     -- the pattern .- matches any sequence of characters (except newline characters) (including whitespaces)
-    k = { '^%s*()().*()%f[%s]%s*() .?.?[=:]' }, -- %f[%s] -> to stop .* and ensure to start %s
-    v = { { '[=:] ()%s*().-%s*()[;,]()', '[=:] ()%s*().*()().$' } }, -- Pattern in double curly bracket equals fallback
+    k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' }, -- .- -> don't be greedy let %s- to exist
+    v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } }, -- Pattern in double curly bracket equals fallback
 
     -- _quotes/uotes
     u = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
 
     -- _number/hexadecimalcolor_textobj
+    -- the pattern %f[%d]%d+ ensures there is a %d before start matching (non %d before %d+)(useful to stop .*)
     n = { '[-+]?()%f[%d]%d+()%.?%d*' }, -- %f[%d] to make jumping to next group of number instead of next digit
     x = { '#()%x%x%x%x%x%x()' },
 

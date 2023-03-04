@@ -163,8 +163,8 @@ neotree.setup({
       ["<esc>"] = "revert_preview",
       -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
       ["P"] = { "toggle_preview", config = { use_float = true } },
-      ["v"] = "open_vsplit",
-      ["V"] = "open_split",
+      ["v"] = function(state) state.commands["open_vsplit"](state) vim.cmd("Neotree close") end,
+      ["V"] = function(state) state.commands["open_split"](state) vim.cmd("Neotree close") end,
       -- ["w"] = "open_with_window_picker",
       -- ["s"] = "vsplit_with_window_picker",
       -- ["S"] = "split_with_window_picker",
@@ -373,13 +373,12 @@ neotree.setup({
       open_tabnew_showbuffer = function(state)
         state.commands["open_tabnew"](state)
         vim.cmd("Neotree show")
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ BufferlineShow ]]
       end,
 
       open_tabdrop_showbuffer = function(state)
         state.commands["open_tab_drop"](state)
-        vim.cmd("Neotree show")
-        require('bufferline').setup { options = { offsets = { { filetype = 'neo-tree', padding = 1 } } } }
+        vim.cmd [[ BufferlineShow ]]
       end,
 
       open_unfocus = function(state)
