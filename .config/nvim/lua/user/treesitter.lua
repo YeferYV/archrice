@@ -87,6 +87,7 @@ configs.setup {
         ['[aF'] = '@function.outer',
         ['[aL'] = '@loop.outer',
         ['[aP'] = '@parameter.outer',
+        ['[aR'] = '@return.outer',
         ['[a='] = '@assignment.outer',
         ['[a+'] = '@assignment.lhs',
 
@@ -98,6 +99,7 @@ configs.setup {
         ['[iF'] = '@function.inner',
         ['[iL'] = '@loop.inner',
         ['[iP'] = '@parameter.inner',
+        ['[iR'] = '@return.inner',
         ['[['] = '@parameter.inner',
         ['[i='] = '@assignment.inner',
         ['[i+'] = '@assignment.rhs',
@@ -111,6 +113,7 @@ configs.setup {
         [']aF'] = '@function.outer',
         [']aL'] = '@loop.outer',
         [']aP'] = '@parameter.outer',
+        [']aR'] = '@return.outer',
         [']a='] = '@assignment.outer',
         [']a+'] = '@assignment.lhs',
 
@@ -122,6 +125,7 @@ configs.setup {
         [']iF'] = '@function.inner',
         [']iL'] = '@loop.inner',
         [']iP'] = '@parameter.inner',
+        [']iR'] = '@return.inner',
         [']]'] = '@parameter.inner',
         [']i='] = '@assignment.inner',
         [']i+'] = '@assignment.rhs',
@@ -135,6 +139,7 @@ configs.setup {
         ['[eaF'] = '@function.outer',
         ['[eaL'] = '@loop.outer',
         ['[eaP'] = '@parameter.outer',
+        ['[eaR'] = '@return.outer',
         ['[ea='] = '@assignment.outer',
         ['[ea+'] = '@assignment.lhs',
 
@@ -146,6 +151,7 @@ configs.setup {
         ['[eiF'] = '@function.inner',
         ['[eiL'] = '@loop.inner',
         ['[eiP'] = '@parameter.inner',
+        ['[eiR'] = '@return.inner',
         ['[ei='] = '@assignment.inner',
         ['[ei+'] = '@assignment.rhs',
       },
@@ -158,6 +164,7 @@ configs.setup {
         [']eaF'] = '@function.outer',
         [']eaL'] = '@loop.outer',
         [']eaP'] = '@parameter.outer',
+        [']eaR'] = '@return.outer',
         [']ea='] = '@assignment.outer',
         [']ea+'] = '@assignment.lhs',
 
@@ -169,6 +176,7 @@ configs.setup {
         [']eiF'] = '@function.inner',
         [']eiL'] = '@loop.inner',
         [']eiP'] = '@parameter.inner',
+        [']eiR'] = '@return.inner',
         [']ei='] = '@assignment.inner',
         [']ei+'] = '@assignment.rhs',
       },

@@ -68,10 +68,9 @@ packer.startup(function(use)
 
   -- Text-Objects
   use { "paraduxos/vim-indent-object", branch = "new_branch", commit = "2408bf0d2d54f70e6cd9cfcb558bd43283bf5003" }
-  use { "echasnovski/mini.nvim", commit = "81a575e0c51d4607bf6690f12906c7590d961717" }
+  use { "echasnovski/mini.nvim", commit = "c65901227e5a3671dbcb054745566a1c78f9f0c8" }
   use { "kana/vim-textobj-user", commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933" }
   use { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" }
-  use { "nvim-treesitter/nvim-treesitter", commit = "44289d817e7ec9df9bbe874ebe24a96375d59e16" }
   use { "nvim-treesitter/nvim-treesitter", commit = "252c1011c4bae91d25a8c54be4ed1a7b341c088c" }
   use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "4b30081d2736e09f90c890a8a7adfe4df36f5b36" }
   use { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }
@@ -227,6 +226,23 @@ require('mini.align').setup({
   },
 })
 
+require('mini.bracketed').setup({
+  buffer     = { suffix = 'b', options = {} },
+  comment    = { suffix = 'c', options = {} },
+  conflict   = { suffix = 'x', options = {} },
+  diagnostic = { suffix = 'd', options = {} },
+  file       = { suffix = 'f', options = {} },
+  indent     = { suffix = 'n', options = {} },
+  jump       = { suffix = 'j', options = {} },
+  location   = { suffix = 'l', options = {} },
+  oldfile    = { suffix = 'o', options = {} },
+  quickfix   = { suffix = 'q', options = {} },
+  treesitter = { suffix = 't', options = {} },
+  undo       = { suffix = 'u', options = {} },
+  window     = { suffix = 'w', options = {} },
+  yank       = { suffix = 'y', options = {} },
+})
+
 require('mini.comment').setup({
   mappings = {
     comment = '',
@@ -321,6 +337,7 @@ configs.setup {
         ['[aF'] = '@function.outer',
         ['[aL'] = '@loop.outer',
         ['[aP'] = '@parameter.outer',
+        ['[aR'] = '@return.outer',
         ['[a='] = '@assignment.outer',
         ['[a+'] = '@assignment.lhs',
 
@@ -332,6 +349,7 @@ configs.setup {
         ['[iF'] = '@function.inner',
         ['[iL'] = '@loop.inner',
         ['[iP'] = '@parameter.inner',
+        ['[iR'] = '@return.inner',
         ['[['] = '@parameter.inner',
         ['[i='] = '@assignment.inner',
         ['[i+'] = '@assignment.rhs',
@@ -345,6 +363,7 @@ configs.setup {
         [']aF'] = '@function.outer',
         [']aL'] = '@loop.outer',
         [']aP'] = '@parameter.outer',
+        [']aR'] = '@return.outer',
         [']a='] = '@assignment.outer',
         [']a+'] = '@assignment.lhs',
 
@@ -356,6 +375,7 @@ configs.setup {
         [']iF'] = '@function.inner',
         [']iL'] = '@loop.inner',
         [']iP'] = '@parameter.inner',
+        [']iR'] = '@return.inner',
         [']]'] = '@parameter.inner',
         [']i='] = '@assignment.inner',
         [']i+'] = '@assignment.rhs',
@@ -369,6 +389,7 @@ configs.setup {
         ['[eaF'] = '@function.outer',
         ['[eaL'] = '@loop.outer',
         ['[eaP'] = '@parameter.outer',
+        ['[eaR'] = '@return.outer',
         ['[ea='] = '@assignment.outer',
         ['[ea+'] = '@assignment.lhs',
 
@@ -380,6 +401,7 @@ configs.setup {
         ['[eiF'] = '@function.inner',
         ['[eiL'] = '@loop.inner',
         ['[eiP'] = '@parameter.inner',
+        ['[eiR'] = '@return.inner',
         ['[ei='] = '@assignment.inner',
         ['[ei+'] = '@assignment.rhs',
       },
@@ -392,6 +414,7 @@ configs.setup {
         [']eaF'] = '@function.outer',
         [']eaL'] = '@loop.outer',
         [']eaP'] = '@parameter.outer',
+        [']eaR'] = '@return.outer',
         [']ea='] = '@assignment.outer',
         [']ea+'] = '@assignment.lhs',
 
@@ -403,6 +426,7 @@ configs.setup {
         [']eiF'] = '@function.inner',
         [']eiL'] = '@loop.inner',
         [']eiP'] = '@parameter.inner',
+        [']eiR'] = '@return.inner',
         [']ei='] = '@assignment.inner',
         [']ei+'] = '@assignment.rhs',
       },
@@ -850,6 +874,14 @@ local next_around_value, prev_around_value = ts_repeat_move.make_repeatable_move
 )
 map({ "n", "x", "o" }, "gNv", next_around_value, { desc = "Next Around Value" })
 map({ "n", "x", "o" }, "gNv", prev_around_value, { desc = "Prev Around Value" })
+
+-- _comment_(goto_repeatable)
+local next_comment, prev_comment = ts_repeat_move.make_repeatable_move_pair(
+  function() require('mini.bracketed').comment('forward') end,
+  function() require('mini.bracketed').comment('backward') end
+)
+map({ "n", "x", "o" }, "gnc", next_comment, { desc = "Next Comment" })
+map({ "n", "x", "o" }, "gpc", prev_comment, { desc = "Prev Comment" })
 
 -- ╭─────────────╮
 -- │ Lsp keymaps │

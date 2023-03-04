@@ -39,10 +39,10 @@ map({ 'n', 't' }, '<M-Up>', require('smart-splits').resize_up)
 map({ 'n', 't' }, '<M-Right>', require('smart-splits').resize_right)
 
 -- Navigate buffers
-keymap("n", "]q", ":cnext<CR>", opts)
-keymap("n", "[q", ":cprevious<CR>", opts)
-keymap("n", "]l", ":lnext<CR>", opts)
-keymap("n", "[l", ":lprevious<CR>", opts)
+-- keymap("n", "]q", ":cnext<CR>", opts)
+-- keymap("n", "[q", ":cprevious<CR>", opts)
+-- keymap("n", "]l", ":lnext<CR>", opts)
+-- keymap("n", "[l", ":lprevious<CR>", opts)
 keymap("n", "<right>", ":bnext<CR>", opts)
 keymap("n", "<left>", ":bprevious<CR>", opts)
 keymap("n", "<Home>", ":tabprevious<CR>", opts)
@@ -575,3 +575,11 @@ local next_around_value, prev_around_value = ts_repeat_move.make_repeatable_move
 )
 map({ "n", "x", "o" }, "gNv", next_around_value, { desc = "Next Around Value" })
 map({ "n", "x", "o" }, "gNv", prev_around_value, { desc = "Prev Around Value" })
+
+-- _comment_(goto_repeatable)
+local next_comment, prev_comment = ts_repeat_move.make_repeatable_move_pair(
+  function() require('mini.bracketed').comment('forward') end,
+  function() require('mini.bracketed').comment('backward') end
+)
+map({ "n", "x", "o" }, "gnc", next_comment, { desc = "Next Comment" })
+map({ "n", "x", "o" }, "gpc", prev_comment, { desc = "Prev Comment" })

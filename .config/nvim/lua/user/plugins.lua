@@ -147,7 +147,7 @@ return require("packer").startup(function(use)
   -- use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
   -- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
   use { "paraduxos/vim-indent-object", branch = "new_branch", commit = "2408bf0d2d54f70e6cd9cfcb558bd43283bf5003" }
-  use { "echasnovski/mini.nvim", commit = "81a575e0c51d4607bf6690f12906c7590d961717" }
+  use { "echasnovski/mini.nvim", commit = "c65901227e5a3671dbcb054745566a1c78f9f0c8" }
   use { "kana/vim-textobj-user", commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933" }
   use { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" }
   use { "nvim-treesitter/nvim-treesitter", commit = "252c1011c4bae91d25a8c54be4ed1a7b341c088c" }
