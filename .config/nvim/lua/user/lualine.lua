@@ -49,6 +49,17 @@ local location = {
   padding = 0,
 }
 
+local number_of_lines = {
+  function()
+    if vim.bo.filetype == "neo-tree" then
+      local neo_file = require("user.neo-tree")
+      return neo_file.NumberOfLines
+    else
+      return " " .. vim.api.nvim_buf_line_count(0)
+    end
+  end
+}
+
 -- cool function for progress
 local progress = {
   color = { bg = 'none', gui = 'bold' },
@@ -120,7 +131,7 @@ local lspServer = {
 
 local function path() return vim.fn.fnamemodify(vim.fn.getcwd(), ':~') end
 
-local function spaces() return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth") end
+local function spaces() return " " .. vim.api.nvim_buf_get_option(0, "shiftwidth") end
 
 local neotree_status = {
   color = { fg = '#ff8800', gui = 'none' },
@@ -151,7 +162,7 @@ local my_extension = {
   sections = {
     lualine_a = { branch },
     -- lualine_b = { 'tabs','mode','filesize'},
-    lualine_x = { 'searchcount', neotree_status, toggleterm_status, path },
+    lualine_x = { 'searchcount', neotree_status, toggleterm_status, path, number_of_lines },
     lualine_y = { location },
     lualine_z = { progress }
   },
@@ -192,7 +203,7 @@ lualine.setup({
     lualine_b = {},
     lualine_c = {},
     lualine_x = { 'searchcount', show_macro_recording, 'diagnostics', treesitterIcon, lspServer, 'filetype', diff, spaces,
-      "encoding" },
+      number_of_lines }, -- "encoding"
     lualine_y = { location },
     lualine_z = { progress },
   },

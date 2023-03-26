@@ -88,7 +88,7 @@ return require("packer").startup(function(use)
   use { "jay-babu/mason-nvim-dap.nvim", commit = "40c9a53c208a2d7e008b27d994ac001fadc7a5a2" }
 
   -- File-Explorer
-  use { "nvim-neo-tree/neo-tree.nvim", commit = "7c6903b05b13c5d4c3882c896a59e6101cb51ea7" }
+  use { "nvim-neo-tree/neo-tree.nvim", commit = "20c2f2f5ba083bbb1e37b8bc3d590621434f31e9" }
   use { "MunifTanjim/nui.nvim", commit = "2a6533fb798efad7dd783311315bab8dc5eb381b" }
 
   -- Snippets

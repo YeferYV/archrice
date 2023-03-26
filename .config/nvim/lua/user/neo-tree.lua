@@ -4,6 +4,16 @@ if not status_ok then
 end
 
 local highlights = require("neo-tree.ui.highlights")
+local M = {}
+
+local number_of_lines = function(state)
+  local node = state.tree:get_node()
+  local wc = vim.api.nvim_exec(string.format("!cat '%s' | wc -l", node.path), true)
+  local wc_third_line = wc:match("^.*\n([^\n]*)\n.*$")
+  M.NumberOfLines = " " .. wc_third_line
+  require('lualine').refresh()
+end
+
 
 neotree.setup({
   add_blank_line_at_top = false, -- Add a blank line at the top of the tree.
@@ -161,6 +171,7 @@ neotree.setup({
       },
       ["<cr>"] = "open",
       ["<esc>"] = "revert_preview",
+      ["0"] = "focus_preview",
       -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
       ["P"] = { "toggle_preview", config = { use_float = true } },
       ["v"] = function(state) state.commands["open_vsplit"](state) vim.cmd("Neotree close") end,
@@ -389,10 +400,21 @@ neotree.setup({
       print_path = function(state)
         local node = state.tree:get_node()
         if node.is_link then
-          print(node.path .. " ➛ " .. node.link_to)
+          vim.notify("\n" .. node.path .. " ➛ " .. node.link_to)
         else
-          print(node.path)
+          vim.notify("\n" .. node.path)
         end
+        number_of_lines(state)
+      end,
+
+      nav_down = function(state)
+        vim.cmd [[normal! j]]
+        number_of_lines(state)
+      end,
+
+      nav_up = function(state)
+        vim.cmd [[normal! k]]
+        number_of_lines(state)
       end,
 
       quit_on_open = function(state)
@@ -479,12 +501,14 @@ neotree.setup({
         ["l"] = "quit_on_open",
         ["L"] = "open_unfocus",
         ["i"] = "print_path",
+        ["<down>"] = "nav_down",
+        ["<up>"] = "nav_up",
         ["O"] = "system_open",
         ["u"] = "ueberzug_open_float",
         ["U"] = "ueberzug_open_vertical",
         ["w"] = "wezterm_open_vertical",
-        ["z"] = "sixel_open_float",
-        ["Z"] = "sixel_open_vertical",
+        ["\\"] = "sixel_open_float",
+        ["|"] = "sixel_open_vertical",
         ["t"] = "open_tabnew_showbuffer",
         ["T"] = "open_tabdrop_showbuffer",
         ["/"] = "fuzzy_finder",
@@ -531,6 +555,7 @@ neotree.setup({
           vim.cmd [[hi Cursor guifg=#5555ff blend=100 | setlocal guicursor=n:Cursor/lCursor]]
         end
         vim.cmd [[hi Search guifg=#5555ff guibg=#111111]]
+        M.NumberOfLines = ""
       end
     },
     {
@@ -551,3 +576,4 @@ neotree.setup({
     }
   },
 })
+return M
