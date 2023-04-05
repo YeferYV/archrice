@@ -18,7 +18,7 @@ map o zoom out
 map c recolor
 map p print
 
-set default-bg                     "#0a0b0e"
+set default-bg                     "#101010"
 set default-fg                     "#f6dcb3"
 set statusbar-bg                   "#0a0b0e"
 set statusbar-fg                   "#f6dcb3"
