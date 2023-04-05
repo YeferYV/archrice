@@ -371,40 +371,40 @@
         "when": "suggestWidgetVisible && textInputFocus"
     },
     // {
-    //     "key": "ctrl+h",
+    //     "key": "alt+h",
     //     "command": "codeium.toggleEnable",
     //     "when": "inlineSuggestionVisible && neovim.mode == 'insert'"
     // },
     {
-        "key": "ctrl+j",
+        "key": "alt+j",
         // "command": "codeium.showNextCompletion",
         "command": "editor.action.inlineSuggest.showNext",
         "when": "inlineSuggestionVisible && neovim.mode == 'insert'"
     },
     {
-        "key": "ctrl+k",
+        "key": "alt+k",
         // "command": "codeium.showPreviousCompletion",
         "command": "editor.action.inlineSuggest.showPrevious",
         "when": "inlineSuggestionVisible && neovim.mode == 'insert'"
     },
     {
-        "key": "ctrl+l",
+        "key": "alt+l",
         // "command": "codeium.acceptCompletion",
         "command": "editor.action.inlineSuggest.commit",
         "when": "inlineSuggestionVisible && neovim.mode == 'insert'"
     },
     {
-        "key": "alt+j",
+        "key": "ctrl+j",
         "command": "selectNextSuggestion",
         "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
     },
     {
-        "key": "alt+k",
+        "key": "ctrl+k",
         "command": "selectPrevSuggestion",
         "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
     },
     {
-        "key": "alt+l",
+        "key": "ctrl+l",
         "command": "acceptSelectedSuggestion",
         "when": "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus"
     },

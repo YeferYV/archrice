@@ -458,7 +458,7 @@ neotree.setup({
           cmd = string.format("(img2sixel -h 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
           direction = "float",
           on_open = function(term)
-            vim.cmd [[ call feedkeys("\<Esc>") ]]
+            vim.cmd [[ call feedkeys("\<Esc>\<Esc>") ]]
             vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
           end,
         }):toggle()

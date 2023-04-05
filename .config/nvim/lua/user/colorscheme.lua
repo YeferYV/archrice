@@ -242,6 +242,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       end
 
     end
+
+    -- DevIcons background
+    -- vim.cmd [[ for hl in getcompletion('BufferLineDevIcon', 'highlight') | execute 'hi '.hl.' guibg=#00ff00' | endfor ]]
   end,
 })
 
@@ -249,5 +252,5 @@ vim.opt.fillchars = "eob: "
 
 local status_ok, _ = pcall(vim.cmd.colorscheme, colorscheme)
 if not status_ok then
-  vim.cmd[[ colorscheme leet ]]
+  vim.cmd [[ colorscheme leet ]]
 end

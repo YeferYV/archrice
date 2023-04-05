@@ -82,7 +82,7 @@ packer.startup(function(use)
   }
 
   -- UI
-  use { 'olivercederborg/poimandres.nvim' }
+  -- use { 'olivercederborg/poimandres.nvim' }
 
   if packer_bootstrap then
     require("packer").sync()
@@ -98,6 +98,13 @@ if not vim.g.vscode then
   require("poimandres").setup({ disable_background = true })
   vim.cmd [[ color poimandres | hi Comment guifg=#444444 | hi Visual guifg=none guibg=#1c1c1c ]]
 end
+
+-- Illuminate disable underline
+vim.cmd [[
+  hi   def IlluminatedWordText               guifg=none     guibg=#080811  gui=none
+  hi   def IlluminatedWordRead               guifg=none     guibg=#080811  gui=none
+  hi   def IlluminatedWordWrite              guifg=none     guibg=#080811  gui=none
+]]
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -306,8 +313,8 @@ configs.setup {
   },
   highlight = { -- enable highlighting for all file types
     enable = false, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
-    use_languagetree = true,
-    additional_vim_regex_highlighting = true,
+    use_languagetree = false,
+    additional_vim_regex_highlighting = false,
   },
   indent = { enable = true, disable = { "python", "yaml" } },
   context_commentstring = {

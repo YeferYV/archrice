@@ -57,8 +57,8 @@ cmp.setup {
   mapping = {
     ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
     ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
-    ["<M-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-    ["<M-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+    ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+    ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
     -- ["<C-k>"] = cmp.mapping.select_prev_item(),
     -- ["<C-j>"] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-1),
@@ -92,7 +92,7 @@ cmp.setup {
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<M-l>"] = cmp.mapping(cmp.mapping.confirm { select = true }, { "i", "c" }),
+    ["<C-l>"] = cmp.mapping(cmp.mapping.confirm { select = true }, { "i", "c" }),
     -- ['<CR>'] = cmp.mapping.confirm({
     --   behavior = cmp.ConfirmBehavior.Replace,
     --   select = false,
