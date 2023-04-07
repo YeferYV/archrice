@@ -10,9 +10,6 @@ local options = {
   expandtab = true, -- convert tabs to spaces
   fileencoding = "utf-8", -- the encoding written to a file
   -- fileencoding = "utf-16",                  -- the encoding written to a file
-  fillchars = { eob = " " }, -- Disable `~` on nonexistent lines
-  foldlevelstart = 99, -- Start Outline without folding it
-  foldlevel = 99, -- Start Outline without folding it
   -- guicursor = a,
   guifont = "monospace:h17", -- the font used in graphical neovim applications
   hlsearch = true, -- highlight all matches on previous search pattern
@@ -52,6 +49,7 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+-- _append/remove_option
 vim.opt.shortmess:append "c" -- don't give |ins-completion-menu| messages
 vim.opt.iskeyword:append "-" -- hyphenated words recognized by searches
 vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
@@ -60,6 +58,21 @@ vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comm
 vim.g.codeium_no_map_tab = true
 vim.g.indent_object_ignore_blank_line = false
 vim.g.diagnostics_enabled = true -- enable diagnostics at start
+
+-- _easyclip
+vim.g.textobj_space_no_default_key_mappings = true
+vim.g.EasyClipUseCutDefaults = false
+vim.g.EasyClipEnableBlackHoleRedirect = false
+vim.g.EasyClipUseYankDefaults = false
+vim.g.EasyClipUsePasteDefaults = false
+vim.g.EasyClipUsePasteToggleDefaults = false
+
+-- _nvim_ufo
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.o.foldlevel = 99 -- Start Outline without folding it
+vim.o.foldlevelstart = 99 -- Start Outline without folding it
+vim.o.foldenable = true
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- neovide
 if vim.g.neovide == true then

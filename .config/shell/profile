@@ -23,7 +23,6 @@ export SURFRAW_graphical=no
 export SURFRAW_text_browser='w3m -sixel'
 export SWALLOWER="bspswap"
 export TERMINAL="wezterm"
-export VIM="/usr/share/nvim"
 export VISUAL="nvim"
 
 #-- ~/Clean-up:

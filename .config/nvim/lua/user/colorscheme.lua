@@ -10,6 +10,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     local hl_groups = {
       "EndOfBuffer",
       "FloatBorder",
+      "FoldColumn",
       "MsgArea",
       "NeoTreeNormal",
       "NeoTreeNormalNC",
@@ -45,6 +46,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       BufferLineTabSelected       = { fg = "#80a0ff" },
       BufferLineTab               = { fg = "#5c5c5c" },
       CursorLine                  = { bg = "#0c0c0c" },
+      Folded                      = { bg = '#0c0c0c' },
       LspSagaWinbarKey            = { fg = '#495466' },
       LspSagaWinbarSep            = { fg = '#495466' },
       LspSagaWinbarEnum           = { fg = '#495466' },
@@ -117,6 +119,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           ["@keyword"]               = { fg = "#9d7cd8", italic = false },
           ["@keyword.function"]      = { fg = "#6e51a2" },
           ["@field"]                 = { fg = "#7aa2f7" },
+          ["@property"]              = { fg = "#7aa2f7" },
           ["@string"]                = { fg = "#73daca" },
           ["@boolean"]               = { fg = "#1cff1c" },
           ["@number"]                = { fg = "#1cff1c" },
@@ -188,7 +191,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
           ["@tag.delimiter"]         = { fg = "#515171" },
           ["@constructor"]           = { fg = "#5de4c7" },
           ["@comment"]               = { fg = "#3e4041" },
-          ["Comment"]                = { fg = "#a6accd" },
+          ["Comment"]                = { fg = "#3e4041" },
           ["Visual"]                 = { bg = "#1c1c1c" },
           GitSignsAdd                = { fg = "#1abc9c" },
           GitSignsChange             = { fg = "#3c3cff" },
@@ -247,8 +250,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     -- vim.cmd [[ for hl in getcompletion('BufferLineDevIcon', 'highlight') | execute 'hi '.hl.' guibg=#00ff00' | endfor ]]
   end,
 })
-
-vim.opt.fillchars = "eob: "
 
 local status_ok, _ = pcall(vim.cmd.colorscheme, colorscheme)
 if not status_ok then

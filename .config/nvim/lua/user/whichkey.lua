@@ -669,6 +669,7 @@ local mappings = {
     ["s"] = { "<cmd>mkview<cr>", "save folds" },
     ["l"] = { "<cmd>loadview<cr>", "load folds" },
     ["p"] = { "zfip", "fold paragraph" },
+    ["P"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, "peek FoldedLines" },
     ["}"] = { "zfa}", "fold curly-bracket block" },
     ["]"] = { "zfa]", "fold square-bracket block" },
     [")"] = { "zfa)", "fold parenthesis block" },

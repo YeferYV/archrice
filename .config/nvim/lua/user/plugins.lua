@@ -145,14 +145,14 @@ return require("packer").startup(function(use)
   -- Text-Objects
   -- use { 'wellle/targets.vim', commit="8d6ff2984cdfaebe5b7a6eee8f226a6dd1226f2d", }
   -- use { "godlygeek/tabular", commit = "339091ac4dd1f17e225fe7d57b48aff55f99b23a" }
-  -- use { 'nvim-treesitter/playground', commit = "1290fdf6f2f0189eb3b4ce8073d3fda6a3658376" }
+  -- use { 'nvim-treesitter/playground', commit = "4044b53c4d4fcd7a78eae20b8627f78ce7dc6f56" }
   use { "paraduxos/vim-indent-object", branch = "new_branch", commit = "2408bf0d2d54f70e6cd9cfcb558bd43283bf5003" }
-  use { "echasnovski/mini.nvim", commit = "c65901227e5a3671dbcb054745566a1c78f9f0c8" }
+  use { "echasnovski/mini.nvim", commit = "a7c375312edba618d7abc7c6129c53c512cca9d7" }
   use { "kana/vim-textobj-user", commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933" }
   use { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" }
-  use { "nvim-treesitter/nvim-treesitter", commit = "871f5665d92d59a369cf916e9aa4d321d466f1e3" }
-  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "4b30081d2736e09f90c890a8a7adfe4df36f5b36" }
-  use { "RRethy/nvim-treesitter-textsubjects", commit = "bc047b20768845fd54340eb76272b2cf2f6fa3f3" }
+  use { "nvim-treesitter/nvim-treesitter", commit = "c85d059c462ae7de0aa2a6ed0589f0b223e0e6a9" }
+  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "b55fe6175f0001347a433c9df358c8cbf8a4e90f" }
+  use { "RRethy/nvim-treesitter-textsubjects", commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" }
   use { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }
   use { "mg979/vim-visual-multi", commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a" }
   use { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df" }
@@ -186,7 +186,7 @@ return require("packer").startup(function(use)
 
   -- TUI
   use { "akinsho/toggleterm.nvim", commit = "3ba683827c623affb4d9aa518e97b34db2623093" }
-  use { "mrjones2014/legendary.nvim", commit = "3008ed68c8f309ced07587684c8af53884791d35" }
+  use { "mrjones2014/legendary.nvim", commit = "0d42c70bddb447b75a3bd9b0c26d826dc809b8e0" }
   use { "nvim-telescope/telescope-file-browser.nvim", commit = "304508fb7bea78e3c0eeddd88c4837501e403ae8" }
   use { "AckslD/nvim-neoclip.lua", commit = "5b9286a40ea2020352280caeb713515badb03d99" }
   use { "nvim-telescope/telescope.nvim",
@@ -236,6 +236,42 @@ return require("packer").startup(function(use)
         },
       }
     end,
+  }
+  use {
+    "kevinhwang91/nvim-ufo",
+    commit = "9e829d5cfa3de6a2ff561d86399772b0339ae49d",
+    config = function()
+      require("ufo").setup({
+        provider_selector = function(bufnr, filetype, buftype)
+          return { "treesitter", "indent" }
+        end
+      })
+    end,
+    requires = {
+      {
+        "kevinhwang91/promise-async",
+        commit = "7fa127fa80e7d4d447e0e2c78e99af4355f4247b",
+      },
+      {
+        "luukvbaal/statuscol.nvim",
+        commit = "1ab254c6519f8a5922c1739d509803e2a4fa6189",
+        config = function()
+          local builtin = require("statuscol.builtin")
+          require("statuscol").setup(
+            {
+              -- foldfunc = "builtin",
+              -- setopt = true,
+              relculright = false,
+              segments = {
+                { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+                { text = { "%s" }, click = "v:lua.ScSa" },
+                { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" }
+              }
+            }
+          )
+        end
+      }
+    }
   }
   -- use { "rcarriga/nvim-notify",
   --   commit = "bdd647f61a05c9b8a57c83b78341a0690e9c29d7",

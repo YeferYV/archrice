@@ -153,6 +153,8 @@ keymap("v", "<leader>Y", 'y:let @* .= @0<cr>', { noremap = true, silent = true, 
 keymap("v", "<leader>z", ":'<,'>fold      <CR>", { noremap = true, silent = true, desc = "Fold" })
 keymap("v", "<leader>Z", ":'<,'>!column -t<CR>", { noremap = true, silent = true, desc = "Format Column" })
 keymap("v", "<leader>gw", "gw", { noremap = true, silent = true, desc = "Format Comment" })
+keymap("n", "zR", require("ufo").openAllFolds, { noremap = true, silent = true, desc = "Open All Folds" })
+keymap("n", "zM", require("ufo").closeAllFolds, { noremap = true, silent = true, desc = "Close All Folds" })
 
 -- Visual increment/decrement numbers
 keymap("v", "<leader>gi", "g<C-a>", { noremap = true, silent = true, desc = "Increment numbers" })
@@ -292,32 +294,28 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- _vim-textobj-space
-vim.g.textobj_space_no_default_key_mappings = true
+-- vim.g.textobj_space_no_default_key_mappings = true
 map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { silent = true, desc = "Space textobj" })
 map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { silent = true, desc = "Space textobj" })
 
--- _clipboard_textobj
-vim.cmd [[
-  let g:EasyClipUseCutDefaults = 0
-  let g:EasyClipEnableBlackHoleRedirect = 0
-  nmap <silent> gx "_d
-  nmap <silent> gxx "_dd
-  xmap <silent> gx "_d
+-- _clipboard_textobj_(vim.g defined in options.lua)
+-- vim.g.EasyClipUseCutDefaults = false
+-- vim.g.EasyClipEnableBlackHoleRedirect = false
+map({ "n", "x" }, "gx", "_d", { silent = true, desc = "Blackhole Delete" })
+map({ "n" }, "gxx", "_dd", { silent = true, desc = "Blackhole _dd" })
 
-  let g:EasyClipUseYankDefaults = 0
-  nmap <silent> gy <plug>SubstituteOverMotionMap
-  nmap <silent> gyy <plug>SubstituteLine
-  xmap <silent> gy <plug>XEasyClipPaste
+-- vim.g.EasyClipUseYankDefaults = false
+map({ "n" }, "gy", "<plug>SubstituteOverMotionMap", { silent = true, desc = "SubstituteOverMotionMap" })
+map({ "n" }, "gyy", "<plug>SubstituteLine", { silent = true, desc = "SubstituteLine" })
+map({ "x" }, "gy", "<plug>XEasyClipPaste ", { silent = true, desc = "XEasyClipPaste" })
 
-  let g:EasyClipUsePasteDefaults = 0
-  nmap <silent> gY <plug>G_EasyClipPasteBefore
-  xmap <silent> gY <Plug>XG_EasyClipPaste
+-- vim.g.EasyClipUsePasteDefaults = false
+map({ "n" }, "gY", "<plug>G_EasyClipPasteBefore", { silent = true, desc = "EasyClip PasteBefore" })
+map({ "x" }, "gY", "<plug>XG_EasyClipPaste ", { silent = true, desc = "EasyClip Paste" })
 
-  let g:EasyClipUsePasteToggleDefaults = 0
-  nmap <silent> gz <plug>EasyClipSwapPasteForward
-  nmap <silent> gZ <plug>EasyClipSwapPasteBackwards
-
-]]
+-- vim.g.EasyClipUsePasteToggleDefaults = false
+map({ "n" }, "gz", "<plug>EasyClipSwapPasteForward", { silent = true, desc = "EasyClip SwapPasteForward" })
+map({ "n" }, "gZ", "<plug>EasyClipSwapPasteBackwards ", { silent = true, desc = "EasyClip SwapPasteBackwards" })
 
 -- ╭─────────╮
 -- │ Motions │
