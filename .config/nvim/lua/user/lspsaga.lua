@@ -4,7 +4,6 @@ if not status_ok then
 end
 
 lspsaga.setup({
-
   -- Default Options
   preview = {
     lines_above = 0,
@@ -15,7 +14,6 @@ lspsaga.setup({
     scroll_up = '<C-b>',
   },
   request_timeout = 2000,
-
   -- :Lspsaga lsp_finder
   finder = {
     edit = { 'o', '<CR>' },
@@ -24,7 +22,6 @@ lspsaga.setup({
     tabe = 't',
     quit = { 'q', '<ESC>' },
   },
-
   -- :Lspsaga peek_definition
   definition = {
     edit = '<C-c>o',
@@ -34,7 +31,6 @@ lspsaga.setup({
     quit = 'q',
     close = '<Esc>',
   },
-
   -- :Lspsaga code_action
   code_action = {
     num_shortcut = true,
@@ -44,7 +40,6 @@ lspsaga.setup({
       exec = '<CR>',
     },
   },
-
   -- Lightbulb
   lightbulb = {
     enable = true,
@@ -53,7 +48,6 @@ lspsaga.setup({
     sign_priority = 40,
     virtual_text = true,
   },
-
   -- :Lspsaga diagnostic_jump_next
   diagnostic = {
     show_code_action = true,
@@ -65,7 +59,6 @@ lspsaga.setup({
       go_action = 'g'
     },
   },
-
   -- :Lspsaga rename
   rename = {
     quit = '<C-c>',
@@ -74,7 +67,6 @@ lspsaga.setup({
     confirm = '<CR>',
     in_select = true,
   },
-
   -- :Lspsaga outline
   outline = {
     win_position = 'right',
@@ -91,7 +83,6 @@ lspsaga.setup({
       quit = 'q',
     },
   },
-
   -- :Lspsaga incoming_calls
   callhierarchy = {
     show_detail = false,
@@ -105,7 +96,6 @@ lspsaga.setup({
       expand_collapse = 'u',
     },
   },
-
   -- Winbar
   symbol_in_winbar = {
     enable = true,
@@ -116,7 +106,6 @@ lspsaga.setup({
     respect_root = false,
     color_mode = true,
   },
-
   -- UI
   ui = {
     -- currently only round theme
@@ -150,37 +139,36 @@ lspsaga.setup({
       black = '#1c1c19',
     },
     kind = {
-      File          = { ' ', '#495466' },
-      Module        = { ' ', '#495466' },
-      Namespace     = { ' ', '#495466' },
-      Package       = { ' ', '#495466' },
-      Class         = { ' ', '#495466' },
-      Method        = { ' ', '#495466' },
-      Property      = { ' ', '#495466' },
-      Field         = { ' ', '#495466' },
-      Constructor   = { ' ', '#495466' },
-      Enum          = { '了', '#495466' },
-      Interface     = { ' ', '#495466' },
-      Function      = { ' ', '#495466' },
-      Variable      = { ' ', '#495466' },
-      Constant      = { ' ', '#495466' },
-      String        = { ' ', '#495466' },
-      Number        = { ' ', '#495466' },
-      Boolean       = { ' ', '#495466' },
-      Array         = { ' ', '#495466' },
-      Object        = { ' ', '#495466' },
-      Key           = { ' ', '#495466' },
-      Null          = { ' ', '#495466' },
-      EnumMember    = { ' ', '#495466' },
-      Struct        = { ' ', '#495466' },
-      Event         = { ' ', '#495466' },
-      Operator      = { ' ', '#495466' },
-      TypeParameter = { ' ', '#495466' },
-      TypeAlias     = { ' ', '#495466' },
-      Parameter     = { ' ', '#495466' },
-      StaticMethod  = { 'ﴂ ', '#495466' },
-      Macro         = { ' ', '#495466' },
+      File          = { " ", "SagaWinbarSep" },
+      Module        = { " ", "SagaWinbarSep" },
+      Namespace     = { " ", "SagaWinbarSep" },
+      Package       = { " ", "SagaWinbarSep" },
+      Class         = { " ", "SagaWinbarSep" },
+      Method        = { " ", "SagaWinbarSep" },
+      Property      = { " ", "SagaWinbarSep" },
+      Field         = { " ", "SagaWinbarSep" },
+      Constructor   = { " ", "SagaWinbarSep" },
+      Enum          = { "了", "SagaWinbarSep" },
+      Interface     = { " ", "SagaWinbarSep" },
+      Function      = { " ", "SagaWinbarSep" },
+      Variable      = { " ", "SagaWinbarSep" },
+      Constant      = { " ", "SagaWinbarSep" },
+      String        = { " ", "SagaWinbarSep" },
+      Number        = { " ", "SagaWinbarSep" },
+      Boolean       = { " ", "SagaWinbarSep" },
+      Array         = { " ", "SagaWinbarSep" },
+      Object        = { " ", "SagaWinbarSep" },
+      Key           = { " ", "SagaWinbarSep" },
+      Null          = { " ", "SagaWinbarSep" },
+      EnumMember    = { " ", "SagaWinbarSep" },
+      Struct        = { " ", "SagaWinbarSep" },
+      Event         = { " ", "SagaWinbarSep" },
+      Operator      = { " ", "SagaWinbarSep" },
+      TypeParameter = { " ", "SagaWinbarSep" },
+      TypeAlias     = { " ", "SagaWinbarSep" },
+      Parameter     = { " ", "SagaWinbarSep" },
+      StaticMethod  = { "ﴂ ", "SagaWinbarSep" },
+      Macro         = { " ", "SagaWinbarSep" },
     },
   },
-
 })

@@ -1,7 +1,3 @@
--- impatient at startup
-local impatient_status_ok, impatient = pcall(require, "impatient")
-if impatient_status_ok then impatient.enable_profile() end
-
 -- ╭──────╮
 -- │ Opts │
 -- ╰──────╯
@@ -36,58 +32,66 @@ vim.g.indent_object_ignore_blank_line = false
 -- │ Plugins │
 -- ╰─────────╯
 
--- automatic installation
-local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap =
-  fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 
--- Use a protected call so we don't error out on first use
-local packer_status_ok, packer = pcall(require, "packer")
-if not packer_status_ok then return end
+vim.opt.rtp:prepend(lazypath)
+vim.g.mapleader = " "
 
-packer.startup(function(use)
-  use({ "wbthomason/packer.nvim", commit = "dcd2f380bb49ec2dfe208f186236dd366434a4d5" })
+local status_ok, lazy = pcall(require, "lazy")
+if not status_ok then
+  return
+end
+
+local opts = {
+  ui = { border = "rounded" },
+  defaults = { lazy = true },
+  performance = {
+    rtp = {
+      disabled_plugins = { "tohtml", "gzip", "zipPlugin", "netrwPlugin", "tarPlugin" },
+    },
+  },
+}
+
+local plugins = {
 
   -- Automation
-  use { 'tpope/vim-commentary', commit = "e87cd90dc09c2a203e13af9704bd0ef79303d755" }
-  use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "32d9627123321db65a4f158b72b757bcaef1a3f4", }
-  use { "lewis6991/impatient.nvim", commit = "d3dd30ff0b811756e735eb9020609fa315bfbbcc" }
+  { 'tpope/vim-commentary' },
+  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  { "lewis6991/impatient.nvim" },
 
   -- Motions
-  use { "machakann/vim-columnmove", commit = "21a43d809a03ff9bf9946d983d17b3a316bf7a64" }
-  use { "tpope/vim-repeat", commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a" }
-  use { "justinmk/vim-sneak", commit = "93395f5b56eb203e4c8346766f258ac94ea81702" }
-  use {
-    "phaazon/hop.nvim",
-    commit = "90db1b2c61b820e230599a04fedcd2679e64bd07",
-    config = function() require("hop").setup() end,
-  }
+  { "machakann/vim-columnmove" },
+  { "tpope/vim-repeat" },
+  { "justinmk/vim-sneak" },
+  { "phaazon/hop.nvim", config = true, },
 
   -- Text-Objects
-  use { "paraduxos/vim-indent-object", branch = "new_branch", commit = "2408bf0d2d54f70e6cd9cfcb558bd43283bf5003" }
-  use { "echasnovski/mini.nvim", commit = "c65901227e5a3671dbcb054745566a1c78f9f0c8" }
-  use { "kana/vim-textobj-user", commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933" }
-  use { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" }
-  use { "nvim-treesitter/nvim-treesitter", commit = "252c1011c4bae91d25a8c54be4ed1a7b341c088c" }
-  use { "nvim-treesitter/nvim-treesitter-textobjects", commit = "4b30081d2736e09f90c890a8a7adfe4df36f5b36" }
-  use { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }
-  use { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df" }
-  use {
-    "chrisgrieser/nvim-various-textobjs",
-    commit = "7915b4567dbf3542652e3ada6f9660bfa81d94f7",
-    config = function() require("various-textobjs").setup { useDefaultKeymaps = false, lookForwardLines = 30 } end,
-  }
+  { "paraduxos/vim-indent-object", branch = "new_branch" },
+  { "echasnovski/mini.nvim" },
+  { "kana/vim-textobj-user" },
+  { "saihoooooooo/vim-textobj-space" },
+  { "nvim-treesitter/nvim-treesitter" },
+  { "nvim-treesitter/nvim-treesitter-textobjects" },
+  { "coderifous/textobj-word-column.vim" },
+  { "svermeulen/vim-easyclip" },
+  { "chrisgrieser/nvim-various-textobjs", config = { useDefaultKeymaps = false, lookForwardLines = 30 } },
 
   -- UI
-  -- use { 'olivercederborg/poimandres.nvim' }
+  { 'olivercederborg/poimandres.nvim' },
 
-  if packer_bootstrap then
-    require("packer").sync()
-  end
-end)
+}
+
+lazy.setup(plugins, opts)
 
 -- ╭──────────────╮
 -- │ Autocommands │

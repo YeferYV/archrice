@@ -19,7 +19,6 @@
 !.local/bin/flix
 !.local/bin/hover
 !.local/bin/lines_per_directory
-!.local/bin/lvim
 !.local/bin/maimpick
 !.local/bin/remaps
 !.local/bin/ResetArch

@@ -35,8 +35,8 @@ mason_lspconfig.setup_handlers({
   -- ["rust_analyzer"] = function ()
   --     require("rust-tools").setup {}
   -- end,
-  -- ["sumneko_lua"] = function ()
-  --     lspconfig.sumneko_lua.setup {
+  -- ["lua_ls"] = function ()
+  --     lspconfig.lua_ls.setup {
   --         settings = {
   --             Lua = {
   --                 diagnostics = {
@@ -69,7 +69,7 @@ local handle = io.popen("lua-language-server --version 2>/dev/null")
 if handle then --handles "Need check nil" warning
   local output = handle:read("*a")
   if output:match("^3.*") then
-    require('lspconfig')['sumneko_lua'].setup {
+    require('lspconfig')['lua_ls'].setup {
       on_attach = require("user.lsp.handlers").on_attach,
       capabilities = require("user.lsp.handlers").capabilities,
       settings = {

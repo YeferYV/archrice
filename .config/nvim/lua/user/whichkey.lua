@@ -324,15 +324,15 @@ local mappings = {
 
   P = {
     name = "Packages",
-    ["c"] = { "<cmd>PackerCompile<cr>", "Packer Compile" },
-    ["C"] = { "<cmd>PackerClean<cr>", "Packer Clean" },
-    ["i"] = { "<cmd>PackerInstall<cr>", "Packer Install" },
-    ["I"] = { "<cmd>Mason<cr>", "Mason Installer" },
+    ["C"] = { "<cmd>Lazy clean<cr>", "Lazy Clean" },
+    ["i"] = { "<cmd>Lazy install<cr>", "Lazy Install" },
+    ["m"] = { "<cmd>Mason<cr>", "Mason Installer" },
     ["L"] = { "<cmd>LspInfo<cr>", "Lsp Info" },
     ["N"] = { "<cmd>NullLsInfo<cr>", "NullLs Info" },
-    ["s"] = { "<cmd>PackerSync<cr>", "Packer Sync" },
-    ["S"] = { "<cmd>PackerStatus<cr>", "Packer Status" },
-    ["u"] = { "<cmd>PackerUpdate<cr>", "Packer Update" },
+    ["P"] = { "<cmd>Lazy profile<cr>", "Lazy Profile" },
+    ["s"] = { "<cmd>Lazy<cr>", "Lazy Status" },
+    ["S"] = { "<cmd>Lazy sync<cr>", "Lazy Sync" },
+    ["U"] = { "<cmd>Lazy update<cr>", "Lazy Update" },
   },
 
   s = {
@@ -733,6 +733,10 @@ which_key.register({
   ["a"] = mini_textobj,
   ["al"] = { name = "+Last", mini_textobj },
   ["aN"] = { name = "+Next", mini_textobj },
+  ["Q"] = { "Textsubjects Prev Selection" },
+  ["K"] = { "Textsubjects Smart" },
+  ["aK"] = { "Textsubjects Container Outer" },
+  ["iK"] = { "Textsubjects Container Inner" },
 })
 
 which_key.register({

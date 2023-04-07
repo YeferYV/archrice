@@ -153,8 +153,8 @@ keymap("v", "<leader>Y", 'y:let @* .= @0<cr>', { noremap = true, silent = true, 
 keymap("v", "<leader>z", ":'<,'>fold      <CR>", { noremap = true, silent = true, desc = "Fold" })
 keymap("v", "<leader>Z", ":'<,'>!column -t<CR>", { noremap = true, silent = true, desc = "Format Column" })
 keymap("v", "<leader>gw", "gw", { noremap = true, silent = true, desc = "Format Comment" })
-keymap("n", "zR", require("ufo").openAllFolds, { noremap = true, silent = true, desc = "Open All Folds" })
-keymap("n", "zM", require("ufo").closeAllFolds, { noremap = true, silent = true, desc = "Close All Folds" })
+map("n", "zR", function() require("ufo").openAllFolds() end, { noremap = true, silent = true, desc = "Open All Folds" })
+map("n", "zM", function() require("ufo").closeAllFolds() end, { noremap = true, silent = true, desc = "Close All Folds" })
 
 -- Visual increment/decrement numbers
 keymap("v", "<leader>gi", "g<C-a>", { noremap = true, silent = true, desc = "Increment numbers" })
@@ -207,8 +207,8 @@ map('n', "g:", function() return GotoTextObj(":normal `[v`]<cr><esc>") end,
 -- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
 -- keymap("v", 'im', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
 -- keymap("v", 'im', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
-keymap("o", 'gm', "<cmd>normal! `[v`]<Left><cr>", { silent = true, desc = "Last change textobj" })
-keymap("x", 'gm', "`[o`]<Left>", { silent = true, desc = "Last change textobj" })
+keymap("o", 'gm', "<cmd>normal! `[v`]<cr>", { silent = true, desc = "Last change textobj" })
+keymap("x", 'gm', "`[o`]", { silent = true, desc = "Last change textobj" })
 
 -- _git_hunk_(next/prev_autojump_unsupported)
 map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { silent = true, desc = "Git hunk textobj" })
@@ -222,7 +222,7 @@ map({ "x" }, 'gk', ':<C-u>normal "zygkgv<cr>', { silent = true, desc = "BlockCom
 map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
 map({ "x" }, 'gC', ':<C-u>normal "zygcgv<cr>', { silent = true, desc = "WholeComment textobj" })
 
--- _search_textobj_(dot-repeat_supported)
+-- _se_textobj_(dot-repeat_supported)
 map({ "o", "x" }, "gs", "gn", { noremap = true, silent = true, desc = "Next search textobj" })
 map({ "o", "x" }, "gS", "gN", { noremap = true, silent = true, desc = "Prev search textobj" })
 
@@ -230,57 +230,50 @@ map({ "o", "x" }, "gS", "gN", { noremap = true, silent = true, desc = "Prev sear
 map({ 'x' }, 'g/', '"zy:s/<C-r>z//g<Left><Left>', { silent = true, desc = "Replace textobj" })
 
 -- _nvim_various_textobjs
-map({ "o", "x" }, "gd", function() require("various-textobjs").diagnostic() vim.call("repeat#set", "vgd") end,
+map({ "o", "x" }, "gd", "<cmd>lua require('various-textobjs').diagnostic()<cr>",
   { silent = true, desc = "Diagnostic textobj" })
-map({ "o", "x" }, "gL", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vgL") end,
-  { silent = true, desc = "nearEoL textobj" }) -- conflicts with visual until search-next workaround: gn
-map({ "o", "x" }, "g|", function() require("various-textobjs").column() vim.call("repeat#set", "vg|") end,
+map({ "o", "x" }, "gL", "<cmd>lua require('various-textobjs').nearEoL()<cr>",
+  { silent = true, desc = "nearEoL textobj" })
+map({ "o", "x" }, "g|", "<cmd>lua require('various-textobjs').column()<cr>",
   { silent = true, desc = "ColumnDown textobj" })
-map({ "o", "x" }, "gr", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vgr") end,
+map({ "o", "x" }, "gr", "<cmd>lua require('various-textobjs').restOfParagraph()<cr>",
   { silent = true, desc = "RestOfParagraph textobj" })
-map({ "o", "x" }, "gR", function() require("various-textobjs").restOfIndentation() vim.call("repeat#set", "vgR") end,
+map({ "o", "x" }, "gR", "<cmd>lua require('various-textobjs').restOfIndentation()<cr>",
   { silent = true, desc = "restOfIndentation textobj" })
-map({ "o", "x" }, "gG", function() require("various-textobjs").entireBuffer() end,
+map({ "o", "x" }, "gG", "<cmd>lua require('various-textobjs').entireBuffer()<cr>",
   { silent = true, desc = "EntireBuffer textobj" })
-map({ "o", "x" }, "gu", function() require("various-textobjs").url() vim.call("repeat#set", "vgu") end,
+map({ "o", "x" }, "gu", "<cmd>lua require('various-textobjs').url()<cr>",
   { silent = true, desc = "Url textobj" })
 
 -- _nvim_various_textobjs: inner-outer
--- map({ "o", "x" }, "av", function() require("various-textobjs").value(false) vim.call("repeat#set", "vav") end,
---   { desc = "outer value textobj" })
--- map({ "o", "x" }, "iv", function() require("various-textobjs").value(true) vim.call("repeat#set", "viv") end,
---   { desc = "inner value textobj" })
--- map({ "o", "x" }, "ak", function() require("various-textobjs").key(false) vim.call("repeat#set", "vak") end,
---   { desc = "outer key textobj" })
--- map({ "o", "x" }, "ik", function() require("various-textobjs").key(true) vim.call("repeat#set", "vik") end,
---   { desc = "inner key textobj" })
--- map({ "o", "x" }, "an", function() require("various-textobjs").number(false) vim.call("repeat#set", "van") end,
---   { desc = "outer number textobj" })
--- map({ "o", "x" }, "in", function() require("various-textobjs").number(true) vim.call("repeat#set", "vin") end,
---   { desc = "inner number textobj" })
--- map({ "o", "x" }, "al", function() require("various-textobjs").mdlink(false) end)
--- map({ "o", "x" }, "il", function() require("various-textobjs").mdlink(true) end)
--- map({ "o", "x" }, "aC", function() require("various-textobjs").mdFencedCodeBlock(false) end)
--- map({ "o", "x" }, "iC", function() require("various-textobjs").mdFencedCodeBlock(true) end)
--- map({ "o", "x" }, "ac", function() require("various-textobjs").cssSelector(false) end)
--- map({ "o", "x" }, "ic", function() require("various-textobjs").cssSelector(true) end)
--- map({ "o", "x" }, "a/", function() require("various-textobjs").jsRegex(false) end)
--- map({ "o", "x" }, "i/", function() require("various-textobjs").jsRegex(true) end)
--- map({ "o", "x" }, "aD", function() require("various-textobjs").doubleSquareBrackets(false) end)
--- map({ "o", "x" }, "iD", function() require("various-textobjs").doubleSquareBrackets(true) end)
-map({ "o", "x" }, "aS", function() require("various-textobjs").subword(false) vim.call("repeat#set", "vaS") end,
+-- map({ "o", "x" }, "av", "<cmd>lua require('various-textobjs').value(false)<cr>")
+-- map({ "o", "x" }, "iv", "<cmd>lua require('various-textobjs').value(true)<cr>")
+-- map({ "o", "x" }, "ak", "<cmd>lua require('various-textobjs').key(false)<cr>")
+-- map({ "o", "x" }, "ik", "<cmd>lua require('various-textobjs').key(true)<cr>")
+-- map({ "o", "x" }, "an", "<cmd>lua require('various-textobjs').number(false)<cr>")
+-- map({ "o", "x" }, "in", "<cmd>lua require('various-textobjs').number(true)<cr>")
+-- map({ "o", "x" }, "al", "<cmd>lua require('various-textobjs').mdlink(false)<cr>")
+-- map({ "o", "x" }, "il", "<cmd>lua require('various-textobjs').mdlink(true)<cr>")
+-- map({ "o", "x" }, "aC", "<cmd>lua require('various-textobjs').mdFencedCodeBlock(false)<cr>")
+-- map({ "o", "x" }, "iC", "<cmd>lua require('various-textobjs').mdFencedCodeBlock(true)<cr>")
+-- map({ "o", "x" }, "ac", "<cmd>lua require('various-textobjs').cssSelector(false)<cr>")
+-- map({ "o", "x" }, "ic", "<cmd>lua require('various-textobjs').cssSelector(true)<cr>")
+-- map({ "o", "x" }, "a/", "<cmd>lua require('various-textobjs').jsRegex(false)<cr>")
+-- map({ "o", "x" }, "i/", "<cmd>lua require('various-textobjs').jsRegex(true)<cr>")
+-- map({ "o", "x" }, "aD", "<cmd>lua require('various-textobjs').doubleSquareBrackets(false)<cr>")
+-- map({ "o", "x" }, "iD", "<cmd>lua require('various-textobjs').doubleSquareBrackets(true)<cr>")
+
+map({ "o", "x" }, "aS", "<cmd>lua require('various-textobjs').subword(false)<cr>",
   { silent = true, desc = "outer Subword textobj" })
-map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim.call("repeat#set", "vaS") end,
+map({ "o", "x" }, "iS", "<cmd>lua require('various-textobjs').subword(true)<cr>",
   { silent = true, desc = "inner Subword textobj" })
--- map({ "o", "x" }, "aP", function() require("various-textobjs").shellPipe(false) end)
--- map({ "o", "x" }, "iP", function() require("various-textobjs").shellPipe(true) end)
 
 -- _nvim_various_textobjs: indentation textobj requires two parameters, first for
 -- exclusion of the starting border, second for the exclusion of ending border
--- map({ "o", "x" }, "ii", function() require("various-textobjs").indentation(true, true) end, { desc = "inner-inner indentation textobj" })
--- map({ "o", "x" }, "ai", function() require("various-textobjs").indentation(false, true) end, { desc = "outer-inner indentation textobj" })
--- map({ "o", "x" }, "iI", function() require("various-textobjs").indentation(true, true) end, { desc = "inner-inner indentation textobj" })
--- map({ "o", "x" }, "aI", function() require("various-textobjs").indentation(false, false) end, { desc = "outer-outer indentation textobj" })
+-- map({ "o", "x" }, "ii", "<cmd>lua require('various-textobjs').indentation(true, true)<cr>", { desc = "inner-inner indentation textobj" })
+-- map({ "o", "x" }, "ai", "<cmd>lua require('various-textobjs').indentation(false, true)<cr>", { desc = "outer-inner indentation textobj" })
+-- map({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation(true, true)<cr>", { desc = "inner-inner indentation textobj" })
+-- map({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation(false, false)<cr>", { desc = "outer-outer indentation textobj" })
 
 -- _vim_indent_object_(visualrepeatable_+_vimrepeat)
 vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -343,37 +336,15 @@ keymap("n", "<Leader><Leader>Z", "<cmd>HopChar2BC<CR>", opts)
 keymap("v", "<Leader><Leader>z", "<cmd>HopChar2AC<CR>", opts)
 keymap("v", "<Leader><Leader>Z", "<cmd>HopChar2BC<CR>", opts)
 
-vim.cmd [[
-  let g:sneak#prompt = ''
-  " let g:sneak#target_labels = ";sftunq/SFGHLTUNRMQZ?0"
-  " let g:sneak#use_ic_scs = 1
-  " let g:sneak#label = 1
-  " let g:sneak#label_esc = "\<Space>"
-  " nnoremap s <Plug>Sneak_s
-  " nnoremap S <Plug>Sneak_S
-  " onoremap s <Plug>Sneak_s
-  " onoremap Z <Plug>Sneak_S
-  " vnoremap s <Plug>Sneak_s
-  " vnoremap Z <Plug>Sneak_S
-  " xnoremap s <Plug>Sneak_s
-  " xnoremap Z <Plug>Sneak_S
-  " map ; <Plug>Sneak_;
-  " map , <Plug>Sneak_,
-  map <silent> f <Plug>Sneak_f
-  map <silent> F <Plug>Sneak_F
-  map <silent> t <Plug>Sneak_t
-  map <silent> T <Plug>Sneak_T
-  map <silent> <space><space>s <Plug>SneakLabel_s
-  map <silent> <space><space>S <Plug>SneakLabel_S
-  nmap <silent><expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
-  nmap <silent><expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>'
-  omap <silent> <Tab> <Plug>SneakLabel_s<cr>
-  omap <silent> <S-Tab> <Plug>SneakLabel_S<cr>
-  vmap <silent> <Tab> <Plug>SneakLabel_s<cr>
-  vmap <silent> <S-Tab> <Plug>SneakLabel_S<cr>
-  xmap <silent> <Tab> <Plug>SneakLabel_s<cr>
-  xmap <silent> <S-Tab> <Plug>SneakLabel_S<cr>
-]]
+-- _sneak_keymaps
+map("n", "f", "<Plug>Sneak_f", opts)
+map("n", "F", "<Plug>Sneak_F", opts)
+map("n", "t", "<Plug>Sneak_t", opts)
+map("n", "T", "<Plug>Sneak_T", opts)
+map("n", "<Tab>", "sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>' ", { expr = true, silent = true })
+map("n", "<S-Tab>", "sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>' ", { expr = true, silent = true })
+map({ "x", "o" }, "<Tab>", "<Plug>SneakLabel_s<cr>", opts)
+map({ "x", "o" }, "<S-Tab>", "<Plug>SneakLabel_S<cr>", opts)
 
 -- ╭────────────╮
 -- │ Repeatable │

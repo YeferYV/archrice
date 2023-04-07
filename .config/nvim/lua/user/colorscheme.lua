@@ -6,7 +6,6 @@ local colorscheme = "tokyonight-night"
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
-
     local hl_groups = {
       "EndOfBuffer",
       "FloatBorder",
@@ -89,6 +88,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       NeoTreeGitStaged            = { fg = "#495466" },
       NeoTreeRootName             = { fg = "#7aa2f7" },
       NeoTreeTabActive            = { fg = "#c0caf5" },
+      SagaWinbarSep               = { fg = "#495466" },
+      SagaWinbarFilename          = { fg = "#495466" },
       SagaNormal                  = { fg = "NONE", bg = "NONE" },
       TerminalNormal              = { fg = "NONE", bg = "NONE" },
       Normal                      = { fg = "NONE", bg = "NONE" },
@@ -181,7 +182,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         }
       },
       poimandres = {
-        custom_colorscheme = { -- a table of overrides/changes to the poimandres theme
+        custom_colorscheme = {
+          -- a table of overrides/changes to the poimandres theme
           ["@punctuation"]           = { fg = "#e8e8e8" },
           ["@punctuation.bracket"]   = { fg = "#515171" },
           ["@punctuation.delimiter"] = { fg = "#e8e8e8" },
@@ -233,7 +235,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
     local selected_colorscheme = custom_themes[vim.g.colors_name]
     if selected_colorscheme then
-
       -- setting custom_colorscheme
       for group, conf in pairs(selected_colorscheme.custom_colorscheme) do
         vim.api.nvim_set_hl(0, group, conf)
@@ -243,7 +244,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       for group, conf in pairs(selected_colorscheme.custom_terminal_colors) do
         vim.g[group] = conf
       end
-
     end
 
     -- DevIcons background

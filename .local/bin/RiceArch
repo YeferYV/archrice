@@ -228,7 +228,7 @@ sudo -u "$USER" -s -- <<===
   install_neovim_plugins() {
     set +eu # disable exit on error (spoiler nvim still outputs errors)
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-    ( APPIMAGE_EXTRACT_AND_RUN=1 nvim -u ~/.config/nvim/lua/user/plugins.lua --headless -c "autocmd User PackerComplete quitall" -c "PackerSync" )
+    ( APPIMAGE_EXTRACT_AND_RUN=1 nvim --headless "+Lazy! sync" +qa )
   }
 
   # Main:
