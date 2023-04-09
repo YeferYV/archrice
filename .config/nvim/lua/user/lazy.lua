@@ -55,6 +55,7 @@ local plugins = {
   -- Bufferline/ScopeBuffer
   {
     "akinsho/bufferline.nvim",
+    lazy = false,
     tag = "v2.7.0", -- Icon bg color linked to selected buffer color #137
     dependencies = { { "tiagovla/scope.nvim", config = true } },
     config = function() require("user.bufferline") end
@@ -97,7 +98,6 @@ local plugins = {
     cmd = "Neotree",
     dependencies = {
       { "MunifTanjim/nui.nvim" },
-      { "akinsho/bufferline.nvim" },
       { "mrjones2014/smart-splits.nvim" },
     },
     config = function() require("user.neo-tree") end
