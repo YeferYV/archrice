@@ -214,7 +214,15 @@ local plugins = {
     event = "LspAttach",
     config = function() require("user.aerial") end
   },
-  { "goolord/alpha-nvim" },
+  { "goolord/alpha-nvim",
+    dependencies = {
+      {
+        "Shatur/neovim-session-manager",
+        config = { autoload_mode = "disabled" }
+      },
+    }
+  },
+
   -- { "HUAHUAI23/telescope-session.nvim", config = function() require("telescope").load_extension("xray23") end },
   -- { "nvim-telescope/telescope-ui-select.nvim", config = function() require("telescope").load_extension("ui-select") end },
   {
@@ -226,10 +234,6 @@ local plugins = {
         select = { telescope = require('telescope.themes').get_dropdown { initial_mode = 'normal' } }
       }
     end
-  },
-  {
-    "Shatur/neovim-session-manager",
-    config = { autoload_mode = "disabled" }
   },
   {
     "lewis6991/gitsigns.nvim",

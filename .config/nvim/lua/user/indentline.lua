@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 indent_blankline.setup {
-  char = "▏",
+  -- char = "│",
   indentLine_enabled = 1,
   show_trailing_blankline_indent = false,
   show_first_indent_level = false,
