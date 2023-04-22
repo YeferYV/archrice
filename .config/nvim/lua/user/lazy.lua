@@ -42,8 +42,18 @@ local plugins = {
     "windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
     event = "InsertEnter",
     config = function()
+
       require("nvim-autopairs").setup()
-      require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+      -- require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+
+      local ts_utils = require("nvim-treesitter.ts_utils")
+      require("cmp").event:on("confirm_done", function(evt)
+        local name = ts_utils.get_node_at_cursor():type()
+        if name ~= "named_imports" then
+          require("nvim-autopairs.completion.cmp").on_confirm_done()(evt)
+        end
+      end)
+
     end,
   },
   {
