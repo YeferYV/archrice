@@ -677,7 +677,7 @@ local mappings = {
   },
 }
 
-require('legendary').setup({ which_key = { auto_register = true } })
+-- require('legendary').setup({ which_key = { auto_register = true } })
 which_key.setup(setup)
 which_key.register(mappings, opts)
 

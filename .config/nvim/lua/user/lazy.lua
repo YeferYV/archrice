@@ -31,13 +31,13 @@ local opts = {
 local plugins = {
 
   -- Automation
-  { 'tpope/vim-commentary', event = "VeryLazy" },
+  -- { 'tpope/vim-commentary', event = "VeryLazy" },
   -- {
   --   "numToStr/Comment.nvim",
   --   commit = "5f01c1a89adafc52bf34e3bf690f80d9d726715d",
   --   config = true
   -- },
-  { "JoosepAlviste/nvim-ts-context-commentstring", event = "InsertEnter" },
+  { "JoosepAlviste/nvim-ts-context-commentstring", event = "VeryLazy" },
   {
     "windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
     event = "InsertEnter",
@@ -131,9 +131,7 @@ local plugins = {
 
   -- Motions
   { "tpope/vim-repeat", event = "VeryLazy" },
-  { "machakann/vim-columnmove", event = "VeryLazy" },
   { "justinmk/vim-sneak", event = "VeryLazy" },
-  { "phaazon/hop.nvim", event = "VeryLazy", config = true },
 
   -- Status-Line
   { "nvim-lualine/lualine.nvim" },
@@ -206,7 +204,9 @@ local plugins = {
   {
     "folke/which-key.nvim",
     dependencies = {
-      { "mrjones2014/legendary.nvim" },
+      -- { "mrjones2014/legendary.nvim" },
+      { "machakann/vim-columnmove" },
+      { "phaazon/hop.nvim", config = true },
     },
   },
   {
