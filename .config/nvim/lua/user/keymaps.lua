@@ -83,6 +83,14 @@ map({ "x" }, "<C-s>", ":s//g<Left><Left>", { noremap = true, silent = false })
 map('i', '<A-j>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
 map('i', '<A-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 map('i', '<A-l>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+map('i', '<C-h>', function()
+  if vim.g.diagnosticsEnabled == "on" or vim.g.diagnosticsEnabled == nil then
+    vim.g.diagnosticsEnabled = "off"
+  else
+    vim.g.diagnosticsEnabled = "on"
+  end
+  vim.diagnostic.config(require("user.lsp.handlers").setup(vim.g.diagnosticsEnabled))
+end, { silent = true })
 
 -- Quick Escape
 keymap("i", "jk", "<ESC>", opts)

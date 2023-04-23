@@ -23,10 +23,10 @@ M.setup = function(diagnostic_status)
 
   local config = {
     off = {
-      underline = false,
+      underline = true,
       virtual_text = false,
-      signs = false,
-      update_in_insert = false,
+      signs = true,
+      update_in_insert = true,
     },
     on = {
       virtual_text = true,
