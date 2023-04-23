@@ -86,11 +86,19 @@ map('i', '<A-l>', function() return vim.fn['codeium#Accept']() end, { expr = tru
 map('i', '<C-h>', function()
   if vim.g.diagnosticsEnabled == "on" or vim.g.diagnosticsEnabled == nil then
     vim.g.diagnosticsEnabled = "off"
+    vim.diagnostic.config({ virtual_text = false })
+    vim.cmd [[
+      augroup _toggle_virtualtext_insertmode
+      autocmd InsertEnter * lua vim.diagnostic.config({ virtual_text = false })
+      autocmd InsertLeave * lua vim.diagnostic.config({ virtual_text = true })
+      augroup end
+    ]]
   else
     vim.g.diagnosticsEnabled = "on"
+    vim.diagnostic.config({ virtual_text = true })
+    vim.cmd [[ autocmd! _toggle_virtualtext_insertmode ]] -- remove the autocmd, `:autocmd _toggle_virtualtext_insertmode` to view it
   end
-  vim.diagnostic.config(require("user.lsp.handlers").setup(vim.g.diagnosticsEnabled))
-end, { silent = true })
+end, { silent = true, desc = "Toggle VirtualText (InsertMode Only)" })
 
 -- Quick Escape
 keymap("i", "jk", "<ESC>", opts)

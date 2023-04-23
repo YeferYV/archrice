@@ -24,6 +24,7 @@ M.setup = function(diagnostic_status)
   local config = {
     off = {
       underline = true,
+      -- virtual_text = { spacing = 4, prefix = "■" },
       virtual_text = false,
       signs = true,
       update_in_insert = true,
