@@ -91,6 +91,7 @@ local plugins = {
       { "hrsh7th/cmp-nvim-lsp" }, -- lsp completions
       { "L3MON4D3/LuaSnip" }, --snippet engine
       { "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
+      { "ray-x/lsp_signature.nvim", config = function() require "lsp_signature".on_attach({ hint_enable = false }) end }
     },
     config = function() require("user.cmp") end
   },
@@ -117,12 +118,12 @@ local plugins = {
   -- { "github/copilot.vim" },
   -- { "tzachar/cmp-tabnine", build = "./install.ps1" },
   { "Exafunction/codeium.vim", event = "InsertEnter" },
-  {
-    "tzachar/cmp-tabnine",
-    build = "./install.sh",
-    event = "InsertEnter",
-    config = function() require("user.cmp-tabnine") end
-  },
+  -- {
+  --   "tzachar/cmp-tabnine",
+  --   build = "./install.sh",
+  --   event = "InsertEnter",
+  --   config = function() require("user.cmp-tabnine") end
+  -- },
 
   -- LSP
   { "neovim/nvim-lspconfig" }, -- enable LSP
