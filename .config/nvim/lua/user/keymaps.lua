@@ -71,8 +71,8 @@ keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- Replace all/visual_selected
-map({ "n" }, "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false })
-map({ "x" }, "<C-s>", ":s//g<Left><Left>", { noremap = true, silent = false })
+map({ "n" }, "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false, desc = "Replace in Buffer" })
+map({ "x" }, "<C-s>", ":s//g<Left><Left>", { noremap = true, silent = false, desc = "Replace in Visual_selected" })
 
 -- Intellisense
 -- map("i", "<A-h>", "<Plug>(copilot-dismiss)", { expr = true, silent = true })
@@ -83,7 +83,16 @@ map({ "x" }, "<C-s>", ":s//g<Left><Left>", { noremap = true, silent = false })
 map('i', '<A-j>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
 map('i', '<A-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 map('i', '<A-l>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-map('i', '<C-h>', function()
+
+keymap("i", "<C-e>", "<esc><C-e>a", opts)
+keymap("i", "<C-y>", "<esc><C-y>a", opts)
+keymap("i", "<C-n>", "<C-e>", opts) -- completes next line
+keymap("i", "<C-p>", "<C-y>", opts) -- completes previous line
+-- map('i', '<C-g>', function() vim.lsp.buf.signature_help() end, opts)
+-- map('i', '<C-g>', function() vim.lsp.buf.hover() end, opts)
+map('i', '<C-h>', function() require('lsp_signature').toggle_float_win() end, opts)
+
+map('i', '<C-v>', function()
   if vim.g.diagnosticsEnabled == "on" or vim.g.diagnosticsEnabled == nil then
     vim.g.diagnosticsEnabled = "off"
     vim.diagnostic.config({ virtual_text = false })

@@ -48,6 +48,10 @@ M.setup = function(diagnostic_status)
 
   vim.diagnostic.config(config[diagnostic_status])
 
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "rounded",
+  })
+
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
   })
