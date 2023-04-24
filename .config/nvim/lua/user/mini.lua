@@ -50,7 +50,7 @@ mini_ai.setup({
     R = spec_treesitter({ a = '@return.outer', i = '@return.inner', }),
     ["="] = spec_treesitter({ a = '@assignment.rhs', i = '@assignment.lhs', }),
     ["+"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
-    ["z"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
+    ["*"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
 
     -- Tweak argument textobject
     a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }), -- brackets = { '%b()', '%b[]', '%b{}' },

@@ -42,7 +42,7 @@
   "nvim-ts-autotag": { "branch": "main", "commit": "7a1c677985b8fc4cdfdb87dd55fbc16dadd86bbe" },
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "729d83ecb990dc2b30272833c213cc6d49ed5214" },
   "nvim-ufo": { "branch": "main", "commit": "9e829d5cfa3de6a2ff561d86399772b0339ae49d" },
-  "nvim-various-textobjs": { "branch": "main", "commit": "909c4ee4b7f5c4f13f38193d64d35e831367975a" },
+  "nvim-various-textobjs": { "branch": "main", "commit": "6b27d63dd94cce2893a00dcb292d6b5a45676ca9" },
   "nvim-web-devicons": { "branch": "master", "commit": "f16ec8f6e5d23e4349501dae46e0a661918e086e" },
   "plenary.nvim": { "branch": "master", "commit": "253d34830709d690f013daf2853a9d21ad7accab" },
   "poimandres.nvim": { "branch": "main", "commit": "43ea31d1e19f7603697bb3272b233930d0292383" },

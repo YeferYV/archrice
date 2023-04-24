@@ -706,6 +706,7 @@ local mini_textobj = {
   R = '@return',
   ["="] = '@assignment.side',
   ["+"] = '@assignment.whole',
+  ["*"] = '@number',
   ['a'] = 'Function Parameters',
   ['A'] = 'Whole Buffer',
   ['b'] = 'Alias )]}',

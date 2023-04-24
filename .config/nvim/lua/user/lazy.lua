@@ -71,14 +71,6 @@ local plugins = {
     config = function() require("user.bufferline") end
   },
 
-  -- ColorSchemes
-  { 'olivercederborg/poimandres.nvim' },
-  { 'folke/tokyonight.nvim' },
-  {
-    "NvChad/nvim-colorizer.lua",
-    config = function() require("user.colorizer") end
-  },
-
   -- cmp-plugins
   {
     "hrsh7th/nvim-cmp", -- The completion plugin
@@ -91,9 +83,13 @@ local plugins = {
       { "hrsh7th/cmp-nvim-lsp" }, -- lsp completions
       { "L3MON4D3/LuaSnip" }, --snippet engine
       { "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
-      { "ray-x/lsp_signature.nvim", config = function() require "lsp_signature".on_attach({ hint_enable = false }) end }
     },
     config = function() require("user.cmp") end
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = { "InsertEnter" },
+    config = function() require "lsp_signature".on_attach({ hint_enable = false }) end
   },
 
   -- DAP
@@ -172,7 +168,7 @@ local plugins = {
   { "svermeulen/vim-easyclip", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
-    config = { useDefaultKeymaps = false, lookForwardLines = 30 },
+    config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
   },
   -- _surround_code_blocks
   -- { 'tpope/vim-surround' },
@@ -225,11 +221,22 @@ local plugins = {
     event = "LspAttach",
     config = function() require("user.aerial") end
   },
-  { "goolord/alpha-nvim",
+  {
+    "goolord/alpha-nvim",
     dependencies = {
       {
         "Shatur/neovim-session-manager",
         config = { autoload_mode = "disabled" }
+      },
+      {
+        "NvChad/nvim-colorizer.lua",
+        config = function() require("user.colorizer") end
+      },
+      {
+        'olivercederborg/poimandres.nvim'
+      },
+      {
+        'folke/tokyonight.nvim'
       },
     }
   },
