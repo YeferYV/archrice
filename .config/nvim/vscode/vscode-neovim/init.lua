@@ -65,26 +65,36 @@ local opts = {
 local plugins = {
 
   -- Automation
-  { 'tpope/vim-commentary' },
-  { "JoosepAlviste/nvim-ts-context-commentstring" },
-  { "lewis6991/impatient.nvim" },
+  { "JoosepAlviste/nvim-ts-context-commentstring", event = "VeryLazy" },
 
   -- Motions
-  { "machakann/vim-columnmove" },
-  { "tpope/vim-repeat" },
-  { "justinmk/vim-sneak" },
-  { "phaazon/hop.nvim", config = true, },
+  { "machakann/vim-columnmove", event = "VeryLazy" },
+  { "tpope/vim-repeat", event = "VeryLazy" },
+  { "justinmk/vim-sneak", event = "VeryLazy" },
+  { "phaazon/hop.nvim", config = true, event = "VeryLazy" },
 
   -- Text-Objects
-  { "paraduxos/vim-indent-object", branch = "new_branch" },
-  { "echasnovski/mini.nvim" },
-  { "kana/vim-textobj-user" },
-  { "saihoooooooo/vim-textobj-space" },
-  { "nvim-treesitter/nvim-treesitter" },
-  { "nvim-treesitter/nvim-treesitter-textobjects" },
-  { "coderifous/textobj-word-column.vim" },
-  { "svermeulen/vim-easyclip" },
-  { "chrisgrieser/nvim-various-textobjs", config = { useDefaultKeymaps = false, lookForwardLines = 30 } },
+  { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" },
+  { "echasnovski/mini.nvim", event = "VeryLazy" },
+  {
+    "kana/vim-textobj-user",
+    event = "VeryLazy",
+    dependencies = { "saihoooooooo/vim-textobj-space" }
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter-textobjects" },
+      { "RRethy/nvim-treesitter-textsubjects" },
+    }
+  },
+  { "coderifous/textobj-word-column.vim", event = "VeryLazy" },
+  { "svermeulen/vim-easyclip", event = "VeryLazy" },
+  {
+    "chrisgrieser/nvim-various-textobjs",
+    event = "VeryLazy",
+    config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 }
+  },
 
   -- UI
   { 'olivercederborg/poimandres.nvim' },
@@ -194,7 +204,7 @@ require("mini.ai").setup({
     R = spec_treesitter({ a = '@return.outer', i = '@return.inner', }),
     ["="] = spec_treesitter({ a = '@assignment.rhs', i = '@assignment.lhs', }),
     ["+"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
-    ["z"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
+    ["*"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
     a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }),
     k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' },
     v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } },
@@ -256,8 +266,8 @@ require('mini.bracketed').setup({
 
 require('mini.comment').setup({
   mappings = {
-    comment = '',
-    comment_line = '',
+    comment = 'gc',
+    comment_line = 'gcc',
     textobject = '',
   },
   hooks = {
@@ -587,6 +597,8 @@ map({ "o", "x" }, "gd", function() require("various-textobjs").diagnostic() vim.
   { desc = "Diagnostic textobj" })
 map({ "o", "x" }, "gL", function() require("various-textobjs").nearEoL() vim.call("repeat#set", "vgL") end,
   { desc = "nearEoL textobj" }) -- conflicts with visual until search-next workaround: gn
+map({ "o", "x" }, "g_", "<cmd>lua require('various-textobjs').lineCharacterwise()<CR>",
+  { silent = true, desc = "lineCharacterwise textobj" })
 map({ "o", "x" }, "g|", function() require("various-textobjs").column() vim.call("repeat#set", "vg|") end,
   { desc = "ColumnDown textobj" })
 map({ "o", "x" }, "gr", function() require("various-textobjs").restOfParagraph() vim.call("repeat#set", "vgr") end,
@@ -599,10 +611,18 @@ map({ "o", "x" }, "gu", function() require("various-textobjs").url() vim.call("r
   { desc = "Url textobj" })
 
 -- _nvim_various_textobjs: inner-outer
+map({ "o", "x" }, "am", "<cmd>lua require('various-textobjs').chainMember(false)<CR>",
+  { silent = true, desc = "inner chainMember textobj" })
+map({ "o", "x" }, "im", "<cmd>lua require('various-textobjs').chainMember(true)<CR>",
+  { silent = true, desc = "inner chainMember textobj" })
 map({ "o", "x" }, "aS", function() require("various-textobjs").subword(false) vim.call("repeat#set", "vaS") end,
   { desc = "outer Subword textobj" })
 map({ "o", "x" }, "iS", function() require("various-textobjs").subword(true) vim.call("repeat#set", "vaS") end,
   { desc = "inner Subword textobj" })
+map({ "o", "x" }, "az", "<cmd>lua require('various-textobjs').closedFold(false)<CR>",
+  { silent = true, desc = "outer ClosedFold textobj" })
+map({ "o", "x" }, "iz", "<cmd>lua require('various-textobjs').closedFold(true)<CR>",
+  { silent = true, desc = "inner ClosedFold textobj" })
 
 -- _vim_indent_object_(visualrepeatable_+_vimrepeat)
 vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -619,27 +639,23 @@ map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { desc = "Space textobj" })
 map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { desc = "Space textobj" })
 
 -- _clipboard_textobj
-vim.cmd [[
-  let g:EasyClipUseCutDefaults = 0
-  let g:EasyClipEnableBlackHoleRedirect = 0
-  nmap gx "_d
-  nmap gxx "_dd
-  xmap gx "_d
+vim.g.EasyClipUseCutDefaults = false
+vim.g.EasyClipEnableBlackHoleRedirect = false
+map({ "n", "x" }, "gx", "_d", { silent = true, desc = "Blackhole Delete" })
+map({ "n" }, "gxx", "_dd", { silent = true, desc = "Blackhole _dd" })
 
-  let g:EasyClipUseYankDefaults = 0
-  nmap <silent> gy <plug>SubstituteOverMotionMap
-  nmap gyy <plug>SubstituteLine
-  xmap gy <plug>XEasyClipPaste
+vim.g.EasyClipUseYankDefaults = false
+map({ "n" }, "gy", "<plug>SubstituteOverMotionMap", { silent = true, desc = "SubstituteOverMotionMap" })
+map({ "n" }, "gyy", "<plug>SubstituteLine", { silent = true, desc = "SubstituteLine" })
+map({ "x" }, "gy", "<plug>XEasyClipPaste ", { silent = true, desc = "XEasyClipPaste" })
 
-  let g:EasyClipUsePasteDefaults = 0
-  nmap gY <plug>G_EasyClipPasteBefore
-  xmap gY <Plug>XG_EasyClipPaste
+vim.g.EasyClipUsePasteDefaults = false
+map({ "n" }, "gY", "<plug>G_EasyClipPasteBefore", { silent = true, desc = "EasyClip PasteBefore" })
+map({ "x" }, "gY", "<plug>XG_EasyClipPaste ", { silent = true, desc = "EasyClip Paste" })
 
-  let g:EasyClipUsePasteToggleDefaults = 0
-  nmap gz <plug>EasyClipSwapPasteForward
-  nmap gZ <plug>EasyClipSwapPasteBackwards
-
-]]
+vim.g.EasyClipUsePasteToggleDefaults = false
+map({ "n" }, "gz", "<plug>EasyClipSwapPasteForward", { silent = true, desc = "EasyClip SwapPasteForward" })
+map({ "n" }, "gZ", "<plug>EasyClipSwapPasteBackwards ", { silent = true, desc = "EasyClip SwapPasteBackwards" })
 
 -- ╭─────────╮
 -- │ Motions │
@@ -667,23 +683,15 @@ keymap("n", "<Leader><Leader>Z", "<cmd>HopChar2BC<CR>", { noremap = false })
 keymap("v", "<Leader><Leader>z", "<cmd>HopChar2AC<CR>", { noremap = false })
 keymap("v", "<Leader><Leader>Z", "<cmd>HopChar2BC<CR>", { noremap = false })
 
-vim.cmd [[
-  let g:sneak#prompt = ''
-  map f <Plug>Sneak_f
-  map F <Plug>Sneak_F
-  map t <Plug>Sneak_t
-  map T <Plug>Sneak_T
-  map <Leader><Leader>s <Plug>SneakLabel_s
-  map <Leader><Leader>S <Plug>SneakLabel_S
-  nmap <silent><expr> <Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>'
-  nmap <silent><expr> <S-Tab> sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>'
-  omap <Tab> <Plug>SneakLabel_s<cr>
-  omap <S-Tab> <Plug>SneakLabel_S<cr>
-  vmap <Tab> <Plug>SneakLabel_s<cr>
-  vmap <S-Tab> <Plug>SneakLabel_S<cr>
-  xmap <Tab> <Plug>SneakLabel_s<cr>
-  xmap <S-Tab> <Plug>SneakLabel_S<cr>
-]]
+-- _sneak_keymaps
+map("n", "f", "<Plug>Sneak_f", opts)
+map("n", "F", "<Plug>Sneak_F", opts)
+map("n", "t", "<Plug>Sneak_t", opts)
+map("n", "T", "<Plug>Sneak_T", opts)
+map("n", "<Tab>", "sneak#is_sneaking() ? '<Plug>SneakLabel_s<cr>' : ':bnext<cr>' ", { expr = true, silent = true })
+map("n", "<S-Tab>", "sneak#is_sneaking() ? '<Plug>SneakLabel_S<cr>' : ':bprevious<cr>' ", { expr = true, silent = true })
+map({ "x", "o" }, "<Tab>", "<Plug>SneakLabel_s<cr>", opts)
+map({ "x", "o" }, "<S-Tab>", "<Plug>SneakLabel_S<cr>", opts)
 
 -- ╭────────────╮
 -- │ Repeatable │
@@ -691,8 +699,8 @@ vim.cmd [[
 
 -- _nvim-treesitter-textobjs_repeatable
 local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
-map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { desc = "Next TS textobj" })
-map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { desc = "Prev TS textobj" })
+map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { silent = true, desc = "Next TS textobj" })
+map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { silent = true, desc = "Prev TS textobj" })
 
 -- _sneak_repeatable
 vim.cmd [[ command SneakForward execute "normal \<Plug>Sneak_;" ]]
@@ -701,8 +709,8 @@ local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ SneakForward ]] end,
   function() vim.cmd [[ SneakBackward ]] end
 )
-map({ "n", "x", "o" }, "M", next_sneak, { desc = "Next SneakForward" })
-map({ "n", "x", "o" }, "Z", prev_sneak, { desc = "Prev SneakForward" })
+map({ "n", "x", "o" }, "<BS>", next_sneak, { silent = true, desc = "Next SneakForward" })
+map({ "n", "x", "o" }, "<S-BS>", prev_sneak, { silent = true, desc = "Prev SneakForward" })
 
 -- _goto_diagnostic_repeatable
 local next_diagnostic, prev_diagnostic = ts_repeat_move.make_repeatable_move_pair(
