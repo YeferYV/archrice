@@ -1438,10 +1438,13 @@
   // "editor.guides.bracketPairsHorizontal": true,
   // "editor.lineHeight": 1.4,
   "editor.linkedEditing": true,
-  "editor.inlineSuggest.enabled": true,
+  "editor.inlineSuggest.enabled": true, // Copilot suggestion
+  "editor.inlineSuggest.suppressSuggestions": false, // lsp priority over copilot
   "editor.minimap.enabled": false,
+  // "editor.quickSuggestions": { "other": "on", "comments": "off", "strings": "off" }, // lsp suggestion
+  // "editor.quickSuggestionsDelay": 10,
   "editor.renderLineHighlight": "none",
-  // "editor.suggest.preview": true,
+  // "editor.suggest.preview": true, // lsp inline preview
   "editor.tabSize": 2,
   "editor.tokenColorCustomizations": {
     "[Hacker]": {
