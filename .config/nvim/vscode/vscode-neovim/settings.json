@@ -1731,7 +1731,9 @@
   "terminal.integrated.fontFamily": "'3270 Nerd Font','TerminessTTF Nerd Font','Font Awesome 6 Free Solid'",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": 500,
+  "terminal.integrated.sendKeybindingsToShell": false, // shell will not trigger keybindings.json
   "terminal.integrated.shellIntegration.enabled": false,
+  "terminal.integrated.commandsToSkipShell": [ "whichkey.show" ],
   "window.customMenuBarAltFocus": false,
   "window.enableMenuBarMnemonics": false,
   "window.menuBarVisibility": "toggle",

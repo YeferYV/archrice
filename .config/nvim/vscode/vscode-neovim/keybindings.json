@@ -114,6 +114,14 @@
     },
 
     // Show UI
+    // {
+    //     "key": "ctrl+\\",
+    //     "command": "-workbench.action.splitEditor"
+    // },
+    {
+        "key": "ctrl+\\",
+        "command": "workbench.action.togglePanel",
+    },
     {
         "key": "alt+space",
         "command": "whichkey.show",
@@ -357,12 +365,12 @@
     },
 
     // Tasks Runners
-    {
-        "key": "ctrl+alt+space",
-        "command": "workbench.action.tasks.runTask",
-        "args": "tmux-copy-mode",
-        "when": "terminalFocus"
-    },
+    // { // already mapped on tmux.conf
+    //     "key": "ctrl+alt+space",
+    //     "command": "workbench.action.tasks.runTask",
+    //     "args": "tmux-copy-mode",
+    //     "when": "terminalFocus"
+    // },
 
     // Completion Navigation (pgdown/pgup scrolls suggestion's preview focused)
     {
