@@ -25,7 +25,6 @@ vim.opt.virtualedit = "all" -- allow cursor bypass end of line
 vim.opt.wrap = false -- display lines as one long line
 vim.opt.shortmess:append "c" -- don't give |ins-completion-menu| messages
 vim.opt.iskeyword:append "-" -- hyphenated words recognized by searches
-vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
 vim.g.indent_object_ignore_blank_line = false
 
 -- ╭─────────╮
@@ -127,6 +126,7 @@ vim.cmd [[
   augroup _general_settings
     autocmd!
     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
+    autocmd BufEnter * :set formatoptions-=cro
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
   augroup end
 

@@ -1747,5 +1747,8 @@
   "workbench.panel.defaultLocation": "right",
   "workbench.startupEditor": "none",
   "workbench.colorTheme": "Hacker",
+  "workbench.activityBar.visible": false,
+  "workbench.editor.enablePreview": false,
+  // "workbench.editor.showTabs": false,
   // "window.zoomLevel": -1,
 }
