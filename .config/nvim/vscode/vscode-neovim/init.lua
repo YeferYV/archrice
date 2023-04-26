@@ -525,8 +525,10 @@ vim.g.mapleader = "\\"
 vim.g.maplocalleader = "\\"
 
 -- Buffer keymaps
+keymap("n", "g,", "g,", { noremap = true, silent = true, desc = "go forward in :changes" }) -- Formatting will lose track of changes
+keymap("n", "g;", "g;", { noremap = true, silent = true, desc = "go backward in :changes" }) -- Formatting will lose track of changes
 keymap("n", "gb;", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
-keymap("n", "<A-;>", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
+keymap("n", "<C-;>", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
 
 -- Explorer
 if not vim.g.vscode then
@@ -906,7 +908,6 @@ map({ "n", "x", "o" }, "gpc", prev_comment, { desc = "Prev Comment" })
 -- │ Lsp keymaps │
 -- ╰─────────────╯
 
-map("n", "g;", function() vim.fn.VSCodeNotify("editor.action.refactor") end, opts)
 map("n", "gA", function() vim.fn.VSCodeNotify("editor.action.autoFix") end, opts)
 map("n", "gd", function() vim.fn.VSCodeNotify("editor.action.revealDefinition") end, opts)
 map("n", "gD", function() vim.fn.VSCodeNotify("editor.action.revealDeclaration") end, opts)
@@ -934,3 +935,4 @@ map("n", "gT", function() vim.fn.VSCodeNotify("editor.action.formatDocument") en
 map("n", "gV", function() vim.fn.VSCodeNotify("references-view.find") end, opts)
 map("n", "gW", function() vim.fn.VSCodeNotify("references-view.findImplementations") end, opts)
 map("n", "gz", function() vim.fn.VSCodeNotify("references-view.showCallHierarchy") end, opts)
+map("n", "gZ", function() vim.fn.VSCodeNotify("editor.action.refactor") end, opts)

@@ -203,10 +203,10 @@
     },
 
     // Buffer Navigation
-    {
-        "key": "alt+;",
+    { // mapped `gb;` `<C-;>` as `<C-6>` in init.lua
+        "key": "ctrl+;",
         "command": "vscode-neovim.send",
-        "args": "<A-;>",
+        "args": "<C-;>",
         "when": "!terminalFocus",
     },
     {
@@ -428,6 +428,26 @@
     },
 
     // QuickOpen Navigation
+    {
+        "key": "alt+;",
+        "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+        "when": "!activeEditorGroupEmpty"
+    },
+    {
+        "key": "alt+;",
+        "command": "workbench.action.quickOpenNavigateNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "alt+shift+;",
+        "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+        "when": "!activeEditorGroupEmpty"
+    },
+    {
+        "key": "alt+shift+;",
+        "command": "workbench.action.quickOpenNavigatePrevious",
+        "when": "inQuickOpen"
+    },
     {
         "key": "ctrl+j",
         "command": "workbench.action.quickOpenNavigateNext",

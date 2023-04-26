@@ -150,8 +150,10 @@ keymap("n", "<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", opts)
 keymap("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", opts)
 keymap("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", opts)
 keymap("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", opts)
-keymap("n", "gb;", ":call CycleLastBuffer()<CR>", opts)
-keymap("n", "gbl", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
+keymap("n", "g,", "g,", { noremap = true, silent = true, desc = "go forward in :changes" }) -- Formatting will lose track of changes
+keymap("n", "g;", "g;", { noremap = true, silent = true, desc = "go backward in :changes" }) -- Formatting will lose track of changes
+keymap("n", "gb;", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
+keymap("n", "<C-;>", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
 keymap("n", "gbs", "<Cmd>BufferLineCyclePrev <CR>", opts)
 keymap("n", "gbf", "<Cmd>BufferLineCycleNext <CR>", opts)
 keymap("n", "gbS", "<Cmd>BufferLineMovePrev <CR>", opts)

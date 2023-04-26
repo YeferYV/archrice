@@ -525,13 +525,6 @@
       "type": "bindings",
       "bindings": [
         {
-          "key": ";",
-          "name": "Refactor",
-          "type": "command",
-          "command": "editor.action.refactor",
-          "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
-        },
-        {
           "key": "A",
           "name": "Auto Fix",
           "type": "command",
@@ -686,6 +679,13 @@
           "name": "View Calls Hierarchy",
           "command": "references-view.showCallHierarchy",
           "when": "editorHasCallHierarchyProvider"
+        },
+        {
+          "key": "Z",
+          "name": "Refactor",
+          "type": "command",
+          "command": "editor.action.refactor",
+          "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
         }
       ]
     },
