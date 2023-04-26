@@ -83,9 +83,15 @@ super + {t,shift + t,d,e}
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
-# set virtual monitor
-super + ctrl + {v,b}
-  bspc monitor -g {685x765+685+0, 1366x765+0+0}
+# set/reset virtual monitor (to the left corner)
+super + ctrl + v
+  xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
+  { \
+    bspc wm --add-monitor eDP-2 $((W/2))x$((H))+0+0; \
+    bspc monitor eDP-1 --rectangle $((W/2))x$((H))+$((W/2))+0; \
+  , bspc monitor eDP-1 --rectangle $((W))x$((H))+0+0; \
+    bspc monitor eDP-2 --remove; \
+  }
 
 #
 # focus/swap
@@ -285,11 +291,16 @@ super + alt + {i,o}
 
 # hover window to left/down/up/right
 super + alt + shift + {u,i,o,p}
-  { x=0;   y=0;   w=681;  h=764; \
-  , x=0;   y=382; w=1362; h=382; \
-  , x=0;   y=0;   w=1362; h=382; \
-  , x=681; y=0;   w=681;  h=764; \
-  } \
+  POLYBAR=18; \
+  BORDER=4; \
+	bspc config -n focused border_width 2; \
+  xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
+	{ \
+	  x=0;         y=$POLYBAR;  w=$((W/2 - BORDER));  h=$((H   - BORDER - POLYBAR)); \
+	, x=0;         y=$((H/2));  w=$((W   - BORDER));  h=$((H/2 - BORDER )); \
+	, x=0;         y=$POLYBAR;  w=$((W   - BORDER));  h=$((H/2 - BORDER - POLYBAR)); \
+	, x=$((W/2));  y=$POLYBAR;  w=$((W/2 - BORDER));  h=$((H   - BORDER - POLYBAR)); \
+	} \
   xdo move -x $x -y $y; xdo resize -w $w -h $h
 
 # move floating window by 10px
@@ -306,14 +317,23 @@ super + alt + {_,shift + } n
 
 # xdo fixedscreen 1366x768 (fullscreen no visible borders)
 super + ctrl + {_,shift + } n
-  xdo move -x 0 -y 0; xdo move {-x -1 -y -1, -x -2 -y -2}; xdo resize -w 1366 -h 768
+	bspc config -n focused border_width 0; \
+  xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
+	{ \
+	  x=0;   y=18;  w=$((W)); h=$((H - 18)); \
+	, x=0;   y=0;   w=$((W)); h=$((H)); \
+	} \
+	xdo move -x $x -y $y; xdo resize -w $w -h $h;
 
 # xdo fixedscreen 1366x768 (min-max window)
 super + {_,shift + }n
-  { x=250; y=18;  w=1112; h=746; \
-  , x=0;   y=0;   w=1362; h=764; \
-  } \
-  xdo move -x $x -y $y; xdo resize -w $w -h $h
+	bspc config -n focused border_width 2; \
+  xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
+	{ \
+	  x=0;   y=18;  w=$((W - 4)); h=$((H - 22)); \
+	, x=0;   y=0;   w=$((W - 4)); h=$((H - 4)); \
+	} \
+	xdo move -x $x -y $y; xdo resize -w $w -h $h;
 
 #
 # status bar
