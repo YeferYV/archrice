@@ -88,7 +88,7 @@ sudo -s -- <<===
   # echo "127.0.0.1 localhost"                >> /etc/hosts
   # echo "::1       localhost"                >> /etc/hosts
   # echo "127.0.1.1 4rch.localdomain 4rch"    >> /etc/hosts
-  useradd -mG video,wheel,tty $USER
+  [ ! -e /home/$USER ] && useradd -mG video,wheel,tty $USER
   echo root:toor | chpasswd
   echo $USER:toor | chpasswd
   echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"  > /etc/sudoers.d/wheel
@@ -149,19 +149,19 @@ sudo -u "$USER" -s -- <<===
 
   # Install Fonts:
   install_fonts() {
-    [ ! -e "$HOME"/.local/share/fonts ] && mkdir -p "$HOME"/.local/share/fonts
+    [ ! -e /home/$USER/.local/share/fonts ] && mkdir -p /home/$USER/.local/share/fonts
 
     # Nerd-Fonts:
-    git clone --depth=1 --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
+    git clone --depth=1 --branch=v2.3.3 --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
     cd nerd-fonts
     git sparse-checkout add patched-fonts/3270
     git sparse-checkout add patched-fonts/CascadiaCode
     git sparse-checkout add patched-fonts/FiraCode
     git sparse-checkout add patched-fonts/Terminus
-    cp -r patched-fonts/3270 "$HOME"/.local/share/fonts/
-    cp -r patched-fonts/CascadiaCode "$HOME"/.local/share/fonts/
-    cp -r patched-fonts/FiraCode "$HOME"/.local/share/fonts/
-    cp -r patched-fonts/Terminus "$HOME"/.local/share/fonts/
+    cp -r patched-fonts/3270 /home/$USER/.local/share/fonts/
+    cp -r patched-fonts/CascadiaCode /home/$USER/.local/share/fonts/
+    cp -r patched-fonts/FiraCode /home/$USER/.local/share/fonts/
+    cp -r patched-fonts/Terminus /home/$USER/.local/share/fonts/
     cd ..
 
     # Font-Awesome:
@@ -169,9 +169,9 @@ sudo -u "$USER" -s -- <<===
     cd Font-Awesome
     git sparse-checkout add otfs
     git sparse-checkout add webfonts
-    mkdir "$HOME"/.local/share/fonts/Font-Awesome
-    cp -r otfs/ "$HOME"/.local/share/fonts/Font-Awesome/
-    cp -r webfonts/ "$HOME"/.local/share/fonts/Font-Awesome/
+    mkdir /home/$USER/.local/share/fonts/Font-Awesome
+    cp -r otfs/ /home/$USER/.local/share/fonts/Font-Awesome/
+    cp -r webfonts/ /home/$USER/.local/share/fonts/Font-Awesome/
     cd ..
 
     # Noto Sans/Serif/Mono:
@@ -180,25 +180,25 @@ sudo -u "$USER" -s -- <<===
     git sparse-checkout add fonts/NotoSans/googlefonts
     git sparse-checkout add fonts/NotoSansMono/googlefonts
     git sparse-checkout add fonts/NotoSerif/googlefonts
-    mkdir "$HOME"/.local/share/fonts/NotoSans
-    mkdir "$HOME"/.local/share/fonts/NotoSansMono
-    mkdir "$HOME"/.local/share/fonts/NotoSerif
-    cp -r fonts/NotoSans/googlefonts "$HOME"/.local/share/fonts/NotoSans/
-    cp -r fonts/NotoSansMono/googlefonts "$HOME"/.local/share/fonts/NotoSansMono/
-    cp -r fonts/NotoSerif/googlefonts "$HOME"/.local/share/fonts/NotoSerif/
+    mkdir /home/$USER/.local/share/fonts/NotoSans
+    mkdir /home/$USER/.local/share/fonts/NotoSansMono
+    mkdir /home/$USER/.local/share/fonts/NotoSerif
+    cp -r fonts/NotoSans/googlefonts /home/$USER/.local/share/fonts/NotoSans/
+    cp -r fonts/NotoSansMono/googlefonts /home/$USER/.local/share/fonts/NotoSansMono/
+    cp -r fonts/NotoSerif/googlefonts /home/$USER/.local/share/fonts/NotoSerif/
     cd ..
 
     # Noto Color-Emoji:
     git clone --depth=1 --filter=blob:none --sparse https://github.com/googlefonts/noto-emoji
     cd noto-emoji
     git sparse-checkout add fonts
-    mkdir "$HOME"/.local/share/fonts/Noto-Emoji
-    cp fonts/NotoColorEmoji.ttf "$HOME"/.local/share/fonts/Noto-Emoji/
+    mkdir /home/$USER/.local/share/fonts/Noto-Emoji
+    cp fonts/NotoColorEmoji.ttf /home/$USER/.local/share/fonts/Noto-Emoji/
     cd ..
 
     # Bedstead Font:
     curl -LO https://bjh21.me.uk/bedstead/bedstead-002.004.zip
-    unzip bedstead-002.004.zip -d "$HOME"/.local/share/fonts/
+    unzip bedstead-002.004.zip -d /home/$USER/.local/share/fonts/
   }
 
   # install_root_configs (){
@@ -227,7 +227,6 @@ sudo -u "$USER" -s -- <<===
   # Neovim Plugins:
   install_neovim_plugins() {
     set +eu # disable exit on error (spoiler nvim still outputs errors)
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
     ( APPIMAGE_EXTRACT_AND_RUN=1 nvim --headless "+Lazy! sync" +qa )
   }
 
