@@ -188,6 +188,14 @@ sudo -u "$USER" -s -- <<===
     cp -r fonts/NotoSerif/googlefonts /home/$USER/.local/share/fonts/NotoSerif/
     cd ..
 
+    # Noto CJK:
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/notofonts/noto-cjk
+    cd noto-cjk
+    git sparse-checkout add google-fonts
+    mkdir /home/$USER/.local/share/fonts/NotoCJK
+    cp -r google-fonts /home/$USER/.local/share/fonts/NotoCJK/
+    cd ..
+
     # Noto Color-Emoji:
     git clone --depth=1 --filter=blob:none --sparse https://github.com/googlefonts/noto-emoji
     cd noto-emoji
