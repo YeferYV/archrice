@@ -111,6 +111,26 @@ vim.cmd [[
   "   autocmd BufEnter * if &filetype != 'neo-tree' | setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20 | endif
   " augroup end
 
+  augroup _mouse_menu
+    aunmenu PopUp
+    vnoremenu PopUp.Cut                         "+x
+    vnoremenu PopUp.Copy                        "+y
+    anoremenu PopUp.Paste                       "+gP
+    vnoremenu PopUp.Paste                       "+P
+    vnoremenu PopUp.Delete                      "_x
+    anoremenu PopUp.Search\ Word                *#
+    anoremenu PopUp.Undo                        <esc><esc>:silent undo<cr>
+    anoremenu PopUp.Write                       :write<cr>
+    anoremenu PopUp.Quit                        :quit!<cr>
+    anoremenu PopUp.Definition                  :Telescope lsp_definitions<cr>
+    anoremenu PopUp.Peek\ Definition            :Lspsaga peek_definition<cr>
+    anoremenu PopUp.Explorer                    :Neotree<cr>
+    anoremenu PopUp.Toggle\ Scroller            :lua MiniMap.toggle()<cr>
+    " anoremenu PopUp.-1-                         <Nop>
+    " anoremenu PopUp.How-to\ disable\ mouse      <Cmd>help disable-mouse<CR>
+    " anoremenu PopMenu.Hello                     :popup PopUp<cr>
+  augroup end
+
 ]]
 
 ------------------------------------------------------------------------------------------------------------------------

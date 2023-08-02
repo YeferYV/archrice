@@ -120,8 +120,8 @@ map("n", "<S-q>", function() vim.cmd("quit") end, opts)
 map("n", "<S-r>", function() vim.lsp.buf.format() vim.cmd("silent write") end, opts)
 
 -- Quick Jump
-keymap("n", "J", "10j", opts)
-keymap("n", "K", "10k", opts)
+keymap("n", "J", "10gj", opts)
+keymap("n", "K", "10gk", opts)
 keymap("n", "H", "10h", opts)
 keymap("n", "L", "10l", opts)
 

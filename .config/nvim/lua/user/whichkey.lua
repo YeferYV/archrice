@@ -569,7 +569,9 @@ local mappings = {
     L = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
     -- n = { "<cmd>Neotree show<cr>", "Neotree show" },
     -- N = { "<cmd>Neotree close<cr>", "Neotree close" },
-    p = { function() vim.opt.paste = not vim.opt.paste:get() end, "Toggle Paste Mode" },
+    m = { "<cmd>lua MiniMap.toggle()<cr>", "Toggle MiniMap" },
+    p = { "<cmd>popup PopUp<cr>", "Toggle PopUp" },
+    P = { function() vim.opt.paste = not vim.opt.paste:get() end, "Toggle Paste Mode" },
     o = { "<cmd>Legendary<cr>", "Open Legendary" },
     r = {
       function()
