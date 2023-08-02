@@ -21,7 +21,6 @@ vim.opt.smartindent = true -- make indenting smarter again
 vim.opt.tabstop = 2 -- insert 2 spaces for a tab
 vim.opt.termguicolors = true -- set term gui colors (most terminals support this)
 vim.opt.timeoutlen = 500 -- time to wait for a mapped sequence to complete (in milliseconds)
-vim.opt.virtualedit = "all" -- allow cursor bypass end of line
 vim.opt.wrap = false -- display lines as one long line
 vim.opt.shortmess:append "c" -- don't give |ins-completion-menu| messages
 vim.opt.iskeyword:append "-" -- hyphenated words recognized by searches
@@ -110,6 +109,7 @@ if not vim.g.vscode then
   vim.cmd [[ autocmd VimEnter * :TSEnable highlight" ]]
   require("poimandres").setup({ disable_background = true })
   vim.cmd [[ color poimandres | hi Comment guifg=#444444 | hi Visual guifg=none guibg=#1c1c1c ]]
+  vim.opt.virtualedit = "all" -- allow cursor bypass end of line
 end
 
 -- Illuminate disable underline
@@ -503,8 +503,8 @@ if not vim.g.vscode then
 end
 keymap("i", "jk", "<ESC>", opts)
 keymap("i", "kj", "<ESC>", opts)
-keymap("n", "J", "10j", opts)
-keymap("n", "K", "10k", opts)
+keymap("n", "J", "10gj", opts)
+keymap("n", "K", "10gk", opts)
 keymap("n", "H", "10h", opts)
 keymap("n", "L", "10l", opts)
 
