@@ -137,7 +137,7 @@ local neotree_status = {
   color = { fg = '#ff8800', gui = 'none' },
   function()
     if vim.bo.filetype == "neo-tree" then
-      return ''
+      return '󰉓'
     else
       return ''
     end
@@ -148,9 +148,9 @@ local toggleterm_status = {
   color = { fg = '#31B53E', gui = 'none' },
   function()
     if vim.bo.filetype == "sp-terminal" or vim.bo.filetype == "vs-terminal" then
-      return ''
+      return ''
     else
-      return ' ' .. vim.b.toggle_number
+      return ' ' .. vim.b.toggle_number
       -- return ' ' .. vim.b.toggle_number
       -- return ' ' .. vim.b.toggle_number
       -- return ' ' .. vim.b.toggle_number

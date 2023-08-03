@@ -43,10 +43,10 @@ neotree.setup({
     show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
     -- of the top visible node when scrolled down.
     tab_labels = { -- falls back to source_name if nil
-      filesystem = "  File ",
-      buffers = "  Bufs ",
-      git_status = "  Git ",
-      diagnostics = " 裂Diagnostics ",
+      filesystem = " 󰉓 File ",
+      buffers = "  Bufs ",
+      git_status = "  Git ",
+      diagnostics = "  Diagnostics ",
     },
     content_layout = "start", -- only with `tabs_layout` = "equal", "focus"
     --                start  : |/ 裡 bufname     \/...
@@ -136,7 +136,7 @@ neotree.setup({
         -- Status type
         untracked = "",
         ignored   = "",
-        unstaged  = "",
+        unstaged  = "",
         staged    = "",
         conflict  = "",
       }

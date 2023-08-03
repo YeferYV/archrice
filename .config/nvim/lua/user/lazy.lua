@@ -114,14 +114,7 @@ local plugins = {
 
   -- Intellisense
   -- { "github/copilot.vim" },
-  -- { "tzachar/cmp-tabnine", build = "./install.ps1" },
   { "Exafunction/codeium.vim", event = "InsertEnter" },
-  -- {
-  --   "tzachar/cmp-tabnine",
-  --   build = "./install.sh",
-  --   event = "InsertEnter",
-  --   config = function() require("user.cmp-tabnine") end
-  -- },
 
   -- LSP
   { "neovim/nvim-lspconfig" }, -- enable LSP
@@ -145,7 +138,7 @@ local plugins = {
   -- Status-Line
   { "nvim-lualine/lualine.nvim" },
   { "nvim-tree/nvim-web-devicons" },
-  { "DaikyXendo/nvim-material-icon" },
+  { "Allianaab2m/nvim-material-icon-v3" },
 
   -- Text-Objects
   -- { 'wellle/targets.vim'},
