@@ -1,7 +1,6 @@
 #!/bin/bash
 
 UB_PID_FILE="/tmp/.$(uuidgen)"
-[[ $TERM_PROGRAM == "vscode" ]] && IMG=iterm2 || IMG=x11
 ueberzugpp layer --output=$IMG --no-stdin --silent --use-escape-codes --pid-file $UB_PID_FILE
 UB_PID=$(cat $UB_PID_FILE)
 

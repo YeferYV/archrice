@@ -441,10 +441,8 @@ neotree.setup({
       sixel_open_vertical = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        -- vim.api.nvim_command(string.format("silent TermExec direction=vertical cmd='(tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE)'", path))
-        -- vim.cmd[[wincmd l]]; vim.api.nvim_command(string.format("term ((tput cup 6 100; img2sixel -w 400 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read)", path));
         require('toggleterm.terminal').Terminal:new({
-          cmd = string.format("(img2sixel -w 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
+          cmd = string.format("(img2sixel -w 500 '%s') > $PTS && read", path),
           on_exit = function(term)
             vim.api.nvim_command("!killall -s SIGWINCH nvim")
           end,
@@ -455,7 +453,7 @@ neotree.setup({
         local node = state.tree:get_node()
         local path = node:get_id()
         require('toggleterm.terminal').Terminal:new({
-          cmd = string.format("(img2sixel -h 500 \"%s\") >$(head -n1 /tmp/sixel-$WEZTERM_PANE) && read", path),
+          cmd = string.format("(img2sixel -h 500 '%s') > $PTS && read", path),
           direction = "float",
           on_open = function(term)
             vim.cmd [[ call feedkeys("\<Esc>\<Esc>") ]]
@@ -468,8 +466,9 @@ neotree.setup({
         local node = state.tree:get_node()
         local path = node:get_id()
         require('toggleterm.terminal').Terminal:new({
-          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='95' [y]='1' [width]='70' [height]='70' [path]='%s'); read; } | ueberzug layer --parser bash'"
-            , path),
+          cmd = string.format(
+            "~/.config/lf/fmz-img/img 95 1 70 70 '%s'",
+            path),
         }):toggle(70, "vertical")
       end,
 
@@ -477,8 +476,9 @@ neotree.setup({
         local node = state.tree:get_node()
         local path = node:get_id()
         require('toggleterm.terminal').Terminal:new({
-          cmd = string.format("bash -c '{ declare -Ap add_command=([action]='add' [identifier]='example' [x]='12' [y]='5' [width]='110' [height]='110' [path]='%s'); read; } | ueberzug layer --parser bash'"
-            , path),
+          cmd = string.format(
+            "~/.config/lf/fmz-img/img 12 5 110 110 '%s'",
+            path),
           direction = "float",
         }):toggle()
       end,
@@ -486,8 +486,9 @@ neotree.setup({
       wezterm_open_vertical = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        vim.api.nvim_command(string.format("silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read '"
-          , path))
+        -- vim.cmd[[wincmd l]]; vim.api.nvim_command(string.format("term ((tput cup 6 100; wezterm imgcat --width=50 '%s') >$PTS && read)", path));
+        --                      vim.api.nvim_command(string.format( "silent TermExec direction=vertical cmd='(tput cup 6 100; wezterm imgcat --width=50 \"%s\") >$PTS'", path)); vim.cmd[[wincmd 2l]];
+        vim.api.nvim_command(string.format( "silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read -n1'", path))
       end,
 
     },
