@@ -1,3 +1,13 @@
+customCommands:
+  - key: 'g'
+    context: files
+
+  - key: 'g'
+    context: commits
+
+  - key: 'g'
+    context: localBranches
+
 gui:
   showIcons: true
   theme:

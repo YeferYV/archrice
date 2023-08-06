@@ -7,7 +7,7 @@
 killall xcape && setxkbmap
 
 ## Increase key speed via a rate change
-xset r rate 300 50
+xset r rate 210 70
 
 ## international english layout?/add ISO_Level3_Shift support
 # setxkbmap -layout 'us(intl)'

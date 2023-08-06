@@ -49,12 +49,12 @@ truncation_length = 9
 # "~" = " .../ "
 
 [character] # The name of the module we are configuring is "character"
-success_symbol = "[ﲵ ](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
-error_symbol = "[ﲵ ](bold red)"
-vimcmd_symbol =	"[ﲵ ](bold green)"
-vimcmd_replace_one_symbol =	"[ﲵ ](bold purple)"
-vimcmd_replace_symbol =	"[ﲵ ](bold purple)"
-vimcmd_visual_symbol =	"[ﲵ ](bold yellow)"
+success_symbol = "[󰞷 ](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[󰞷 ](bold red)"
+vimcmd_symbol =	"[󰞷 ](bold green)"
+vimcmd_replace_one_symbol =	"[󰞷 ](bold purple)"
+vimcmd_replace_symbol =	"[󰞷 ](bold purple)"
+vimcmd_visual_symbol =	"[󰞷 ](bold yellow)"
 format = "$symbol"
 
 # Disable the package module, hiding it from the prompt completely

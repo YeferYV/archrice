@@ -78,6 +78,8 @@ export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 export YT_API_KEY="AIzaSyDWLUg9KCJ6CAw2KXIsQTcOzMZRXOQ7OC0"
 export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 
+# export MANPAGER="less -R --use-color -Dd+r -Du+b"
+export MANROFFOPT="-P -c"
 # export LESS="-R --use-color --LINE-NUMBERS --color=Nk" #causes manpages badformatting
 export LESS='-RS'
 export LESSOPEN="| /usr/bin/bat --style full --color always --paging always --wrap never %s"
@@ -109,12 +111,12 @@ ln=96:\ #cyan
 fi=97"  #white
 
 export LF_ICONS="\
-tw=:\
+tw=󰉋:\
 or=:\
 ex=:\
 bd=:\
-di=:\
-ow=:\
+di=󰉋:\
+ow=󰉋:\
 ln=:\
 fi="
 

@@ -509,6 +509,7 @@ super + BackSpace
           --xrender-sync-fence \
           --backend glx \
           --transparent-clipping \
+          --frame-opacity=0.5 \
           # --active-opacity=0.90 \
           # --inactive-opacity=0.90 \
           # --refresh-rate 30\
