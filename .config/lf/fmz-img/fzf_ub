@@ -1,7 +1,8 @@
 #!/bin/bash
 
 UB_PID_FILE="/tmp/.$(uuidgen)"
-ueberzugpp layer --no-stdin --silent --use-escape-codes --pid-file $UB_PID_FILE
+[[ $TERM_PROGRAM == "vscode" ]] && IMG=iterm2 || IMG=x11
+ueberzugpp layer --output=$IMG --no-stdin --silent --use-escape-codes --pid-file $UB_PID_FILE
 UB_PID=$(cat $UB_PID_FILE)
 
 export SOCKET=/tmp/ueberzugpp-$UB_PID.socket
@@ -15,6 +16,9 @@ function previewer {
 }
 
 export -f previewer
-SHELL="$(which bash)" fzf --preview "previewer {}" "${@}"
+SHELL="$(which bash)" fzf --preview "previewer {}" \
+                          --bind='alt-j:clear-screen+refresh-preview+down' \
+                          --bind='alt-k:clear-screen+refresh-preview+up' \
+                          "${@}"
 
 ueberzugpp cmd -s $SOCKET -a exit

@@ -28,7 +28,7 @@ function hash_sixel {
 function draw_kitty {
     [[ -e "$UB_SOCKET" ]] && ueberzugpp cmd -s $UB_SOCKET -a add -i PREVIEW -x $X -y $Y --max-width $((W - 2)) --max-height $((H)) -f "$1" && exit 1
     [[ -e /.dockerenv ]] && PTS="/dev/pts/0"
-    [[ -z $TMUX ]] &&
+    [[ -z $TMUX ]] && [[ -z $NVIM ]] &&
       ( kitty +icat --silent --stdin no --transfer-mode memory --place "$((W - 1))x$((H))@$((X))x$((Y))" "$1" ) < /dev/null > /dev/tty ||
       ( tput cup $((Y)) $((X)) && img2sixel --loop-control=disable --width=$((W*7)) "$1" ) > $PTS
 }

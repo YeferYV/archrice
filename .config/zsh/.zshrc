@@ -48,7 +48,7 @@ precmd() { eval "$PROMPT_COMMAND" }
 
 # export LC_ALL=en_US.UTF-8
 export LS_COLORS="tw=30:di=90:ow=94:ln=34"
-[[ -z $TMUX ]] && export PTS=$TTY
+[[ -z $TMUX ]] && [[ -z $NVIM ]] && export PTS=$TTY
 
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
@@ -193,7 +193,8 @@ bindkey '\eo' 'lfcd'
 lfub () {
     cleanup() { exec 3>&-; ueberzugpp cmd -s $UB_SOCKET -a exit }
     [ ! -d "$HOME/.cache/lf" ] && mkdir --parents "$HOME/.cache/lf"
-    ueberzugpp layer --output=x11 --silent --no-stdin --pid-file $UB_PID_$$
+    [[ $TERM_PROGRAM == "vscode" ]] && IMG=iterm2 || IMG=x11
+    ueberzugpp layer --output=$IMG --silent --no-stdin --pid-file $UB_PID_$$
     UB_PID=$(cat $UB_PID_$$)
     rm $UB_PID_$$ >/dev/null
     export UB_SOCKET="/tmp/ueberzugpp-${UB_PID}.socket"
