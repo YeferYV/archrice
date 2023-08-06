@@ -203,11 +203,11 @@ lfub () {
 zle -N lfub
 bindkey '\eu' 'lfub'
 
-## fzf scripts
+## fmz_file_manager ( dependency `yay -S stpv-git` )
 fmzcd () {
     tmp=$(mktemp)
     FZF_DEFAULT_OPTS="--layout=reverse --height=60% --border" \
-    command ~/.config/lf/fmz/fmz --cd "$tmp" "$@" <$TTY
+    command ~/.config/lf/fmz-img/fmz --cd "$tmp" "$@" <$TTY
     res=$(tail -n 1 "$tmp")
     if [ -d "$res" ] && [ "$res" != "$PWD" ]; then
         cd "$res" || return 1
@@ -217,7 +217,7 @@ fmzcd () {
     rm "$tmp" >/dev/null
 }
 
-## stpv-git(AUR)
+## pacman -Ql stpv-git --> /bin/fzfp
 fzfprev() {
   cd $(dirname "$(fzfp --layout=reverse --height 70% --border --color hl+:#ff0000\
     --bind='?:toggle-preview' <$TTY )")
