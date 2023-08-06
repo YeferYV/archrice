@@ -48,6 +48,7 @@ precmd() { eval "$PROMPT_COMMAND" }
 
 # export LC_ALL=en_US.UTF-8
 export LS_COLORS="tw=30:di=90:ow=94:ln=34"
+[[ -z $TMUX ]] && export PTS=$TTY
 
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
@@ -105,21 +106,16 @@ echo -ne '\e[6 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
 # x2xalarm() { ssh -YC drksl@4l4rm x2x -north -to :0.0; }
-l() {                                            tty > /tmp/sixel-$WEZTERM_PANE; lfcd $1; trap "rm /tmp/sixel-$WEZTERM_PANE >/dev/null" EXIT; }
-n() { printf "\033]0; ${1##*/} \007" > /dev/tty; tty > /tmp/sixel-$WEZTERM_PANE; nvim $1; trap "rm /tmp/sixel-$WEZTERM_PANE >/dev/null" EXIT; }
 
 ## Tmux not-printed(archwiki)
 tmux-attach() {
-    (exec </dev/tty; exec <&1; tty >> /tmp/sixel-$WEZTERM_PANE; tmux attach || tmux new-session)
-    trap "rm /tmp/sixel-$WEZTERM_PANE" EXIT
+    (exec </dev/tty; exec <&1; tmux attach || tmux new-session)
 }
 tmux-choose-tree() {
-    (exec </dev/tty; exec <&1; tty >> /tmp/sixel-$WEZTERM_PANE; tmux attach\; choose-tree -s -w)
-    trap "rm /tmp/sixel-$WEZTERM_PANE" EXIT
+    (exec </dev/tty; exec <&1; tmux attach\; choose-tree -s -w)
 }
 tmux-new-session() {
-    (exec </dev/tty; exec <&1; tty >> /tmp/sixel-$WEZTERM_PANE; tmux new-session)
-    trap "rm /tmp/sixel-$WEZTERM_PANE" EXIT
+    (exec </dev/tty; exec <&1; tmux new-session)
 }
 zle -N tmux-attach
 zle -N tmux-choose-tree
@@ -195,14 +191,14 @@ bindkey '\eo' 'lfcd'
 [ -n "$LF_CD" ] && unset LF_CD && lfcd $PWD
 
 lfub () {
-    cleanup() { exec 3>&-; rm "$LF_UEBERZUG" >/dev/null; }
-    [ ! -d "$HOME/.cache/lf" ] && mkdir -p "$HOME/.cache/lf";
-    export LF_UEBERZUG="$HOME/.cache/lf/ueberzug-$$";
-    mkfifo "$LF_UEBERZUG";
-    ueberzug layer -s <"$LF_UEBERZUG" &;
-    exec 3>"$LF_UEBERZUG";
-    trap cleanup HUP INT QUIT TERM PWR EXIT;
-    lfcd "$@" 3>&-;
+    cleanup() { exec 3>&-; ueberzugpp cmd -s $UB_SOCKET -a exit }
+    [ ! -d "$HOME/.cache/lf" ] && mkdir --parents "$HOME/.cache/lf"
+    ueberzugpp layer --output=x11 --silent --no-stdin --pid-file $UB_PID_$$
+    UB_PID=$(cat $UB_PID_$$)
+    rm $UB_PID_$$ >/dev/null
+    export UB_SOCKET="/tmp/ueberzugpp-${UB_PID}.socket"
+    trap cleanup INT QUIT TERM PWR EXIT
+    lfcd "$@" 3>&-
 }
 zle -N lfub
 bindkey '\eu' 'lfub'

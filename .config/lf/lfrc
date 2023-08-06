@@ -28,7 +28,11 @@ set cleaner ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
 # set cleaner stpvimgclr
 # &stpvimg --listen $id
 # cmd on-quit $stpvimg --end $id
-set promptfmt "[1;90m%w "
+set cursoractivefmt  "\033[40m" # "\033[7m\033[30m\033[46m"
+set cursorparentfmt  "\033[40m" # "\033[7m\033[30m\033[46m"
+set cursorpreviewfmt "\033[40m" # "\033[7m\033[30m\033[46m"
+set mouse true
+set promptfmt        "[1;90m%w "
 set shell /bin/bash
 set scrolloff 50
 set ratios 1:2
@@ -297,6 +301,10 @@ cmd zip ${{
 }}
 
 # Bindings
+# map <m-1> ???
+map <m-2> :updir
+map <m-3> :open
+
 map <a-j> :down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
 map <a-k> :up; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
 map <a-i> imgcat

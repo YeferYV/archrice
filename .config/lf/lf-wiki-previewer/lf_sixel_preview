@@ -28,8 +28,8 @@ case "$1" in
 
     # *.jpg|*.png) (exec >/dev/tty; exec <&1; tput cup $((y)) $((x));  img2sixel -w $((w*8)) "$1" );         cleanup; exit 1;;
     # *.jpg|*.png) (tput hpa 80 & tput vpa 10 &&                       img2sixel -w 200 "$1" && tput civis)  >/dev/tty && lf -remote "send redraw" && exit 1;;
-    # *.jpg|*.png) (tput cup $((y)) $((x)) ;                           img2sixel -w $((w*8)) "$1")           >$(head -n1 /tmp/sixel-$WEZTERM_PANE ); exit 1;;
     # *.jpg|*.png) (tput cup $((y)) $((x)) ;                           wezterm imgcat --width $((w)) "$1")   >/dev/tty; exit 1;;
+    # *.jpg|*.png) (tput cup $((y)) $((x)) &&                          chafa -f iterm -s "80x50" "$1")       >/dev/tty && read;;
 
     *json) bat -l json --style plain --color=always "$1" || echo "no bat :(" ;;
     *) bat --style plain --color=always "$1" || echo "no bat :(" ;;
