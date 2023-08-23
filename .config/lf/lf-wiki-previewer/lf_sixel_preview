@@ -24,7 +24,10 @@ case "$1" in
 
     # # https://github.com/gokcehan/lf/pull/840
     # *.jpg|*.png)  chafa -f sixel "$1" -s "$4"x  | sed 's/#/\n#/g' && exit 1 ;;
-    # *.jpg|*.png)  img2sixel -w $((w*15/2)) "$1" | sed 's/#/\n#/g'  && exit 1 ;;
+    # *.jpg|*.png)  img2sixel -w $((w*15/2)) "$1" | sed 's/#/\n#/g' && exit 1 ;;
+
+    # # https://github.com/gokcehan/lf/pull/1211
+    # *.jpg|*.png)  chafa -f iterm -s "$((w - 20))x$((h - 5))" "$1" > /dev/tty   && exit 1 ;;
 
     # *.jpg|*.png) (exec >/dev/tty; exec <&1; tput cup $((y)) $((x));  img2sixel -w $((w*8)) "$1" );         cleanup; exit 1;;
     # *.jpg|*.png) (tput hpa 80 & tput vpa 10 &&                       img2sixel -w 200 "$1" && tput civis)  >/dev/tty && lf -remote "send redraw" && exit 1;;

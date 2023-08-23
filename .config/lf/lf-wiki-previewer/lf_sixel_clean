@@ -25,4 +25,11 @@
 # echo 'send redraw'           | nc -U ${XDG_RUNTIME_DIR:-/tmp}/lf.${USER}.sock
 # tput clear                         > ${XDG_RUNTIME_DIR:-/tmp}/lf.${USER}.sock
 
+# -------------------------------------------------------------------------------------
+# [ "$1" != "$f" ] && lf -remote "send $id redraw"
+# -------------------------------------------------------------------------------------
+# lf -remote "send $id set user_f $1"
+# [ "$1" != "$lf_user_f" ] && lf -remote "send $id redraw"
+# -------------------------------------------------------------------------------------
+
 killall -s SIGWINCH lf
