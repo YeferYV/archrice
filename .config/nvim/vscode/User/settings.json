@@ -735,9 +735,14 @@
       // "terminalCursor.foreground": "#ffffff",
       // "scrollbarSlider.background": "#55555555",
 
+      "diffEditor.removedTextBackground": "#c0577620",
+      "diffEditor.removedTextBorder": "#c0577600",
+      "diffEditor.insertedTextBackground": "#a7ecb720",
+      "diffEditor.insertedTextBorder": "#a7ecb700",
+
       // "editor.selectionBackground": "#1c1c1c",
       "editor.selectionBackground": "#55555555",
-      "editor.selectionHighlightBackground": "#33333333",
+      "editor.selectionHighlightBackground": "#33333333", // references highlights
 
       "editor.wordHighlightStrongBackground": "#33333333",
       "editor.wordHighlightBackground": "#33333333",
