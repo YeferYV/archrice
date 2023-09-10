@@ -33,6 +33,6 @@ case "$1" in
     # *.jpg|*.png) killall -s SIGWINCH fzf && sleep 0.5 && (tput cup 2 ${imageX};                wezterm imgcat --width ${imageW} "$1")        >/dev/tty && sleep 60;;
     # *.jpg|*.png)                                                                               wezterm cli split-pane --horizontal           -- bash -c "wezterm imgcat "$1" && read ";;
 
-    *json) bat -l json --style plain --color=always "$1" || echo "no bat :(" ;;
+    *json) bat -l json --color=always "$1" || echo "no bat :(" ;;
     *) bat --style plain --color=always "$1" || echo "no bat :(" ;;
 esac

@@ -7,6 +7,7 @@
 # is used selectively within individual commands as it can be limiting at
 # times.
 set shellopts '-eu'
+set shell /bin/bash
 
 # set internal field separator (IFS) to "\n" for shell commands
 # This is useful to automatically split file names in $fs and $fx properly
@@ -18,22 +19,21 @@ set ifs "\n"
 set icons
 set hidden true
 set period 1
-set previewer ~/.config/lf/lf-wiki-previewer/lf_kitty_preview
-set cleaner ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
-# set previewer ~/.config/lf/lf-wiki-previewer/lf_sixel_preview
-# set cleaner ~/.config/lf/lf-wiki-previewer/lf_sixel_clean
-# set previewer ~/.config/lf/lf-wiki-previewer/lf_ueberzug_preview
-# set cleaner ~/.config/lf/lf-wiki-previewer/lf_ueberzug_clean
-# set previewer stpv
-# set cleaner stpvimgclr
-# &stpvimg --listen $id
-# cmd on-quit $stpvimg --end $id
-set cursoractivefmt  "\033[40m" # "\033[7m\033[30m\033[46m"
-set cursorparentfmt  "\033[40m" # "\033[7m\033[30m\033[46m"
-set cursorpreviewfmt "\033[40m" # "\033[7m\033[30m\033[46m"
-set mouse true
+set previewer        ~/.config/lf/lf-wiki-previewer/lf_kitty_preview
+set cleaner          ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
+# set previewer      ~/.config/lf/lf-wiki-previewer/lf_sixel_preview
+# set cleaner        ~/.config/lf/lf-wiki-previewer/lf_sixel_clean
+# set previewer      ~/.config/lf/lf-wiki-previewer/lf_ueberzug_preview
+# set cleaner        ~/.config/lf/lf-wiki-previewer/lf_ueberzug_clean
+# set previewer      stpv
+# set cleaner        stpvimgclr
+# &stpvimg           --listen $id
+# cmd on-quit        $stpvimg --end $id
+# set cursoractivefmt  "\033[40m" # "\033[7m\033[30m\033[46m"
+# set cursorparentfmt  "\033[40m" # "\033[7m\033[30m\033[46m"
+# set cursorpreviewfmt "\033[40m" # "\033[7m\033[30m\033[46m"
 set promptfmt        "[1;90m%w "
-set shell /bin/bash
+set mouse true
 set scrolloff 50
 set ratios 1:2
 
@@ -48,20 +48,20 @@ map <c-x> !$f
 map <c-X> :$f
 
 #--- Ranger's open_with
-cmd shell-open-with        $$@ $fx
-cmd shell-pipe-open-with   %"$@" $fx
-cmd shell-wait-open-with   !$@ $fx
-cmd shell-async-open-with  &$@ $fx
+cmd shell-open-with        $ $@   $fx
+cmd shell-pipe-open-with   % "$@" $fx
+cmd shell-wait-open-with   ! $@   $fx
+cmd shell-async-open-with  & $@   $fx
 
-cmd draganddrop            &dragon-drop -a -x $fx
-# cmd duplicatelf          &nohup $TERMINAL -e "lf" >/dev/null 2>&1
-# cmd duplicatelf          &nohup sh -c "export LF_CD=true && $TERMINAL" >/dev/null 2>&1
-# cmd duplicateterm        $nohup $TERMINAL start --cwd=$PWD >/dev/null 2>&1
-cmd duplicatelf            &setsid -f env LF_CD=true $TERMINAL start --cwd=$PWD
-cmd duplicateterm          &setsid -f $TERMINAL start --cwd=$PWD
-# cmd mkdir                $mkdir -p "$(echo $* | tr ' ' '\ ')"
-# cmd touch                $touch "$(echo $* | tr ' ' '\ ')"
-# cmd trash                %set -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
+cmd draganddrop            & dragon-drop -a -x $fx
+# cmd duplicatelf          & nohup sh -c "export LF_CD=true && $TERMINAL"                 >/dev/null 2>&1
+# cmd duplicatelf          & nohup                             $TERMINAL -e "lf"          >/dev/null 2>&1
+# cmd duplicateterm        $ nohup                             $TERMINAL start --cwd=$PWD >/dev/null 2>&1
+cmd duplicatelf            & setsid -f env LF_CD=true          $TERMINAL start --cwd=$PWD
+cmd duplicateterm          & setsid -f                         $TERMINAL start --cwd=$PWD
+# cmd mkdir                $ mkdir  -p "$(echo $* | tr ' ' '\ ')"
+# cmd touch                $ touch     "$(echo $* | tr ' ' '\ ')"
+# cmd trash                % set    -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
 
 #--- To refresh numbers of colums
 cmd onecol ${{
@@ -102,37 +102,40 @@ cmd open ${{
     #"sudo -E env "PATH=$PATH" lf" https://unix.stackexchange.com/questions/83191/how-to-make-sudo-preserve-path
     case $(file --dereference --brief --mime-type $f) in
         text/*|application/json) printf "\033]0; ${f##*/} \007" > /dev/tty; $EDITOR $fx ;;
-	      image/*) basename -a $fx | $SWALLOWER sxiv -baio ;;
-	      audio/*) basename -a $fx | $SWALLOWER mpv --force-window --playlist=- ;;
-	      video/*) basename -a $fx | $SWALLOWER mpv --playlist=- ;;
-        application/pdf) $SWALLOWER zathura $fx ;;
-        #*) for f in $fx; do xdg-open $f &>/dev/null &;;
-        *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+	      image/*)                 basename -a $fx | $SWALLOWER sxiv -baio ;;
+	      audio/*)                 basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --force-window --playlist=- ;;
+	      video/*)                 basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --playlist=- ;;
+        application/pdf)                           $SWALLOWER zathura $fx ;;
+        #*) for f in $fx; do xdg-open $f           &>/dev/null &;;
+        *)  for f in $fx; do setsid -f $OPENER $f   >/dev/null 2>&1; done;;
     esac
 }}
 
 cmd imgcat !{{
     [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && basename -a $fx |{
-        mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) --playlist=-
+        mpv -vo=kitty --playlist=-
         wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x"
     }||{
     case $(file --dereference --brief --mime-type $fx) in
         text/*)   bat --paging always --wrap never $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x" ;;
-        image/*)  wezterm imgcat $fx ;;
-        video/*)  mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x";;
-        application/pdf) spdf $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x";; # termpdf -sixel $fx
+        image/*)  wezterm imgcat                   $fx ;;
+        video/*)  mpv -vo=kitty --really-quiet     $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x";; # mpv -vo=kitty --really-quiet --vo-kitty-use-shm=yes --profile=sw-fast $fx
+        application/pdf) spdf                      $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x";; # termpdf -sixel $fx
+        *)        mpv -vo=kitty --really-quiet     $fx && wezterm cli send-text --pane-id ${WEZTERM_PANE:-0} "x";; # directory cases
     esac
     }
 }}
 
 cmd sixel ${{
-    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && { Xsixel :11 -screen 1024x1024 -exec 'basename -a $fx | sxiv -baio' # files with spaces not showing
+    [[ $( awk 'END {print NR}' <<<$fx ) -ne 1 ]] && {
+        mpv -vo=sixel --playlist=-
     }||{
     case $(file --dereference --brief --mime-type $fx) in
-        text/*)   bat --paging always --wrap never $fx;;
-        image/*)  Xsixel :11 -screen 1024x1024 -exec 'sxiv "$fx"' 2>/dev/null;;
-        video/*)  mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) $fx;;
-        application/pdf) Xsixel :11 -screen 1024x1024 -exec 'zathura "$fx"' 2>/dev/null;;
+        text/*)          bat --paging always --wrap never                                                           $fx;;
+        video/*)         mpv -vo=sixel --vo-sixel-width=$(($(tput cols)*8)) --vo-sixel-height=$(($(tput lines)*16)) $fx;;
+        image/*)         Xsixel :11 -screen 1024x1024 -exec 'sxiv                                                  "$fx"' 2>/dev/null;;
+        application/pdf) Xsixel :11 -screen 1024x1024 -exec 'zathura                                               "$fx"' 2>/dev/null;;
+        *)               mpv -vo=sixel --really-quiet                                                               $fx;;
     esac
     }
 }}
@@ -163,7 +166,6 @@ cmd cmd_redraw_up :{{
   $lf -remote "send $id reload"
   # $lf -remote "send $id up && send $id redraw"
   %wc -l "$fx"
-  &({ declare -Ap add_command=([action]='add' [identifier]='PREVIEW' [x]="55" [y]="1" [width]="110" [height]="110" [path]="$fx"); sleep 3; } | ueberzug layer --parser bash)
 }}
 
 cmd cmd_redraw_down :{{
@@ -173,13 +175,13 @@ cmd cmd_redraw_down :{{
   $lf -remote "send $id reload"
   # $lf -remote "send $id down && send $id redraw"
   %wc -l "$fx"
-  &({ declare -Ap add_command=([action]='add' [identifier]='PREVIEW' [x]="55" [y]="1" [width]="110" [height]="110" [path]="$fx"); sleep 3; } | ueberzug layer --parser bash)
 }}
 
 cmd setbg ${{
   # ln -sf $fx ~/.local/share/bg
   cp -f $fx ~/.local/share/bg
-  wal -i $fx #-o ~/.config/wal/postrun
+  # [ -e /bin/wal ] && wal -i $fx #-o ~/.config/wal/postrun
+  [ -e /bin/wal ] && wal -i $fx -o ~/.config/wal/postrun
   xwallpaper --zoom ~/.local/share/bg
 }}
 
@@ -192,13 +194,13 @@ cmd fzf_preview ${{
     # fzf with lf images preview like keybinding
     export FZF_DEFAULT_COMMAND='rg --files -g "!.git/" --hidden'
     export FZF_PREVIEWER="$HOME/.config/lf/${1}"
-    fzf --bind='alt-j:down+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
-        --bind='alt-k:up+execute-silent((tput sc; tput cup 2 $(tput cols) ; wezterm imgcat --width $(tput cols) {}; tput rc; read) >/dev/tty)'\
-        --bind='alt-i:refresh-preview+down+execute-silent((tput sc; tput cup 2 $(tput cols) ; img2sixel --width $(($(tput cols)*8)) {}; tput rc; read) >/dev/tty)'\
-        --bind='alt-o:refresh-preview+up+execute-silent((tput sc; tput cup 2 $(tput cols) ; img2sixel --width $(($(tput cols)*8)) {}; tput rc; read) >/dev/tty)'\
-        --bind='alt-u:execute((img2sixel --width $(($(tput cols)*7)) {} </dev/tty && read) >/dev/tty)'\
-        --bind='alt-p:execute(wezterm cli split-pane --horizontal -- bash -c "img2sixel --width $(($(tput cols)*4)) {} && read ")'\
-        --bind='alt-?:execute(notify-send "$TTY - $COLUMNS - $LINES" < /dev/tty)'\
+    fzf --bind='alt-j:down+execute-silent(                 (tput sc; tput cup 2 $(tput cols) ;              wezterm imgcat --width $(   tput cols    ) {}; tput rc;    read) >/dev/tty)'\
+        --bind='alt-k:up+execute-silent(                   (tput sc; tput cup 2 $(tput cols) ;              wezterm imgcat --width $(   tput cols    ) {}; tput rc;    read) >/dev/tty)'\
+        --bind='alt-i:refresh-preview+down+execute-silent( (tput sc; tput cup 2 $(tput cols) ;              img2sixel      --width $(($(tput cols)*8)) {}; tput rc;    read) >/dev/tty)'\
+        --bind='alt-o:refresh-preview+up+execute-silent(   (tput sc; tput cup 2 $(tput cols) ;              img2sixel      --width $(($(tput cols)*8)) {}; tput rc;    read) >/dev/tty)'\
+        --bind='alt-u:execute(                             (                                                img2sixel      --width $(($(tput cols)*7)) {} </dev/tty && read) >/dev/tty)'\
+        --bind='alt-p:execute(                              wezterm cli split-pane --horizontal -- bash -c "img2sixel      --width $(($(tput cols)*4)) {}           && read"          )'\
+        --bind='alt-?:execute(                              notify-send "$TTY - $COLUMNS - $LINES" < /dev/tty)'\
         --bind='ctrl-j:clear-screen+refresh-preview+down'\
         --bind='ctrl-k:clear-screen+refresh-preview+up'\
         --bind='down:clear-screen+refresh-preview+down'\
@@ -212,6 +214,7 @@ cmd fzf_preview ${{
         --bind='ctrl-p:execute(less -f {} < /dev/tty > /dev/tty)'\
         --bind='?:toggle-preview'\
         --preview='$FZF_PREVIEWER {}'\
+        --preview-window 'right,50%,border-left' \
     | xargs -I_ lf -remote "send $id select '_'"
   }}
 
@@ -242,7 +245,7 @@ cmd fzf_rg ${{
           --preview-window 'up,60%,border-bottom,+{2}+3/3,~3'
     )
     [ -n "${selected[0]}" ] && lf -remote "send $id select \"${selected[0]}\""
-    [ -n "${selected[0]}" ] && nvim "${selected[0]}" "+${selected[1]}"
+    [ -n "${selected[0]}" ] && nvim       "${selected[0]}" "+${selected[1]}"
   }}
 
 cmd delete ${{
@@ -302,79 +305,80 @@ cmd zip ${{
 
 # Bindings
 # map <m-1> ???
-map <m-2> :updir
-map <m-3> :open
+map <m-2>     : updir
+map <m-3>     : open
 
-map <a-j> :down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
-map <a-k> :up; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
-map <a-i> imgcat
-map <a-o> sixel
-map <a-u> !tput cup 0 5 && img2sixel --width $(($(tput cols)*15/2)) $fx
-map <a-p> $wezterm cli split-pane --horizontal -- bash -c "img2sixel --width $(($(tput cols)*4)) $fx && read"
-map <a-l> $({ declare -Ap add_command=([action]="add" [identifier]="PREVIEW" [x]="1" [y]="1" [width]="$(tput cols)" [height]="$(tput lines)" [path]="$fx"); read; } | ueberzug layer --parser bash)
-map <a-h> &(printf 'chafa "%s" && read' $fx  | xargs -I var tmux popup -w 110 -h 37 -x 60 -y 1 -E "var")
-map <a-y> &(printf 'chafa "%s"' $fx  | xargs -I var tmux split-window -h \; send-keys "var" 'Enter')
+map <a-j>     : down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map <a-k>     : up;   redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map <a-i>       imgcat
+map <a-o>       sixel
 
-map <c-j> cmd_redraw_down
-map <c-k> cmd_redraw_up
-map <tab> cmd_scrolldown #<c-i>
+map <c-j>     cmd_redraw_down
+map <c-k>     cmd_redraw_up
+map <tab>     cmd_scrolldown #<c-i>
 map <backtab> cmd_scrollup
-map <c-o> cmd_scrollup
+map <c-o>     cmd_scrollup
 
 map <enter> shell
-map a     rename # at the very end
-map A     push a<c-u> # new rename
-map b     setbg $f
-map B     $vidir $fx
-map C     copyto
-map D     $trash --trash-dir ~/.cache/Trash $fx
-map gbm   $ $SWALLOWER mpv $fx
-map gbl   $ $SWALLOWER libreoffice --nologo $fx
+map a       rename # at the very end
+map A       push a<c-u> # new rename
+map b       setbg $f
+map B     $ vidir $fx
+map C       copyto
+map D     $ [ ! -e $HOME/.cache/Trash ] && ln -s $HOME/.local/share/Trash $HOME/.cache/Trash; gio trash $fx
+map gbk   $ mpv --vo=kitty --really-quiet $fx
+map gbs   $ mpv --vo=sixel --really-quiet $fx
+map gbt   $ mpv --vo=tct   --really-quiet $fx
+map gbg   $ $SWALLOWER mpv --vo=gpu $fx
+map gbx   $ $SWALLOWER mpv --vo=x11 $fx
 map gbc   $ $SWALLOWER code $fx
-map gdt   duplicateterm
-map gdl   duplicatelf
-map gdd   draganddrop
-map gfr   fzf_rg
-map gfk   fzf_preview "./fmz-img/fzf_kit"
-map gfs   fzf_preview "./fmz-img/fzf_six"
-map gfu   $~/.config/lf/fmz-img/fzf_ub
-map gfi   $~/.config/lf/fmz-img/img 0 0 $(tput cols) $(tput lines) $f
-map gff   $~/.config/lf/fmz-img/fmz # yay -S stpv-git
-map gll   $lazygit
-map glk   $lf -remote "send $id select '$(KITTY_PID=1000 fzfp)'" # yay -S stpv-git
-map glu   $lf -remote "send $id select '$(~/.config/lf/fzfimg/fzfimg.sh)'" #https://github.com/seebye/ueberzug/blob/master/examples/fzfimg.sh
-map glw   $lf -remote "send $id select '$(fzf --bind='alt-p:execute-silent((tput cup 2 $(($COLUMNS/2)); wezterm imgcat --width $(($COLUMNS/2)) {})>/dev/tty)')'"
-map glc   $lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' $HOME/.config/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"
-map gmm   !mediainfo $f | less && xdotool key KP_Enter
-map gms   $wezterm cli split-pane --horizontal -- bash -c "timg --center $fx && read"
-map gmt   $wezterm cli spawn -- bash -c "timg --center $fx && read"
-map gmj   :down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
-map gmk   :up; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
-map gmi   imgcat
-map gmo   sixel
-map gmu   !tput cup 0 5 && img2sixel --width $(($(tput cols)*15/2)) $fx
-map gmp   $wezterm cli split-pane --horizontal -- bash -c "img2sixel --width $(($(tput cols)*4)) $fx && read"
-map gpo   push :shell-open-with<space>
-map gpp   push :shell-pipe-open-with<space>
-map gpw   push :shell-wait-open-with<space>
-map gpa   push :shell-async-open-with<space>
-map gpg   push :$sr<space>google<space>
-map gpy   push :$ytfzf<space>-t<space>
-map gpm   push :$mkdir<space>-p<space>
-map gpv   push :$nvim<space>
-map gtl   tmuxtty lf
-map gtz   tmuxtty zsh
-map J     push 10j
-map K     push 10k
-map L     $ $SWALLOWER neovide $fx
+map gbl   $ $SWALLOWER libreoffice --nologo $fx
+map gbn   $ $SWALLOWER neovide $fx
+map gdt     duplicateterm
+map gdl     duplicatelf
+map gdd     draganddrop
+map gfr     fzf_rg
+map gfk     fzf_preview "./fmz-img/fzf_kit"                                 # kitty fzf
+map gfs     fzf_preview "./fmz-img/fzf_six"                                 # sixel fzf
+map gfu   $ ~/.config/lf/fmz-img/fzf_ub                                     # ueberzug fzf
+map gfi   $ ~/.config/lf/fmz-img/img 0 0 $(tput cols) $(tput lines) $f      # ueberzug viewer
+map gff   $ ~/.config/lf/fmz-img/fmz                                        # yay -S stpv-git
+map gll   $ lazygit
+map glk   $ lf -remote "send $id select '$(KITTY_PID=1000 fzfp)'"           # yay -S stpv-git
+map glw   $ lf -remote "send $id select '$(fzf --bind='alt-p:execute-silent((tput cup 2 $(($COLUMNS/2)); wezterm imgcat --width $(($COLUMNS/2)) {})>/dev/tty)')'" # wezterm fzf
+map glg   $ lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' $HOME/.config/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"     # go to env
+map gmm   ! mediainfo $f | less && xdotool key KP_Enter
+map gmi     imgcat
+map gmo     sixel
+# map gms ! tput cup 0 5 && img2sixel --width $(($(tput cols)*15/2)) $fx
+map gtl     tmuxtty lf
+map gtz     tmuxtty zsh
+map gtd   $ tmux detach -E                                 "mpv --vo=sixel,kitty,x11 --quiet $fx && tmux attach-session" # /etc/zsh/zprofile may overwrite tmux $PATH
+map gtp   $ tmux popup -w 110 -h 37 -x 60 -y 1 -E          "mpv --vo=tct                     $fx"
+map gts   $ tmux split-window -h \; send-keys              "mpv --vo=sixel,kitty,x11 --quiet $fx && exit" 'Enter'
+map gtw   $ tmux new-window      \; send-keys              "mpv --vo=sixel,kitty,x11 --quiet $fx && exit" 'Enter'
+map gws   $ wezterm cli split-pane --horizontal -- bash -c "mpv --vo=kitty,sixel,x11 --quiet $fx"
+map gww   $ wezterm cli spawn                   -- bash -c "mpv --vo=kitty,sixel,x11 --quiet $fx"
+map gwf   $ wezterm cli split-pane --horizontal -- bash -c "awrit \"file://$f\""
+map gwj   : down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map gwk   : up;   redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map Po      push :shell-open-with<space>
+map Pp      push :shell-pipe-open-with<space>
+map Pw      push :shell-wait-open-with<space>
+map Pa      push :shell-async-open-with<space>
+map Pg      push :$sr<space>google<space>
+map Py      push :$ytfzf<space>-t<space>
+map Pv      push :$nvim<space>
+map J       push 10j
+map K       push 10k
 
-map i     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' bat --pager "less -R" --paging always --wrap never $fx
-map I     $LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less -R $f
-map o     &mimeopen $fx >/dev/null 2>&1                           #'setsid -f' unneeded
-map O     &wezterm cli split-pane -- bash -c "mimeopen --ask $fx" #'setsid -f' breaks prompt
+map i     $ LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' bat --pager "less -R" --paging always --wrap never $fx
+map I     $ LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less -R $f
+map o     & mimeopen $fx >/dev/null 2>&1                           #'setsid -f' unneeded
+map O     & wezterm cli split-pane -- bash -c "mimeopen --ask $fx" #'setsid -f' breaks prompt
 
-map M     moveto
-map S     $zsh
-map X     extract
-map Y     $printf "%s" "$fx" | xclip -selection clipboard
-map Z     push :zip<space>
+map M       moveto
+map S     $ zsh
+map X       extract
+map Y     $ printf "%s" "$fx" | xclip -selection clipboard
+map Z       push :zip<space>

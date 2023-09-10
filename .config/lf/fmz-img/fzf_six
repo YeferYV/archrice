@@ -118,10 +118,10 @@ case $(file -Lb --mime-type "$1") in
         unrar l "$1" || echo "no unrar :("
         ;;
     *json)
-        bat -l json --style plain --color always "$1" | awk "NR > ${OFFSET}-1" || echo "no bat :("
+        bat -l json --color always "$1" | awk "NR > ${OFFSET}-1" || echo "no bat :("
         ;;
     *)
-        bat --style plain --color always "$1" || echo "no bat :("
+        bat --color always "$1" || echo "no bat :("
         ;;
 
 esac

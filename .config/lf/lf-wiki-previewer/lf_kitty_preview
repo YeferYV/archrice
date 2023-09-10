@@ -59,14 +59,16 @@ function make_djvu {
 
 function make_video {
     if [ "${TMP_FILE}" -ot "$1" ]; then
-	      ffmpegthumbnailer -s 0 -c png -i "$1" -o "${TMP_FILE}"
+	      # ffmpegthumbnailer -s 0 -c png -i "$1" -o "${TMP_FILE}"
+	      ffmpeg -ss 00:10 -i "$1"  -frames 1 -f image2 "${TMP_FILE}"
     fi
 }
 
 function make_pdf {
     if [ "${TMP_FILE}" -ot "$1" ]; then
         # pdftoppm -singlefile -png "$1" "${TMP_FILE%.png}"
-        mutool draw -F png -o "${TMP_FILE}" "$1" 1
+        # mutool draw -F png -o "${TMP_FILE}" "$1" 1
+        convert "${f}[0]" png:"${TMP_FILE}"
     fi
 }
 
