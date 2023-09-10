@@ -99,7 +99,9 @@ super + ctrl + v
 
 # focus the node in the given direction
 super + {h,j,k,l}
-	bspc node -f {west,south,north,east}
+	{ DIR=west FALLBACK=prev; , DIR=south; , DIR=north; , DIR=east FALLBACK=next; } \
+	bspc node -f $DIR || bspc node -f $FALLBACK.leaf
+	# bspc node -f $DIR || bspc node -f $FALLBACK.window
 
 # Swap focused window with the one in the given direction
 super + shift + {h,j,k,l}
@@ -568,10 +570,13 @@ super + {_,shift +} w
 super + alt + ctrl + w
   (printf "\x1b]11;{#0c0c0c,#000000}\x1b\\\\") > $(find /dev/pts -iname '[0-9]')
 
-# pywal background
+# pywal offline wallpaper
 super + alt + {_, shift +} w
-  wal { --theme random, -i "$HOME/.config/wallhaven-4lokdp.jpg" -b "0c0c0c"}
+  wal --cols16 -s -e -i { "$HOME/bgs/bgi/eyelust/eyelust", "/tmp/pywal" } -o ~/.config/wal/postrun
 
-# pywal wallpaper
+# pywal online wallpaper
 super + ctrl + {_, shift +} w
-  wal { -i "$HOME/bgs/bgi/eyelust/eyelust" , -R }
+  { curl -s "https://wallhaven.cc/api/v1/search?sorting=toplist&page=$(shuf --head-count=1 --input-range=1-10)" | jq ".data[$(shuf --head-count=1 --input-range=1-24)].path" | xargs curl -LO --output-dir /tmp/pywal --create-dirs;\
+  , curl -H "User-agent: 'your bot 0.1'" "https://www.reddit.com/r/wallpaper.json?limit=100" | jq ".data.children[$(shuf --head-count=1 --input-range=1-100)].data.url_overridden_by_dest" | xargs curl -LO --output-dir /tmp/pywal --create-dirs;\
+  } wal --iterative --cols16 -s -i /tmp/pywal;
+  # curl -s "https://wallhaven.cc/api/v1/search?sorting=random&q=4k" | jq '.data[0].path' | xargs curl -LO --output-dir /tmp/pywal --create-dirs; \

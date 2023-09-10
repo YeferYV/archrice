@@ -16,7 +16,7 @@ export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\
 export BAT_THEME="base16"
 export BROWSER="google-chrome-stable"
 export EDITOR="nvim"
-export OPENER="xdg-open"
+export OPENER="gio open" #"xdg-open"
 export PAGER="less"
 export SHELL="$(which zsh)"
 export SURFRAW_graphical=no

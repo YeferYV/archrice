@@ -29,9 +29,9 @@ set cleaner          ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
 # set cleaner        stpvimgclr
 # &stpvimg           --listen $id
 # cmd on-quit        $stpvimg --end $id
-# set cursoractivefmt  "\033[40m" # "\033[7m\033[30m\033[46m"
-# set cursorparentfmt  "\033[40m" # "\033[7m\033[30m\033[46m"
-# set cursorpreviewfmt "\033[40m" # "\033[7m\033[30m\033[46m"
+set cursoractivefmt  "\033[40m" # "\033[7m\033[30m\033[46m"
+set cursorparentfmt  "\033[40m" # "\033[7m\033[30m\033[46m"
+set cursorpreviewfmt "\033[40m" # "\033[7m\033[30m\033[46m"
 set promptfmt        "[1;90m%w "
 set mouse true
 set scrolloff 50
@@ -180,9 +180,7 @@ cmd cmd_redraw_down :{{
 cmd setbg ${{
   # ln -sf $fx ~/.local/share/bg
   cp -f $fx ~/.local/share/bg
-  # [ -e /bin/wal ] && wal -i $fx #-o ~/.config/wal/postrun
-  [ -e /bin/wal ] && wal -i $fx -o ~/.config/wal/postrun
-  xwallpaper --zoom ~/.local/share/bg
+  wal --cols16 -s -i $fx -o ~/.config/wal/postrun
 }}
 
 cmd tmuxtty ${{

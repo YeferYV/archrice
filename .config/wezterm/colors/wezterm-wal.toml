@@ -1,0 +1,58 @@
+[colors]
+
+foreground    = "#a0a0a0"
+background    = "#000000"
+cursor_bg     = "#ffffff"
+cursor_border = "#a0a0a0"
+cursor_fg     = "#000000"
+selection_bg  = "#5555cc"
+selection_fg  = "#ffffff"
+split         = "#444444"
+
+# ansi    = ["#222222", "#A96729", "#D97525", "#BF7F41", "#EB9939", "#F39034", "#BE8744", "#c3c1c0"]
+# brights = ["#4c4742", "#A96729", "#D97525", "#BF7F41", "#EB9939", "#F39034", "#BE8744", "#c3c1c0"]
+ansi    = [ "#1c1712", "#990000", "#009900", "#999900", "#5555cc", "#8855ff", "#5FB3A1", "#a0a0a0" ] # Intensity Normal font SHELL:{30,37}
+brights = [ "#6c6c6c", "#ff0000", "#00ff00", "#ffff00", "#1c1cff", "#8844bb", "#5DE4C7", "#ffffff" ] # Intensity Bold font SHELL:{90,97}
+
+[colors.tab_bar]
+background = '#000000'
+
+[colors.tab_bar.active_tab]
+bg_color = '#1c1712'
+fg_color = '#888888'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.inactive_tab]
+bg_color = '#000000'
+fg_color = '#2c2c2c'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = '#000000'
+fg_color = '#909090'
+intensity = 'Normal'
+italic = true
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.new_tab]
+bg_color = '#000000'
+fg_color = '#000000'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.new_tab_hover]
+bg_color = '#000000'
+fg_color = '#ffffff'
+intensity = 'Normal'
+italic = true
+strikethrough = false
+underline = 'None'

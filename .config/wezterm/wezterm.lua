@@ -1,6 +1,8 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
+local home = os.getenv("HOME")
+
 wezterm.on("open_in_vim", function(window, pane)
   local file = io.open("/tmp/wezterm_buf", "w")
   file:write(pane:get_lines_as_text(3000))
@@ -13,33 +15,41 @@ wezterm.on("open_in_vim", function(window, pane)
   )
 end)
 
+wezterm.on("move_pane_to_new_tab", function()
+	wezterm.run_child_process({ "wezterm", "cli", "move-pane-to-new-tab" })
+	wezterm.run_child_process({ "wezterm", "cli", "activate-tab", "--tab-relative", "1" })
+end)
+
+wezterm.add_to_config_reload_watch_list("/home/drknss/.cache/wal/wezterm-wal.toml")
+
 return {
+  -- animation_fps = 60,
   -- enable_csi_u_key_encoding = true, --unmap ctrl-(j|i...) same as stty -ixon
-  -- initial_rows = 50,
-  -- initial_cols = 170,
   -- force_reverse_video_cursor = true,
+  -- initial_cols = 170,
+  -- initial_rows = 50,
+  adjust_window_size_when_changing_font_size = false,
   audible_bell = "Disabled",
-  use_fancy_tab_bar = false,
+  default_prog = { "zsh" },
+  enable_kitty_keyboard = true,
+  font_size = 10.0,
+  front_end = "WebGpu",
   hide_tab_bar_if_only_one_tab = true,
   tab_bar_at_bottom = true,
-  front_end = "WebGpu",
-  -- animation_fps = 60,
-  default_prog = { "zsh" },
-  font_size = 10.0,
-  adjust_window_size_when_changing_font_size = false,
+  use_fancy_tab_bar = false,
 
-  -- use_cap_height_to_scale_fallback_fonts = true,
-  -- font_hinting = "Full",
+  -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
+  -- cell_width = 1.20,
+  -- custom_block_glyphs = false,
   -- font_antialias = "Greyscale",
   -- font_antialias = "Subpixel",
+  -- font_hinting = "Full",
+  -- freetype_interpreter_version = 40,
   -- freetype_load_target = "Light",
   -- freetype_render_target = "HorizontalLcd",
-  -- freetype_interpreter_version = 40,
-  -- cell_width = 1.20,
   -- line_height = 0.90,
-  -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
-  -- custom_block_glyphs = false,
   -- unicode_version=9 ,
+  -- use_cap_height_to_scale_fallback_fonts = true,
   bold_brightens_ansi_colors = false, -- default true -- for i in {0..255}; do; printf "\033[${i};1m color${i}"; done
   window_close_confirmation = "NeverPrompt",
 
@@ -52,7 +62,7 @@ return {
   -- window_padding = {left = "6pt", right = "6pt", top = "10pt", bottom = "10pt"},
   -- window_padding = {left = "1cell", right = "1cell", top = "1cell", bottom = "1cell"},
   -- window_padding = {left = "1%", right = "1%", top = "2%", bottom = "2%"},
-  window_background_opacity = 0.7,
+  -- window_background_opacity = 0.7,
   -- text_background_opacity = 0.9,
   scrollback_lines = 10000,
 
@@ -277,7 +287,14 @@ return {
     -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
     { key = "a", mods = "LEADER|CTRL", action = wezterm.action { SendString = "\x01" } },
     { key = "[", mods = "LEADER", action = wezterm.action({ EmitEvent = "open_in_vim" }) },
-    { key = "]", mods = "LEADER", action = "QuickSelect" },
+    { key = "]", mods = "LEADER", action = wezterm.action({ EmitEvent = "move_pane_to_new_tab" }) },
+    {
+		  mods = "LEADER", key = ".",
+		  action = wezterm.action_callback(function()
+			  wezterm.run_child_process({ "wezterm", "cli", "move-pane-to-new-tab" })
+		  end)
+	  },
+    { key = "q", mods = "LEADER", action = "QuickSelect" },
 
     -- {key="i", mods="CTRL", action={SendKey={key="i", mods="CTRL"}}}, -- default:tab
     -- {key="[", mods="CTRL", action={SendKey={key="[", mods="CTRL"}}}, -- default:esc
@@ -374,88 +391,91 @@ return {
   },
 
   -- color_scheme = "Retro",
-  colors = {
-    -- SHELL: for i in $(seq 256); do echo $(lua <<<"print('\27[${i}mReadydone${i}')"); done
-    foreground = "#a0a0a0",
-    background = "#000000",
-    cursor_bg = "#ffffff",
-    cursor_fg = "#000000",
-    -- cursor_border = "#0000ff",
-    -- ansi = {"#111111", "maroon", "green", "olive", "navy", "purple", "teal", "silver"},        -- Intensity Normal font SHELL:{30,37}
-    ansi = { "#222222", "#990000", "#009900", "#999900", "#5555cc", "#8855ff", "#5FB3A1", "#a0a0a0" }, -- Intensity Normal font SHELL:{30,37}
-    -- brights = {"#1c1c1c", "red", "lime", "yellow", "blue", "fuchsia", "aqua", "white"},        -- Intensity Bold font SHELL:{90,97}
-    brights = { "#6c6c6c", "#ff0000", "#00ff00", "#ffff00", "#1c1cff", "#8844bb", "#5DE4C7", "#ffffff" }, -- Intensity Bold font SHELL:{90,97}
-
-    tab_bar = {
-      -- The color of the strip that goes along the top of the window
-      -- (does not apply when fancy tab bar is in use)
-      background = "#000000",
-
-      -- The active tab is the one that has focus in the window
-      active_tab = {
-        -- bg_color = "#0c0c0c",
-        -- fg_color = "#ffffff",
-        bg_color = "#1c1c1c",
-        fg_color = "#888888",
-
-        -- Specify whether you want "Half", "Normal" or "Bold" intensity for the
-        -- label shown for this tab.
-        -- The default is "Normal"
-        intensity = "Normal",
-
-        -- Specify whether you want "None", "Single" or "Double" underline for
-        -- label shown for this tab.
-        -- The default is "None"
-        underline = "None",
-
-        -- Specify whether you want the text to be italic (true) or not (false)
-        -- for this tab.  The default is false.
-        italic = false,
-
-        -- Specify whether you want the text to be rendered with strikethrough (true)
-        -- or not for this tab.  The default is false.
-        strikethrough = false,
-      },
-
-      -- Inactive tabs are the tabs that do not have focus
-      inactive_tab = {
-        bg_color = "#000000",
-        fg_color = "#2c2c2c",
-
-        -- The same options that were listed under the `active_tab` section above
-        -- can also be used for `inactive_tab`.
-      },
-
-      -- You can configure some alternate styling when the mouse pointer
-      -- moves over inactive tabs
-      inactive_tab_hover = {
-        bg_color = "#111111",
-        fg_color = "#909090",
-        italic = true,
-
-        -- The same options that were listed under the `active_tab` section above
-        -- can also be used for `inactive_tab_hover`.
-      },
-
-      -- The new tab button that let you create new tabs
-      new_tab = {
-        bg_color = "#000000",
-        fg_color = "#000000",
-
-        -- The same options that were listed under the `active_tab` section above
-        -- can also be used for `new_tab`.
-      },
-
-      -- You can configure some alternate styling when the mouse pointer
-      -- moves over the new tab button
-      new_tab_hover = {
-        bg_color = "#888888",
-        fg_color = "#ffffff",
-        italic = true,
-
-        -- The same options that were listed under the `active_tab` section above
-        -- can also be used for `new_tab_hover`.
-      }
-    }
-  }
+  color_scheme_dirs = {"/home/drknss/.cache/wal"},
+  color_scheme = "wezterm-wal",
+  -- colors = {
+  --
+  --   -- SHELL: for i in $(seq 256); do echo $(lua <<<"print('\27[${i}mReadydone${i}')"); done
+  --   -- foreground = "#a0a0a0",
+  --   -- background = "#000000",
+  --   -- cursor_bg = "#ffffff",
+  --   -- cursor_fg = "#000000",
+  --   -- cursor_border = "#0000ff",
+  --   -- ansi = {"#111111", "maroon", "green", "olive", "navy", "purple", "teal", "silver"},                   -- Intensity Normal font SHELL:{30,37}
+  --   -- ansi = { "#222222", "#990000", "#009900", "#999900", "#5555cc", "#8855ff", "#5FB3A1", "#a0a0a0" },    -- Intensity Normal font SHELL:{30,37}
+  --   -- brights = {"#1c1c1c", "red", "lime", "yellow", "blue", "fuchsia", "aqua", "white"},                   -- Intensity Bold   font SHELL:{90,97}
+  --   -- brights = { "#6c6c6c", "#ff0000", "#00ff00", "#ffff00", "#1c1cff", "#8844bb", "#5DE4C7", "#ffffff" }, -- Intensity Bold   font SHELL:{90,97}
+  --
+  --   tab_bar = {
+  --     -- The color of the strip that goes along the top of the window
+  --     -- (does not apply when fancy tab bar is in use)
+  --     background = "#000000",
+  --
+  --     -- The active tab is the one that has focus in the window
+  --     active_tab = {
+  --       -- bg_color = "#0c0c0c",
+  --       -- fg_color = "#ffffff",
+  --       bg_color = "#1c1c1c",
+  --       fg_color = "#888888",
+  --
+  --       -- Specify whether you want "Half", "Normal" or "Bold" intensity for the
+  --       -- label shown for this tab.
+  --       -- The default is "Normal"
+  --       intensity = "Normal",
+  --
+  --       -- Specify whether you want "None", "Single" or "Double" underline for
+  --       -- label shown for this tab.
+  --       -- The default is "None"
+  --       underline = "None",
+  --
+  --       -- Specify whether you want the text to be italic (true) or not (false)
+  --       -- for this tab.  The default is false.
+  --       italic = false,
+  --
+  --       -- Specify whether you want the text to be rendered with strikethrough (true)
+  --       -- or not for this tab.  The default is false.
+  --       strikethrough = false,
+  --     },
+  --
+  --     -- Inactive tabs are the tabs that do not have focus
+  --     inactive_tab = {
+  --       bg_color = "#000000",
+  --       fg_color = "#2c2c2c",
+  --
+  --       -- The same options that were listed under the `active_tab` section above
+  --       -- can also be used for `inactive_tab`.
+  --     },
+  --
+  --     -- You can configure some alternate styling when the mouse pointer
+  --     -- moves over inactive tabs
+  --     inactive_tab_hover = {
+  --       bg_color = "#111111",
+  --       fg_color = "#909090",
+  --       italic = true,
+  --
+  --       -- The same options that were listed under the `active_tab` section above
+  --       -- can also be used for `inactive_tab_hover`.
+  --     },
+  --
+  --     -- The new tab button that let you create new tabs
+  --     new_tab = {
+  --       bg_color = "#000000",
+  --       fg_color = "#000000",
+  --
+  --       -- The same options that were listed under the `active_tab` section above
+  --       -- can also be used for `new_tab`.
+  --     },
+  --
+  --     -- You can configure some alternate styling when the mouse pointer
+  --     -- moves over the new tab button
+  --     new_tab_hover = {
+  --       bg_color = "#888888",
+  --       fg_color = "#ffffff",
+  --       italic = true,
+  --
+  --       -- The same options that were listed under the `active_tab` section above
+  --       -- can also be used for `new_tab_hover`.
+  --     }
+  --   }
+  -- }
 }

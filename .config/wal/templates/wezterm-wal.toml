@@ -1,0 +1,56 @@
+[colors]
+
+foreground    = "{foreground}"
+background    = "{background}"
+cursor_bg     = "#ffffff"
+cursor_border = "#a0a0a0"
+cursor_fg     = "#000000"
+selection_bg  = "{color4}"
+selection_fg  = "{color15}"
+split         = "#444444"
+
+ansi    = ["#1c1712" , "{color1}", "{color2}" , "{color3}" , "{color4}" , "{color5}" ,"{color6}" , "{color7}" ]
+brights = ["{color8}", "{color9}", "{color10}", "{color11}", "{color12}", "{color13}","{color14}", "{color15}"]
+
+[colors.tab_bar]
+background = '{background}'
+
+[colors.tab_bar.active_tab]
+bg_color = '#1c1712'
+fg_color = '#888888'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.inactive_tab]
+bg_color = '{background}'
+fg_color = '#2c2c2c'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = '{background}'
+fg_color = '#909090'
+intensity = 'Normal'
+italic = true
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.new_tab]
+bg_color = '{background}'
+fg_color = '{background}'
+intensity = 'Normal'
+italic = false
+strikethrough = false
+underline = 'None'
+
+[colors.tab_bar.new_tab_hover]
+bg_color = '{background}'
+fg_color = '#ffffff'
+intensity = 'Normal'
+italic = true
+strikethrough = false
+underline = 'None'
