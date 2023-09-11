@@ -19,6 +19,7 @@ local options = {
   mouse = "a", -- allow the mouse to be used in neovim
   number = true, -- set numbered lines
   numberwidth = 4, -- set number column width to 2 {default 4}
+  -- paste = true, -- (conflictswith/overrides nvim-cmp) allow auto-indenting pasted text
   preserveindent = true, -- Preserve indent structure as much as possible
   pumheight = 10, -- pop up menu height
   relativenumber = false, -- set relative numbered lines

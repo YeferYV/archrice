@@ -233,6 +233,15 @@ local plugins = {
       {
         'folke/tokyonight.nvim'
       },
+      -- {
+      --   'sonjiku/yawnc.nvim'
+      -- },
+      {
+        'oncomouse/lushwal.nvim',
+        cmd = { "LushwalCompile" },
+        dependencies = { "rktjmp/lush.nvim", "rktjmp/shipwright.nvim" },
+        -- config = function() vim.g.lushwal_configuration = { compile_to_vimscript = false } end
+      }
     }
   },
 
@@ -255,7 +264,7 @@ local plugins = {
         add          = { text = "│" },
         change       = { text = "│" },
         delete       = { text = "│" },
-        topdelete    = { text = "契" },
+        topdelete    = { text = "" },
         changedelete = { text = "~" },
         untracked    = { text = '┆' },
       },
