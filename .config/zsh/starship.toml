@@ -1,16 +1,3 @@
-# format = """
-# $battery\
-# $sudo\
-# $username\
-# $directory\
-# $git_branch\
-# $git_status\
-# $time\
-# $status\
-# $package\
-# $character\
-# """
-
 format = """
 $battery\
 $sudo\
@@ -18,25 +5,18 @@ $username\
 $custom\
 $git_branch\
 $git_status\
-$time\
+$cmd_duration\
 $status\
 $package\
 $character\
 """
 
-# format = "[$symbol($output )]($style)"
-# Get editor completions based on the config schema
-"$schema" = 'https://starship.rs/config-schema.json'
-
-# Inserts a blank line between shell prompts
+# Timeout 1 min
+command_timeout = 60000
 add_newline = false
 
-# Timeout 10 min
-command_timeout = 600000
-
-[line_break]
-disabled = true
-# truncation_symbol = "…/"
+[cmd_duration]
+min_time = 60000
 
 [directory]
 disabled = false
@@ -44,9 +24,6 @@ style = "bold fg:#555555"
 format = "[$path ]($style)"
 truncation_length = 9
 # truncation_symbol = "…/"
-
-# [directory.substitutions]
-# "~" = " .../ "
 
 [character] # The name of the module we are configuring is "character"
 success_symbol = "[󰞷 ](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
@@ -57,14 +34,10 @@ vimcmd_replace_symbol =	"[󰞷 ](bold purple)"
 vimcmd_visual_symbol =	"[󰞷 ](bold yellow)"
 format = "$symbol"
 
-# Disable the package module, hiding it from the prompt completely
-[package]
-disabled = true
-
 [custom.home]
 when = """ test "$HOME" = "$PWD" """
 format = ""
-# format = """[ﲵ ](fg:#0000ff)"""
+# format = """[󰞷 ](fg:#0000ff)"""
 
 [custom.gitroot]
 command = """
