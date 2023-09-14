@@ -1,5 +1,6 @@
 {
-  "vscode-neovim.neovimInitVimPaths.linux": "/home/drknss/.config/nvim/vscode/vscode-neovim/init.lua",
+  "vscode-neovim.neovimInitVimPaths.win32": "~/.config/nvim/vscode/vscode-neovim/init.lua",
+  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/vscode/vscode-neovim/init.lua",
   "vscode-neovim.useCtrlKeysForNormalMode": true,
   "extensions.experimental.affinity": { "asvetliakov.vscode-neovim": 1 },
   "whichkey.bindings": [
@@ -486,9 +487,6 @@
             "punctuation.start.definition.comment"
           ],
           "settings": {
-            // "foreground": "#2c2c2c",
-            // "foreground": "#3c3c3c",
-            // "foreground": "#4c4c4c",
             "foreground": "#5c5c5c"
           }
         },
