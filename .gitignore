@@ -5,7 +5,6 @@
 .config/mpv/playlists
 .config/ncmpcpp/lyrics/
 .config/ncmpcpp/error.log
-.config/nvim/plugin
 .config/zsh/.zcompdump
 
 .local/bin/*

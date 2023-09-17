@@ -75,7 +75,6 @@ export FZF_DEFAULT_OPTS="--multi --color='hl:#cccc00,hl+:#cccc00'"
 export MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
 export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
-export YT_API_KEY="AIzaSyDWLUg9KCJ6CAw2KXIsQTcOzMZRXOQ7OC0"
 export _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 
 # export MANPAGER="less -R --use-color -Dd+r -Du+b"
