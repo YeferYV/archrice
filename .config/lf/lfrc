@@ -101,11 +101,11 @@ cmd on-cd &{{
 cmd open ${{
     #"sudo -E env "PATH=$PATH" lf" https://unix.stackexchange.com/questions/83191/how-to-make-sudo-preserve-path
     case $(file --dereference --brief --mime-type $f) in
-        text/*|application/json) printf "\033]0; ${f##*/} \007" > /dev/tty; $EDITOR $fx ;;
-	      image/*)                 basename -a $fx | $SWALLOWER sxiv -baio ;;
-	      audio/*)                 basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --force-window --playlist=- ;;
-	      video/*)                 basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --playlist=- ;;
-        application/pdf)                           $SWALLOWER zathura $fx ;;
+        text/*|*/json|*/javascript)  printf "\033]0; ${f##*/} \007" > /dev/tty; $EDITOR $fx ;;
+	      image/*)                     basename -a $fx | $SWALLOWER sxiv -baio ;;
+	      audio/*)                     basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --force-window --playlist=- ;;
+	      video/*)                     basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --playlist=- ;;
+        application/pdf)                               $SWALLOWER zathura $fx ;;
         #*) for f in $fx; do xdg-open $f           &>/dev/null &;;
         *)  for f in $fx; do setsid -f $OPENER $f   >/dev/null 2>&1; done;;
     esac

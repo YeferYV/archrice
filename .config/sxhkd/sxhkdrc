@@ -3,7 +3,7 @@
 #
 
 # terminal emulator
-mod4 + {_,shift + ,ctrl + ,shift + ctrl + ,alt + }Return
+mod4 + {_, shift, ctrl, shift + ctrl, alt} + Return
 	{ \
 		$TERMINAL; \
 	, bspc node -p east -o 0.5 && $TERMINAL; \
@@ -13,11 +13,11 @@ mod4 + {_,shift + ,ctrl + ,shift + ctrl + ,alt + }Return
 	}
 
 # terminal emulator
-mod1 + {_,shift +,ctrl +,shift + ctrl +}Return
-  {neovide,kitty,alacritty -e tmux,cool-retro-term}
+mod1 + {_, shift, ctrl, shift + ctrl} + Return
+  {neovide, kitty, cool-retro-term -e tmux, alacritty -e tmux}
 
 # dunst close/reopen notification
-ctrl + {_,shift + }Return
+ctrl + {_, shift} + Return
 	dunstctl {close, history-pop}
 
 # stop cronbat

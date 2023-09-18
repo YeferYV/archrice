@@ -32,7 +32,7 @@ return {
   audible_bell = "Disabled",
   default_prog = { "zsh" },
   enable_kitty_keyboard = true,
-  font_size = 10.0,
+  font_size = 12.0,
   front_end = "WebGpu",
   hide_tab_bar_if_only_one_tab = true,
   tab_bar_at_bottom = true,
@@ -62,8 +62,8 @@ return {
   -- window_padding = {left = "6pt", right = "6pt", top = "10pt", bottom = "10pt"},
   -- window_padding = {left = "1cell", right = "1cell", top = "1cell", bottom = "1cell"},
   -- window_padding = {left = "1%", right = "1%", top = "2%", bottom = "2%"},
-  -- window_background_opacity = 0.7,
-  -- text_background_opacity = 0.9,
+  window_background_opacity = 0.3,
+  text_background_opacity = 0.3,
   scrollback_lines = 10000,
 
   foreground_text_hsb = {
@@ -89,7 +89,7 @@ return {
     {
       intensity = "Normal", -- ansi palet colors
       font = wezterm.font_with_fallback({
-        { family = "FiraCode Nerd Font", scale = 1.00, stretch = "Normal", weight = "Medium" },
+        { family = "FiraCode Nerd Font", scale = 1.00, stretch = "Normal", weight = "Regular" },
         { family = "3270 Nerd Font", scale = 1.20, stretch = "Normal", weight = "Medium" },
         { family = "Noto Color Emoji", weight = "Regular", stretch = "Normal", style = "Normal" },
         { family = "Symbols Nerd Font Mono", weight = "Regular", stretch = "Normal", style = "Normal" },
@@ -289,7 +289,7 @@ return {
     { key = "[", mods = "LEADER", action = wezterm.action({ EmitEvent = "open_in_vim" }) },
     { key = "]", mods = "LEADER", action = wezterm.action({ EmitEvent = "move_pane_to_new_tab" }) },
     {
-		  mods = "LEADER", key = ".",
+		  mods = "LEADER", key = "!",
 		  action = wezterm.action_callback(function()
 			  wezterm.run_child_process({ "wezterm", "cli", "move-pane-to-new-tab" })
 		  end)
