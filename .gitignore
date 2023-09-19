@@ -12,12 +12,12 @@
 !.local/bin/i3cmds/
 !.local/bin/statusbar/
 !.local/bin/bspswap
-!.local/bin/clear_screen
 !.local/bin/compiler
 !.local/bin/dmenumount
 !.local/bin/dmenupass
 !.local/bin/flix
 !.local/bin/hover
+!.local/bin/imgpassthrough
 !.local/bin/lines_per_directory
 !.local/bin/maimpick
 !.local/bin/remaps

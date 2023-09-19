@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sleep 1
+# printf %b '\033Ptmux;\033' '\033Ptmux;\033' $(wezterm imgcat --width=50 $1) '\033\\' '\033\\'
+printf %b '\033Ptmux;\033' '\033Ptmux;\033' $(img2sixel --width=200 $1) '\033\\' '\033\\'
