@@ -15,11 +15,11 @@
   { "key": "Up", "command": "runCommands", "args": { "commands": [ "list.focusUp", "filesExplorer.openFilePreserveFocus", ] }, "when": "listFocus && !inputFocus" },
   { "key": "shift+j", "command": "runCommands", "args": { "commands": [ "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown" ] }, "when": "listFocus && !inputFocus" },
   { "key": "shift+k", "command": "runCommands", "args": { "commands": [ "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp" ] }, "when": "listFocus && !inputFocus" },
-  { "key": "shift+l", "command": "runCommands", "args": { "commands": [ "explorer.openAndPassFocus", "workbench.view.explorer", ] }, "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus" },
+  { "key": "shift+l", "command": "runCommands", "args": { "commands": [ "explorer.openAndPassFocus", "workbench.view.explorer", ] }, "when": "listFocus && !inputFocus" },
   { "key": "l", "command": "runCommands", "args": { "commands": [ "explorer.openAndPassFocus", "workbench.action.toggleSidebarVisibility", ] }, "when": "listFocus && !inputFocus" },
   { "key": "v", "command": "runCommands", "args": { "commands": [ "explorer.openToSide", "workbench.action.toggleSidebarVisibility", ] }, "when": "listFocus && !inputFocus" },
-  { "key": "q", "command": "workbench.action.toggleSidebarVisibility", "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus" },
-  { "key": "z", "command": "workbench.files.action.collapseExplorerFolders", "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus" },
+  { "key": "q", "command": "workbench.action.toggleSidebarVisibility", "when": "listFocus && !inputFocus" },
+  { "key": "z", "command": "workbench.files.action.collapseExplorerFolders", "when": "listFocus && !inputFocus" },
 
   // Show UI
   { "key": "ctrl+\\", "command": "workbench.action.togglePanel" },
@@ -116,9 +116,9 @@
   { "key": "ctrl+b n", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
   { "key": "ctrl+b p", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
   { "key": "ctrl+b v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
-  { "key": "ctrl+b shift+v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+v", "command": "runCommands", "args": { "commands": [ "workbench.action.terminal.split", "workbench.action.moveActiveEditorGroupDown" ] }, "when": "terminalFocus" },
   { "key": "ctrl+alt+v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
-  { "key": "ctrl+alt+h", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
+  { "key": "ctrl+alt+h", "command": "runCommands", "args": { "commands": [ "workbench.action.terminal.split", "workbench.action.moveActiveEditorGroupDown" ] }, "when": "terminalFocus" },
 
   // Terminal buffer-scrollback
   {
