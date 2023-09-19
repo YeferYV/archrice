@@ -3,13 +3,14 @@
 #
 
 # terminal emulator
-mod4 + {_, shift, ctrl, shift + ctrl, alt} + Return
+mod4 + {_, shift, ctrl, alt, shift + ctrl, shift + alt } + Return
 	{ \
 		$TERMINAL; \
+  , wezterm --config window_background_opacity=0.0 --config text_background_opacity=0.3; \
 	, bspc node -p east -o 0.5 && $TERMINAL; \
 	, bspc node -p south -o 0.5 && $TERMINAL; \
 	, bspc rule -a \* -o state=floating && $TERMINAL; \
-	, bspc rule -a \* -o state=floating && wezterm --config initial_rows=47 --config initial_cols=169; \
+	, bspc rule -a \* -o state=floating && wezterm --config initial_rows=34 --config initial_cols=135; \
 	}
 
 # terminal emulator
@@ -492,7 +493,7 @@ mod1 + XF86Audio{RaiseVolume,Mute,LowerVolume}
 mod1 + ctrl + {1,2,3,4,5}
   redshift {-x, -O 2222, -O 3333, -O 4444, -O 5555}
 
-# compositor start/end
+# compositor wallpaper background
 super + BackSpace
 	{\
 		picom --glx-no-rebind-pixmap \
@@ -508,7 +509,7 @@ super + BackSpace
     killall picom\
 	}
 
-# compositor keep background
+# compositor blur background
 super + alt + BackSpace
 	{ \
 	  picom --blur-method="dual_kawase" \
@@ -521,6 +522,10 @@ super + alt + BackSpace
 # compositor keep background
 super + ctrl + BackSpace
 	{picom,killall picom}
+
+# compositor no shadow
+super + shift + BackSpace
+	{picom --shadow-opacity=0 --transparent-clipping, killall picom}
 
 # compositor decrease/increase transparency
 super + ctrl + {minus,equal}

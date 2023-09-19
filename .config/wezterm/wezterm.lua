@@ -62,8 +62,8 @@ return {
   -- window_padding = {left = "6pt", right = "6pt", top = "10pt", bottom = "10pt"},
   -- window_padding = {left = "1cell", right = "1cell", top = "1cell", bottom = "1cell"},
   -- window_padding = {left = "1%", right = "1%", top = "2%", bottom = "2%"},
-  window_background_opacity = 0.3,
-  text_background_opacity = 0.3,
+  window_background_opacity = 0.7,
+  text_background_opacity = 0.7,
   scrollback_lines = 10000,
 
   foreground_text_hsb = {
