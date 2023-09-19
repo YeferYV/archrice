@@ -6,16 +6,16 @@ menu() {
 }
 
 if [ "$1" = "fullscreen" ]; then
-		maim --hidecursor ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png"
+		import -window root  ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png"
 else
 	option="$(menu)"
 	case "$option" in
-		"a selected area") maim --hidecursor -s ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" || exit ;;
-		"current window") maim --hidecursor -i "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
-		"fullscreen") maim --hidecursor ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
-		"a selected area (copy)") maim --hidecursor -s | xclip -selection clipboard -t image/png ;;
-		"current window (copy)") maim --hidecursor -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png ;;
-		"fullscreen (copy)") maim --hidecursor | xclip -selection clipboard -t image/png ;;
+		"a selected area")         killall unclutter && import                 ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" && unclutter --timeout 1 & ;;
+		"current window")          import -window "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
+		"fullscreen")              import -window root                         ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
+		"a selected area (copy)")  killall unclutter && import                 /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png && unclutter --timeout 1 & ;;
+		"current window (copy)")   import -window "$(xdotool getactivewindow)" /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png ;;
+		"fullscreen (copy)")       import -window root                         /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png ;;
 		*) notify-send "Nothing selected" && exit ;;
 	esac
 fi &&
