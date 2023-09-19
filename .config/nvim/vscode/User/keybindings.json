@@ -1,120 +1,23 @@
 [
   // File Explorer
-  { "key": "a", "command": "explorer.newFile", "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" },
-  { "key": "shift+a", "command": "explorer.newFolder", "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" },
-  { "key": "d d", "command": "moveFileToTrash", "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" },
-  { "key": "r", "command": "renameFile", "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" },
-  {
-    "key": "e",
-    "command": "whichkey.triggerKey",
-    "args": {
-      "key": "e",
-      "when": "sideBarVisible && explorerViewletVisible"
-    },
-    "when": "whichkeyVisible && sideBarVisible && explorerViewletVisible"
-  },
   // { "key": "space", "command": "filesExplorer.openFilePreserveFocus", "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus" },
   // { "key": "enter", "command": "explorer.openAndPassFocus", "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus" },
+  { "key": "a", "command": "explorer.newFile", "when": "listFocus && !inputFocus" },
+  { "key": "shift+a", "command": "explorer.newFolder", "when": "listFocus && !inputFocus" },
+  { "key": "d d", "command": "moveFileToTrash", "when": "listFocus && !inputFocus" },
+  { "key": "r", "command": "renameFile", "when": "listFocus && !inputFocus" },
+  { "key": "e", "command": "whichkey.triggerKey", "args": { "key": "e", "when": "sideBarVisible && explorerViewletVisible" }, "when": "whichkeyVisible && sideBarVisible && explorerViewletVisible" },
   { "key": "h", "command": "list.collapse", "when": "listFocus && !inputFocus" },
   { "key": "o", "command": "list.select", "when": "listFocus && !inputFocus" },
-  {
-    "key": "Left",
-    "command": "list.collapse",
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "Right",
-    "command": "list.select",
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "Down",
-    "command": "vim.remap",
-    "args": {
-      "commands": [
-        { "command": "list.focusDown" },
-        { "command": "filesExplorer.openFilePreserveFocus" },
-      ]
-    },
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "Up",
-    "command": "vim.remap",
-    "args": {
-      "commands": [
-        { "command": "list.focusUp" },
-        { "command": "filesExplorer.openFilePreserveFocus" },
-      ]
-    },
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "shift+j",
-    "command": "vim.remap",
-    "args": {
-      "commands": [
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-        { "command": "list.focusDown" },
-      ]
-    },
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "shift+k",
-    "command": "vim.remap",
-    "args": {
-      "commands": [
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-        { "command": "list.focusUp" },
-      ]
-    },
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "shift+l",
-    "command": "workbench.action.tasks.runTask",
-    "args": "open-file-unfocus",
-    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
-  },
-  {
-    "key": "l",
-    "command": "vim.remap",
-    "args": {
-      "commands": [
-        { "command": "explorer.openAndPassFocus" },
-        { "command": "workbench.action.toggleSidebarVisibility" },
-      ]
-    },
-    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
-  },
-  {
-    "key": "v",
-    "command": "vim.remap",
-    "args": {
-      "commands": [
-        { "command": "explorer.openToSide" },
-        { "command": "workbench.action.toggleSidebarVisibility" },
-      ]
-    },
-    "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
-  },
+  { "key": "Left", "command": "list.collapse", "when": "listFocus && !inputFocus" },
+  { "key": "Right", "command": "list.select", "when": "listFocus && !inputFocus" },
+  { "key": "Down", "command": "runCommands", "args": { "commands": [ "list.focusDown", "filesExplorer.openFilePreserveFocus", ] }, "when": "listFocus && !inputFocus" },
+  { "key": "Up", "command": "runCommands", "args": { "commands": [ "list.focusUp", "filesExplorer.openFilePreserveFocus", ] }, "when": "listFocus && !inputFocus" },
+  { "key": "shift+j", "command": "runCommands", "args": { "commands": [ "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown", "list.focusDown" ] }, "when": "listFocus && !inputFocus" },
+  { "key": "shift+k", "command": "runCommands", "args": { "commands": [ "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp", "list.focusUp" ] }, "when": "listFocus && !inputFocus" },
+  { "key": "shift+l", "command": "runCommands", "args": { "commands": [ "explorer.openAndPassFocus", "workbench.view.explorer", ] }, "when": "listFocus && !inputFocus" },
+  { "key": "l", "command": "runCommands", "args": { "commands": [ "explorer.openAndPassFocus", "workbench.action.toggleSidebarVisibility", ] }, "when": "listFocus && !inputFocus" },
+  { "key": "v", "command": "runCommands", "args": { "commands": [ "explorer.openToSide", "workbench.action.toggleSidebarVisibility", ] }, "when": "listFocus && !inputFocus" },
   { "key": "q", "command": "workbench.action.toggleSidebarVisibility", "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus" },
   { "key": "z", "command": "workbench.files.action.collapseExplorerFolders", "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus" },
 
@@ -185,6 +88,8 @@
   { "key": "ctrl+b x", "command": "workbench.action.terminal.kill", "when": "terminalFocus" },
   { "key": "alt+s", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
   { "key": "alt+f", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
+  { "key": "alt+shift+s", "command": "runCommands", "args": { "commands": [ "workbench.action.terminal.moveToEditor", "workbench.action.terminal.moveToTerminalPanel" ] } },
+  { "key": "alt+shift+f", "command": "runCommands", "args": { "commands": [ "workbench.action.terminal.moveToEditor", "workbench.action.terminal.moveToTerminalPanel" ] } },
   { "key": "ctrl+alt+n", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
   { "key": "ctrl+alt+p", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
   { "key": "ctrl+left", "command": "workbench.action.terminal.focusPreviousPane", "when": "terminalFocus" },
@@ -215,7 +120,7 @@
 
   // Terminal buffer-scrollback
   {
-    "key": "ctrl+alt+a",
+    "key": "ctrl+b [",
     "command": "runCommands",
     "args": {
       "commands": [

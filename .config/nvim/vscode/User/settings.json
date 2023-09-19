@@ -85,14 +85,7 @@
       "key": "b",
       "name": "Buffers/Editors...",
       "bindings": [
-        {
-          "key": ";",
-          "name": "Recent editor",
-          "commands": [
-            "workbench.action.quickOpenPreviousRecentlyUsedEditor",
-            "workbench.action.acceptSelectedQuickOpenItem"
-          ]
-        },
+        { "key": ";", "name": "Recent editor", "commands": [ "workbench.action.quickOpenPreviousRecentlyUsedEditor", "workbench.action.acceptSelectedQuickOpenItem" ] },
         { "key": "b", "name": "Find editors", "command": "workbench.action.showAllEditors" },
         { "key": "B", "name": "Recent editors", "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor" },
         { "key": "C", "name": "Close other editors", "command": "workbench.action.closeOtherEditors" },
@@ -107,15 +100,7 @@
         { "key": "t", "name": "New untitled editor", "command": "workbench.action.files.newUntitledFile" },
         { "key": "u", "name": "Reopen closed editor", "command": "workbench.action.reopenClosedEditor" },
         { "key": "x", "name": "Close active editor", "command": "workbench.action.closeActiveEditor" },
-        {
-          "key": "y",
-          "name": "Copy buffer to clipboard",
-          "commands": [
-            "editor.action.selectAll",
-            "editor.action.clipboardCopyAction",
-            "cancelSelection"
-          ]
-        }
+        { "key": "y", "name": "Copy buffer to clipboard", "commands": [ "editor.action.selectAll", "editor.action.clipboardCopyAction", "cancelSelection" ] }
       ]
     },
     {
@@ -133,14 +118,7 @@
         { "key": "S", "name": "Stop debug", "command": "workbench.action.debug.stop" },
         { "key": "p", "name": "Pause debug", "command": "workbench.action.debug.pause" },
         { "key": "q", "name": "Quokka start", "command": "quokka.makeQuokkaFromExistingFile" },
-        {
-          "key": "Q",
-          "name": "Quokka stop",
-          "commands": [
-            "quokka.stopAll",
-            "workbench.action.toggleAuxiliaryBar"
-          ]
-        },
+        { "key": "Q", "name": "Quokka stop", "commands": [ "quokka.stopAll", "workbench.action.toggleAuxiliaryBar" ] },
         { "key": "r", "name": "Restart debug", "command": "workbench.action.debug.restart" },
         { "key": "R", "name": "Run without debugging", "command": "workbench.action.debug.run" },
         { "key": "t", "name": "Toggle REPL", "command": "workbench.debug.action.toggleRepl" },
@@ -339,42 +317,30 @@
 
         // Tmux-panes
         { "key": ";", "name": "Quick OpenTerm", "command": "workbench.action.quickOpenTerm" },
-        { "key": "!", "name": "Break Panel", "command": "workbench.action.terminal.unsplit" },
+        { "key": "!", "name": "Break panel", "command": "workbench.action.terminal.unsplit" },
         { "key": "z", "name": "Toggle maximized panel", "command": "workbench.action.toggleMaximizedPanel" },
-        { "key": "-", "name": "join panel (instances)", "command": "workbench.action.terminal.joinInstance" },
-        { "key": "+", "name": "join panel (select)", "command": "workbench.action.terminal.join" },
+        { "key": "-", "name": "Join panel (instances)", "command": "workbench.action.terminal.joinInstance" },
+        { "key": "+", "name": "Join panel (select)", "command": "workbench.action.terminal.join" },
         { "key": "x", "name": "Close panel", "command": "workbench.action.terminal.kill" },
         { "key": "s", "name": "Focus previous terminal group", "command": "workbench.action.terminal.focusPrevious" },
         { "key": "f", "name": "Focus next terminal group", "command": "workbench.action.terminal.focusNext" },
+        { "key": "S", "name": "Move panel to Last position", "commands": [ "workbench.action.terminal.moveToEditor", "workbench.action.terminal.moveToTerminalPanel" ] },
+        { "key": "F", "name": "Move panel to Last position", "commands": [ "workbench.action.terminal.moveToEditor", "workbench.action.terminal.moveToTerminalPanel" ] },
         { "key": "h", "name": "Focus previous panel", "command": "workbench.action.terminal.focusPreviousPane" },
         { "key": "j", "name": "Focus next panel", "command": "workbench.action.terminal.focusNextPane" },
         { "key": "k", "name": "Focus previous panel", "command": "workbench.action.terminal.focusPreviousPane" },
         { "key": "l", "name": "Focus next panel", "command": "workbench.action.terminal.focusNextPane" },
-        { "key": "H", "name": "Resize Pane left", "command": "workbench.action.terminal.resizePaneLeft" },
-        { "key": "J", "name": "Resize Pane down", "command": "workbench.action.terminal.resizePaneDown" },
-        { "key": "K", "name": "Resize Pane up", "command": "workbench.action.terminal.resizePaneUp" },
-        { "key": "L", "name": "Resize Pane right", "command": "workbench.action.terminal.resizePaneRight" },
+        { "key": "H", "name": "Resize Panel left", "command": "workbench.action.terminal.resizePaneLeft" },
+        { "key": "J", "name": "Resize Panel down", "command": "workbench.action.terminal.resizePaneDown" },
+        { "key": "K", "name": "Resize Panel up", "command": "workbench.action.terminal.resizePaneUp" },
+        { "key": "L", "name": "Resize Panel right", "command": "workbench.action.terminal.resizePaneRight" },
 
         // tmux-windows
         { "key": ",", "name": "Rename terminal", "command": "workbench.action.terminal.rename" },
         { "key": "n", "name": "Focus next terminal group", "command": "workbench.action.terminal.focusNext" },
         { "key": "p", "name": "Focus previous terminal group", "command": "workbench.action.terminal.focusPrevious" },
-        {
-          "key": "v",
-          "name": "Panel to right",
-          "commands": [
-            "workbench.action.positionPanelRight",
-            "workbench.action.terminal.focus"
-          ]
-        },
-        {
-          "key": "V",
-          "name": "Panel to bottom",
-          "commands": [
-            "workbench.action.positionPanelBottom",
-            "workbench.action.terminal.focus"
-          ]
-        },
+        { "key": "v", "name": "Panel to right", "commands": [ "workbench.action.positionPanelRight", "workbench.action.terminal.focus" ] },
+        { "key": "V", "name": "Panel to bottom", "commands": [ "workbench.action.positionPanelBottom", "workbench.action.terminal.focus" ] },
         // { "key": "%", "name": "tmux split vertical", "command": "workbench.action.tasks.runTask", "args": "tmux-split-vertical" },
         // { "key": "\"", "name": "tmux split horizontal", "command": "workbench.action.tasks.runTask", "args": "tmux-split-horizontal" },
         { "key": "%", "name": "Split terminal", "command": "workbench.action.terminal.split" },
@@ -382,7 +348,7 @@
         { "key": "\\", "name": "Focus terminal", "command": "workbench.action.terminal.toggleTerminal" },
         { "key": "t", "name": "Toggle terminal", "command": "workbench.action.togglePanel" },
         { "key": "T", "name": "New Tab terminal", "command": "workbench.action.createTerminalEditor" },
-        { "key": "S", "name": "New Tab (side) terminal", "command": "workbench.action.createTerminalEditorSide" },
+        { "key": ">", "name": "New Tab (side) terminal", "command": "workbench.action.createTerminalEditorSide" },
       ]
     },
     {
@@ -403,48 +369,20 @@
         { "key": "S", "name": "Toggle sec-sidebar visibility", "command": "workbench.action.toggleAuxiliaryBar" },
         { "key": "t", "name": "Select theme", "command": "workbench.action.selectTheme" },
         { "key": "T", "name": "Toggle tab visibility", "command": "workbench.action.toggleTabsVisibility" },
-        {
-          "key": "u",
-          "name": "Go to Parent Fold",
-          "commands": [
-            "editor.gotoParentFold",
-            "cursorHome"
-          ]
-        },
+        { "key": "u", "name": "Go to Parent Fold", "commands": [ "editor.gotoParentFold", "cursorHome" ] },
         { "key": "U", "name": "Go to Bracket", "command": "editor.action.jumpToBracket" },
         { "key": "x", "name": "Extensions", "command": "workbench.view.extensions" },
         { "key": "z", "name": "Toggle zen mode", "command": "workbench.action.toggleZenMode" },
         { "key": "Z", "name": "Zoom reset", "command": "editor.action.fontZoomReset" }
       ]
     },
-    {
-      "key": "v",
-      "name": "Vertical split",
-      "commands": [
-        "workbench.action.positionPanelRight",
-        "workbench.action.terminal.focus"
-      ]
-    },
-    {
-      "key": "V",
-      "name": "Horizontal split",
-      "commands": [
-        "workbench.action.positionPanelBottom",
-        "workbench.action.terminal.focus"
-      ]
-    },
+    { "key": "v", "name": "Vertical split", "commands": [ "workbench.action.positionPanelRight", "workbench.action.terminal.focus" ] },
+    { "key": "V", "name": "Horizontal split", "commands": [ "workbench.action.positionPanelBottom", "workbench.action.terminal.focus" ] },
     {
       "key": "w",
       "name": "Window...",
       "bindings": [
-        {
-          "key": ";",
-          "name": "Recent editor group",
-          "commands": [
-            "workbench.action.quickOpenPreviousRecentlyUsedEditor",
-            "workbench.action.acceptSelectedQuickOpenItem"
-          ]
-        },
+        { "key": ";", "name": "Recent editor group", "commands": [ "workbench.action.quickOpenPreviousRecentlyUsedEditor", "workbench.action.acceptSelectedQuickOpenItem" ] },
         { "key": "c", "name": "Combine all editors", "command": "workbench.action.joinAllGroups" },
         { "key": "C", "name": "Close all editor groups", "command": "workbench.action.closeAllGroups" },
         { "key": "f", "name": "Focus editor group", "command": "workbench.action.focusActiveEditorGroup" },
@@ -463,11 +401,7 @@
         { "key": "=", "name": "Reset editor group sizes", "command": "workbench.action.evenEditorWidths" }
       ]
     },
-    {
-      "key": "x",
-      "name": "Close active editor",
-      "command": "workbench.action.closeActiveEditor"
-    },
+    { "key": "x", "name": "Close active editor", "command": "workbench.action.closeActiveEditor" },
     {
       "key": "y",
       "name": "Sync...",
@@ -511,11 +445,11 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
 
-  // "editor.bracketPairColorization.enabled": true,
   "editor.accessibilitySupport": "off",
   "editor.cursorBlinking": "solid",
   "editor.cursorSurroundingLines": 4,
-  "editor.fontFamily": "\"CaskaydiaCove Nerd Font\",\"Bedstead\",\"Font Awesome 6 Free Solid\"",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.fontFamily": "'CaskaydiaCove Nerd Font','Bedstead','Font Awesome 6 Free Solid'",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.fontWeight": 400,
@@ -550,9 +484,6 @@
             "punctuation.start.definition.comment"
           ],
           "settings": {
-            // "foreground": "#2c2c2c",
-            // "foreground": "#3c3c3c",
-            // "foreground": "#4c4c4c",
             "foreground": "#5c5c5c"
           }
         },
@@ -731,7 +662,6 @@
       "diffEditor.insertedTextBackground": "#a7ecb720",
       "diffEditor.insertedTextBorder": "#a7ecb700",
 
-      // "editor.selectionBackground": "#1c1c1c",
       "editor.selectionBackground": "#55555555",
       "editor.selectionHighlightBackground": "#33333333", // references highlights
 
@@ -795,23 +725,18 @@
   },
   "debug.inlineValues": "on",
   "diffEditor.renderSideBySide": true,
-  // "git.autofetch": true,
   // "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
   // "javascript.referencesCodeLens.enabled": true,
   // "javascript.referencesCodeLens.showOnAllFunctions": true,
-  "Lua.telemetry.enable": false,
   "material-icon-theme.folders.color": "#A1A1A1",
   "material-icon-theme.folders.theme": "specific",
   "python.defaultInterpreterPath": "/bin/python",
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
-  // "quokka.automaticRestart": true,
-  // "quokka.automaticStartRegex": "\\.(ts|js|jsx|tsx)$",
   "scm.alwaysShowActions": true,
   "search.defaultViewMode": "tree",
   "security.workspace.trust.untrustedFiles": "open",
-  // "terminal.integrated.defaultProfile.linux": "tmux",
   "terminal.integrated.fontFamily": "'3270 Nerd Font','TerminessTTF Nerd Font','Font Awesome 6 Free Solid'",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": 500,
@@ -829,7 +754,6 @@
   "workbench.colorTheme": "Hacker",
   // "workbench.editor.enablePreviewFromQuickOpen": true,
   // "workbench.editor.enablePreview": false,
-  // "workbench.editor.showTabs": false,
   "workbench.editor.untitled.hint": "hidden",
   "workbench.iconTheme": "material-icon-theme",
   // "workbench.panel.defaultLocation": "right",
