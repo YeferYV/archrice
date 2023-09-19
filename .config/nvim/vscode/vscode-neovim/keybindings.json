@@ -71,7 +71,21 @@
   { "key": "alt+shift+s", "command": "workbench.action.moveEditorLeftInGroup", "when": "!terminalFocus" },
   { "key": "alt+shift+f", "command": "workbench.action.moveEditorRightInGroup", "when": "!terminalFocus" },
 
-  // Tmux-like
+  // Terminal clear/copy-mode
+  { "key": "ctrl+alt+l", "command": "workbench.action.terminal.clear", "when": "terminalFocus" },
+  { "key": "ctrl+alt+space", "command": "workbench.action.terminal.focusAccessibleBuffer", "when": "terminalFocus" },
+
+  // Terminal Scrolling-Navigation
+  { "key": "alt+r", "command": "workbench.action.terminal.scrollToNextCommand", "when": "terminalFocus" },
+  { "key": "alt+w", "command": "workbench.action.terminal.scrollToPreviousCommand", "when": "terminalFocus" },
+  { "key": "alt+e", "command": "workbench.action.terminal.scrollUp", "when": "terminalFocus" },
+  { "key": "alt+d", "command": "workbench.action.terminal.scrollDown", "when": "terminalFocus" },
+  { "key": "alt+q", "command": "workbench.action.terminal.scrollUpPage", "when": "terminalFocus" },
+  { "key": "alt+a", "command": "workbench.action.terminal.scrollDownPage", "when": "terminalFocus" },
+  { "key": "alt+t", "command": "workbench.action.terminal.scrollToTop", "when": "terminalFocus" },
+  { "key": "alt+g", "command": "workbench.action.terminal.scrollToBottom", "when": "terminalFocus" },
+
+  // Tmux-toggle
   { "key": "ctrl+b 1", "command": "workbench.action.terminal.focusAtIndex1", "when": "terminalFocus" },
   { "key": "ctrl+b 2", "command": "workbench.action.terminal.focusAtIndex2", "when": "terminalFocus" },
   { "key": "ctrl+b 3", "command": "workbench.action.terminal.focusAtIndex3", "when": "terminalFocus" },
@@ -81,34 +95,46 @@
   { "key": "ctrl+b 7", "command": "workbench.action.terminal.focusAtIndex7", "when": "terminalFocus" },
   { "key": "ctrl+b 8", "command": "workbench.action.terminal.focusAtIndex8", "when": "terminalFocus" },
   { "key": "ctrl+b 9", "command": "workbench.action.terminal.focusAtIndex9", "when": "terminalFocus" },
+  { "key": "ctrl+alt+b", "command": "workbench.action.toggleSidebarVisibility", "when": "terminalFocus" },
   { "key": "ctrl+b c", "command": "workbench.action.terminal.newInActiveWorkspace", "when": "terminalFocus" },
-  { "key": "ctrl+b ctrl+b", "command": "workbench.action.toggleSidebarVisibility", "when": "terminalFocus" },
-  { "key": "ctrl+b n", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
-  { "key": "ctrl+b p", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
+  { "key": "ctrl+t", "command": "workbench.action.terminal.newInActiveWorkspace", "when": "terminalFocus" },
+  { "key": "ctrl+w", "command": "workbench.action.terminal.kill", "when": "terminalFocus" },
+
+  // Tmux-panes
+  { "key": "ctrl+b ;", "command": "workbench.action.quickOpenTerm", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+1", "command": "workbench.action.terminal.unsplit", "when": "terminalFocus" },
+  { "key": "ctrl+b z", "command": "workbench.action.toggleMaximizedPanel", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+=", "command": "workbench.action.terminal.join", "when": "terminalFocus" },
+  { "key": "ctrl+b x", "command": "workbench.action.terminal.kill", "when": "terminalFocus" },
+  { "key": "alt+s", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
+  { "key": "alt+f", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
   { "key": "ctrl+alt+n", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
   { "key": "ctrl+alt+p", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
-  { "key": "ctrl+b v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
-  { "key": "ctrl+b shift+v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
-  { "key": "ctrl+b w", "command": "workbench.action.quickOpenTerm", "when": "terminalFocus" },
-  { "key": "ctrl+b x", "command": "workbench.action.terminal.kill", "when": "terminalFocus" },
-  { "key": "ctrl+b z", "command": "workbench.action.toggleMaximizedPanel", "when": "terminalFocus" },
-  { "key": "ctrl+alt+l", "command": "workbench.action.terminal.clear", "when": "terminalFocus" },
-  { "key": "ctrl+b h", "command": "workbench.action.terminal.focusPreviousPane", "when": "terminalFocus" },
-  { "key": "ctrl+b j", "command": "workbench.action.terminal.focusNextPane", "when": "terminalFocus" },
-  { "key": "ctrl+b k", "command": "workbench.action.terminal.focusPreviousPane", "when": "terminalFocus" },
-  { "key": "ctrl+b l", "command": "workbench.action.terminal.focusNextPane", "when": "terminalFocus" },
   { "key": "ctrl+left", "command": "workbench.action.terminal.focusPreviousPane", "when": "terminalFocus" },
   { "key": "ctrl+right", "command": "workbench.action.terminal.focusNextPane", "when": "terminalFocus" },
   { "key": "ctrl+up", "command": "workbench.action.terminal.focusPreviousPane", "when": "terminalFocus" },
   { "key": "ctrl+down", "command": "workbench.action.terminal.focusNextPane", "when": "terminalFocus" },
-  { "key": "ctrl+b alt+up", "command": "workbench.action.terminal.resizePaneUp", "when": "terminalFocus" },
-  { "key": "ctrl+b alt+down", "command": "workbench.action.terminal.resizePaneDown", "when": "terminalFocus" },
-  { "key": "ctrl+b alt+left", "command": "workbench.action.terminal.resizePaneLeft", "when": "terminalFocus" },
-  { "key": "ctrl+b alt+right", "command": "workbench.action.terminal.resizePaneRight", "when": "terminalFocus" },
+  { "key": "ctrl+b h", "command": "workbench.action.terminal.focusPreviousPane", "when": "terminalFocus" },
+  { "key": "ctrl+b j", "command": "workbench.action.terminal.focusNextPane", "when": "terminalFocus" },
+  { "key": "ctrl+b k", "command": "workbench.action.terminal.focusPreviousPane", "when": "terminalFocus" },
+  { "key": "ctrl+b l", "command": "workbench.action.terminal.focusNextPane", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+h", "command": "workbench.action.terminal.resizePaneLeft", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+j", "command": "workbench.action.terminal.resizePaneDown", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+k", "command": "workbench.action.terminal.resizePaneUp", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+l", "command": "workbench.action.terminal.resizePaneRight", "when": "terminalFocus" },
   { "key": "ctrl+alt+left", "command": "workbench.action.terminal.resizePaneLeft", "when": "terminalFocus" },
   { "key": "ctrl+alt+right", "command": "workbench.action.terminal.resizePaneRight", "when": "terminalFocus" },
   { "key": "ctrl+alt+down", "command": "workbench.action.terminal.resizePaneDown", "when": "terminalFocus" },
   { "key": "ctrl+alt+up", "command": "workbench.action.terminal.resizePaneUp", "when": "terminalFocus" },
+
+  // tmux-windows
+  { "key": "ctrl+b ,", "command": "workbench.action.terminal.rename", "when": "terminalFocus" },
+  { "key": "ctrl+b n", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
+  { "key": "ctrl+b p", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
+  { "key": "ctrl+b v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
+  { "key": "ctrl+b shift+v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
+  { "key": "ctrl+alt+v", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
+  { "key": "ctrl+alt+h", "command": "workbench.action.terminal.split", "when": "terminalFocus" },
 
   // Terminal buffer-scrollback
   {
@@ -123,21 +149,6 @@
       ]
     }
   },
-
-  // Terminal copy-mode
-  { "key": "ctrl+alt+space", "command": "workbench.action.terminal.focusAccessibleBuffer", "when": "terminalFocus" },
-
-  // Terminal Scrolling-Navigation
-  { "key": "alt+d", "command": "workbench.action.terminal.scrollDown", "when": "terminalFocus" },
-  { "key": "alt+e", "command": "workbench.action.terminal.scrollUp", "when": "terminalFocus" },
-  { "key": "alt+q", "command": "workbench.action.terminal.scrollUpPage", "when": "terminalFocus" },
-  { "key": "alt+a", "command": "workbench.action.terminal.scrollDownPage", "when": "terminalFocus" },
-  { "key": "alt+t", "command": "workbench.action.terminal.scrollToTop", "when": "terminalFocus" },
-  { "key": "alt+g", "command": "workbench.action.terminal.scrollToBottom", "when": "terminalFocus" },
-  { "key": "alt+w", "command": "workbench.action.terminal.scrollToPreviousCommand", "when": "terminalFocus" },
-  { "key": "alt+r", "command": "workbench.action.terminal.scrollToNextCommand", "when": "terminalFocus" },
-  { "key": "alt+s", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
-  { "key": "alt+f", "command": "workbench.action.terminal.focusNext", "when": "terminalFocus" },
 
   // Terminal Resize
   { "key": "alt+left", "command": "workbench.action.terminal.resizePaneLeft", "when": "terminalFocus" },

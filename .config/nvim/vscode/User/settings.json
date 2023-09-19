@@ -320,47 +320,45 @@
       "key": "t",
       "name": "Terminal...",
       "bindings": [
+
+        // Tmux-toggle
+        { "key": " ", "name": "Scrollback Buffer", "command": "workbench.action.terminal.focusAccessibleBuffer" },
         { "key": "0", "name": "Focus tabs view", "command": "workbench.action.terminal.focusTabs" },
         { "key": "1", "name": "Focus index 1", "command": "workbench.action.terminal.focusAtIndex1" },
         { "key": "2", "name": "Focus index 2", "command": "workbench.action.terminal.focusAtIndex2" },
         { "key": "3", "name": "Focus index3", "command": "workbench.action.terminal.focusAtIndex3" },
         { "key": "4", "name": "Focus index4", "command": "workbench.action.terminal.focusAtIndex4" },
         { "key": "5", "name": "Focus index5", "command": "workbench.action.terminal.focusAtIndex5" },
+        { "key": "6", "name": "Focus index5", "command": "workbench.action.terminal.focusAtIndex5" },
+        { "key": "7", "name": "Focus index5", "command": "workbench.action.terminal.focusAtIndex5" },
+        { "key": "8", "name": "Focus index5", "command": "workbench.action.terminal.focusAtIndex5" },
+        { "key": "9", "name": "Focus index5", "command": "workbench.action.terminal.focusAtIndex5" },
         { "key": "b", "name": "Move terminal to buffer", "command": "workbench.action.terminal.moveToEditor" },
         { "key": "B", "name": "Move buffer to terminal", "command": "workbench.action.terminal.moveToTerminalPanel" },
-        { "key": "c", "name": "Create terminal group", "command": "workbench.action.terminal.new" },
-        { "key": "F", "name": "Focus terminal", "command": "workbench.action.terminal.toggleTerminal" },
-        { "key": "f", "name": "Focus next terminal group", "command": "workbench.action.terminal.focusNext" },
+        { "key": "c", "name": "Create terminal group", "command": "workbench.action.terminal.newInActiveWorkspace" },
+
+        // Tmux-panes
+        { "key": ";", "name": "Quick OpenTerm", "command": "workbench.action.quickOpenTerm" },
+        { "key": "!", "name": "Break Panel", "command": "workbench.action.terminal.unsplit" },
+        { "key": "z", "name": "Toggle maximized panel", "command": "workbench.action.toggleMaximizedPanel" },
+        { "key": "-", "name": "join panel (instances)", "command": "workbench.action.terminal.joinInstance" },
+        { "key": "+", "name": "join panel (select)", "command": "workbench.action.terminal.join" },
+        { "key": "x", "name": "Close panel", "command": "workbench.action.terminal.kill" },
         { "key": "s", "name": "Focus previous terminal group", "command": "workbench.action.terminal.focusPrevious" },
+        { "key": "f", "name": "Focus next terminal group", "command": "workbench.action.terminal.focusNext" },
         { "key": "h", "name": "Focus previous panel", "command": "workbench.action.terminal.focusPreviousPane" },
         { "key": "j", "name": "Focus next panel", "command": "workbench.action.terminal.focusNextPane" },
         { "key": "k", "name": "Focus previous panel", "command": "workbench.action.terminal.focusPreviousPane" },
         { "key": "l", "name": "Focus next panel", "command": "workbench.action.terminal.focusNextPane" },
-        {
-          "key": "H",
-          "name": "Resize Pane left",
-          "commands": [
-            "workbench.action.terminal.resizePaneLeft",
-            "workbench.action.terminal.resizePaneLeft"
-          ]
-        },
+        { "key": "H", "name": "Resize Pane left", "command": "workbench.action.terminal.resizePaneLeft" },
         { "key": "J", "name": "Resize Pane down", "command": "workbench.action.terminal.resizePaneDown" },
         { "key": "K", "name": "Resize Pane up", "command": "workbench.action.terminal.resizePaneUp" },
-        {
-          "key": "L",
-          "name": "Resize Pane right",
-          "commands": [
-            "workbench.action.terminal.resizePaneRight",
-            "workbench.action.terminal.resizePaneRight"
-          ]
-        },
-        { "key": "m", "name": "Toggle maximized panel", "command": "workbench.action.toggleMaximizedPanel" },
+        { "key": "L", "name": "Resize Pane right", "command": "workbench.action.terminal.resizePaneRight" },
+
+        // tmux-windows
+        { "key": ",", "name": "Rename terminal", "command": "workbench.action.terminal.rename" },
         { "key": "n", "name": "Focus next terminal group", "command": "workbench.action.terminal.focusNext" },
         { "key": "p", "name": "Focus previous terminal group", "command": "workbench.action.terminal.focusPrevious" },
-        { "key": "r", "name": "Rename terminal", "command": "workbench.action.terminal.rename" },
-        { "key": "t", "name": "Toggle terminal", "command": "workbench.action.togglePanel" },
-        { "key": "T", "name": "New Tab terminal", "command": "workbench.action.createTerminalEditor" },
-        { "key": "S", "name": "New Tab (side) terminal", "command": "workbench.action.createTerminalEditorSide" },
         {
           "key": "v",
           "name": "Panel to right",
@@ -377,21 +375,14 @@
             "workbench.action.terminal.focus"
           ]
         },
-        { "key": "-", "name": "Split terminal", "command": "workbench.action.terminal.split" },
-        { "key": "+", "name": "Split terminal (inActiveWorkspace)", "command": "workbench.action.terminal.splitInActiveWorkspace" },
-        { "key": "w", "name": "Quick OpenTerm", "command": "workbench.action.quickOpenTerm" },
-        { "key": "x", "name": "Close panel", "command": "workbench.action.terminal.kill" },
-        { "key": " ", "name": "Scrollback Buffer", "command": "workbench.action.terminal.focusAccessibleBuffer" },
-        {
-          "key": "!",
-          "name": "Break-pane",
-          "commands": [
-            "workbench.action.terminal.moveToEditor",
-            "workbench.action.terminal.moveToTerminalPanel"
-          ]
-        },
-        { "key": "%", "name": "tmux split vertical", "command": "workbench.action.tasks.runTask", "args": "tmux-split-vertical" },
-        { "key": "\"", "name": "tmux split horizontal", "command": "workbench.action.tasks.runTask", "args": "tmux-split-horizontal" }
+        // { "key": "%", "name": "tmux split vertical", "command": "workbench.action.tasks.runTask", "args": "tmux-split-vertical" },
+        // { "key": "\"", "name": "tmux split horizontal", "command": "workbench.action.tasks.runTask", "args": "tmux-split-horizontal" },
+        { "key": "%", "name": "Split terminal", "command": "workbench.action.terminal.split" },
+        { "key": "\"", "name": "Split terminal (inActiveWorkspace)", "command": "workbench.action.terminal.splitInActiveWorkspace" },
+        { "key": "\\", "name": "Focus terminal", "command": "workbench.action.terminal.toggleTerminal" },
+        { "key": "t", "name": "Toggle terminal", "command": "workbench.action.togglePanel" },
+        { "key": "T", "name": "New Tab terminal", "command": "workbench.action.createTerminalEditor" },
+        { "key": "S", "name": "New Tab (side) terminal", "command": "workbench.action.createTerminalEditorSide" },
       ]
     },
     {
