@@ -12,7 +12,7 @@ export PATH="$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':'):$HOME/.local/sha
 
 #-- Default programs:
 # export NEOVIDE_MULTIGRID=true
-export TERM="xterm-256color" # inside docker TERM is xterm
+export TERM="xterm-256color" # inside docker TERM is xterm which makes tmux 8 colors
 export BAT_THEME="base16"
 export BROWSER="google-chrome-stable"
 export EDITOR="nvim"
