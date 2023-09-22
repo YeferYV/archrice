@@ -37,8 +37,8 @@ alias \
 
 # _colorize_commands_when_possible_
 alias \
-	ll="ls -lAhN --hyperlink=auto --color=auto --group-directories-first" \
-	ls="ls -a --hyperlink=auto --color=auto --group-directories-first" \
+	ll="ls -lha --hyperlink=auto --color=auto --group-directories-first" \
+	ls="ls      --hyperlink=auto --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
 	pacman="sudo pacman --noconfirm" \

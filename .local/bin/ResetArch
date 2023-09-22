@@ -3,123 +3,135 @@
 # exit on error
 set -eu
 
-# curl -LO blackarch.org/strap.sh
-# sh strap.sh
+# curl -L blackarch.org/strap.sh | sh
+# curl -L larbs.xyz/larbs.sh     | sh
+# curl -L nixos.org/nix/install  | sh && source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+# ( which nix-env >/dev/nul ) || yes | sh <(curl -L https://nixos.org/nix/install) --daemon && $SUDO nix-daemon &
 
-# curl -LO larbs.xyz/larbs.sh
-# sh larbs.sh
+# ( true  || true  ) && echo yes || echo no # -> yes
+# ( true  || false ) && echo yes || echo no # -> yes
+# ( false || true  ) && echo yes || echo no # -> yes
+# ( false || false ) && echo yes || echo no # -> no
 
-# curl -LO nixos.org/nix/install
-# sh install
+# ( ! true  && ! true  ) && echo yes || echo no # -> no
+# ( ! true  && ! false ) && echo yes || echo no # -> no
+# ( ! false && ! true  ) && echo yes || echo no # -> no
+# ( ! false && ! false ) && echo yes || echo no # -> yes
 
-# curl LO raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-# bash install.sh
+# Detect root/sudo:
+# ( [ "$(id -u)" != 0 ] && [ ! -e "/bin/sudo" ] ) || ( echo "$(tput -T ansi setaf 3) run as root or install sudo( and run without sudo ) $(tput -T ansi sgr0)" && exit 1 )
+  ( [ "$(id -u)" == 0 ] || [   -e "/bin/sudo" ] ) || ( echo "$(tput -T ansi setaf 3) run as root or install sudo( and run without sudo ) $(tput -T ansi sgr0)" && exit 1 )
+    [ "$(id -u)" != 0 ] &&  export SUDO="sudo"    || export SUDO="" # if non-root use sudo
 
-# sed -n '17,129p' ResetArch | sed 's/ \//g' > resetarchpackages
-# comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base-devel|sort) > installedpackages
+echo "$(tput -T ansi setaf 3) Installing Packages... $(tput -T ansi sgr0)"
 
-#-- Pacman configs
-[ "$(id -u)" == 0 ] && printf "\e[1;31mRun it as unprivileged user(wheel group), sudo command needed\e[0m\n" >&2 && exit 1
-sudo sed -i '33s/#//' /etc/pacman.conf
-sudo sed -i '37s/#//' /etc/pacman.conf
-sudo pacman-key --init
-sudo pacman-key --populate
-sudo pacman -Sy  --noconfirm archlinux-keyring
-sudo pacman -Syu --noconfirm base-devel git
+# Pacman:
+$SUDO sed -i 's/#Color/Color/'                         /etc/pacman.conf
+$SUDO sed -i 's/#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
+$SUDO sed -i '/ParallelDownloads/a\ILoveCandy'         /etc/pacman.conf
+$SUDO pacman -Sy --noconfirm base-devel git glibc ||
+{
+  $SUDO pacman-key --init
+  $SUDO pacman-key --populate
+  $SUDO pacman -Sy  --noconfirm archlinux-keyring
+  $SUDO pacman -Syu --noconfirm base-devel git
+}
 
-#-- Neovim version 0.9.0
-sudo curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.0/nvim.appimage && sudo chmod +x /usr/local/bin/nvim
+# Neovim:
+$SUDO curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.1/nvim.appimage && $SUDO chmod +x /usr/local/bin/nvim
 
-#-- yay
-git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
-cd /tmp/yay-bin
-makepkg -si --noconfirm
+# AUR:
+$SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_x86_64.tar.gz | $SUDO tar -xzf- --strip-components=1 --directory="/usr/local/bin" "yay_12.1.2_x86_64/yay"
+# $SUDO rm -rf /var/cache/private/yay /var/cache/yay
 
-#-- Packages excluded on docker
-[ ! -e /.dockerenv ] && yes | yay -S --noconfirm \
-broadcom-wl \
-bspwm \
-btrfs-progs \
-cronie \
-dosfstools \
-dmenu \
-dragon-drop \
-dunst \
-exfat-utils \
-festival-us \
-fuse2 \
-gnome-keyring \
-google-chrome \
-gtk-theme-arc-gruvbox-git \
-htop-vim \
-imagemagick \
-kitty \
-libnotify \
-light \
-maim \
-man-db \
-mediainfo \
-moreutils \
-mpc \
-mpd \
-mpv-mpris \
-ncmpcpp \
-network-manager-applet \
-ntfs-3g \
-picom \
-pipewire \
-pipewire-pulse \
-playerctl \
-polybar \
-redshift \
-rofi \
-rofimoji \
-siji-git \
-snapper \
-snapper-rollback \
-sxhkd \
-sxiv \
-touchcursor-linux-git \
-ttf-unifont \
-unclutter \
-xcape \
-xdo \
-xdotool \
-xorg-server \
-xorg-xinit \
-xorg-xmodmap \
-xorg-xset \
-xorg-xsetroot \
-xf86-input-synaptics \
-xwallpaper \
-zathura-pdf-mupdf \
+# Browser:
+# yes | yay -S --noconfirm google-chrome
 
-#-- 4rch dependencies
-yes | yay -S --noconfirm \
+# GUI dependencies: (yay as root requires systemd)
+[ ! -e /.dockerenv ] && {
+
+  # root doesn't support yay multi-install
+  # yes | yay -S --noconfirm --mflags "--skippgpcheck" ttf-unifont &&
+  yes | yay -S --noconfirm cht.sh-git                            &&
+  yes | yay -S --noconfirm dragon-drop                           &&
+  yes | yay -S --noconfirm gtk-theme-arc-gruvbox-git             &&
+  yes | yay -S --noconfirm htop-vim                              &&
+  yes | yay -S --noconfirm pywal-16-colors                       &&
+  yes | yay -S --noconfirm siji-git                              &&
+  yes | yay -S --noconfirm snapper-rollback                      &&
+  yes | yay -S --noconfirm touchcursor-linux-git                 &&
+  yes | yay -S --noconfirm zsh-fast-syntax-highlighting          &&
+  yes | $SUDO pacman -S --noconfirm \
+  broadcom-wl \
+  bspwm \
+  btrfs-progs \
+  cronie \
+  dosfstools \
+  dmenu \
+  dunst \
+  exfat-utils \
+  festival-us \
+  gnome-keyring \
+  kitty \
+  libnotify \
+  light \
+  man-db \
+  mediainfo \
+  moreutils \
+  mpc \
+  mpd \
+  mpv-mpris \
+  ncmpcpp \
+  network-manager-applet \
+  ntfs-3g \
+  perl-file-mimeinfo \
+  picom \
+  playerctl \
+  polybar \
+  redshift \
+  rofi \
+  rofimoji \
+  snapper \
+  sxhkd \
+  sxiv \
+  unclutter \
+  wezterm \
+  xcape \
+  xdo \
+  xdotool \
+  xorg-server \
+  xorg-xinit \
+  xorg-xmodmap \
+  xorg-xset \
+  xorg-xsetroot \
+  xf86-input-synaptics \
+  zathura-pdf-mupdf \
+  && true | yay -Scc || ( printf "$(tput -T ansi setaf 1) Installing GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
+}
+
+# Non GUI dependencies:
+$SUDO pacman -S --noconfirm \
 bat \
-cht.sh-git \
-ffmpegthumbnailer \
 fzf \
+ghostscript \
+imagemagick \
 lazygit \
 lf \
 libsixel \
-mupdf-tools \
 mpv \
-perl-file-mimeinfo \
+pipewire-pulse \
+poppler \
 ripgrep \
 starship \
 stow \
-trash-cli \
 unzip \
-wezterm \
 xclip \
 zsh-autosuggestions \
-zsh-fast-syntax-highlighting \
+&& true | pacman -Scc || ( printf "$(tput -T ansi setaf 1) Installing Non GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
 
-#-- Clean
-true | yay -Scc
+echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 
-#-- Optional
+# Optional:
 # 8188eu-aircrack-dkms-git
 # acpi
 # abook
@@ -156,8 +168,9 @@ true | yay -Scc
 # efibootmgr
 # grub
 # ffmpeg
-# ffmpeg-git
+# ffmpegthumbnailer
 # figlet
+# fuse2
 # fzf-tab-bin-git
 # gimp
 # grub-btrfs
@@ -184,6 +197,7 @@ true | yay -Scc
 # moreutils
 # mpv-full
 # mtools
+# mupdf-tools
 # mutt-wizard-git
 # ncdu
 # neofetch
@@ -235,6 +249,7 @@ true | yay -Scc
 # tmate
 # transmission-cli
 # transmission-gtk
+# trash-cli
 # tsserver
 # ttf-hack
 # ttf-unifont
@@ -250,11 +265,13 @@ true | yay -Scc
 # wmctrl
 # xcompmgr
 # x2x-git
+# xdg-utils
 # xf86-video-amdgpu
 # xorg-fonts-misc
 # xorg-xwininfo
 # xorg-xdpyinfo
 # xorg-xprop
+# xwallpaper
 # ytfzf
 # youtube-dl
 # zsh-completions

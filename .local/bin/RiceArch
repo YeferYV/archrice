@@ -1,256 +1,292 @@
 #!/bin/bash
 
-#==================== Docker run archrice ====================#
+#======================================== Docker run archrice ========================================#
 
+# xhost +
 # cd "$(git rev-parse --show-toplevel)"
 # docker run -it \
-#            --name archrice \
-#            --privileged \
-#            --volume=${PWD%/*}:/home/dtfls/dotfiles-docker-volume \
-#            --volume=/run/user/1000/pulse/native:/run/user/1000/pulse/native \
-#            --volume=/tmp/.X11-unix:/tmp/.X11-unix \
-#            archlinux:base-devel \
-#            bash -uelic '
-#              if [ ! -e /home/drknss ]; then
-#                tty >> /tmp/sixel-
-#                cd /home/dtfls/dotfiles-docker-volume/dotfiles/.local/bin
-#                RESETARCH_SNAPSHOT=true ./RiceArch
-#                mkdir -p /run/user/1000/pulse
-#                chown -R drknss:drknss /run/user/1000
-#                yes | pacman -S pulseaudio
-#              else
-#                reset
-#              fi
-#              chmod g+w /dev/pts/0
-#              stty rows $(tput lines) && stty cols $(tput cols) && stty sane
-#              su - "drknss" bash -c "export XDG_RUNTIME_DIR=/run/user/1000 && script -qI /dev/null"
-#            '
+#     --name archrice \
+#     --ipc=host \
+#     --volume=${PWD%/*}:/home/dtfls/docker-volume \
+#     --volume=/run/user/1000/pipewire-0:/run/user/1000/pipewire-0 \
+#     --volume=/tmp/.X11-unix:/tmp/.X11-unix \
+#     archlinux:base-devel bash -uelic '
+#       [ ! -e /home/drknss ] && cd /home/dtfls/docker-volume/dotfiles/.local/bin && ./ResetArch && ./RiceArch
+#       chmod g+w /dev/pts/0
+#       su - "drknss"
+#     '
 
-#======================= Vagrant build =======================#
+#============================================== Vagrant ==============================================#
 
-# pacman -S polkit-gnome libvirt qemu virt-manager vagrant
+# pacman -S polkit-gnome dnsmasq libvirt qemu virt-manager vagrant
 # exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & disown
 # systemctl start libvirtd
 # vagrant plugin install vagrant-libvirt
 # vagrant init archlinux/archlinux
 # vagrant up
 # vagrant ssh
-# export SDX2=vda2
-# ARCH_USER=drknss BTRFS_SNAPSHOT=true RESETARCH_SNAPSHOT=true RICEARCH_SNAPSHOT=true ./RiceArch
+# sudo passwd
+# su - # `sudo -i` doesn't work with yay
 
-#=============== Before-Chroot (partitioning) ================#
+#----------------------------------- Before-Chroot ( subvolumes ) ------------------------------------#
+
+# mkdir                              /mnt/btrfsroot
+# mount -o subvolid=5 /dev/vda3      /mnt/btrfsroot
+# btrfs subvolume snapshot           /mnt/btrfsroot /mnt/btrfsroot/@
+# btrfs subvolume set-default        /mnt/btrfsroot/@
+# btrfs subvolume get-default        /mnt/btrfsroot/@
+# btrfs subvolume create             /mnt/btrfsroot/@home
+# btrfs subvolume create             /mnt/btrfsroot/@.snapshots
+# mkdir                              /mnt/btrfsroot/@/.snapshots
+# echo "/dev/vda3    /              btrfs    rw,noatime,compress=lzo,subvol=/@              0 0" >> /mnt/btrfsroot/@/etc/fstab
+# echo "/dev/vda3    /home          btrfs    rw,noatime,compress=lzo,subvol=/@home          0 0" >> /mnt/btrfsroot/@/etc/fstab
+# echo "/dev/vda3    /.snapshots    btrfs    rw,noatime,compress=lzo,subvol=/@.snapshots    0 0" >> /mnt/btrfsroot/@/etc/fstab
+# # echo "/dev/vda2    /boot/efi      vfat     rw,relatime                                    0 2" >> /mnt/btrfsroot/@/etc/fstab
+# rm -rf                             /mnt/btrfsroot/@/home/*
+# mount -o subvol=@home /dev/vda3    /mnt/btrfsroot/@/home
+# cp -r /home/*                      /mnt/btrfsroot/@/home
+# chown vagrant:vagrant -R           /mnt/btrfsroot/@/home/vagrant
+
+#------------------------------------ After-Chroot (   grub    ) -------------------------------------#
+
+# pacman -S --noconfirm arch-install-scripts
+# umount                             /mnt/btrfsroot/@/home
+# umount                             /mnt/btrfsroot
+# mount  /dev/vda3                   /mnt/btrfsroot
+# arch-chroot                        /mnt/btrfsroot
+# mkdir -p                           /boot/efi
+# mount /dev/vda2                    /boot/efi
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB_ARCH
+# grub-mkconfig -o /boot/grub/grub.cfg
+# exit
+# reboot
+# su -
+# mount -o subvolid=5 /dev/vda3      /mnt/btrfsroot
+# find                               /mnt/btrfsroot -maxdepth 1 -not -name "*@*" -not -path "/mnt/btrfsroot" -not -path "/mnt/btrfsroot/boot" | xargs rm -r
+# ls                                 /mnt/btrfsroot | grep -v @ | grep -v boot | xargs -I var rm -r /mnt/btrfsroot/var
+
+#============================================= Arch ISO ==============================================#
+
+# pacman -S polkit-gnome dnsmasq libvirt qemu virt-manager vagrant
+# exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & disown
+# systemctl start libvirtd
+# curl -LO "https://geo.mirror.pkgbuild.com/iso/2023.09.01/archlinux-2023.09.01-x86_64.iso"
+# virt-manager
+
+#----------------------------------- Before-Chroot (partitioning) ------------------------------------#
 
 # cfdisk
-# mkfs.fat /dev/$SDX1
-# mkfs.btrfs /dev/$SDX2
-# mount /dev/$SDX2 /mnt
+# mkfs.fat   /dev/vda2
+# mkfs.btrfs /dev/vda3
+# mount /dev/vda3 /mnt
 # btrfs su cr /mnt/@
 # btrfs su cr /mnt/@home
-# btrfs su cr /mnt/@swap
 # btrfs su cr /mnt/@.snapshots
-# mount -o noatime,compress=lzo,subvol=@ /dev/$SDX2 /mnt
-# mkdir -p /mnt/{boot/efi,home,swap,.snapshots}
-# mount -o noatime,compress=lzo,subvol=@home /dev/$SDX2 /mnt/home
-# mount -o noatime,compress=lzo,subvol=@.snapshots /dev/$SDX2 /mnt/.snapshots
-# mount -o nodatacow,subvol=@swap /dev/$SDX2 /mnt/swap
-# mount /dev/$SDX2 /mnt/boot/efi
+# mount -o noatime,compress=lzo,subvol=@           /dev/vda3 /mnt
+# mkdir -p /mnt/{boot/efi,home,.snapshots}
+# mount -o noatime,compress=lzo,subvol=@home       /dev/vda3 /mnt/home
+# mount -o noatime,compress=lzo,subvol=@.snapshots /dev/vda3 /mnt/.snapshots
+# mount                                            /dev/vda2 /mnt/boot/efi
 # pacstrap /mnt base base-devel broadcom-wl btrfs-progs efibootmgr grub linux linux-firmware neovim networkmanager snapper git cronie
 # genfstab U /mnt >> /mnt/etc/fstab
-# sed -i "s/MODULE=()/MODULE=(btrfs)/" /etc/mkinitcpio.conf
-# mkinitcpio -p linux
 
-#==================== After-Chroot (swap) ====================#
+#------------------------------------ After-Chroot (zram + grub) -------------------------------------#
 
 # arch-chroot /mnt
-# truncate -s 0 /swap/swapfile
-# chattr +C /swap/swapfile
-# btrfs property set /swap/swapfile compression none
-# dd if=/dev/zero of=/swap/swapfile bs=1G count=8 status=progress
-# chmod 600 /swap/swapfile
-# mkswap /swap/swapfile
-# swapon /swap/swapfile
-# echo "/swap/swapfile none defaults 0 0" >> /etc/fstab
+# pacman -S --noconfirm zram-generator
+# echo "[zram0]\n zram-size = ram / 10" >> /etc/systemd/zram-generator.conf
+# systemctl daemon-reload
+# systemctl start systemd-zram-setup@zram0.service
 
-#================== After-Reboot (configs) ===================#
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB_ARCH
+# grub-mkconfig -o /boot/grub/grub.cfg
 
-printf "\e[1;33m After-Reboot (configs) \e[0m\n"
-USER=${ARCH_USER:-drknss}
+#=========================================== After-Reboot ============================================#
+
+# ARCH_USER=drknss BTRFS_SNAPSHOT=true RESETARCH_SNAPSHOT=true RICEARCH_SNAPSHOT=true ./RiceArch
+
+# exit on error
 set -eu
-sudo -s -- <<===
-  set -eu
+
+# Detect non-root user:
+[ "$(id -u)" != 0 ] && printf "\e[1;31m Run it as root user, ARCH_USER will be added \e[0m\n" && exit 1
+
+#------------------------------------------ Btrfs snapshot -------------------------------------------#
+
+[ "${BTRFS_SNAPSHOT:-}" == true ] && {
+  printf "\n\e[1;33m Btrfs snapshot (@ @home subvolumes required) \e[0m\n"
+
+  pacman -S --noconfirm snapper
+  umount /.snapshots
+  rm -rf /.snapshots
+  snapper --config root create-config /
+  btrfs su delete /.snapshots
+  mkdir /.snapshots
+  mount --all # remount
+  snapper --config home create-config /home
+  snapper --config root create --description "base-install"
+  snapper --config home create --description "base-install"
+  btrfs su snapshot /          /.snapshots/backup-"$(date +%y-%m-%d)"-snapper-base-install
+  btrfs su snapshot /home /home/.snapshots/backup-"$(date +%y-%m-%d)"-snapper-base-install
+
+}
+
+#---------------------------------------- ResetArch snapshot -----------------------------------------#
+
+[ "${RESETARCH_SNAPSHOT:-}" == true ] && {
+  printf "\n\e[1;33m ReseArch snapshot \e[0m\n"
+  ./ResetArch
+  snapper -c root create -d "after-ResetArch"
+  snapper -c home create -d "after-ResetArch"
+}
+
+#----------------------------------------- AddUser + locales -----------------------------------------#
+
+echo "$(tput -T ansi setaf 3) AddUser + locales $(tput -T ansi sgr0)"
+
+USER=${ARCH_USER:-drknss}
+
+# Add user:
+install_user() {
+  [ ! -e "/home/$USER" ] && useradd --shell /bin/zsh -mG audio,video,wheel,tty $USER
+  echo root:toor  | chpasswd
+  echo $USER:toor | chpasswd
+  echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"  > /etc/sudoers.d/wheel
+}
+
+install_locales(){
+  # Locales:
   # timedatectl set-ntp true
   # hwclock --systohc
   ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
   sed -i 's/#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
   locale-gen
-  echo "LANG=en_US.UTF-8"                    > /etc/locale.conf
+  # echo "LANG=en_US.UTF-8"                    > /etc/locale.conf
   echo "4rch"                                > /etc/hostname
-  # echo "127.0.0.1 localhost"                >> /etc/hosts
+  echo "127.0.0.1 localhost"                >> /etc/hosts
   # echo "::1       localhost"                >> /etc/hosts
   # echo "127.0.1.1 4rch.localdomain 4rch"    >> /etc/hosts
-  [ ! -e /home/$USER ] && useradd -mG video,wheel,tty $USER
-  echo root:toor | chpasswd
-  echo $USER:toor | chpasswd
-  echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"  > /etc/sudoers.d/wheel
-===
-
-#======================= Btrfs snapshot ======================#
-
-[ "${BTRFS_SNAPSHOT:-}" == true ] && {
-  [ "$(id -u)" != 0 ] && echo "\e[1;33mRun it as root user at root's folder\e[0m\n" >&2 && exit 1
-  printf "\n\e[1;33m Btrfs snapshot \e[0m\n"
-  pacman -Syu --noconfirm btrfs-progs snapper
-  mkdir /mnt/@
-  mount -o subvolid=5 /dev/"${SDX2:-vda2}" /mnt/@
-  # mv /mnt/@root /mnt/@
-  btrfs su get-default /mnt/@
-  btrfs su set-default /mnt/@
-  mv /home /home.bak
-  btrfs su cr /home
-  mv /home.bak/* /home
-  rm -rf /.snapshots /home.bak
-  snapper -c root create-config /
-  snapper -c home create-config /home
-  snapper -c root create -d "base-install"
-  snapper -c home create -d "base-install"
-  btrfs su snapshot / /.snapshots/backup-"$(date +%y-%m-%d)"-snapper-base-install
-  btrfs su snapshot /home /home/.snapshots/backup-"$(date +%y-%m-%d)"-snapper-base-install
 }
 
-#==================== ResetArch snapshot =====================#
+install_user    || ( echo $(tput -T ansi setaf 1) install_user failed    && exit 1; )
+install_locales || ( echo $(tput -T ansi setaf 1) install_locales failed && exit 1; )
 
-[ "${RESETARCH_SNAPSHOT:-}" == true ] && {
-  printf "\n\e[1;33m ReseArch snapshot \e[0m\n"
-  sudo -u "$USER" -s -- ./ResetArch
-  # sudo snapper -c root create -d "after-ResetArch"
-  # sudo snapper -c home create -d "after-ResetArch"
-}
+#----------------------------------------- Login User Configs ----------------------------------------#
 
-#================== Post-Install (dotfiles) ==================#
+printf "\n\e[1;33m Login User Configs \e[0m\n"
 
-printf "\n\e[1;33m Post-Install (dotfiles) \e[0m\n"
-sudo -u "$USER" -s -- <<===
+# sudo -u "drksl" -s -- bash -c "echo $USER" #==> root
+# sudo -u "drksl" -s -- bash -c 'echo $USER' #==> drknss
+sudo -u "$USER" -s -- <<'====' # with '====' or "====" makes USER=drknss, with just ==== makes USER=root
   set -eu
 
-  # Dotfiles:
-  install_dotfiles() {
-    [ ! -e /home/$USER/.config ] && mkdir -p /home/$USER/.config
-    [ ! -e /home/$USER/.local ] && mkdir -p /home/$USER/.local
-    sudo mkdir -p /home/dtfls/yydtfls
-    # git clone --depth=1 https://gitlab.com/yucrayeff36/dotfiles /home/dtfls/yydtfls/dotfiles
-    sudo cp -r ../../../dotfiles /home/dtfls/yydtfls/dotfiles
-    sudo chown -R $USER:$USER /home/dtfls
-    cd /home/dtfls/yydtfls/dotfiles
-    stow --restow --verbose --target=/home/$USER/.config .config
-    stow --restow --verbose --target=/home/$USER/.local .local
-    ln -s /home/$USER/.config/shell/profile /home/$USER/.zprofile
-    ln -s /home/$USER/.config/x11/.xinitrc /home/$USER/.xinitrc
+  install_dependencies(){
+    [ -e /.dockerenv ] && yes | yay -S --noconfirm tmux
+    yes | yay -S --noconfirm cht.sh-git zsh-fast-syntax-highlighting
   }
 
-  # Install Fonts:
+  install_dotfiles() {
+
+    sudo mkdir -p /home/dtfls/YYdtfls
+    sudo chown -R $USER:$USER /home/dtfls
+    cp -r ../../../dotfiles /home/dtfls/YYdtfls/dotfiles
+    cd /home/dtfls/YYdtfls/dotfiles
+
+    mkdir -p "$HOME"/.config
+    mkdir -p "$HOME"/.local
+    stow --restow --verbose --target="$HOME"/.config .config
+    stow --restow --verbose --target="$HOME"/.local  .local
+    ln -sf "$HOME"/.config/shell/.zprofile "$HOME"/.zprofile
+    ln -sf "$HOME"/.config/shell/.xinitrc  "$HOME"/.xinitrc
+
+  }
+
   install_fonts() {
-    [ ! -e /home/$USER/.local/share/fonts ] && mkdir -p /home/$USER/.local/share/fonts
+    mkdir -p "$HOME"/.local/share/fonts
 
     # Nerd-Fonts:
-    git clone --depth=1 --branch=v2.3.3 --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts
-    cd nerd-fonts
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts /tmp/nerd-fonts
+    cd /tmp/nerd-fonts
     git sparse-checkout add patched-fonts/3270
     git sparse-checkout add patched-fonts/CascadiaCode
     git sparse-checkout add patched-fonts/FiraCode
     git sparse-checkout add patched-fonts/Terminus
-    cp -r patched-fonts/3270 /home/$USER/.local/share/fonts/
-    cp -r patched-fonts/CascadiaCode /home/$USER/.local/share/fonts/
-    cp -r patched-fonts/FiraCode /home/$USER/.local/share/fonts/
-    cp -r patched-fonts/Terminus /home/$USER/.local/share/fonts/
-    cd ..
+    cp -r patched-fonts/3270         "$HOME"/.local/share/fonts
+    cp -r patched-fonts/CascadiaCode "$HOME"/.local/share/fonts
+    cp -r patched-fonts/FiraCode     "$HOME"/.local/share/fonts
+    cp -r patched-fonts/Terminus     "$HOME"/.local/share/fonts
+    cd .. && rm -rf /tmp/nerd-fonts
 
     # Font-Awesome:
-    git clone --depth=1 --filter=blob:none --sparse https://github.com/FortAwesome/Font-Awesome
-    cd Font-Awesome
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/FortAwesome/Font-Awesome /tmp/Font-Awesome
+    cd /tmp/Font-Awesome
     git sparse-checkout add otfs
     git sparse-checkout add webfonts
-    mkdir /home/$USER/.local/share/fonts/Font-Awesome
-    cp -r otfs/ /home/$USER/.local/share/fonts/Font-Awesome/
-    cp -r webfonts/ /home/$USER/.local/share/fonts/Font-Awesome/
-    cd ..
+    mkdir           "$HOME"/.local/share/fonts/Font-Awesome
+    cp -r otfs/     "$HOME"/.local/share/fonts/Font-Awesome
+    cp -r webfonts/ "$HOME"/.local/share/fonts/Font-Awesome
 
     # Noto Sans/Serif/Mono:
-    git clone --depth=1 --filter=blob:none --sparse https://github.com/notofonts/notofonts.github.io
-    cd notofonts.github.io
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/notofonts/notofonts.github.io /tmp/notofonts.github.io
+    cd /tmp/notofonts.github.io
     git sparse-checkout add fonts/NotoSans/googlefonts
     git sparse-checkout add fonts/NotoSansMono/googlefonts
     git sparse-checkout add fonts/NotoSerif/googlefonts
-    mkdir /home/$USER/.local/share/fonts/NotoSans
-    mkdir /home/$USER/.local/share/fonts/NotoSansMono
-    mkdir /home/$USER/.local/share/fonts/NotoSerif
-    cp -r fonts/NotoSans/googlefonts /home/$USER/.local/share/fonts/NotoSans/
-    cp -r fonts/NotoSansMono/googlefonts /home/$USER/.local/share/fonts/NotoSansMono/
-    cp -r fonts/NotoSerif/googlefonts /home/$USER/.local/share/fonts/NotoSerif/
-    cd ..
+    mkdir                                "$HOME"/.local/share/fonts/NotoSans
+    mkdir                                "$HOME"/.local/share/fonts/NotoSansMono
+    mkdir                                "$HOME"/.local/share/fonts/NotoSerif
+    cp -r fonts/NotoSans/googlefonts     "$HOME"/.local/share/fonts/NotoSans
+    cp -r fonts/NotoSansMono/googlefonts "$HOME"/.local/share/fonts/NotoSansMono
+    cp -r fonts/NotoSerif/googlefonts    "$HOME"/.local/share/fonts/NotoSerif
 
     # Noto CJK:
-    git clone --depth=1 --filter=blob:none --sparse https://github.com/notofonts/noto-cjk
-    cd noto-cjk
-    git sparse-checkout add google-fonts
-    mkdir /home/$USER/.local/share/fonts/NotoCJK
-    cp -r google-fonts /home/$USER/.local/share/fonts/NotoCJK/
-    cd ..
+    # git clone --depth=1 --filter=blob:none --sparse https://github.com/notofonts/noto-cjk /tmp/noto-cjk
+    # cd /tmp/noto-cjk
+    # git sparse-checkout add google-fonts
+    # mkdir              $HOME/.local/share/fonts/NotoCJK
+    # cp -r google-fonts $HOME/.local/share/fonts/NotoCJK
 
     # Noto Color-Emoji:
-    git clone --depth=1 --filter=blob:none --sparse https://github.com/googlefonts/noto-emoji
-    cd noto-emoji
+    git clone --depth=1 --filter=blob:none --sparse https://github.com/googlefonts/noto-emoji /tmp/noto-emoji
+    cd /tmp/noto-emoji
     git sparse-checkout add fonts
-    mkdir /home/$USER/.local/share/fonts/Noto-Emoji
-    cp fonts/NotoColorEmoji.ttf /home/$USER/.local/share/fonts/Noto-Emoji/
-    cd ..
+    mkdir                       "$HOME"/.local/share/fonts/Noto-Emoji
+    cp fonts/NotoColorEmoji.ttf "$HOME"/.local/share/fonts/Noto-Emoji
 
     # Bedstead Font:
-    curl -LO https://bjh21.me.uk/bedstead/bedstead-002.004.zip
-    unzip bedstead-002.004.zip -d /home/$USER/.local/share/fonts/
+    curl -L https://bjh21.me.uk/bedstead/bedstead-002.004.zip --output /tmp/bedstead-002.004.zip
+    unzip /tmp/bedstead-002.004.zip -d "$HOME"/.local/share/fonts/
   }
 
-  # install_root_configs (){
-  #   sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-  #   sudo grub-mkconfig -o /boot/grub/grub.cfg
-  #   sudo systemctl enable NetworkManager
-  #   sudo systemctl enable cronie
-  # }
-
-  # User Configs:
   install_configs (){
-    mkdir -p /home/$USER/.local/share/mpd
+
+    # sudo systemctl enable NetworkManager
+    # sudo systemctl enable cronie
     # systemctl --user enable mpd
-    # systemctl --user enable pulseaudio-x11
+    # systemctl --user enable pipewire
     # systemctl --user enable touchcursor
     # mpc --port=6601 update
-    [ ! -e /etc/X11/xorg.conf.d/ ] && sudo mkdir -p /etc/X11/xorg.conf.d/
-    sudo cp /home/$USER/.config/x11/10-synaptics.conf /etc/X11/xorg.conf.d/
-    sudo cp /home/$USER/.config/wallhaven-4lokdp.jpg /home/$USER/.local/share/bg
-    sudo chsh --shell /usr/bin/zsh $USER
-    [ -x "$(command -v crontab)" ] && crontab /home/$USER/.local/bin/cron/lowbatnotificationcron
-    rm -rf {nerd-fonts,Font-Awesome,notofonts.github.io,noto-emoji,bedstead-002.004.zip}
-  }
 
+    cp       "$HOME"/.config/wallhaven-2ye15g.jpg  "$HOME"/.local/share/bg
+    mkdir -p "$HOME"/.local/share/mpd              "$HOME"/.cache/zsh
+    sudo mkdir -p /etc/X11/xorg.conf.d && sudo cp  "$HOME"/.config/shell/10-synaptics.conf /etc/X11/xorg.conf.d
+    if [ -e /bin/crontab ]; then     sudo crontab  "$HOME"/.local/bin/cron/lowbatnotificationcron; fi
 
-  # Neovim Plugins:
-  install_neovim_plugins() {
-    set +eu # disable exit on error (spoiler nvim still outputs errors)
-    ( APPIMAGE_EXTRACT_AND_RUN=1 nvim --headless "+Lazy! sync" +qa )
   }
 
   # Main:
-  install_dotfiles        || echo "$(tput -T ansi setaf 1) install_dotfiles failed"
-  install_fonts           || echo "$(tput -T ansi setaf 1) install_nerdfonts failed"
-  install_configs         || echo "$(tput -T ansi setaf 1) install_configs failed"
-  install_neovim_plugins  || echo "$(tput -T ansi setaf 1) install_neovim_plugins failed"
-===
+  install_dependencies                          || ( echo "$(tput -T ansi setaf 1) install_dependencies failed"  && exit 1)
+  install_dotfiles                              || ( echo "$(tput -T ansi setaf 1) install_dotfiles failed"      && exit 1)
+  if [ ! -e /.dockerenv ]; then install_fonts   || ( echo "$(tput -T ansi setaf 1) install_nerdfonts failed"     && exit 1); fi
+  if [ ! -e /.dockerenv ]; then install_configs || ( echo "$(tput -T ansi setaf 1) install_configs failed"       && exit 1); fi
+====
 
-#===================== RiceArch snapshot =====================#
+#----------------------------------------- RiceArch snapshot -----------------------------------------#
 
 [ "${RICEARCH_SNAPSHOT:-}" == true ] && {
   printf "\n\e[1;33m RiceArch snapshot \e[0m\n"
-  sudo snapper -c root create -d "after-RiceArch"
-  sudo snapper -c home create -d "after-RiceArch"
+  snapper -c root create -d "after-RiceArch"
+  snapper -c home create -d "after-RiceArch"
 }
 
 printf "\e[1;32mDone!\e[0m\n"

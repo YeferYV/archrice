@@ -107,7 +107,9 @@ ln=:\
 fi="
 
 if [ -e /.dockerenv ]; then export APPIMAGE_EXTRACT_AND_RUN=1; fi
-if [ -e /.dockerenv ] && [ -e /bin/sshd ] && [ -z $TMUX ]; then sudo ssh-keygen -A && sudo /bin/sshd && sudo chown $USER:$USER /run/user/1000 && exec tmux -u; fi
+if [ -e /.dockerenv ]; then sudo chown $USER:$USER /run/user/1000; fi
+if [ -e /.dockerenv ]; then alias mpv="XDG_RUNTIME_DIR=/run/user/1000 mpv"; fi
+if [ -e /.dockerenv ] && [ -e /bin/sshd ]; then sudo ssh-keygen -A && sudo /bin/sshd; fi
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 if [ -e $HOME/.xsessionrc ]; then . $HOME/.xsessionrc; fi
 
