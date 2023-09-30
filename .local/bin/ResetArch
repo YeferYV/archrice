@@ -6,7 +6,7 @@ set -eu
 # curl -L blackarch.org/strap.sh | sh
 # curl -L larbs.xyz/larbs.sh     | sh
 # curl -L nixos.org/nix/install  | sh && source "$HOME/.nix-profile/etc/profile.d/nix.sh"
-# ( which nix-env >/dev/nul ) || yes | sh <(curl -L https://nixos.org/nix/install) --daemon && $SUDO nix-daemon &
+# ( which nix-env >/dev/nul ) || yes | sh <(curl -L https://nixos.org/nix/install) --daemon
 
 # ( true  || true  ) && echo yes || echo no # -> yes
 # ( true  || false ) && echo yes || echo no # -> yes
@@ -105,7 +105,7 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   xorg-xset \
   xorg-xsetroot \
   xf86-input-synaptics \
-  zathura-pdf-mupdf \
+  zathura-pdf-poppler \
   && true | yay -Scc || ( printf "$(tput -T ansi setaf 1) Installing GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
 }
 
@@ -223,7 +223,6 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # pavucontrol
 # pcmanfm-gtk3
 # pfetch
-# poppler
 # pulseaudio-alsa
 # pulsemixer
 # python-ueberzug-git

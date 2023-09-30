@@ -2,6 +2,7 @@
 
 # tmux inside docker
 if [ -e /.dockerenv ] && [ -z $TMUX ]; then exec tmux -u; fi
+if [ "$(id -u)" = 0 ] && [ -z $TMUX ]; then exec tmux -u; fi
 
 ## To activate tab completion support for cht.sh
 fpath=(~/.config/zsh/ $fpath)
@@ -296,12 +297,12 @@ bindkey '^v' edit-command-line
   source /usr/share/fzf/key-bindings.zsh
   source /usr/share/fzf/completion.zsh }
 
-[ -e $HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]&&\
-  source $HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ||\
+[ -e $HOME/.config/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh ] &&
+  source $HOME/.config/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh ||
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
-[ -e $HOME/.nix-profile/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh ]&&\
-  source $HOME/.nix-profile/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh ||\
+[ -e $HOME/.config/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] &&
+  source $HOME/.config/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ||
   source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # bindkey '^I' expand-or-complete
