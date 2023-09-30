@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# code --list-extensions
+# code --install-extension ms-python.black-formatter
+# code --install-extension ms-python.python
+# code --install-extension ms-python.vscode-pylance
+# code --install-extension ms-vscode-remote.remote-wsl
+# code --install-extension ms-vscode.cmake-tools
+# code --install-extension ms-vscode.cpptools
+# code --install-extension ms-vscode.cpptools-extension-pack
+# code --install-extension twxs.cmake
+code --install-extension bradlc.vscode-tailwindcss
+code --install-extension brenix.hacker-theme
+code --install-extension Codeium.codeium
+code --install-extension DanielPriestley.poimandres-alternate
+code --install-extension dlasagno.wal-theme
+code --install-extension drewxs.tokyo-night-dark
+code --install-extension dsznajder.es7-react-js-snippets
+code --install-extension PKief.material-icon-theme
+code --install-extension rangav.vscode-thunder-client
+code --install-extension traBpUkciP.wolf
+code --install-extension usernamehw.errorlens
+code --install-extension vscodevim.vim
+code --install-extension VSpaceCode.whichkey
+code --install-extension WallabyJs.console-ninja
