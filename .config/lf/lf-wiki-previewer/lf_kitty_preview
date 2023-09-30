@@ -30,7 +30,7 @@ function draw_kitty {
     [[ -e /.dockerenv ]] && PTS="/dev/pts/0"
     [[ -z $TMUX ]] && [[ -z $NVIM ]] &&
       ( kitty +icat --silent --stdin no --transfer-mode memory --place "$((W - 1))x$((H))@$((X))x$((Y))" "$1" ) < /dev/null > /dev/tty ||
-      ( tput cup $((Y)) $((X)) && img2sixel --loop-control=disable --width=$((W*7)) "$1" ) > $PTS
+      ( tput cup $((Y)) $((X)) && img2sixel --loop-control=disable --height=$((H*14)) "$1" ) > $PTS
 }
 
 function draw_sixel {
@@ -68,7 +68,7 @@ function make_pdf {
     if [ "${TMP_FILE}" -ot "$1" ]; then
         # pdftoppm -singlefile -png "$1" "${TMP_FILE%.png}"
         # mutool draw -F png -o "${TMP_FILE}" "$1" 1
-        convert "${f}[0]" png:"${TMP_FILE}"
+        magick convert "${1}[0]" png:"${TMP_FILE}"
     fi
 }
 

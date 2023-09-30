@@ -4,7 +4,7 @@
 # [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
 
 # _sudo_not_required_for_some_system_commands_
-for command in mount umount sv pacman updatedb su shutdown poweroff reboot ; do
+for command in mount umount sv updatedb su shutdown poweroff reboot ; do
 	alias $command="sudo $command"
 done; unset command
 
@@ -42,6 +42,7 @@ alias \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
 	pacman="sudo pacman --noconfirm" \
+	apt="sudo apt -y" \
 	cht="cht.sh" \
 	# cht="cheat-sh" \
 
@@ -51,14 +52,14 @@ alias \
   vi="NVIM_APPNAME=nvchad nvim" \
   vim="NVIM_APPNAME=astronvim nvim" \
   vscodevim="NVIM_APPNAME=vscode-neovim nvim" \
-	nvimdiff="nvim -d" \
-	nvimterminal="nvim -c 'set nonumber | terminal zsh'" \
-	tmuxconf="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
-	tmuxattach="tmux attach" \
-	tmuxssh="ssh -t <user@host> tmux" \
-	tmuxlist="tmux ls" \
-	tmuxkillall="tmux kill-session -a" \
-	tmuxmpvdmenu="tmux new -d mpv --loop-playlist --no-video $1" \
+	nvim_diff="nvim -d" \
+	nvim_terminal="nvim -c 'set nonumber | terminal zsh'" \
+	tmux_conf="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
+	tmux_attach="tmux attach" \
+	tmux_ssh="ssh -t <user@host> tmux" \
+	tmux_list="tmux ls" \
+	tmux_killall="tmux kill-session -a" \
+	tmux_mpvdmenu="tmux new -d mpv --loop-playlist --no-video $1" \
 	# ref="~/.local/bin/i3cmds/shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
 	# volumebar="echo '♪: $(pamixer --get-volume-human)'" \
 	# batterybar="acpi | sed 's/Battery [0-9]: //;s/[Dd]ischarging, /🔋/;s/[Nn]ot charging, /🛑/;s/[Cc]harging, /🔌/;s/[Uu]nknown, /♻️/;s/[Ff]ull, /⚡/;s/,.*//'" \

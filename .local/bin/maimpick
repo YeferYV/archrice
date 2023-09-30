@@ -6,16 +6,16 @@ menu() {
 }
 
 if [ "$1" = "fullscreen" ]; then
-		import -window root  ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png"
+		magick import -window root  ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png"
 else
 	option="$(menu)"
 	case "$option" in
-		"a selected area")         killall unclutter && import                 ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" && unclutter --timeout 1 & ;;
-		"current window")          import -window "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
-		"fullscreen")              import -window root                         ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
-		"a selected area (copy)")  killall unclutter && import                 /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png && unclutter --timeout 1 & ;;
-		"current window (copy)")   import -window "$(xdotool getactivewindow)" /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png ;;
-		"fullscreen (copy)")       import -window root                         /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png ;;
+		"a selected area")         killall unclutter && magick import                 ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" && unclutter --timeout 1 & ;;
+		"current window")          magick import -window "$(xdotool getactivewindow)" ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
+		"fullscreen")              magick import -window root                         ~/bgs/bgi/"$(date '+%y%m%d-%H%M-%S').png" ;;
+		"a selected area (copy)")  killall unclutter && magick import                 /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png && unclutter --timeout 1 & ;;
+		"current window (copy)")   magick import -window "$(xdotool getactivewindow)" /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png ;;
+		"fullscreen (copy)")       magick import -window root                         /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png ;;
 		*) notify-send "Nothing selected" && exit ;;
 	esac
 fi &&

@@ -61,7 +61,12 @@ cmd duplicatelf            & setsid -f env LF_CD=true          $TERMINAL start -
 cmd duplicateterm          & setsid -f                         $TERMINAL start --cwd=$PWD
 # cmd mkdir                $ mkdir  -p "$(echo $* | tr ' ' '\ ')"
 # cmd touch                $ touch     "$(echo $* | tr ' ' '\ ')"
-# cmd trash                % set    -f; mv -f $fx $HOME/.cache/trash/ || $(cp -r $f $HOME/.cache/trash/ && rm -r $f)
+# cmd trash-onefile        $ mkdir -p $HOME/.cache/Trash    && mv $f "$HOME/.cache/Trash/$(basename $f)-$(date '+%y%m%d-%H-%M-%S')"
+
+cmd trash ${{
+  mkdir -p $HOME/.cache/Trash
+  basename -a $fx | xargs -I var mv var "$HOME/.cache/Trash/var-$(date '+%y%m%d-%H-%M-%S')"
+}}
 
 #--- To refresh numbers of colums
 cmd onecol ${{
@@ -323,7 +328,7 @@ map A       push a<c-u> # new rename
 map b       setbg $f
 map B     $ vidir $fx
 map C       copyto
-map D     $ [ ! -e $HOME/.cache/Trash ] && ln -s $HOME/.local/share/Trash $HOME/.cache/Trash; gio trash $fx
+map D       trash
 map gbk   $ mpv --vo=kitty --really-quiet $fx
 map gbs   $ mpv --vo=sixel --really-quiet $fx
 map gbt   $ mpv --vo=tct   --really-quiet $fx
