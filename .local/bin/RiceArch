@@ -149,6 +149,7 @@ USER=${ARCH_USER:-drknss}
 # Add user:
 install_user() {
   [ ! -e "/home/$USER" ] && useradd --shell /bin/zsh -mG audio,video,wheel,tty $USER
+  sudo usermod --append --groups audio,video $USER
   echo root:toor  | chpasswd
   echo $USER:toor | chpasswd
   echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"  > /etc/sudoers.d/wheel

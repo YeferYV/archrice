@@ -100,10 +100,12 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   xdo \
   xdotool \
   xorg-server \
+  xorg-xhost \
   xorg-xinit \
   xorg-xmodmap \
   xorg-xset \
   xorg-xsetroot \
+  xwallpaper \
   xf86-input-synaptics \
   zathura-pdf-poppler \
   && true | yay -Scc || ( printf "$(tput -T ansi setaf 1) Installing GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
@@ -127,7 +129,7 @@ stow \
 unzip \
 xclip \
 zsh-autosuggestions \
-&& true | pacman -Scc || ( printf "$(tput -T ansi setaf 1) Installing Non GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
+&& true | $SUDO pacman -Scc || ( printf "$(tput -T ansi setaf 1) Installing Non GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
 
 echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 
