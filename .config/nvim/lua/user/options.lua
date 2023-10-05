@@ -61,6 +61,7 @@ vim.g.indent_object_ignore_blank_line = false
 vim.g.diagnostics_enabled = true -- enable diagnostics at start
 
 -- _easyclip
+vim.g.EasyClipAutoFormat = 1
 vim.g.textobj_space_no_default_key_mappings = true
 vim.g.EasyClipUseCutDefaults = false
 vim.g.EasyClipEnableBlackHoleRedirect = false

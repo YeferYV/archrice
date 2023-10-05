@@ -192,7 +192,7 @@
   // VScode-neovim
   // { "key": "shift+r", "command": "vscode-neovim.send", "args": "<cmd>lua vim.fn.VSCodeCall('editor.action.format') vim.fn.VSCodeCall('workbench.action.files.save')<cr>", "when": "editorTextFocus && neovim.mode == normal", },
   { "key": "shift+r", "command": "vscode-neovim.send", "args": "<cmd>call VSCodeCall('editor.action.format')<cr><cmd>call VSCodeCall('workbench.action.files.save')<cr>", "when": "editorTextFocus && neovim.mode == normal" },
-  { "key": "alt+/", "command": "vscode-neovim.send", "args": "<cmd>lua vim.fn.VSCodeNotifyVisual('editor.action.commentLine', false)<cr><esc>", "when": "inputFocus && neovim.mode == 'visual' || neovim.mode == 'visualLine' || neovim.mode == 'visualBlock'" },
+  { "key": "alt+/", "command": "vscode-neovim.send", "args": "<cmd>lua vim.fn.VSCodeNotify('editor.action.commentLine')<cr>", "when": "inputFocus && neovim.mode == 'visual' || neovim.mode == 'visualLine' || neovim.mode == 'visualBlock'" },
   { "key": "alt+/", "command": "vscode-neovim.send", "args": "<Cmd>call VSCodeNotify('editor.action.commentLine')<CR>", "when": "inputFocus && neovim.mode == 'normal'" },
   { "key": "ctrl+space", "command": "vscode-neovim.send", "args": "<C-space>", "when": "editorTextFocus && neovim.mode != insert" },
   { "key": "shift+q", "command": "workbench.action.closeActiveEditor", "when": "editorTextFocus && neovim.mode == normal" },

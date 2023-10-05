@@ -267,6 +267,8 @@ autocmd({ "TermEnter", "TermOpen" }, {
 --   end,
 -- })
 
+------------------------------------------------------------------------------------------------------------------------
+
 -- _autoclose_tab-terminal_if_last_window
 autocmd({ "TermClose" }, {
   group = hide_terminal_statusline,
@@ -393,5 +395,56 @@ create_command("BufferlineShow", ShowBufferline, {})
 --     end
 --   end,
 -- })
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- https://thevaluable.dev/vim-create-text-objects
+-- select indent by the same level:
+M.select_indent = function(check_blank_line)
+  local start_indent = vim.fn.indent(vim.fn.line('.'))
+
+  if check_blank_line then
+    match_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
+  else
+    match_blank_line = function(line) return false end
+  end
+
+  local prev_line = vim.fn.line('.') - 1
+  while vim.fn.indent(prev_line) == start_indent or match_blank_line(prev_line) do
+    vim.cmd('-')
+    prev_line = vim.fn.line('.') - 1
+  end
+
+  vim.cmd('normal! 0V')
+
+  local next_line = vim.fn.line('.') + 1
+  while vim.fn.indent(next_line) == start_indent or match_blank_line(next_line) do
+    vim.cmd('+')
+    next_line = vim.fn.line('.') + 1
+  end
+end
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- next/prev same level indent:
+M.next_indent = function(next)
+  local start_indent = vim.fn.indent(vim.fn.line('.'))
+  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  local sign = next and '+' or '-'
+
+  while vim.fn.indent(next_line) == start_indent do
+    vim.cmd(sign)
+    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  end
+
+  while vim.fn.indent(next_line) > start_indent or string.match(vim.fn.getline(next_line), '^%s*$')  do
+    vim.cmd(sign)
+    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  end
+
+  vim.cmd(sign)
+end
+
+------------------------------------------------------------------------------------------------------------------------
 
 return M

@@ -29,7 +29,8 @@ mini_ai.setup({
     -- N = mapped to next by mini.ai
     -- p = mapped to paragraph by nvim
     -- q = alias to '"` by mini.ai
-    -- r = mapped to space-textobj by vim-textobj-space
+    -- r = mapped to whitespace by mini.ai
+    -- R = mapped to Return by mini.ai
     -- s = mapped to sentence by nvim
     -- S = mapped to Subword by nvim-various-textobjs
     -- t = mapped to tag by mini.ai
@@ -38,6 +39,11 @@ mini_ai.setup({
     -- v = mapped to value by nvim-various-textobjs
     -- w = mapped to word by nvim
     -- W = mapped to Word by nvim
+    -- x = mapped to hexadecimal by mini.ai
+    -- y = mapped to Indent by vim-textobj-indent
+    -- Y = mapped to Indent-same  by vim-textobj-indent
+    -- z = mapped to fold by keymaps.lua
+    -- Z = mapped to closefold by nvim-various-textobjs
 
     q = spec_treesitter({ a = '@call.outer', i = '@call.inner', }),
     Q = spec_treesitter({ a = '@class.outer', i = '@class.inner', }),
@@ -52,30 +58,33 @@ mini_ai.setup({
     ["+"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
     ["*"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
 
-    -- Tweak argument textobject
+    -- Tweak argument textobject:
     a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }), -- brackets = { '%b()', '%b[]', '%b{}' },
 
-    -- Disable brackets alias in favor of builtin block textobject
+    -- Disable brackets alias in favor of builtin block textobject:
     -- b = false,
     -- b = { { '%b()', '%b[]', '%b{}' }, '^.().*().$' },
 
-    -- _key_value_textobj :help mini.ai (line 300)
+    -- key-value textobj :help mini.ai (line 300)
     -- the pattern .- matches any sequence of characters (except newline characters) (including whitespaces)
     k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' }, -- .- -> don't be greedy let %s- to exist
     v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } }, -- Pattern in double curly bracket equals fallback
 
-    -- _quotes/uotes
+    -- quotes/uotes:
     u = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
 
-    -- _number/hexadecimalcolor_textobj
+    -- number/hexadecimalcolor textobj:
     -- the pattern %f[%d]%d+ ensures there is a %d before start matching (non %d before %d+)(useful to stop .*)
     n = { '[-+]?()%f[%d]%d+()%.?%d*' }, -- %f[%d] to make jumping to next group of number instead of next digit
     x = { '#()%x%x%x%x%x%x()' },
 
-    -- Now `vax` should select `xxx` and `vix` - middle `x`
+    -- _whitespace_textobj:
+    r = { '%S()%s+()%S' },
+
+    -- Now `vax` should select `xxx` and `vix` - middle `x`:
     -- x = { 'x()x()x' },
 
-    -- Whole buffer
+    -- Whole buffer:
     A = function()
       local from = { line = 1, col = 1 }
       local to = {
@@ -85,6 +94,29 @@ mini_ai.setup({
       return { from = from, to = to }
     end,
 
+    -- indent delimited by blanklines textobj:
+    i = function()
+      local start_indent = vim.fn.indent(vim.fn.line('.'))
+      if string.match(vim.fn.getline('.'), '^%s*$') then return { from = nil, to = nil } end
+
+      local prev_line = vim.fn.line('.') - 1
+      while vim.fn.indent(prev_line) >= start_indent do
+          vim.cmd('-')
+          prev_line = vim.fn.line('.') - 1
+      end
+
+      from = { line = vim.fn.line('.'), col = 1 }
+
+      local next_line = vim.fn.line('.') + 1
+      while vim.fn.indent(next_line) >= start_indent do
+          vim.cmd('+')
+          next_line = vim.fn.line('.') + 1
+      end
+
+      to = { line = vim.fn.line('.'), col = vim.fn.getline(vim.fn.line('.')):len() }
+      return { from = from, to = to }
+
+    end
   },
 
   user_textobject_id = true,
@@ -193,6 +225,21 @@ require('mini.bracketed').setup({
 
 require('mini.comment').setup({
 
+  -- Options which control module behavior
+  options = {
+    -- Function to compute custom 'commentstring' (optional)
+    custom_commentstring = nil,
+
+    -- Whether to ignore blank lines
+    ignore_blank_line = false,
+
+    -- Whether to recognize as comment only lines without indent
+    start_of_line = false,
+
+    -- Whether to ensure single space pad for comment parts
+    pad_comment_parts = true,
+  },
+
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     -- Toggle comment (like `gcip` - comment inner paragraph) for both
@@ -204,7 +251,7 @@ require('mini.comment').setup({
 
     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
-    textobject = '', -- mapped as `gk` in keymaps.lua
+    textobject = 'gc', -- mapped as `gk` in keymaps.lua
   },
   -- Hook functions to be executed at certain stage of commenting
   hooks = {
@@ -232,10 +279,11 @@ require('mini.indentscope').setup({
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     -- Textobjects
-    object_scope = 'iI',
-    object_scope_with_border = 'aI',
+    object_scope = '',
+    object_scope_with_border = '',
 
     -- Motions (jump to respective border line; if not present - body line)
+    -- _repressing-incremental works inside visual mode
     goto_top = '[ii',
     goto_bottom = ']ii',
   },

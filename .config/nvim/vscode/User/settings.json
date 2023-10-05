@@ -138,6 +138,16 @@
       ]
     },
     {
+      "key": "E",
+      "name": "Emmet (insert mode only)...",
+      "bindings": [
+        { "key": "a", "name": "select outward item", "command": "editor.emmet.action.balanceOut" },
+        { "key": "i", "name": "select inward item", "command": "editor.emmet.action.balanceIn" },
+        { "key": "n", "name": "select next item", "command": "editor.emmet.action.selectNextItem" },
+        { "key": "p", "name": "select prev item", "command": "editor.emmet.action.selectPrevItem" },
+      ]
+    },
+    {
       "key": "f",
       "name": "Find & Replace...",
       "bindings": [

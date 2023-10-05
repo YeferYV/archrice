@@ -63,35 +63,35 @@ local opts = {
 local plugins = {
 
   -- Automation
-  { "JoosepAlviste/nvim-ts-context-commentstring", event = "VeryLazy" },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    commit = "729d83ecb990dc2b30272833c213cc6d49ed5214",
+    event = "VeryLazy"
+  },
 
   -- Motions
-  { "machakann/vim-columnmove", event = "VeryLazy" },
-  { "tpope/vim-repeat", event = "VeryLazy" },
-  { "justinmk/vim-sneak", event = "VeryLazy" },
-  { "phaazon/hop.nvim", config = true, event = "VeryLazy" },
+  { "tpope/vim-repeat", commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a", event = "VeryLazy" },
+  { "justinmk/vim-sneak", commit = "93395f5b56eb203e4c8346766f258ac94ea81702", event = "VeryLazy" },
+  { "machakann/vim-columnmove", commit = "21a43d809a03ff9bf9946d983d17b3a316bf7a64", event = "VeryLazy" },
+  { "phaazon/hop.nvim", commit = "90db1b2c61b820e230599a04fedcd2679e64bd07", config = true, event = "VeryLazy" },
 
   -- Text-Objects
-  { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" },
-  { "echasnovski/mini.nvim", event = "VeryLazy" },
-  {
-    "kana/vim-textobj-user",
-    event = "VeryLazy",
-    dependencies = { "saihoooooooo/vim-textobj-space" }
-  },
+  -- { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" }, -- weird bug with vscode opening problem-panel -- incremental-repressing + respects-blanklines + vimrepeat + VisualRepeatable(e.g mini.comment is noVisualRepeable)
+  { "echasnovski/mini.nvim", commit = "2d70ae2b0faade0b5ab8524e155f47ca829db5f2" },
   {
     "nvim-treesitter/nvim-treesitter",
+    commit = "9161093fc7e13b12aa5bc86c641768c049d43a26",
     dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects" },
-      { "RRethy/nvim-treesitter-textsubjects" },
+      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "b55fe6175f0001347a433c9df358c8cbf8a4e90f" },
+      { "RRethy/nvim-treesitter-textsubjects", commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
     }
   },
-  { "coderifous/textobj-word-column.vim", event = "VeryLazy" },
-  { "svermeulen/vim-easyclip", event = "VeryLazy" },
+  { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33", event = "VeryLazy" },
+  { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
-    event = "VeryLazy",
-    config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 }
+    commit = "eba7c5d09c97ac8a73bad5793618b7d376d91048",
+    config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
   },
 
   -- UI
@@ -183,6 +183,55 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
+-- https://thevaluable.dev/vim-create-text-objects
+-- select indent by the same level:
+M.select_indent = function(check_blank_line)
+  local start_indent = vim.fn.indent(vim.fn.line('.'))
+
+  if check_blank_line then
+    match_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
+  else
+    match_blank_line = function(line) return false end
+  end
+
+  local prev_line = vim.fn.line('.') - 1
+  while vim.fn.indent(prev_line) == start_indent or match_blank_line(prev_line) do
+    vim.cmd('-')
+    prev_line = vim.fn.line('.') - 1
+  end
+
+  vim.cmd('normal! 0V')
+
+  local next_line = vim.fn.line('.') + 1
+  while vim.fn.indent(next_line) == start_indent or match_blank_line(next_line) do
+    vim.cmd('+')
+    next_line = vim.fn.line('.') + 1
+  end
+end
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- next/prev same level indent:
+M.next_indent = function(next)
+  local start_indent = vim.fn.indent(vim.fn.line('.'))
+  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  local sign = next and '+' or '-'
+
+  while vim.fn.indent(next_line) == start_indent do
+    vim.cmd(sign)
+    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  end
+
+  while vim.fn.indent(next_line) > start_indent or string.match(vim.fn.getline(next_line), '^%s*$')  do
+    vim.cmd(sign)
+    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  end
+
+  vim.cmd(sign)
+end
+
+------------------------------------------------------------------------------------------------------------------------
+
 -- ╭──────╮
 -- │ Mini │
 -- ╰──────╯
@@ -208,9 +257,39 @@ require("mini.ai").setup({
     a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }),
     k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' },
     v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } },
-    n = { '[-+]?()%f[%d]%d+()%.?%d*' },
     u = { { "%b''", '%b""', '%b``' }, '^.().*().$' },
+    n = { '[-+]?()%f[%d]%d+()%.?%d*' },
     x = { '#()%x%x%x%x%x%x()' },
+    r = { '%S()%s+()%S' },
+    A = function()
+      local from = { line = 1, col = 1 }
+      local to = {
+        line = vim.fn.line('$'),
+        col = math.max(vim.fn.getline('$'):len(), 1)
+      }
+      return { from = from, to = to }
+    end,
+    i = function()
+      local start_indent = vim.fn.indent(vim.fn.line('.'))
+      if string.match(vim.fn.getline('.'), '^%s*$') then return { from = nil, to = nil } end
+
+      local prev_line = vim.fn.line('.') - 1
+      while vim.fn.indent(prev_line) >= start_indent do
+          vim.cmd('-')
+          prev_line = vim.fn.line('.') - 1
+      end
+
+      from = { line = vim.fn.line('.'), col = 1 }
+
+      local next_line = vim.fn.line('.') + 1
+      while vim.fn.indent(next_line) >= start_indent do
+          vim.cmd('+')
+          next_line = vim.fn.line('.') + 1
+      end
+
+      to = { line = vim.fn.line('.'), col = vim.fn.getline(vim.fn.line('.')):len() }
+      return { from = from, to = to }
+    end
   },
   user_textobject_id = true,
   mappings = {
@@ -265,10 +344,16 @@ require('mini.bracketed').setup({
 })
 
 require('mini.comment').setup({
+  options = {
+    custom_commentstring = nil,
+    ignore_blank_line = false,
+    start_of_line = false,
+    pad_comment_parts = true,
+  },
   mappings = {
     comment = 'gc',
     comment_line = 'gcc',
-    textobject = '',
+    textobject = 'gc',
   },
   hooks = {
     pre = function() require('ts_context_commentstring.internal').update_commentstring() end,
@@ -278,12 +363,12 @@ require('mini.comment').setup({
 
 require('mini.indentscope').setup({
   draw = {
-    delay = 100,
+    delay = 10,
     animation = nil --<function: implements constant 20ms between steps>,
   },
   mappings = {
-    object_scope = 'iI',
-    object_scope_with_border = 'aI',
+    object_scope = '',
+    object_scope_with_border = '',
     goto_top = '[ii',
     goto_bottom = ']ii',
   },
@@ -382,6 +467,8 @@ configs.setup {
         ['[aR'] = '@return.outer',
         ['[a='] = '@assignment.outer',
         ['[a+'] = '@assignment.lhs',
+        ["[aX"] = { query = "@scope", query_group = "locals", desc = "Prev scope" },
+        ["[["] = { query = "@fold", query_group = "folds", desc = "Previous Start Fold" },
 
         ['[iq'] = '@call.inner',
         ['[iQ'] = '@class.inner',
@@ -392,7 +479,6 @@ configs.setup {
         ['[iL'] = '@loop.inner',
         ['[iP'] = '@parameter.inner',
         ['[iR'] = '@return.inner',
-        ['[['] = '@parameter.inner',
         ['[i='] = '@assignment.inner',
         ['[i+'] = '@assignment.rhs',
       },
@@ -408,6 +494,8 @@ configs.setup {
         [']aR'] = '@return.outer',
         [']a='] = '@assignment.outer',
         [']a+'] = '@assignment.lhs',
+        ["]aX"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+        ["]]"] = { query = "@fold", query_group = "folds", desc = "Next Start Fold" },
 
         [']iq'] = '@call.inner',
         [']iQ'] = '@class.inner',
@@ -418,7 +506,6 @@ configs.setup {
         [']iL'] = '@loop.inner',
         [']iP'] = '@parameter.inner',
         [']iR'] = '@return.inner',
-        [']]'] = '@parameter.inner',
         [']i='] = '@assignment.inner',
         [']i+'] = '@assignment.rhs',
       },
@@ -434,6 +521,8 @@ configs.setup {
         ['[eaR'] = '@return.outer',
         ['[ea='] = '@assignment.outer',
         ['[ea+'] = '@assignment.lhs',
+        ["[eX"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+        ["[e["] = { query = "@fold", query_group = "folds", desc = "Previous End Fold" },
 
         ['[eiq'] = '@call.inner',
         ['[eiQ'] = '@class.inner',
@@ -459,6 +548,8 @@ configs.setup {
         [']eaR'] = '@return.outer',
         [']ea='] = '@assignment.outer',
         [']ea+'] = '@assignment.lhs',
+        ["]eX"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+        ["]e]"] = { query = "@fold", query_group = "folds", desc = "Next End Fold" },
 
         [']eiq'] = '@call.inner',
         [']eiQ'] = '@class.inner',
@@ -602,7 +693,7 @@ map("x", 'gm', "`[o`]", { desc = "Last change textobj" })
 -- _jump_to_last_change
 map({ "n", "o", "x" }, "gl", "`.", { silent = true, desc = "Jump to last change" })
 
--- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
+-- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)_(gC and gk visual support for gc and gk textobj)
 map({ "o" }, 'gk', '<Cmd>lua MiniComment.textobject()<CR>', { silent = true, desc = "BlockComment textobj" })
 map({ "x" }, 'gk', ':<C-u>normal "zygkgv<cr>', { silent = true, desc = "BlockComment textobj" })
 map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
@@ -642,45 +733,48 @@ map({ "o", "x" }, "aS", "<cmd>lua require('various-textobjs').subword(false)<cr>
   { silent = true, desc = "outer Subword textobj" })
 map({ "o", "x" }, "iS", "<cmd>lua require('various-textobjs').subword(true)<cr>",
   { silent = true, desc = "inner Subword textobj" })
-map({ "o", "x" }, "az", "<cmd>lua require('various-textobjs').closedFold(false)<CR>",
+map({ "o", "x" }, "aZ", "<cmd>lua require('various-textobjs').closedFold(false)<CR>",
   { silent = true, desc = "outer ClosedFold textobj" })
-map({ "o", "x" }, "iz", "<cmd>lua require('various-textobjs').closedFold(true)<CR>",
+map({ "o", "x" }, "iZ", "<cmd>lua require('various-textobjs').closedFold(true)<CR>",
   { silent = true, desc = "inner ClosedFold textobj" })
 
--- _vim_indent_object_(visualrepeatable_+_vimrepeat)
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = "*",
-  callback = function()
-    map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>",
-      { silent = true, desc = "MiniIndentscope_iI" })
-    map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>",
-      { silent = true, desc = "MiniIndentscope_aI" })
-  end
-})
+-- _fold_textobj
+keymap("x", 'iz', ":<C-U>silent!normal![zjV]zk<CR>", { silent = true, desc = "inner fold textobj" })
+keymap("o", 'iz', ":normal Vif<CR>", { silent = true, desc = "inner fold textobj" })
+keymap("x", 'az', ":<C-U>silent!normal![zV]z<CR>", { silent = true, desc = "outer fold textobj" })
+keymap("o", 'az', ":normal Vaf<CR>", { silent = true, desc = "outer fold textobj" })
 
--- _vim-textobj-space
-vim.g.textobj_space_no_default_key_mappings = true
-map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { silent = true, desc = "Space textobj" })
-map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { silent = true, desc = "Space textobj" })
+-- Mini Indent Scope textobj:
+map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { silent = true, desc = "MiniIndentscope bordersless blankline_wise" })
+map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { silent = true, desc = "MiniIndentscope bordersless blankline_skip" })
+map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders blankline_skip" })
+
+-- indent same level textobj:
+map({"x","o"}, "iy", function() M.select_indent(false) end, { silent = true, desc = "indent_samelevel_noblankline textobj" })
+map({"x","o"}, "ay", function() M.select_indent(true) end, { silent = true, desc = "indent_samelevel_blankline textobj" })
 
 -- _clipboard_textobj
+vim.g.EasyClipAutoFormat = 1
 vim.g.EasyClipUseCutDefaults = false
 vim.g.EasyClipEnableBlackHoleRedirect = false
-map({ "n", "x" }, "gx", "_d", { silent = true, desc = "Blackhole Delete" })
-map({ "n" }, "gxx", "_dd", { silent = true, desc = "Blackhole _dd" })
+map({ "n", "x" }, "gx", '"_d', { silent = true, desc = "Blackhole Motion/Selected" })
+map({ "n" }, "gxx", '"_dd', { silent = true, desc = "Blackhole line" })
+map({ "n" }, "gX", '"/p', { silent = true, desc = "Search register" })
 
 vim.g.EasyClipUseYankDefaults = false
-map({ "n" }, "gy", "<plug>SubstituteOverMotionMap", { silent = true, desc = "SubstituteOverMotionMap" })
-map({ "n" }, "gyy", "<plug>SubstituteLine", { silent = true, desc = "SubstituteLine" })
-map({ "x" }, "gy", "<plug>XEasyClipPaste ", { silent = true, desc = "XEasyClipPaste" })
+map({ "n" }, "gy", "<plug>SubstituteOverMotionMap", { silent = true, desc = "Substitute Motion" })
+map({ "n" }, "gyy", "<plug>SubstituteLine", { silent = true, desc = "Substitute Line" })
+map({ "x" }, "gy", "<plug>XEasyClipPaste ", { silent = true, desc = "Substitute Selected" })
 
 vim.g.EasyClipUsePasteDefaults = false
-map({ "n" }, "gY", "<plug>G_EasyClipPasteBefore", { silent = true, desc = "EasyClip PasteBefore" })
-map({ "x" }, "gY", "<plug>XG_EasyClipPaste ", { silent = true, desc = "EasyClip Paste" })
+map({ "n" }, "gY", "<plug>G_EasyClipPasteBefore", { silent = true, desc = "Paste Preserving cursor position" })
+map({ "x" }, "gY", "<plug>XG_EasyClipPaste ", { silent = true, desc = "Paste Preserving cursor position" })
 
 vim.g.EasyClipUsePasteToggleDefaults = false
-map({ "n" }, "gz", "<plug>EasyClipSwapPasteForward", { silent = true, desc = "EasyClip SwapPasteForward" })
-map({ "n" }, "gZ", "<plug>EasyClipSwapPasteBackwards ", { silent = true, desc = "EasyClip SwapPasteBackwards" })
+map({ "n" }, "gz", '"1p', { silent = true, desc = "Redo register (dot to Paste forward the rest of register)" })
+map({ "n" }, "gZ", '"1P', { silent = true, desc = "Redo register (dot to Paste backward the rest of register)" })
 
 -- ╭─────────╮
 -- │ Motions │
@@ -736,6 +830,24 @@ local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
 )
 map({ "n", "x", "o" }, "<BS>", next_sneak, { silent = true, desc = "Next SneakForward" })
 map({ "n", "x", "o" }, "<S-BS>", prev_sneak, { silent = true, desc = "Prev SneakForward" })
+
+-- _goto_next_indent_repeatable
+vim.cmd [[ command NextIndentedParagraph execute "normal \<Plug>(textobj-indentedparagraph-n)" ]]
+vim.cmd [[ command PrevIndentedParagraph execute "normal \<Plug>(textobj-indentedparagraph-p)" ]]
+local next_indentedparagraph, prev_indentedparagraph = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ NextIndentedParagraph ]] end,
+  function() vim.cmd [[ PrevIndentedParagraph ]] end
+)
+map({ "n", "x", "o" }, "gni", next_indentedparagraph, { silent = true, desc = "Next IndentedParagraph" })
+map({ "n", "x", "o" }, "gpi", prev_indentedparagraph, { silent = true, desc = "Prev IndentedParagraph" })
+
+-- _goto_indent_samelevel_blankline_repeatable
+local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() require("user.autocommands").next_indent(true) end,
+  function() require("user.autocommands").next_indent(false) end
+)
+map({ "n", "x", "o" }, "gny", next_indent, { silent = true, desc = "next indent_samelevel_blankline" })
+map({ "n", "x", "o" }, "gpy", prev_indent, { silent = true, desc = "prev indent_samelevel_blankline" })
 
 -- _goto_diagnostic_repeatable
 local next_diagnostic, prev_diagnostic = ts_repeat_move.make_repeatable_move_pair(
@@ -820,14 +932,6 @@ local next_blankline, prev_blankline = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<leader><leader>}", next_blankline, { silent = true, desc = "Next Blankline" })
 map({ "n", "x", "o" }, "<leader><leader>{", prev_blankline, { silent = true, desc = "Prev Blankline" })
 
--- _jump_indent_repeatable
-local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal vii_ ]] vim.cmd [[ call feedkeys("") ]] end,
-  function() vim.cmd [[ normal viio_ ]] vim.cmd [[ call feedkeys("") ]] end
-)
-map({ "n", "x", "o" }, "<leader><leader>]", next_indent, { silent = true, desc = "Next Indent" })
-map({ "n", "x", "o" }, "<leader><leader>[", prev_indent, { silent = true, desc = "Prev Indent" })
-
 -- _jump_paragraph_repeatable
 local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal ) ]] end,
@@ -835,6 +939,22 @@ local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
 )
 map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { silent = true, desc = "Next Paragraph" })
 map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { silent = true, desc = "Prev Paragraph" })
+
+-- _jump_edgeindent_repeatable
+local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal g]i ]] vim.cmd [[ call feedkeys("") ]] end,
+  function() vim.cmd [[ normal g[i ]] vim.cmd [[ call feedkeys("") ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>i", next_indent, { silent = true, desc = "End Indent" })
+map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc = "Start Indent" })
+
+-- _jump_edgefold_repeatable
+local next_fold, prev_fold = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal ]z ]] end,
+  function() vim.cmd [[ normal [z ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>]", next_fold, { silent = true, desc = "End Fold" })
+map({ "n", "x", "o" }, "<leader><leader>[", prev_fold, { silent = true, desc = "Start Fold" })
 
 -- _jump_startofline_repeatable
 local next_startline, prev_startline = ts_repeat_move.make_repeatable_move_pair(

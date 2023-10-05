@@ -62,8 +62,8 @@ configs.setup {
     --     ['iL'] = '@loop.inner',          --     supported in bash
     --     ['aP'] = '@parameter.outer',
     --     ['iP'] = '@parameter.inner',
-    --     -- ["aS"] = "@statement.outer",  -- not supported in c/go/javascript/lua/python/rust
-    --     -- ["iS"] = "@scopename.inner",  -- not supported in      javascript/lua
+    --     -- ["aX"] = "@statement.outer",  -- not supported in c/go/javascript/lua/python/rust
+    --     -- ["iX"] = "@scopename.inner",  -- not supported in      javascript/lua
     --     ['a='] = '@assignment.lhs',
     --     ['i='] = '@assignment.rhs',
     --     ['a+'] = '@assignment.outer',
@@ -90,6 +90,8 @@ configs.setup {
         ['[aR'] = '@return.outer',
         ['[a='] = '@assignment.outer',
         ['[a+'] = '@assignment.lhs',
+        ["[aX"] = { query = "@scope", query_group = "locals", desc = "Prev scope" },
+        ["[["] = { query = "@fold", query_group = "folds", desc = "Previous Start Fold" },
 
         ['[iq'] = '@call.inner',
         ['[iQ'] = '@class.inner',
@@ -100,7 +102,6 @@ configs.setup {
         ['[iL'] = '@loop.inner',
         ['[iP'] = '@parameter.inner',
         ['[iR'] = '@return.inner',
-        ['[['] = '@parameter.inner',
         ['[i='] = '@assignment.inner',
         ['[i+'] = '@assignment.rhs',
       },
@@ -116,6 +117,8 @@ configs.setup {
         [']aR'] = '@return.outer',
         [']a='] = '@assignment.outer',
         [']a+'] = '@assignment.lhs',
+        ["]aX"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+        ["]]"] = { query = "@fold", query_group = "folds", desc = "Next Start Fold" },
 
         [']iq'] = '@call.inner',
         [']iQ'] = '@class.inner',
@@ -126,7 +129,6 @@ configs.setup {
         [']iL'] = '@loop.inner',
         [']iP'] = '@parameter.inner',
         [']iR'] = '@return.inner',
-        [']]'] = '@parameter.inner',
         [']i='] = '@assignment.inner',
         [']i+'] = '@assignment.rhs',
       },
@@ -142,6 +144,8 @@ configs.setup {
         ['[eaR'] = '@return.outer',
         ['[ea='] = '@assignment.outer',
         ['[ea+'] = '@assignment.lhs',
+        ["[eX"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+        ["[e["] = { query = "@fold", query_group = "folds", desc = "Previous End Fold" },
 
         ['[eiq'] = '@call.inner',
         ['[eiQ'] = '@class.inner',
@@ -167,6 +171,8 @@ configs.setup {
         [']eaR'] = '@return.outer',
         [']ea='] = '@assignment.outer',
         [']ea+'] = '@assignment.lhs',
+        ["]eX"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+        ["]e]"] = { query = "@fold", query_group = "folds", desc = "Next End Fold" },
 
         [']eiq'] = '@call.inner',
         [']eiQ'] = '@class.inner',

@@ -62,6 +62,11 @@ keymap("n", "<leader>X", ":tabclose<CR>", { silent = true, desc = "Close Tab" })
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
+-- Macros and :normal <keys> repeatable
+-- keymap("n", "!", "z", opts)
+-- keymap("n", "z", "Q", opts)
+keymap("n", "U", "@:", opts)
+
 -- Move text up and down autoindented
 -- keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
 -- keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
@@ -243,13 +248,13 @@ map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { silent = true, desc 
 -- _jump_to_last_change
 map({ "n", "o", "x" }, "gl", "`.", { silent = true, desc = "Jump to last change" })
 
--- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
+-- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)_(gC and gk visual support for gc and gk textobj)
 map({ "o" }, 'gk', '<Cmd>lua MiniComment.textobject()<CR>', { silent = true, desc = "BlockComment textobj" })
 map({ "x" }, 'gk', ':<C-u>normal "zygkgv<cr>', { silent = true, desc = "BlockComment textobj" })
 map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
 map({ "x" }, 'gC', ':<C-u>normal "zygcgv<cr>', { silent = true, desc = "WholeComment textobj" })
 
--- _se_textobj_(dot-repeat_supported)
+-- _search_textobj_(dot-repeat_supported)
 map({ "o", "x" }, "gs", "gn", { noremap = true, silent = true, desc = "Next search textobj" })
 map({ "o", "x" }, "gS", "gN", { noremap = true, silent = true, desc = "Prev search textobj" })
 
@@ -300,52 +305,99 @@ map({ "o", "x" }, "aS", "<cmd>lua require('various-textobjs').subword(false)<cr>
   { silent = true, desc = "outer Subword textobj" })
 map({ "o", "x" }, "iS", "<cmd>lua require('various-textobjs').subword(true)<cr>",
   { silent = true, desc = "inner Subword textobj" })
-map({ "o", "x" }, "az", "<cmd>lua require('various-textobjs').closedFold(false)<CR>",
+map({ "o", "x" }, "aZ", "<cmd>lua require('various-textobjs').closedFold(false)<CR>",
   { silent = true, desc = "outer ClosedFold textobj" })
-map({ "o", "x" }, "iz", "<cmd>lua require('various-textobjs').closedFold(true)<CR>",
+map({ "o", "x" }, "iZ", "<cmd>lua require('various-textobjs').closedFold(true)<CR>",
   { silent = true, desc = "inner ClosedFold textobj" })
+
+-- _fold_textobj
+-- https://superuser.com/questions/578432/can-vim-treat-a-folded-section-as-a-motion
+keymap("x", 'iz', ":<C-U>silent!normal![zjV]zk<CR>", { silent = true, desc = "inner fold textobj" })
+keymap("o", 'iz', ":normal Vif<CR>", { silent = true, desc = "inner fold textobj" })
+keymap("x", 'az', ":<C-U>silent!normal![zV]z<CR>", { silent = true, desc = "outer fold textobj" })
+keymap("o", 'az', ":normal Vaf<CR>", { silent = true, desc = "outer fold textobj" })
 
 -- _nvim_various_textobjs: indentation textobj requires two parameters, first for
 -- exclusion of the starting border, second for the exclusion of ending border
+-- _vim_indent_object_(noincrementalrepressing_+_visualrepeatable_+_vimrepeat_+_notrespectingblanklines_+_norespectslastblanklines(selectblanklines is vip))
 -- map({ "o", "x" }, "ii", "<cmd>lua require('various-textobjs').indentation(true, true)<cr>", { desc = "inner-inner indentation textobj" })
 -- map({ "o", "x" }, "ai", "<cmd>lua require('various-textobjs').indentation(false, true)<cr>", { desc = "outer-inner indentation textobj" })
 -- map({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation(true, true)<cr>", { desc = "inner-inner indentation textobj" })
 -- map({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation(false, false)<cr>", { desc = "outer-outer indentation textobj" })
 
--- _vim_indent_object_(visualrepeatable_+_vimrepeat)
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = "*",
-  callback = function()
-    map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>",
-      { silent = true, desc = "MiniIndentscope_iI" })
-    map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>",
-      { silent = true, desc = "MiniIndentscope_aI" })
-  end
-})
+-- -- _vim_indent_object_(incrementalrepressing_+_visualrepeatable_+_vimrepeat_+_notrespectingblanklines_+_respectslastblanklines(selectblanklines is vip))
+-- -- _as_autocommand_since_vim-indent-object_overwrites_it
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--   pattern = "*",
+--   callback = function()
+--     map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>",
+--       { silent = true, desc = "MiniIndentscope_noborders" })
+--     map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>",
+--       { silent = true, desc = "MiniIndentscope_withborders" })
+--   end
+-- })
 
--- _vim-textobj-space
--- vim.g.textobj_space_no_default_key_mappings = true
-map({ "o", "x" }, "ir", "<Plug>(textobj-space-i)", { silent = true, desc = "Space textobj" })
-map({ "o", "x" }, "ar", "<Plug>(textobj-space-a)", { silent = true, desc = "Space textobj" })
+-- Indented Paragraph textobj:
+-- map({ "o", "x" }, 'ii', '<Plug>(textobj-indentedparagraph-i)', { silent = true, desc = "MiniIndentscope bordersless blankline_wise" })
+-- map({ "x" }, 'ai', '<Plug>(textobj-indentedparagraph-i)jok', { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+-- map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+-- map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { silent = true, desc = "MiniIndentscope bordersless blankline_skip" })
+-- map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders blankline_skip" })
+
+-- Mini Indent Scope textobj:
+map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { silent = true, desc = "MiniIndentscope bordersless blankline_wise" })
+map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { silent = true, desc = "MiniIndentscope bordersless blankline_skip" })
+map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders blankline_skip" })
+
+-- braces linewise textobj:
+-- vim.cmd [[
+--   xnoremap iy aB$o0
+--   onoremap iy :normal! vaB$o0<cr>
+-- ]]
+-- keymap("x", 'iy', "aB$o0", { silent = true, desc = "" })
+-- keymap("o", 'iy', "<cmd>normal vaB$o0<cr>", { silent = true, desc = "" })
+
+-- -- _vim-textobj-indent_(noincrementalrepressing_+_visualrepeatable_+_vimrepeat_+_respectingblanklines_+_norespectslastblanklines(selectblanklines is vip))
+-- map({ "o", "x" }, "iy", "<Plug>(textobj-indent-i)", { silent = true, desc = "indent nosamelevel noblankline textobj" })
+-- map({ "o", "x" }, "ay", "<Plug>(textobj-indent-a)", { silent = true, desc = "indent nosamelevel blankline textobj" })
+-- map({ "o", "x" }, "iY", "<Plug>(textobj-indent-same-i)", { silent = true, desc = "indent samelevel noblankline textobj" })
+-- map({ "o", "x" }, "aY", "<Plug>(textobj-indent-same-a)", { silent = true, desc = "indent samelevel blankline textobj" })
+
+-- indent same level textobj:
+map({"x","o"}, "iy", function() require("user.autocommands").select_indent(false) end, { silent = true, desc = "indent_samelevel_noblankline textobj" })
+map({"x","o"}, "ay", function() require("user.autocommands").select_indent(true) end, { silent = true, desc = "indent_samelevel_blankline textobj" })
 
 -- _clipboard_textobj_(vim.g defined in options.lua)
--- vim.g.EasyClipUseCutDefaults = false
 -- vim.g.EasyClipEnableBlackHoleRedirect = false
-map({ "n", "x" }, "gx", "_d", { silent = true, desc = "Blackhole Delete" })
-map({ "n" }, "gxx", "_dd", { silent = true, desc = "Blackhole _dd" })
+map({ "n", "x" }, "gx", '"_d', { silent = true, desc = "Blackhole Motion/Selected" })
+map({ "n" }, "gxx", '"_dd', { silent = true, desc = "Blackhole line" })
+
+-- vim.g.EasyClipUseCutDefaults = false
+-- map({ "n" }, "gX", "<plug>MoveMotionPlug", { silent = true, desc = "noBlackhole Motion" }) -- same as "Delete + motion" if EasyClipEnableBlackHoleRedirect is disabled
+-- map({ "n" }, "gXX", "<plug>MoveMotionLinePlug", { silent = true, desc = "noBlackhole Line" }) -- same as "dd" if EasyClipEnableBlackHoleRedirect is disabled
+-- map({ "x" }, "gX", "<plug>MoveMotionXPlug", { silent = true, desc = "noBlackhole Selected" }) -- same as "d" if EasyClipEnableBlackHoleRedirect is disabled
+
+-- Search Register:
+map({ "n" }, "gX", '"/p', { silent = true, desc = "Search register" })
 
 -- vim.g.EasyClipUseYankDefaults = false
-map({ "n" }, "gy", "<plug>SubstituteOverMotionMap", { silent = true, desc = "SubstituteOverMotionMap" })
-map({ "n" }, "gyy", "<plug>SubstituteLine", { silent = true, desc = "SubstituteLine" })
-map({ "x" }, "gy", "<plug>XEasyClipPaste ", { silent = true, desc = "XEasyClipPaste" })
+map({ "n" }, "gy", "<plug>SubstituteOverMotionMap", { silent = true, desc = "Substitute Motion" })
+map({ "n" }, "gyy", "<plug>SubstituteLine", { silent = true, desc = "Substitute Line" })
+map({ "x" }, "gy", "<plug>XEasyClipPaste ", { silent = true, desc = "Substitute Selected" })
 
 -- vim.g.EasyClipUsePasteDefaults = false
-map({ "n" }, "gY", "<plug>G_EasyClipPasteBefore", { silent = true, desc = "EasyClip PasteBefore" })
-map({ "x" }, "gY", "<plug>XG_EasyClipPaste ", { silent = true, desc = "EasyClip Paste" })
+map({ "n" }, "gY", "<plug>G_EasyClipPasteBefore", { silent = true, desc = "Paste Preserving cursor position" })
+map({ "x" }, "gY", "<plug>XG_EasyClipPaste ", { silent = true, desc = "Paste Preserving cursor position" })
 
 -- vim.g.EasyClipUsePasteToggleDefaults = false
-map({ "n" }, "gz", "<plug>EasyClipSwapPasteForward", { silent = true, desc = "EasyClip SwapPasteForward" })
-map({ "n" }, "gZ", "<plug>EasyClipSwapPasteBackwards ", { silent = true, desc = "EasyClip SwapPasteBackwards" })
+-- map({ "n" }, "gz", "<plug>EasyClipSwapPasteForward", { silent = true, desc = "Paste Swapping register Forward" }) -- replaced by neoclip since has a tui
+-- map({ "n" }, "gZ", "<plug>EasyClipSwapPasteBackwards ", { silent = true, desc = "Paste Swapping register Backwards" }) -- replaced by neoclip since has a tui
+
+-- Redo Register:
+map({ "n" }, "gz", '"1p', { silent = true, desc = "Redo register (dot to Paste forward the rest of register)" })
+map({ "n" }, "gZ", '"1P', { silent = true, desc = "Redo register (dot to Paste backward the rest of register)" })
 
 -- ╭─────────╮
 -- │ Motions │
@@ -402,6 +454,24 @@ local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
 )
 map({ "n", "x", "o" }, "<BS>", next_sneak, { silent = true, desc = "Next SneakForward" })
 map({ "n", "x", "o" }, "<S-BS>", prev_sneak, { silent = true, desc = "Prev SneakForward" })
+
+-- _goto_next_indent_repeatable
+vim.cmd [[ command NextIndentedParagraph execute "normal \<Plug>(textobj-indentedparagraph-n)" ]]
+vim.cmd [[ command PrevIndentedParagraph execute "normal \<Plug>(textobj-indentedparagraph-p)" ]]
+local next_indentedparagraph, prev_indentedparagraph = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ NextIndentedParagraph ]] end,
+  function() vim.cmd [[ PrevIndentedParagraph ]] end
+)
+map({ "n", "x", "o" }, "gni", next_indentedparagraph, { silent = true, desc = "Next IndentedParagraph" })
+map({ "n", "x", "o" }, "gpi", prev_indentedparagraph, { silent = true, desc = "Prev IndentedParagraph" })
+
+-- _goto_indent_samelevel_blankline_repeatable
+local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() require("user.autocommands").next_indent(true) end,
+  function() require("user.autocommands").next_indent(false) end
+)
+map({ "n", "x", "o" }, "gny", next_indent, { silent = true, desc = "next indent_samelevel_blankline" })
+map({ "n", "x", "o" }, "gpy", prev_indent, { silent = true, desc = "prev indent_samelevel_blankline" })
 
 -- _goto_diagnostic_repeatable
 local next_diagnostic, prev_diagnostic = ts_repeat_move.make_repeatable_move_pair(
@@ -486,21 +556,29 @@ local next_blankline, prev_blankline = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<leader><leader>}", next_blankline, { silent = true, desc = "Next Blankline" })
 map({ "n", "x", "o" }, "<leader><leader>{", prev_blankline, { silent = true, desc = "Prev Blankline" })
 
--- _jump_indent_repeatable
-local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal vii_ ]] vim.cmd [[ call feedkeys("") ]] end,
-  function() vim.cmd [[ normal viio_ ]] vim.cmd [[ call feedkeys("") ]] end
-)
-map({ "n", "x", "o" }, "<leader><leader>]", next_indent, { silent = true, desc = "Next Indent" })
-map({ "n", "x", "o" }, "<leader><leader>[", prev_indent, { silent = true, desc = "Prev Indent" })
-
 -- _jump_paragraph_repeatable
 local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal ) ]] end,
-  function() vim.cmd [[ normal ( ]] end
+  function() vim.cmd [[ normal )) ]] end,
+  function() vim.cmd [[ normal (( ]] end
 )
 map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { silent = true, desc = "Next Paragraph" })
 map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { silent = true, desc = "Prev Paragraph" })
+
+-- _jump_edgeindent_repeatable
+local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal g]i ]] end,
+  function() vim.cmd [[ normal g[i ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>i", next_indent, { silent = true, desc = "End Indent" })
+map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc = "Start Indent" })
+
+-- _jump_edgefold_repeatable
+local next_fold, prev_fold = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal ]z ]] end,
+  function() vim.cmd [[ normal [z ]] end
+)
+map({ "n", "x", "o" }, "<leader><leader>]", next_fold, { silent = true, desc = "End Fold" })
+map({ "n", "x", "o" }, "<leader><leader>[", prev_fold, { silent = true, desc = "Start Fold" })
 
 -- _jump_startofline_repeatable
 local next_startline, prev_startline = ts_repeat_move.make_repeatable_move_pair(
