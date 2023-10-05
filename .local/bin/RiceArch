@@ -270,8 +270,9 @@ sudo -u "$USER" -s -- <<'====' # with '====' or "====" makes USER=drknss, with j
 
     cp       "$HOME"/.config/wallhaven-2ye15g.jpg  "$HOME"/.local/share/bg
     mkdir -p "$HOME"/.local/share/mpd              "$HOME"/.cache/zsh
+    [ -e /etc/X11/xorg.conf.d ] && sudo mv /etc/X11/xorg.conf.d /etc/X11/xorg.conf.d.synapticsconflicts
     sudo mkdir -p /etc/X11/xorg.conf.d && sudo cp  "$HOME"/.config/shell/10-synaptics.conf /etc/X11/xorg.conf.d
-    if [ -e /bin/crontab ]; then     sudo crontab  "$HOME"/.local/bin/cron/lowbatnotificationcron; fi
+    if [ -e /bin/crontab ]; then          crontab  "$HOME"/.local/bin/cron/lowbatnotificationcron; fi
 
   }
 

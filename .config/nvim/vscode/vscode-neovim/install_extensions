@@ -4,11 +4,13 @@
 code --profile VSCode-Neovim --install-extension asvetliakov.vscode-neovim
 code --profile VSCode-Neovim --install-extension bradlc.vscode-tailwindcss
 code --profile VSCode-Neovim --install-extension brenix.hacker-theme
+code --profile VSCode-Neovim --install-extension christian-kohler.path-intellisense
 code --profile VSCode-Neovim --install-extension Codeium.codeium
 code --profile VSCode-Neovim --install-extension DanielPriestley.poimandres-alternate
 code --profile VSCode-Neovim --install-extension dlasagno.wal-theme
 code --profile VSCode-Neovim --install-extension drewxs.tokyo-night-dark
 code --profile VSCode-Neovim --install-extension dsznajder.es7-react-js-snippets
+code --profile VSCode-Neovim --install-extension lamartire.git-indicators
 code --profile VSCode-Neovim --install-extension PKief.material-icon-theme
 code --profile VSCode-Neovim --install-extension rangav.vscode-thunder-client
 code --profile VSCode-Neovim --install-extension traBpUkciP.wolf

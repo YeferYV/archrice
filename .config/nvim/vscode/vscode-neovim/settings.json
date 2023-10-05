@@ -352,6 +352,8 @@
     }
   ],
 
+  "console-ninja.featureSet": "Community", // disable pro prompt
+  "emmet.includeLanguages": { "javascript": "javascriptreact" }, // emmet support for javascriptreact
   "html.format.maxPreserveNewLines": 120,
   "css.format.maxPreserveNewLines": 120,
   "json.format.keepLines": true,
