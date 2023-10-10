@@ -174,7 +174,7 @@ super + ctrl + backslash
 	}
 
 
-# rofi drun
+# rofi drun (dmenu for .desktop apps)
 super + ctrl + d
   A='rofimoji --action clipboard copy print --files fontawesome nerd_font gitmoji emojis latin-1'; \
   COL=10 \
@@ -206,20 +206,18 @@ super + alt + z
 
 # rofi alt-tab
 alt + Tab
-  A=$(($(xprop -root _NET_CLIENT_LIST_STACKING | wc -w) - 4)); \
-  ( if [[ $A -le 5 ]]; then echo "$((A * 20))% 33%"; elif [[ 6 -le $A && $A -le 10 ]]; then echo "100% 66%"; else echo "100% 100%"; fi; ) | read RWIDTH RHEIGHT; \
-  RWIDTH=$RWIDTH RHEIGHT=$RHEIGHT \
-    rofi \
-      -show window  -window-thumbnail -show-icons \
-      -kb-accept-entry "!Alt-Tab,!Alt_L,!Alt+Alt_L,Return" \
-      -kb-row-right "Alt+Tab,Alt+l" \
-      -kb-row-up "Alt+k" \
-      -kb-row-down "Alt+j" \
-      -kb-row-left "Alt+ISO_Left_Tab,Alt+h"& \
-    xdotool keyup Tab;\
-    xdotool key Tab;
-  # (if [ $A -le 4 ]; then echo "$((A * 342)) 47% 42%"; elif [ 5 -eq $A ]; then echo "100% 33%"; else if [[ 6 -le $A && $A -le 10 ]]; then echo "100% 66%";fi;fi;) | read W H I; \
-  # RWIDTH=$W RHEIGHT=$H ICON=$I
+  N=$(($(xprop -root _NET_CLIENT_LIST_STACKING | wc -w) - 4)); \
+  [ $N -le 5 ]&& export RWIDTH="$((N * 20))%" RHEIGHT=33%; \
+  [[ 6 -le $N && $N -le 10 ]]&& export RHEIGHT=66%; \
+  rofi \
+    -show window -window-thumbnail -show-icons \
+    -kb-accept-entry "!Alt-Tab,!Alt_L,!Alt+Alt_L,Return" \
+    -kb-row-right "Alt+Tab,Alt+l" \
+    -kb-row-up "Alt+k" \
+    -kb-row-down "Alt+j" \
+    -kb-row-left "Alt+ISO_Left_Tab,Alt+h"& \
+  xdotool keyup Tab;\
+  xdotool key Tab;
 
 # focus the last node/desktop
 super + {Tab,grave}

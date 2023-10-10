@@ -57,8 +57,8 @@ element-text {
 
 element-icon {
   background-color: @black;
-  // size: env(ICON,28%);
-  size: env(ICON,218);
+  // size: env(ICON,214);
+  size: env(ICON,27.9%);
   padding: 0 0 0 0;
 }
 

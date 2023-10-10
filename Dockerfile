@@ -40,11 +40,11 @@ ENV XDG_RUNTIME_DIR=/run/user/1000
 SHELL ["/bin/zsh","-c"]
 
 # Dotfiles:
-COPY --chown=drksl . /home/drksl/.config/dotfiles/dotfiles
+COPY --chown=drksl . /home/drksl/.config/dotfiles/archrice
 
 # stow:
 RUN mkdir -p $HOME/.local \
-  && cd $HOME/.config/dotfiles/dotfiles \
+  && cd $HOME/.config/dotfiles/archrice \
   && stow --restow --verbose --target="$HOME"/.config .config \
   && stow --restow --verbose --target="$HOME"/.local .local \
   && ln -sf "$HOME"/.config/shell/.zprofile "$HOME"/.zprofile

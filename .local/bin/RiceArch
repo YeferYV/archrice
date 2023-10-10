@@ -11,7 +11,7 @@
 #     --volume=/run/user/1000/pipewire-0:/run/user/1000/pipewire-0 \
 #     --volume=/tmp/.X11-unix:/tmp/.X11-unix \
 #     archlinux:base-devel bash -uelic '
-#       [ ! -e /home/drknss ] && cd /home/dtfls/docker-volume/dotfiles/.local/bin && ./ResetArch && ./RiceArch
+#       [ ! -e /home/drknss ] && cd /home/dtfls/docker-volume/archrice/.local/bin && ./ResetArch && ./RiceArch
 #       chmod g+w /dev/pts/0
 #       su - "drknss"
 #     '
@@ -188,10 +188,9 @@ sudo -u "$USER" -s -- <<'====' # with '====' or "====" makes USER=drknss, with j
 
   install_dotfiles() {
 
-    sudo mkdir -p /home/dtfls/YYdtfls
-    sudo chown -R $USER:$USER /home/dtfls
-    cp -r ../../../dotfiles /home/dtfls/YYdtfls/dotfiles
-    cd /home/dtfls/YYdtfls/dotfiles
+    mkdir -p $HOME/.config/dotfiles
+    cp -r ../../../archrice $HOME/.config/dotfiles
+    cd $HOME/.config/dotfiles/archrice
 
     mkdir -p "$HOME"/.config
     mkdir -p "$HOME"/.local

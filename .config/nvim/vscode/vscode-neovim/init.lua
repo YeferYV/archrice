@@ -598,8 +598,6 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- Macros and :normal <keys> repeatable
-keymap("n", "!", "z", opts)
-keymap("n", "z", "Q", opts)
 keymap("n", "U", "@:", opts)
 
 -- Quick commands
