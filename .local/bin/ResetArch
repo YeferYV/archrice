@@ -55,6 +55,7 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
 
   # root doesn't support yay multi-install
   # yes | yay -S --noconfirm --mflags "--skippgpcheck" ttf-unifont &&
+  yes | yay -S --noconfirm bspwm-git                             &&
   yes | yay -S --noconfirm cht.sh-git                            &&
   yes | yay -S --noconfirm dragon-drop                           &&
   yes | yay -S --noconfirm gtk-theme-arc-gruvbox-git             &&
@@ -66,7 +67,6 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   yes | yay -S --noconfirm zsh-fast-syntax-highlighting          &&
   yes | $SUDO pacman -S --noconfirm \
   broadcom-wl \
-  bspwm \
   btrfs-progs \
   cronie \
   dosfstools \
@@ -107,6 +107,7 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   xorg-xmodmap \
   xorg-xset \
   xorg-xsetroot \
+  xorg-xwininfo \
   xwallpaper \
   xf86-input-synaptics \
   zathura-pdf-poppler \
@@ -228,6 +229,7 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # pavucontrol
 # pcmanfm-gtk3
 # pfetch
+# polkit-gnome
 # pulseaudio-alsa
 # pulsemixer
 # python-ueberzug-git
@@ -276,7 +278,6 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # xorg-xdpyinfo
 # xorg-xhost
 # xorg-xprop
-# xorg-xwininfo
 # xwallpaper
 # youtube-dl
 # ytfzf

@@ -36,9 +36,9 @@ xsetroot -cursor_name left_ptr &
 
 ## Set Wallpaper
 # hsetroot -solid "#080808" &
-# xwallpaper --zoom "$HOME/.local/share/bg" &
-( wal -R && gio trash "$HOME"/.cache/wal/wezterm-wal.toml ) || wal --cols16 -s -i "$HOME/.local/share/bg" -o $HOME/.config/wal/postrun &
-picom &
+# ( wal -R && gio trash "$HOME"/.cache/wal/wezterm-wal.toml ) || wal --cols16 -s -i "$HOME/.local/share/bg" -o $HOME/.config/wal/postrun &
+xwallpaper --zoom "$HOME/.local/share/bg" &
+picom --transparent-clipping &
 
 ## vncserver
 # x0vncserver -rfbauth ~/.vnc/passwd &

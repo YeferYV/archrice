@@ -100,6 +100,7 @@
 
 # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB_ARCH
 # grub-mkconfig -o /boot/grub/grub.cfg
+# efibootmgr -c -d /dev/sda1 -l "\EFI\CLOVER\CLOVERX64.efi" -L "CLOVER"
 
 #========================================== rollback layout ==========================================#
 
@@ -107,16 +108,16 @@
 # ○ snapper-rollback to "base-install"
 # ○ snapper delete old snapshots
 # ○ ./ResetArch
-# ○ snapper -c home create -d "after-ResetArch(commit 319)"
+# ○ snapper -c home create -d "after-ResetArch(commit 320)"
 # ○ ./RiceArch
 # ○ check google-chrome
 # ○ check vscode
 # ○ check yay -Scc
 # ○ check neovim plugins
 # ○ check systemctl .services
-# ○ snapper -c home create -d "after-RiceArch(commit 319)"
+# ○ snapper -c home create -d "after-RiceArch(commit 320)"
 # ○ ./Rice
-# ○ snapper -c home create -d "after-Rice(commit 117)"
+# ○ snapper -c home create -d "after-Rice(commit 118)"
 # ○ ./larbs.sh
 # ○ snapper -c home create -d "after-larbs(commit ???)"
 
@@ -125,15 +126,17 @@
 # ○ snapper delete old snapshots
 # ○ delete btrfs snapshots created by snapper-rollback
 # ○ ./ResetArch
-# ○ snapper create -d "after-ResetArch(commit 319)"
+# ○ snapper create -d "after-ResetArch(commit 320)"
 # ○ ./RiceArch
 # ○ check dataos
 # ○ check sudoers
 # ○ check snapper-rollback.conf
+# ○ check touchpad
 # ○ check zram
-# ○ snapper create -d "after-RiceArch(commit 319)"
+# ○ snapper create -d "after-RiceArch(commit 320)"
 # ○ ./Rice
-# ○ snapper create -d "after-Rice(commit 117)"
+# ○ check neovim plugins
+# ○ snapper create -d "after-Rice(commit 118)"
 # ○ ./larbs.sh
 # ○ snappet create -d "after-Larbs(commit???)"
 
@@ -304,7 +307,7 @@ sudo -u "$USER" -s -- <<'====' # with '====' or "====" makes USER=drknss, with j
     # mpc --port=6601 update
 
     cp       "$HOME"/.config/wallhaven-2ye15g.jpg  "$HOME"/.local/share/bg
-    mkdir -p "$HOME"/.local/share/mpd              "$HOME"/.cache/zsh
+    mkdir -p "$HOME"/.local/share/mpd
     [ -e /etc/X11/xorg.conf.d ] && sudo mv /etc/X11/xorg.conf.d /etc/X11/xorg.conf.d.synapticsconflicts
     sudo mkdir -p /etc/X11/xorg.conf.d && sudo cp  "$HOME"/.config/shell/10-synaptics.conf /etc/X11/xorg.conf.d
     if [ -e /bin/crontab ]; then          crontab  "$HOME"/.local/bin/cron/lowbatnotificationcron; fi

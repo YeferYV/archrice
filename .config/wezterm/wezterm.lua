@@ -37,6 +37,7 @@ return {
   hide_tab_bar_if_only_one_tab = true,
   tab_bar_at_bottom = true,
   use_fancy_tab_bar = false,
+  warn_about_missing_glyphs=false,
 
   -- allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
   -- cell_width = 1.20,

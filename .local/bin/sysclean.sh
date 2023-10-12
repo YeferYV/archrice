@@ -4,7 +4,7 @@ read -p "reset to essential packages? [y/N]" ans
 [ "$ans" != "y" ] && exit
 
 # https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#List_of_installed_packages
-# pacman -Qqet
+# pacman -Qqe
 
 # https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Removing_everything_but_essential_packages
 sudo pacman -D --asdeps $(pacman -Qqe)
@@ -16,7 +16,7 @@ base-devel \
 bat \
 bison \
 broadcom-wl \
-bspwm \
+bspwm-git \
 btrfs-progs \
 cht.sh-git \
 cronie \

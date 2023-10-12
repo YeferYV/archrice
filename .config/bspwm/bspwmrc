@@ -19,7 +19,7 @@ $HOME/.config/polybar/launch_polybar &
     }
 
 bspc config window_gap            12
-bspc config border_width          2
+bspc config border_width          1
 bspc config borderless_monocle    true
 bspc config borderless_singleton  true
 bspc config focus_follows_pointer true

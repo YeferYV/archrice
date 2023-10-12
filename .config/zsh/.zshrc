@@ -62,7 +62,7 @@ setopt interactive_comments  # Solves command not found: '#'
 ## History in cache directory:
 HISTSIZE=10000000
 SAVEHIST=10000000
-HISTFILE=~/.cache/zsh/history
+HISTFILE=~/.cache/history
 
 ## Load aliases and shortcuts if existent.
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
@@ -71,7 +71,7 @@ HISTFILE=~/.cache/zsh/history
 # [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 
 ## Basic auto/tab complete:
-autoload -U compinit && compinit -d ~/.cache/zsh/.zcompdump
+autoload -U compinit && compinit -d ~/.cache/.zcompdump
 zmodload zsh/complist
 zstyle ':completion:*' menu select
 _comp_options+=(globdots)		# Include hidden files.
