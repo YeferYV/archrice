@@ -47,6 +47,9 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
 # Browser:
 # yes | yay -S --noconfirm google-chrome
 
+# Editor:
+# yes | yay -S visual-studio-code-bin
+
 # GUI dependencies: (yay as root requires systemd)
 [ ! -e /.dockerenv ] && {
 
@@ -100,7 +103,6 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   xdo \
   xdotool \
   xorg-server \
-  xorg-xhost \
   xorg-xinit \
   xorg-xmodmap \
   xorg-xset \
@@ -108,6 +110,7 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   xwallpaper \
   xf86-input-synaptics \
   zathura-pdf-poppler \
+  zram-generator \
   && true | yay -Scc || ( printf "$(tput -T ansi setaf 1) Installing GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
 }
 
@@ -271,6 +274,7 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # xf86-video-amdgpu
 # xorg-fonts-misc
 # xorg-xdpyinfo
+# xorg-xhost
 # xorg-xprop
 # xorg-xwininfo
 # xwallpaper

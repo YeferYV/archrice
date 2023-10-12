@@ -9,8 +9,6 @@
 
 .local/bin/*
 !.local/bin/cron/
-!.local/bin/i3cmds/
-!.local/bin/statusbar/
 !.local/bin/bspswap
 !.local/bin/compiler
 !.local/bin/dmenumount
@@ -23,5 +21,4 @@
 !.local/bin/remaps
 !.local/bin/ResetArch
 !.local/bin/RiceArch
-!.local/bin/spdf
 !.local/bin/sysclean.sh

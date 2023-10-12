@@ -36,11 +36,11 @@
 # btrfs subvolume set-default        /mnt/btrfsroot/@
 # btrfs subvolume get-default        /mnt/btrfsroot/@
 # btrfs subvolume create             /mnt/btrfsroot/@home
-# btrfs subvolume create             /mnt/btrfsroot/@.snapshots
+# btrfs subvolume create             /mnt/btrfsroot/@snapshots
 # mkdir                              /mnt/btrfsroot/@/.snapshots
 # echo "/dev/vda3    /              btrfs    rw,noatime,compress=lzo,subvol=/@              0 0" >> /mnt/btrfsroot/@/etc/fstab
 # echo "/dev/vda3    /home          btrfs    rw,noatime,compress=lzo,subvol=/@home          0 0" >> /mnt/btrfsroot/@/etc/fstab
-# echo "/dev/vda3    /.snapshots    btrfs    rw,noatime,compress=lzo,subvol=/@.snapshots    0 0" >> /mnt/btrfsroot/@/etc/fstab
+# echo "/dev/vda3    /.snapshots    btrfs    rw,noatime,compress=lzo,subvol=/@snapshots     0 0" >> /mnt/btrfsroot/@/etc/fstab
 # # echo "/dev/vda2    /boot/efi      vfat     rw,relatime                                    0 2" >> /mnt/btrfsroot/@/etc/fstab
 # rm -rf                             /mnt/btrfsroot/@/home/*
 # mount -o subvol=@home /dev/vda3    /mnt/btrfsroot/@/home
@@ -81,25 +81,61 @@
 # mount /dev/vda3 /mnt
 # btrfs su cr /mnt/@
 # btrfs su cr /mnt/@home
-# btrfs su cr /mnt/@.snapshots
+# btrfs su cr /mnt/@snapshots
 # mount -o noatime,compress=lzo,subvol=@           /dev/vda3 /mnt
 # mkdir -p /mnt/{boot/efi,home,.snapshots}
 # mount -o noatime,compress=lzo,subvol=@home       /dev/vda3 /mnt/home
-# mount -o noatime,compress=lzo,subvol=@.snapshots /dev/vda3 /mnt/.snapshots
+# mount -o noatime,compress=lzo,subvol=@snapshots  /dev/vda3 /mnt/.snapshots
 # mount                                            /dev/vda2 /mnt/boot/efi
-# pacstrap /mnt base base-devel broadcom-wl btrfs-progs efibootmgr grub linux linux-firmware neovim networkmanager snapper git cronie
+# pacstrap /mnt base base-devel broadcom-wl btrfs-progs efibootmgr git grub linux linux-firmware networkmanager snapper
 # genfstab U /mnt >> /mnt/etc/fstab
 
 #------------------------------------ After-Chroot (zram + grub) -------------------------------------#
 
 # arch-chroot /mnt
 # pacman -S --noconfirm zram-generator
-# echo "[zram0]\n zram-size = ram / 10" >> /etc/systemd/zram-generator.conf
+# echo -e "[zram0]\n zram-size = ram / 4" >> /etc/systemd/zram-generator.conf
 # systemctl daemon-reload
 # systemctl start systemd-zram-setup@zram0.service
 
 # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB_ARCH
 # grub-mkconfig -o /boot/grub/grub.cfg
+
+#========================================== rollback layout ==========================================#
+
+# ● home 》
+# ○ snapper-rollback to "base-install"
+# ○ snapper delete old snapshots
+# ○ ./ResetArch
+# ○ snapper -c home create -d "after-ResetArch(commit 319)"
+# ○ ./RiceArch
+# ○ check google-chrome
+# ○ check vscode
+# ○ check yay -Scc
+# ○ check neovim plugins
+# ○ check systemctl .services
+# ○ snapper -c home create -d "after-RiceArch(commit 319)"
+# ○ ./Rice
+# ○ snapper -c home create -d "after-Rice(commit 117)"
+# ○ ./larbs.sh
+# ○ snapper -c home create -d "after-larbs(commit ???)"
+
+# ● root 》
+# ○ snapper-rollback to "base-install"
+# ○ snapper delete old snapshots
+# ○ delete btrfs snapshots created by snapper-rollback
+# ○ ./ResetArch
+# ○ snapper create -d "after-ResetArch(commit 319)"
+# ○ ./RiceArch
+# ○ check dataos
+# ○ check sudoers
+# ○ check snapper-rollback.conf
+# ○ check zram
+# ○ snapper create -d "after-RiceArch(commit 319)"
+# ○ ./Rice
+# ○ snapper create -d "after-Rice(commit 117)"
+# ○ ./larbs.sh
+# ○ snappet create -d "after-Larbs(commit???)"
 
 #=========================================== After-Reboot ============================================#
 
