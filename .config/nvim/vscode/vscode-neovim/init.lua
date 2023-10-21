@@ -90,7 +90,7 @@ local plugins = {
   { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
-    commit = "eba7c5d09c97ac8a73bad5793618b7d376d91048",
+    commit = "6e5a8e37816619ed0b6f2761621239eb3c3197a2",
     config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
   },
 
@@ -185,7 +185,7 @@ end
 
 -- https://thevaluable.dev/vim-create-text-objects
 -- select indent by the same level:
-M.select_indent = function(check_blank_line)
+function select_indent(check_blank_line)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
 
   if check_blank_line then
@@ -212,7 +212,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 
 -- next/prev same level indent:
-M.next_indent = function(next)
+function next_indent(next)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
   local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
   local sign = next and '+' or '-'
@@ -254,42 +254,13 @@ require("mini.ai").setup({
     ["="] = spec_treesitter({ a = '@assignment.rhs', i = '@assignment.lhs', }),
     ["+"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
     ["*"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
-    a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }),
-    k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' },
-    v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } },
-    u = { { "%b''", '%b""', '%b``' }, '^.().*().$' },
-    n = { '[-+]?()%f[%d]%d+()%.?%d*' },
-    x = { '#()%x%x%x%x%x%x()' },
-    r = { '%S()%s+()%S' },
-    A = function()
-      local from = { line = 1, col = 1 }
-      local to = {
-        line = vim.fn.line('$'),
-        col = math.max(vim.fn.getline('$'):len(), 1)
-      }
-      return { from = from, to = to }
-    end,
-    i = function()
-      local start_indent = vim.fn.indent(vim.fn.line('.'))
-      if string.match(vim.fn.getline('.'), '^%s*$') then return { from = nil, to = nil } end
-
-      local prev_line = vim.fn.line('.') - 1
-      while vim.fn.indent(prev_line) >= start_indent do
-          vim.cmd('-')
-          prev_line = vim.fn.line('.') - 1
-      end
-
-      from = { line = vim.fn.line('.'), col = 1 }
-
-      local next_line = vim.fn.line('.') + 1
-      while vim.fn.indent(next_line) >= start_indent do
-          vim.cmd('+')
-          next_line = vim.fn.line('.') + 1
-      end
-
-      to = { line = vim.fn.line('.'), col = vim.fn.getline(vim.fn.line('.')):len() }
-      return { from = from, to = to }
-    end
+    a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }),        -- argument textobj
+    k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' }, -- key textobj
+    v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } },            -- value textobj
+    u = { { "%b''", '%b""', '%b``' }, '^.().*().$' },                           -- quote textobj
+    n = { '[-+]?()%f[%d]%d+()%.?%d*' },                                         -- number(inside string) textobj
+    x = { '#()%x%x%x%x%x%x()' },                                                -- hexadecimal textobj
+    r = { '%S()%s+()%S' },                                                      -- whitespace textobj
   },
   user_textobject_id = true,
   mappings = {
@@ -742,16 +713,15 @@ keymap("o", 'iz', ":normal Vif<CR>", { silent = true, desc = "inner fold textobj
 keymap("x", 'az', ":<C-U>silent!normal![zV]z<CR>", { silent = true, desc = "outer fold textobj" })
 keymap("o", 'az', ":normal Vaf<CR>", { silent = true, desc = "outer fold textobj" })
 
--- Mini Indent Scope textobj:
-map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { silent = true, desc = "MiniIndentscope bordersless blankline_wise" })
-map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { silent = true, desc = "MiniIndentscope borders blankline_wise" })
-map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders blankline_wise" })
-map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { silent = true, desc = "MiniIndentscope bordersless blankline_skip" })
-map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders blankline_skip" })
+-- indent textobj:
+map({ "o", "x" }, "ii", '<cmd>lua require("various-textobjs").indentation("inner", "inner", "noBlanks")<cr>', { desc = "inner noblanks indentation textobj" })
+map({ "o", "x" }, "ai", '<cmd>lua require("various-textobjs").indentation("outer", "outer", "noBlanks")<cr>', { desc = "outer noblanks indentation textobj" })
+map({ "o", "x" }, "iI", '<cmd>lua require("various-textobjs").indentation("inner", "inner")<cr>', { desc = "inner indentation textobj" })
+map({ "o", "x" }, "aI", '<cmd>lua require("various-textobjs").indentation("outer", "outer")<cr>', { desc = "outer indentation textobj" })
 
 -- indent same level textobj:
-map({"x","o"}, "iy", function() M.select_indent(false) end, { silent = true, desc = "indent_samelevel_noblankline textobj" })
-map({"x","o"}, "ay", function() M.select_indent(true) end, { silent = true, desc = "indent_samelevel_blankline textobj" })
+map({"x","o"}, "iy", ":<c-u> lua select_indent(false)<cr>", { silent = true, desc = "indent_samelevel_noblankline textobj" })
+map({"x","o"}, "ay", ":<c-u> lua select_indent(true)<cr>", { silent = true, desc = "indent_samelevel_blankline textobj" })
 
 -- _clipboard_textobj
 vim.g.EasyClipAutoFormat = 1
@@ -940,10 +910,10 @@ map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { silent = true, des
 
 -- _jump_edgeindent_repeatable
 local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal g]i ]] vim.cmd [[ call feedkeys("") ]] end,
-  function() vim.cmd [[ normal g[i ]] vim.cmd [[ call feedkeys("") ]] end
+  function() vim.cmd [[ normal viiV$ ]] end,
+  function() vim.cmd [[ normal viio ]] FeedKeysCorrectly('<esc>_') end
 )
-map({ "n", "x", "o" }, "<leader><leader>i", next_indent, { silent = true, desc = "End Indent" })
+map({ "n", "x", "o" }, "<leader><leader>I", next_indent, { silent = true, desc = "End Indent" })
 map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc = "Start Indent" })
 
 -- _jump_edgefold_repeatable

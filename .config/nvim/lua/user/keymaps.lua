@@ -319,11 +319,11 @@ keymap("o", 'az', ":normal Vaf<CR>", { silent = true, desc = "outer fold textobj
 
 -- _nvim_various_textobjs: indentation textobj requires two parameters, first for
 -- exclusion of the starting border, second for the exclusion of ending border
--- _vim_indent_object_(noincrementalrepressing_+_visualrepeatable_+_vimrepeat_+_notrespectingblanklines_+_norespectslastblanklines(selectblanklines is vip))
--- map({ "o", "x" }, "ii", "<cmd>lua require('various-textobjs').indentation(true, true)<cr>", { desc = "inner-inner indentation textobj" })
--- map({ "o", "x" }, "ai", "<cmd>lua require('various-textobjs').indentation(false, true)<cr>", { desc = "outer-inner indentation textobj" })
--- map({ "o", "x" }, "iI", "<cmd>lua require('various-textobjs').indentation(true, true)<cr>", { desc = "inner-inner indentation textobj" })
--- map({ "o", "x" }, "aI", "<cmd>lua require('various-textobjs').indentation(false, false)<cr>", { desc = "outer-outer indentation textobj" })
+-- _vim_indent_object_(incrementalrepressing_+_visualrepeatable_+_vimrepeat_+_respectingblanklines_+_norespectslastblanklines(selectblanklines is vip))
+map({ "o", "x" }, "ii", '<cmd>lua require("various-textobjs").indentation("inner", "inner", "noBlanks")<cr>', { desc = "inner noblanks indentation textobj" })
+map({ "o", "x" }, "ai", '<cmd>lua require("various-textobjs").indentation("outer", "outer", "noBlanks")<cr>', { desc = "outer noblanks indentation textobj" })
+map({ "o", "x" }, "iI", '<cmd>lua require("various-textobjs").indentation("inner", "inner")<cr>', { desc = "inner indentation textobj" })
+map({ "o", "x" }, "aI", '<cmd>lua require("various-textobjs").indentation("outer", "outer")<cr>', { desc = "outer indentation textobj" })
 
 -- -- _vim_indent_object_(incrementalrepressing_+_visualrepeatable_+_vimrepeat_+_notrespectingblanklines_+_respectslastblanklines(selectblanklines is vip))
 -- -- _as_autocommand_since_vim-indent-object_overwrites_it
@@ -345,11 +345,11 @@ keymap("o", 'az', ":normal Vaf<CR>", { silent = true, desc = "outer fold textobj
 -- map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders blankline_skip" })
 
 -- Mini Indent Scope textobj:
-map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { silent = true, desc = "MiniIndentscope bordersless blankline_wise" })
-map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { silent = true, desc = "MiniIndentscope borders blankline_wise" })
-map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders blankline_wise" })
-map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { silent = true, desc = "MiniIndentscope bordersless blankline_skip" })
-map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders blankline_skip" })
+-- map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { silent = true, desc = "MiniIndentscope bordersless blankline_wise" })
+-- map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+-- map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders blankline_wise" })
+-- map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { silent = true, desc = "MiniIndentscope bordersless blankline_skip" })
+-- map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders blankline_skip" })
 
 -- braces linewise textobj:
 -- vim.cmd [[
@@ -366,8 +366,8 @@ map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silen
 -- map({ "o", "x" }, "aY", "<Plug>(textobj-indent-same-a)", { silent = true, desc = "indent samelevel blankline textobj" })
 
 -- indent same level textobj:
-map({"x","o"}, "iy", function() require("user.autocommands").select_indent(false) end, { silent = true, desc = "indent_samelevel_noblankline textobj" })
-map({"x","o"}, "ay", function() require("user.autocommands").select_indent(true) end, { silent = true, desc = "indent_samelevel_blankline textobj" })
+map({"x","o"}, "iy", ":<c-u> lua require('user.autocommands').select_indent(false)<cr>", { silent = true, desc = "indent_samelevel_noblankline textobj" })
+map({"x","o"}, "ay", ":<c-u> lua require('user.autocommands').select_indent(true)<cr>", { silent = true, desc = "indent_samelevel_blankline textobj" })
 
 -- _clipboard_textobj_(vim.g defined in options.lua)
 -- vim.g.EasyClipEnableBlackHoleRedirect = false
@@ -566,10 +566,10 @@ map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { silent = true, des
 
 -- _jump_edgeindent_repeatable
 local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal g]i ]] end,
-  function() vim.cmd [[ normal g[i ]] end
+  function() vim.cmd [[ normal viiV$ ]] end,
+  function() vim.cmd [[ normal viio ]] FeedKeysCorrectly('<esc>_') end
 )
-map({ "n", "x", "o" }, "<leader><leader>i", next_indent, { silent = true, desc = "End Indent" })
+map({ "n", "x", "o" }, "<leader><leader>I", next_indent, { silent = true, desc = "End Indent" })
 map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc = "Start Indent" })
 
 -- _jump_edgefold_repeatable

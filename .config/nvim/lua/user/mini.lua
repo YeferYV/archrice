@@ -94,29 +94,29 @@ mini_ai.setup({
       return { from = from, to = to }
     end,
 
-    -- indent delimited by blanklines textobj:
-    i = function()
-      local start_indent = vim.fn.indent(vim.fn.line('.'))
-      if string.match(vim.fn.getline('.'), '^%s*$') then return { from = nil, to = nil } end
-
-      local prev_line = vim.fn.line('.') - 1
-      while vim.fn.indent(prev_line) >= start_indent do
-          vim.cmd('-')
-          prev_line = vim.fn.line('.') - 1
-      end
-
-      from = { line = vim.fn.line('.'), col = 1 }
-
-      local next_line = vim.fn.line('.') + 1
-      while vim.fn.indent(next_line) >= start_indent do
-          vim.cmd('+')
-          next_line = vim.fn.line('.') + 1
-      end
-
-      to = { line = vim.fn.line('.'), col = vim.fn.getline(vim.fn.line('.')):len() }
-      return { from = from, to = to }
-
-    end
+    -- -- indent delimited by blanklines textobj:
+    -- i = function()
+    --   local start_indent = vim.fn.indent(vim.fn.line('.'))
+    --   if string.match(vim.fn.getline('.'), '^%s*$') then return { from = nil, to = nil } end
+    --
+    --   local prev_line = vim.fn.line('.') - 1
+    --   while vim.fn.indent(prev_line) >= start_indent do
+    --       vim.cmd('-')
+    --       prev_line = vim.fn.line('.') - 1
+    --   end
+    --
+    --   from = { line = vim.fn.line('.'), col = 1 }
+    --
+    --   local next_line = vim.fn.line('.') + 1
+    --   while vim.fn.indent(next_line) >= start_indent do
+    --       vim.cmd('+')
+    --       next_line = vim.fn.line('.') + 1
+    --   end
+    --
+    --   to = { line = vim.fn.line('.'), col = vim.fn.getline(vim.fn.line('.')):len() }
+    --   return { from = from, to = to }
+    --
+    -- end
   },
 
   user_textobject_id = true,

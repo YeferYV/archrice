@@ -186,7 +186,7 @@ local plugins = {
   { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
-    commit = "eba7c5d09c97ac8a73bad5793618b7d376d91048",
+    commit = "6e5a8e37816619ed0b6f2761621239eb3c3197a2",
     config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
   },
   -- _surround_code_blocks
