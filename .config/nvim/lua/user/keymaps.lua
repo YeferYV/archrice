@@ -564,13 +564,21 @@ local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { silent = true, desc = "Next Paragraph" })
 map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { silent = true, desc = "Prev Paragraph" })
 
--- _jump_edgeindent_repeatable
+-- _jump_edgeindent_repeatable_blankline
 local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal viiV$ ]] end,
   function() vim.cmd [[ normal viio ]] FeedKeysCorrectly('<esc>_') end
 )
-map({ "n", "x", "o" }, "<leader><leader>I", next_indent, { silent = true, desc = "End Indent" })
+map({ "n", "x", "o" }, "<leader><leader>a", next_indent, { silent = true, desc = "End Indent" })
 map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc = "Start Indent" })
+
+-- _jump_edgeindent_repeatable_noblankline
+local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() vim.cmd [[ normal viIV$ ]] end,
+  function() vim.cmd [[ normal viIo ]] FeedKeysCorrectly('<esc>_') end
+)
+map({ "n", "x", "o" }, "<leader><leader>A", next_indent, { silent = true, desc = "End Indent" })
+map({ "n", "x", "o" }, "<leader><leader>I", prev_indent, { silent = true, desc = "Start Indent" })
 
 -- _jump_edgefold_repeatable
 local next_fold, prev_fold = ts_repeat_move.make_repeatable_move_pair(
