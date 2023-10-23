@@ -426,25 +426,161 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- next/prev same level indent:
-M.next_indent = function(next)
-  local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
-  local sign = next and '+' or '-'
-
-  while vim.fn.indent(next_line) == start_indent do
-    vim.cmd(sign)
-    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
-  end
-
-  while vim.fn.indent(next_line) > start_indent or string.match(vim.fn.getline(next_line), '^%s*$')  do
-    vim.cmd(sign)
-    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
-  end
-
-  vim.cmd(sign)
-end
+-- -- next/prev same level indent:
+-- M.next_indent = function(next)
+--   local start_indent = vim.fn.indent(vim.fn.line('.'))
+--   local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   local sign = next and '+' or '-'
+--
+--   while vim.fn.indent(next_line) == start_indent do
+--     vim.cmd(sign)
+--     next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   end
+--
+--   while vim.fn.indent(next_line) > start_indent or string.match(vim.fn.getline(next_line), '^%s*$')  do
+--     vim.cmd(sign)
+--     next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   end
+--
+--   vim.cmd(sign)
+-- end
 
 ------------------------------------------------------------------------------------------------------------------------
 
+-- -- next/prev same level indent:
+-- M.next_indent = function(next)
+--   local start_indent = vim.fn.indent(vim.fn.line('.'))
+--   local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   local sign = next and '+' or '-'
+--
+--   -- -- scroll indent = 0 (which causes loop)
+--   if start_indent == 0 then return end
+--
+--   -- scroll same indentation
+--   while vim.fn.indent(next_line) == start_indent do
+--     vim.cmd(sign)
+--     next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   end
+--
+--   -- scroll blank lines
+--   while string.match(vim.fn.getline(next_line), '^%s*$')  do
+--     vim.cmd(sign)
+--     next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   end
+--
+--   -- scroll to next indentation
+--   vim.cmd(sign)
+--
+--   -- scroll to top of indentation
+--   if sign == '-' then
+--     local start_indent = vim.fn.indent(vim.fn.line('.'))
+--     local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--     while vim.fn.indent(next_line) == start_indent do
+--       vim.cmd('-')
+--       next_line = vim.fn.line('.') - 1
+--     end
+--   end
+--
+-- end
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- -- next/prev same level indent:
+-- M.next_indent = function(next)
+--   local start_indent = vim.fn.indent(vim.fn.line('.'))
+--   local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   local sign = next and '+' or '-'
+--
+--   -- scroll indents = 0 when going down
+--   if sign == '+' then
+--     while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
+--       vim.cmd('+')
+--       next_line = vim.fn.line('.') + 1
+--     end
+--   end
+--
+--   -- scroll same indentation
+--   if start_indent ~= 0 then
+--     while vim.fn.indent(next_line) == start_indent do
+--
+--       vim.cmd(sign)
+--       next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--
+--     end
+--   end
+--
+--   -- scroll blank lines
+--   while string.match(vim.fn.getline(next_line), '^%s*$') do
+--     vim.cmd(sign)
+--     next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   end
+--
+--   -- scroll to next indentation
+--   vim.cmd(sign)
+--
+--   -- scroll to top of indentation noblacklines
+--   local start_indent = vim.fn.indent(vim.fn.line('.'))
+--   local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+--   if sign == '-' then
+--     -- next_line indent is start_indent, next_line is no_blankline
+--     while vim.fn.indent(next_line) == start_indent and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
+--       vim.cmd('-')
+--       next_line = vim.fn.line('.') - 1
+--     end
+--   end
+--
+-- end
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- next/prev same level indent:
+M.next_indent = function(next)
+  local start_indent = vim.fn.indent(vim.fn.line('.'))
+  local current_line = vim.fn.line('.')
+  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  local sign = next and '+' or '-'
+
+  -- scroll no_blanklines (indent = 0) when going down
+  if string.match(vim.fn.getline(current_line), '^%s*$') == nil then
+    if sign == '+' then
+      while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
+        vim.cmd('+')
+        next_line = vim.fn.line('.') + 1
+      end
+    end
+  end
+
+  -- scroll same indentation (indent != 0)
+  if start_indent ~= 0 then
+    while vim.fn.indent(next_line) == start_indent do
+      vim.cmd(sign)
+      next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+    end
+  end
+
+  -- scroll blanklines (indent = -1 is when line is 0 or line is last+1 )
+  while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') do
+    vim.cmd(sign)
+    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  end
+
+  -- scroll to next indentation
+  vim.cmd(sign)
+
+  -- scroll to top of indentation noblacklines
+  local start_indent = vim.fn.indent(vim.fn.line('.'))
+  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  if sign == '-' then
+
+    -- next_line indent is start_indent, next_line is no_blankline
+    while vim.fn.indent(next_line) == start_indent and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
+      vim.cmd('-')
+      next_line = vim.fn.line('.') - 1
+    end
+
+  end
+
+end
+
+------------------------------------------------------------------------------------------------------------------------
 return M
