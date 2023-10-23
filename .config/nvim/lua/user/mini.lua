@@ -251,7 +251,7 @@ require('mini.comment').setup({
 
     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
-    textobject = 'gc', -- mapped as `gk` in keymaps.lua
+    textobject = '', -- mapped as `gc` in keymaps.lua
   },
   -- Hook functions to be executed at certain stage of commenting
   hooks = {

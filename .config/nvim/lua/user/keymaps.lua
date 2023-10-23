@@ -248,11 +248,13 @@ map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { silent = true, desc 
 -- _jump_to_last_change
 map({ "n", "o", "x" }, "gl", "`.", { silent = true, desc = "Jump to last change" })
 
--- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)_(gC and gk visual support for gc and gk textobj)
-map({ "o" }, 'gk', '<Cmd>lua MiniComment.textobject()<CR>', { silent = true, desc = "BlockComment textobj" })
-map({ "x" }, 'gk', ':<C-u>normal "zygkgv<cr>', { silent = true, desc = "BlockComment textobj" })
-map({ "x" }, 'gK', '<Cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
-map({ "x" }, 'gC', ':<C-u>normal "zygcgv<cr>', { silent = true, desc = "WholeComment textobj" })
+-- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
+-- map({ "o" }, 'gk', '<cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "BlockComment textobj" })
+-- map({ "x" }, 'gk', ':<c-u>normal "zygkgv<cr>', { silent = true, desc = "BlockComment textobj" })
+map({ "o", "x" }, "gc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>", { silent = true, desc = "BlockComment textobj" })
+map({ "n" }, "vgc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>", { silent = true, desc = "BlockComment textobj" })
+map({ "x" }, 'gK', '<cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
+map({ "o" }, 'gK', ':<c-u>normal vgK<cr>', { silent = true, desc = "RestOfComment textobj" })
 
 -- _search_textobj_(dot-repeat_supported)
 map({ "o", "x" }, "gs", "gn", { noremap = true, silent = true, desc = "Next search textobj" })
