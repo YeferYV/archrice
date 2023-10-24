@@ -398,29 +398,56 @@ create_command("BufferlineShow", ShowBufferline, {})
 
 ------------------------------------------------------------------------------------------------------------------------
 
+
 -- https://thevaluable.dev/vim-create-text-objects
 -- select indent by the same level:
-M.select_indent = function(check_blank_line)
+M.select_same_indent = function(skip_blank_line)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
 
-  if check_blank_line then
-    match_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
-  else
+  if skip_blank_line then
     match_blank_line = function(line) return false end
+  else
+    match_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
   end
 
   local prev_line = vim.fn.line('.') - 1
   while vim.fn.indent(prev_line) == start_indent or match_blank_line(prev_line) do
+
     vim.cmd('-')
     prev_line = vim.fn.line('.') - 1
+
+    -- exit loop if there's no indentation
+    if skip_blank_line then
+      if vim.fn.indent(prev_line) == 0 and string.match(vim.fn.getline(prev_line), '^%s*$') then
+        break
+      end
+    else
+      if vim.fn.indent(prev_line) < 0 then
+        break
+      end
+    end
+
   end
 
   vim.cmd('normal! 0V')
 
   local next_line = vim.fn.line('.') + 1
   while vim.fn.indent(next_line) == start_indent or match_blank_line(next_line) do
+
     vim.cmd('+')
     next_line = vim.fn.line('.') + 1
+
+    -- exit loop if there's no indentation
+    if skip_blank_line then
+      if vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') then
+        break
+      end
+    else
+      if vim.fn.indent(prev_line) < 0 then
+        break
+      end
+    end
+
   end
 end
 
