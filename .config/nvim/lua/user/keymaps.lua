@@ -457,23 +457,21 @@ local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<BS>", next_sneak, { silent = true, desc = "Next SneakForward" })
 map({ "n", "x", "o" }, "<S-BS>", prev_sneak, { silent = true, desc = "Prev SneakForward" })
 
--- _goto_next_indent_repeatable
-vim.cmd [[ command NextIndentedParagraph execute "normal \<Plug>(textobj-indentedparagraph-n)" ]]
-vim.cmd [[ command PrevIndentedParagraph execute "normal \<Plug>(textobj-indentedparagraph-p)" ]]
-local next_indentedparagraph, prev_indentedparagraph = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ NextIndentedParagraph ]] end,
-  function() vim.cmd [[ PrevIndentedParagraph ]] end
+-- _goto_indent_same_level_noblankline_repeatable
+local next_same_indent, prev_same_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() require("user.autocommands").next_same_indent(true) end,
+  function() require("user.autocommands").next_same_indent(false) end
 )
-map({ "n", "x", "o" }, "gni", next_indentedparagraph, { silent = true, desc = "Next IndentedParagraph" })
-map({ "n", "x", "o" }, "gpi", prev_indentedparagraph, { silent = true, desc = "Prev IndentedParagraph" })
+map({ "n", "x", "o" }, "gny", next_same_indent, { silent = true, desc = "next same_indent" })
+map({ "n", "x", "o" }, "gpy", prev_same_indent, { silent = true, desc = "prev same_indent" })
 
--- _goto_indent_samelevel_blankline_repeatable
-local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
-  function() require("user.autocommands").next_indent(true) end,
-  function() require("user.autocommands").next_indent(false) end
+-- _goto_indent_different_level_noblankline_repeatable
+local next_different_indent, prev_different_indent = ts_repeat_move.make_repeatable_move_pair(
+  function() require("user.autocommands").next_different_indent(true) end,
+  function() require("user.autocommands").next_different_indent(false) end
 )
-map({ "n", "x", "o" }, "gny", next_indent, { silent = true, desc = "next indent_samelevel_blankline" })
-map({ "n", "x", "o" }, "gpy", prev_indent, { silent = true, desc = "prev indent_samelevel_blankline" })
+map({ "n", "x", "o" }, "gni", next_different_indent, { silent = true, desc = "next different_indent" })
+map({ "n", "x", "o" }, "gpi", next_different_indent, { silent = true, desc = "prev different_indent" })
 
 -- _goto_diagnostic_repeatable
 local next_diagnostic, prev_diagnostic = ts_repeat_move.make_repeatable_move_pair(
