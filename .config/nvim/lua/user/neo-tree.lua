@@ -17,12 +17,12 @@ end
 
 neotree.setup({
   add_blank_line_at_top = false, -- Add a blank line at the top of the tree.
-  close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+  close_if_last_window = true,   -- Close Neo-tree if it is the last window left in the tab
   popup_border_style = "rounded",
   enable_git_status = true,
   enable_diagnostics = true,
   sort_case_insensitive = false, -- used when sorting files and directories in the tree
-  sort_function = nil, -- use a custom function for sorting files and directories in the tree
+  sort_function = nil,           -- use a custom function for sorting files and directories in the tree
   -- sort_function = function (a,b)
   --       if a.type == b.type then
   --           return a.path > b.path
@@ -38,11 +38,11 @@ neotree.setup({
     "git_status",
   },
   source_selector = {
-    winbar = true, -- toggle to show selector on winbar
-    statusline = false, -- toggle to show selector on statusline
+    winbar = true,                         -- toggle to show selector on winbar
+    statusline = false,                    -- toggle to show selector on statusline
     show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
     -- of the top visible node when scrolled down.
-    tab_labels = { -- falls back to source_name if nil
+    tab_labels = {                         -- falls back to source_name if nil
       filesystem = " 󰉓 File ",
       buffers = "  Bufs ",
       git_status = "  Git ",
@@ -174,41 +174,155 @@ neotree.setup({
       ["0"] = "focus_preview",
       -- ["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
       ["P"] = { "toggle_preview", config = { use_float = true } },
-      ["v"] = function(state) state.commands["open_vsplit"](state) vim.cmd("Neotree close") end,
-      ["V"] = function(state) state.commands["open_split"](state) vim.cmd("Neotree close") end,
+      ["v"] = function(state)
+        state.commands["open_vsplit"](state)
+        vim.cmd("Neotree close")
+      end,
+      ["V"] = function(state)
+        state.commands["open_split"](state)
+        vim.cmd("Neotree close")
+      end,
       -- ["w"] = "open_with_window_picker",
       -- ["s"] = "vsplit_with_window_picker",
       -- ["S"] = "split_with_window_picker",
       ["s"] = false,
       ["S"] = false,
       ["f"] = false,
-      ["fa"] = function() vim.cmd [[normal 0]] vim.cmd [[/ a]] vim.cmd [[normal n]] end,
-      ["fb"] = function() vim.cmd [[normal 0]] vim.cmd [[/ b]] vim.cmd [[normal n]] end,
-      ["fc"] = function() vim.cmd [[normal 0]] vim.cmd [[/ c]] vim.cmd [[normal n]] end,
-      ["fd"] = function() vim.cmd [[normal 0]] vim.cmd [[/ d]] vim.cmd [[normal n]] end,
-      ["fe"] = function() vim.cmd [[normal 0]] vim.cmd [[/ e]] vim.cmd [[normal n]] end,
-      ["ff"] = function() vim.cmd [[normal 0]] vim.cmd [[/ f]] vim.cmd [[normal n]] end,
-      ["fg"] = function() vim.cmd [[normal 0]] vim.cmd [[/ g]] vim.cmd [[normal n]] end,
-      ["fh"] = function() vim.cmd [[normal 0]] vim.cmd [[/ h]] vim.cmd [[normal n]] end,
-      ["fi"] = function() vim.cmd [[normal 0]] vim.cmd [[/ i]] vim.cmd [[normal n]] end,
-      ["fj"] = function() vim.cmd [[normal 0]] vim.cmd [[/ j]] vim.cmd [[normal n]] end,
-      ["fk"] = function() vim.cmd [[normal 0]] vim.cmd [[/ k]] vim.cmd [[normal n]] end,
-      ["fl"] = function() vim.cmd [[normal 0]] vim.cmd [[/ l]] vim.cmd [[normal n]] end,
-      ["fm"] = function() vim.cmd [[normal 0]] vim.cmd [[/ m]] vim.cmd [[normal n]] end,
-      ["fn"] = function() vim.cmd [[normal 0]] vim.cmd [[/ n]] vim.cmd [[normal n]] end,
-      ["fo"] = function() vim.cmd [[normal 0]] vim.cmd [[/ o]] vim.cmd [[normal n]] end,
-      ["fp"] = function() vim.cmd [[normal 0]] vim.cmd [[/ p]] vim.cmd [[normal n]] end,
-      ["fq"] = function() vim.cmd [[normal 0]] vim.cmd [[/ q]] vim.cmd [[normal n]] end,
-      ["fr"] = function() vim.cmd [[normal 0]] vim.cmd [[/ r]] vim.cmd [[normal n]] end,
-      ["fs"] = function() vim.cmd [[normal 0]] vim.cmd [[/ s]] vim.cmd [[normal n]] end,
-      ["ft"] = function() vim.cmd [[normal 0]] vim.cmd [[/ t]] vim.cmd [[normal n]] end,
-      ["fu"] = function() vim.cmd [[normal 0]] vim.cmd [[/ u]] vim.cmd [[normal n]] end,
-      ["fv"] = function() vim.cmd [[normal 0]] vim.cmd [[/ v]] vim.cmd [[normal n]] end,
-      ["fw"] = function() vim.cmd [[normal 0]] vim.cmd [[/ w]] vim.cmd [[normal n]] end,
-      ["fx"] = function() vim.cmd [[normal 0]] vim.cmd [[/ x]] vim.cmd [[normal n]] end,
-      ["fy"] = function() vim.cmd [[normal 0]] vim.cmd [[/ y]] vim.cmd [[normal n]] end,
-      ["fz"] = function() vim.cmd [[normal 0]] vim.cmd [[/ z]] vim.cmd [[normal n]] end,
-      ["f/"] = function() vim.cmd [[normal 0]] vim.cmd [[/\v( | )]] vim.cmd [[normal n]] end,
+      ["fa"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ a]]
+        vim.cmd [[normal n]]
+      end,
+      ["fb"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ b]]
+        vim.cmd [[normal n]]
+      end,
+      ["fc"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ c]]
+        vim.cmd [[normal n]]
+      end,
+      ["fd"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ d]]
+        vim.cmd [[normal n]]
+      end,
+      ["fe"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ e]]
+        vim.cmd [[normal n]]
+      end,
+      ["ff"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ f]]
+        vim.cmd [[normal n]]
+      end,
+      ["fg"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ g]]
+        vim.cmd [[normal n]]
+      end,
+      ["fh"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ h]]
+        vim.cmd [[normal n]]
+      end,
+      ["fi"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ i]]
+        vim.cmd [[normal n]]
+      end,
+      ["fj"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ j]]
+        vim.cmd [[normal n]]
+      end,
+      ["fk"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ k]]
+        vim.cmd [[normal n]]
+      end,
+      ["fl"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ l]]
+        vim.cmd [[normal n]]
+      end,
+      ["fm"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ m]]
+        vim.cmd [[normal n]]
+      end,
+      ["fn"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ n]]
+        vim.cmd [[normal n]]
+      end,
+      ["fo"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ o]]
+        vim.cmd [[normal n]]
+      end,
+      ["fp"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ p]]
+        vim.cmd [[normal n]]
+      end,
+      ["fq"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ q]]
+        vim.cmd [[normal n]]
+      end,
+      ["fr"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ r]]
+        vim.cmd [[normal n]]
+      end,
+      ["fs"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ s]]
+        vim.cmd [[normal n]]
+      end,
+      ["ft"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ t]]
+        vim.cmd [[normal n]]
+      end,
+      ["fu"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ u]]
+        vim.cmd [[normal n]]
+      end,
+      ["fv"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ v]]
+        vim.cmd [[normal n]]
+      end,
+      ["fw"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ w]]
+        vim.cmd [[normal n]]
+      end,
+      ["fx"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ x]]
+        vim.cmd [[normal n]]
+      end,
+      ["fy"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ y]]
+        vim.cmd [[normal n]]
+      end,
+      ["fz"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/ z]]
+        vim.cmd [[normal n]]
+      end,
+      ["f/"] = function()
+        vim.cmd [[normal 0]]
+        vim.cmd [[/\v( | )]]
+        vim.cmd [[normal n]]
+      end,
       ["z"] = "close_all_nodes",
       ["Z"] = "expand_all_nodes",
       ["a"] = {
@@ -219,7 +333,7 @@ neotree.setup({
         }
       },
       ["A"] = "add_directory", -- also accepts the optional config.show_path option like "add".
-      ["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
+      ["c"] = "copy",          -- takes text input for destination, also accepts the optional config.show_path option like "add":
       ["C"] = "close_node",
       -- ["c"] = {
       --  "copy",
@@ -285,15 +399,15 @@ neotree.setup({
         {
           "container",
           content = {
-            { "name", zindex = 10 },
+            { "name",        zindex = 10 },
             -- {
             --   "symlink_target",
             --   zindex = 10,
             --   highlight = "NeoTreeSymbolicLinkTarget",
             -- },
-            { "clipboard", zindex = 10 },
-            { "diagnostics", errors_only = true, zindex = 20, align = "right", hide_when_expanded = true },
-            { "git_status", zindex = 20, align = "right", hide_when_expanded = true },
+            { "clipboard",   zindex = 10 },
+            { "diagnostics", errors_only = true, zindex = 20,     align = "right",          hide_when_expanded = true },
+            { "git_status",  zindex = 20,        align = "right", hide_when_expanded = true },
           },
         },
       },
@@ -312,11 +426,11 @@ neotree.setup({
             --   zindex = 10,
             --   highlight = "NeoTreeSymbolicLinkTarget",
             -- },
-            { "clipboard", zindex = 10 },
-            { "bufnr", zindex = 10 },
-            { "modified", zindex = 20, align = "right" },
+            { "clipboard",   zindex = 10 },
+            { "bufnr",       zindex = 10 },
+            { "modified",    zindex = 20, align = "right" },
             { "diagnostics", zindex = 20, align = "right" },
-            { "git_status", zindex = 20, align = "right" },
+            { "git_status",  zindex = 20, align = "right" },
           },
         },
       },
@@ -347,9 +461,9 @@ neotree.setup({
       },
     },
     find_by_full_path_words = true,
-    follow_current_file = true, -- This will find and focus the file in the active buffer every
+    follow_current_file = true,             -- This will find and focus the file in the active buffer every
     -- time the current file is changed while the tree is open.
-    group_empty_dirs = false, -- when true, empty folders will be grouped together
+    group_empty_dirs = false,               -- when true, empty folders will be grouped together
     hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
     -- in whatever position is specified in window.position
     -- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -488,7 +602,8 @@ neotree.setup({
         local path = node:get_id()
         -- vim.cmd[[wincmd l]]; vim.api.nvim_command(string.format("term ((tput cup 6 100; wezterm imgcat --width=50 '%s') >$PTS && read)", path));
         --                      vim.api.nvim_command(string.format( "silent TermExec direction=vertical cmd='(tput cup 6 100; wezterm imgcat --width=50 \"%s\") >$PTS'", path)); vim.cmd[[wincmd 2l]];
-        vim.api.nvim_command(string.format( "silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read -n1'", path))
+        vim.api.nvim_command(string.format(
+          "silent !wezterm cli split-pane --horizontal -- bash -c 'wezterm imgcat '%s' && read -n1'", path))
       end,
 
     },
@@ -524,7 +639,7 @@ neotree.setup({
   buffers = {
     follow_current_file = true, -- This will find and focus the file in the active buffer every
     -- time the current file is changed while the tree is open.
-    group_empty_dirs = true, -- when true, empty folders will be grouped together
+    group_empty_dirs = true,    -- when true, empty folders will be grouped together
     show_unloaded = true,
     window = {
       mappings = {

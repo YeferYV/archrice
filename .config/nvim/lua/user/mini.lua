@@ -68,7 +68,7 @@ mini_ai.setup({
     -- key-value textobj :help mini.ai (line 300)
     -- the pattern .- matches any sequence of characters (except newline characters) (including whitespaces)
     k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' }, -- .- -> don't be greedy let %s- to exist
-    v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } }, -- Pattern in double curly bracket equals fallback
+    v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } },            -- Pattern in double curly bracket equals fallback
 
     -- quotes/uotes:
     u = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
@@ -356,16 +356,16 @@ require('mini.surround').setup({
 
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
-    add = 'ys', -- Add surrounding in Normal and Visual modes
-    delete = 'ds', -- Delete surrounding
-    find = 'zf', -- Find surrounding (to the right)
-    find_left = 'zF', -- Find surrounding (to the left)
-    highlight = 'zh', -- Highlight surrounding
-    replace = 'cs', -- Replace surrounding
+    add = 'ys',            -- Add surrounding in Normal and Visual modes
+    delete = 'ds',         -- Delete surrounding
+    find = 'zf',           -- Find surrounding (to the right)
+    find_left = 'zF',      -- Find surrounding (to the left)
+    highlight = 'zh',      -- Highlight surrounding
+    replace = 'cs',        -- Replace surrounding
     update_n_lines = 'zn', -- Update `n_lines`
 
-    suffix_last = 'l', -- Suffix to search with "prev" method
-    suffix_next = 'N', -- Suffix to search with "next" method
+    suffix_last = 'l',     -- Suffix to search with "prev" method
+    suffix_next = 'N',     -- Suffix to search with "next" method
   },
 
   -- Number of lines within which surrounding is searched

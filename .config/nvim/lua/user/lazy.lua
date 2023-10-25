@@ -48,7 +48,6 @@ local plugins = {
     commit = "0fd6519d44eac3a6736aafdb3fe9da916c3701d4",
     event = "InsertEnter",
     config = function()
-
       require("nvim-autopairs").setup()
       -- require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
 
@@ -61,7 +60,6 @@ local plugins = {
           end
         end
       end)
-
     end,
   },
   {
@@ -86,12 +84,12 @@ local plugins = {
     commit = "777450fd0ae289463a14481673e26246b5e38bf2",
     event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
-      { "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }, -- buffer completions
-      { "hrsh7th/cmp-path", commit = "91ff86cd9c29299a64f968ebb45846c485725f23" }, -- path completions
-      { "hrsh7th/cmp-cmdline", commit = "8fcc934a52af96120fe26358985c10c035984b53" }, -- cmdline completions
-      { "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" }, -- snippet completions
-      { "hrsh7th/cmp-nvim-lsp", commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef" }, -- lsp completions
-      { "L3MON4D3/LuaSnip", commit = "bc8ec05022743d3f08bda7a76c6bb5e9a9024581" }, --snippet engine
+      { "hrsh7th/cmp-buffer",           commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }, -- buffer completions
+      { "hrsh7th/cmp-path",             commit = "91ff86cd9c29299a64f968ebb45846c485725f23" }, -- path completions
+      { "hrsh7th/cmp-cmdline",          commit = "8fcc934a52af96120fe26358985c10c035984b53" }, -- cmdline completions
+      { "saadparwaiz1/cmp_luasnip",     commit = "18095520391186d634a0045dacaa346291096566" }, -- snippet completions
+      { "hrsh7th/cmp-nvim-lsp",         commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef" }, -- lsp completions
+      { "L3MON4D3/LuaSnip",             commit = "bc8ec05022743d3f08bda7a76c6bb5e9a9024581" }, --snippet engine
       { "rafamadriz/friendly-snippets", commit = "8d91ba2dc2421a54981115f61b914974f938fa77" }, -- a bunch of snippets to use
     },
     config = function() require("user.cmp") end
@@ -107,7 +105,7 @@ local plugins = {
   {
     "rcarriga/nvim-dap-ui",
     commit = "56a2df0e96bfa64ebd6967e7cad877a1530633d5",
-    dependencies = { {"mfussenegger/nvim-dap", commit = "debd7c2f80eaf20c5f5df25db8d8c1b9b18f4421" } },
+    dependencies = { { "mfussenegger/nvim-dap", commit = "debd7c2f80eaf20c5f5df25db8d8c1b9b18f4421" } },
     -- config = function() require("user.dap") end
   },
 
@@ -117,7 +115,7 @@ local plugins = {
     commit = "2b2f74828eeb02cf29d6b21aa32eedadadc94ca7",
     cmd = "Neotree",
     dependencies = {
-      { "MunifTanjim/nui.nvim", commit = "1f43b13d133eb4b4f53a4485379d9afa58808389" },
+      { "MunifTanjim/nui.nvim",          commit = "1f43b13d133eb4b4f53a4485379d9afa58808389" },
       { "mrjones2014/smart-splits.nvim", commit = "d0111ef84fc82c9a31f4b000ff99190eaf18e790" },
     },
     config = function() require("user.neo-tree") end
@@ -132,14 +130,14 @@ local plugins = {
   },
 
   -- LSP
-  { "neovim/nvim-lspconfig", commit = "e683951a35ade60f9e1768ef770bb42ffcc1d2b7" }, -- enable LSP
-  { "jose-elias-alvarez/null-ls.nvim", commit = "5855128178fa78293acdfb5b4e41ef046779240b" }, -- for formatters and linters
-  { "b0o/SchemaStore.nvim", commit = "a592fbe98959d13014b022ec1b1418498309019c" }, -- jsonls schema completions
-  { "RRethy/vim-illuminate", commit = "a2907275a6899c570d16e95b9db5fd921c167502" },
-  { "williamboman/mason.nvim", commit = "2311d9d883eb709ad9979a726a38c5ce1343b63c", config = true },
+  { "neovim/nvim-lspconfig",             commit = "e683951a35ade60f9e1768ef770bb42ffcc1d2b7" }, -- enable LSP
+  { "jose-elias-alvarez/null-ls.nvim",   commit = "5855128178fa78293acdfb5b4e41ef046779240b" }, -- for formatters and linters
+  { "b0o/SchemaStore.nvim",              commit = "a592fbe98959d13014b022ec1b1418498309019c" }, -- jsonls schema completions
+  { "RRethy/vim-illuminate",             commit = "a2907275a6899c570d16e95b9db5fd921c167502" },
+  { "williamboman/mason.nvim",           commit = "2311d9d883eb709ad9979a726a38c5ce1343b63c", config = true },
   { "williamboman/mason-lspconfig.nvim", commit = "a8d5db8f227b9b236d1c54a9c6234bc033825ce7", config = true },
-  { "jay-babu/mason-null-ls.nvim", commit = "a991e7697514f30126fac7c07a11c488c553e94f" }, -- autoconfigured formatters
-  { "jay-babu/mason-nvim-dap.nvim", commit = "aa7f489903460f2c2e15a6a874c8b933722fe109" }, -- autoconfigured debuggers
+  { "jay-babu/mason-null-ls.nvim",       commit = "a991e7697514f30126fac7c07a11c488c553e94f" }, -- autoconfigured formatters
+  { "jay-babu/mason-nvim-dap.nvim",      commit = "aa7f489903460f2c2e15a6a874c8b933722fe109" }, -- autoconfigured debuggers
   {
     "glepnir/lspsaga.nvim",
     commit = "44af2ab1fee6bf166a001f7f006284a13737b45e",
@@ -148,12 +146,12 @@ local plugins = {
   },
 
   -- Motions
-  { "tpope/vim-repeat", commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a", event = "VeryLazy" },
-  { "justinmk/vim-sneak", commit = "93395f5b56eb203e4c8346766f258ac94ea81702", event = "VeryLazy" },
+  { "tpope/vim-repeat",                  commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a", event = "VeryLazy" },
+  { "justinmk/vim-sneak",                commit = "93395f5b56eb203e4c8346766f258ac94ea81702", event = "VeryLazy" },
 
   -- Status-Line
-  { "nvim-lualine/lualine.nvim", commit = "c28a7427c3fb29322db136f0564ec58807b26747" },
-  { "nvim-tree/nvim-web-devicons", commit = "f16ec8f6e5d23e4349501dae46e0a661918e086e" },
+  { "nvim-lualine/lualine.nvim",         commit = "c28a7427c3fb29322db136f0564ec58807b26747" },
+  { "nvim-tree/nvim-web-devicons",       commit = "f16ec8f6e5d23e4349501dae46e0a661918e086e" },
   { "Allianaab2m/nvim-material-icon-v3", commit = "89a89f7fa20330b21c93f4446bf99c20e7cea8d8" },
 
   -- Text-Objects
@@ -161,7 +159,7 @@ local plugins = {
   -- { "godlygeek/tabular"},
   -- { 'nvim-treesitter/playground'},
   -- { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" }, -- incremental-repressing + respects-blanklines + vimrepeat + VisualRepeatable(e.g mini.comment is noVisualRepeable)
-  { "echasnovski/mini.nvim", commit = "2d70ae2b0faade0b5ab8524e155f47ca829db5f2" },
+  { "echasnovski/mini.nvim",             commit = "2d70ae2b0faade0b5ab8524e155f47ca829db5f2" },
   -- {
   --   "kana/vim-textobj-user",
   --   commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933",
@@ -178,12 +176,12 @@ local plugins = {
     commit = "9161093fc7e13b12aa5bc86c641768c049d43a26",
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects", commit = "b55fe6175f0001347a433c9df358c8cbf8a4e90f" },
-      { "RRethy/nvim-treesitter-textsubjects", commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
+      { "RRethy/nvim-treesitter-textsubjects",         commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
     }
   },
   { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33", event = "VeryLazy" },
-  { "mg979/vim-visual-multi", commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a", event = "VeryLazy" },
-  { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
+  { "mg979/vim-visual-multi",             commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a", event = "VeryLazy" },
+  { "svermeulen/vim-easyclip",            commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
     commit = "c0aa3ff33eaf9e7bc827ea918f92ac47d6037118",
@@ -211,15 +209,15 @@ local plugins = {
   -- },
 
   -- TUI
-  { "akinsho/toggleterm.nvim", commit = "b86982429325112d2b20c6d0cc7a5c4b182ab705" },
+  { "akinsho/toggleterm.nvim",             commit = "b86982429325112d2b20c6d0cc7a5c4b182ab705" },
   {
     "nvim-telescope/telescope.nvim",
     commit = "942fe5faef47b21241e970551eba407bc10d9547",
     dependencies = {
-      { "nvim-lua/plenary.nvim", commit = "253d34830709d690f013daf2853a9d21ad7accab" },
-      { "nvim-telescope/telescope-fzf-native.nvim", commit = "580b6c48651cabb63455e97d7e131ed557b8c7e2", build = "make" },
+      { "nvim-lua/plenary.nvim",                      commit = "253d34830709d690f013daf2853a9d21ad7accab" },
+      { "nvim-telescope/telescope-fzf-native.nvim",   commit = "580b6c48651cabb63455e97d7e131ed557b8c7e2", build = "make" },
       { "nvim-telescope/telescope-file-browser.nvim", commit = "e0fcb12702ad0d2873544a31730f9aaef04fd032" },
-      { "AckslD/nvim-neoclip.lua", commit = "5b9286a40ea2020352280caeb713515badb03d99", config = true },
+      { "AckslD/nvim-neoclip.lua",                    commit = "5b9286a40ea2020352280caeb713515badb03d99", config = true },
     },
     config = function() require("user.telescope") end
   },
@@ -227,14 +225,14 @@ local plugins = {
   -- UI
   -- { "metakirby5/codi.vim" },
   { "lukas-reineke/indent-blankline.nvim", commit = "018bd04d80c9a73d399c1061fa0c3b14a7614399" },
-  { "ahmedkhalf/project.nvim", commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
+  { "ahmedkhalf/project.nvim",             commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   {
     "folke/which-key.nvim",
     commit = "4b73390eec680b4c061ea175eb32c0ff3412271d",
     dependencies = {
       -- { "mrjones2014/legendary.nvim" },
       { "machakann/vim-columnmove", commit = "21a43d809a03ff9bf9946d983d17b3a316bf7a64" },
-      { "phaazon/hop.nvim", commit = "90db1b2c61b820e230599a04fedcd2679e64bd07", config = true },
+      { "phaazon/hop.nvim",         commit = "90db1b2c61b820e230599a04fedcd2679e64bd07", config = true },
     },
   },
   {
@@ -271,7 +269,7 @@ local plugins = {
         commit = "ff3598395270c7f64d4dff5b15845a531abc4bc7",
         cmd = { "LushwalCompile" },
         dependencies = {
-          { "rktjmp/lush.nvim", commit = "a8f0f7b9f837887f13a61d67b40ae26188fe4d62" },
+          { "rktjmp/lush.nvim",       commit = "a8f0f7b9f837887f13a61d67b40ae26188fe4d62" },
           { "rktjmp/shipwright.nvim", commit = "ab70e80bb67b7ed3350bec89dd73473539893932" }
         },
         -- config = function() vim.g.lushwal_configuration = { compile_to_vimscript = false } end
@@ -326,8 +324,8 @@ local plugins = {
             {
               relculright = false,
               segments = {
-                { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-                { text = { "%s" }, click = "v:lua.ScSa" },
+                { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
+                { text = { "%s" },                  click = "v:lua.ScSa" },
                 { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" }
               }
             }

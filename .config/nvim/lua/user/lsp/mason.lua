@@ -62,25 +62,25 @@ for _, server in pairs(servers) do
   lspconfig[server].setup(opts)
 end
 
--- _manually_lspconfig_setup_using_nix/system_package_manager
--- to install lua-language-server version 3.5.3 run:
--- :!nix-env -iA sumneko-lua-language-server -f https://github.com/NixOS/nixpkgs/archive/ee01de29d2f58d56b1be4ae24c24bd91c5380cea.tar.gz
-local handle = io.popen("lua-language-server --version 2>/dev/null")
-if handle then --handles "Need check nil" warning
-  local output = handle:read("*a")
-  if output:match("^3.*") then
-    require('lspconfig')['lua_ls'].setup {
-      on_attach = require("user.lsp.handlers").on_attach,
-      capabilities = require("user.lsp.handlers").capabilities,
-      settings = {
-        Lua = {
-          telemetry = { enable = false },
-          runtime = { version = "LuaJIT" },
-          diagnostics = { globals = { "vim" } },
-          format = { enable = true, }
-        }
-      }
-    }
-  end
-  handle:close()
-end
+-- -- _manually_lspconfig_setup_using_nix/system_package_manager
+-- -- to install lua-language-server version 3.5.3 run:
+-- -- :!nix-env -iA sumneko-lua-language-server -f https://github.com/NixOS/nixpkgs/archive/ee01de29d2f58d56b1be4ae24c24bd91c5380cea.tar.gz
+-- local handle = io.popen("lua-language-server --version 2>/dev/null")
+-- if handle then --handles "Need check nil" warning
+--   local output = handle:read("*a")
+--   if output:match("^3.*") then
+--     require('lspconfig')['lua_ls'].setup {
+--       on_attach = require("user.lsp.handlers").on_attach,
+--       capabilities = require("user.lsp.handlers").capabilities,
+--       settings = {
+--         Lua = {
+--           telemetry = { enable = false },
+--           runtime = { version = "LuaJIT" },
+--           diagnostics = { globals = { "vim" } },
+--           format = { enable = true, }
+--         }
+--       }
+--     }
+--   end
+--   handle:close()
+-- end

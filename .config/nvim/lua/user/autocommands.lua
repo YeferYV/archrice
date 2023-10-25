@@ -135,32 +135,33 @@ vim.cmd [[
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- -- swap current window with the last visited window
--- _G.SwapWindow = function()
---   local thiswin = vim.fn.winnr()
---   local thisbuf = vim.fn.bufnr("%")
---   local lastwin = vim.fn.winnr("#")
---   local lastbuf = vim.fn.winbufnr(lastwin)
---
---   vim.cmd( lastwin   .. "wincmd w") -- go to lastwin
---   vim.cmd( "buffer " ..  thisbuf  ) -- view thisbuf in current window
---   vim.cmd( thiswin   .. "wincmd w") -- go to thiswin
---   vim.cmd( "buffer " ..  lastbuf  ) -- view lastbuf in current window
--- end
+function ShowBufferline()
+  require('bufferline').setup {
+    options = {
+      offsets = { { filetype = 'neo-tree', padding = 1 } },
+      show_close_icon = false
+    }
+  }
+end
+
+create_command("BufferlineShow", ShowBufferline, {})
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- swap current window with the last visited window
-_G.SwapWindow = function()
-  local thiswin = vim.fn.winnr()
-  local thisbuf = vim.fn.bufnr("%")
-  local lastwin = vim.fn.winnr("#")
-  local lastbuf = vim.fn.winbufnr(lastwin)
-  vim.cmd("buffer " .. lastbuf) -- view lastbuf in current window
-  vim.cmd("wincmd p")           -- go to previous window
-  vim.cmd("buffer " .. thisbuf) -- view thisbuf in current window
-  vim.cmd("wincmd p")           -- go to previous window
-end
+-- -- _json_to_jsonc
+-- cmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
+--   -- pattern = "*.json",
+--   -- command = "set ft=jsonc"
+--   callback = function()
+--     if vim.fn.expand('%:p:h:t') == "User" then
+--       if vim.fn.expand('%:t') == "settings.json" or
+--           vim.fn.expand('%:t') == "keybindings.json" or
+--           vim.fn.expand('%:t') == "tasks.json" then
+--         vim.bo.filetype = "jsonc"
+--       end
+--     end
+--   end,
+-- })
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -215,14 +216,12 @@ autocmd({ "TermEnter", "TermOpen" }, {
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- _autoclose_tab-terminal_if_last_window
+-- _show_alpha_if_close_last_tab-terminal + _autoclose_tab-terminal_if_last_window
 autocmd({ "TermClose" }, {
   group = hide_terminal_statusline,
   callback = function()
-
     local type = vim.bo.filetype
     if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" or type == "tab-terminal" then
-
       -- if number of tabs is equal to 1 (last tab)
       if #vim.api.nvim_list_tabpages() == 1 then
         vim.cmd [[ Alpha ]]
@@ -240,10 +239,38 @@ autocmd({ "TermClose" }, {
 
       -- alternatively close the buffer instead of confirming
       -- vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
-
     end
   end,
 })
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- -- swap current window with the last visited window
+-- _G.SwapWindow = function()
+--   local thiswin = vim.fn.winnr()
+--   local thisbuf = vim.fn.bufnr("%")
+--   local lastwin = vim.fn.winnr("#")
+--   local lastbuf = vim.fn.winbufnr(lastwin)
+--
+--   vim.cmd( lastwin   .. "wincmd w") -- go to lastwin
+--   vim.cmd( "buffer " ..  thisbuf  ) -- view thisbuf in current window
+--   vim.cmd( thiswin   .. "wincmd w") -- go to thiswin
+--   vim.cmd( "buffer " ..  lastbuf  ) -- view lastbuf in current window
+-- end
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- swap current window with the last visited window
+_G.SwapWindow = function()
+  local thiswin = vim.fn.winnr()
+  local thisbuf = vim.fn.bufnr("%")
+  local lastwin = vim.fn.winnr("#")
+  local lastbuf = vim.fn.winbufnr(lastwin)
+  vim.cmd("buffer " .. lastbuf) -- view lastbuf in current window
+  vim.cmd("wincmd p")           -- go to previous window
+  vim.cmd("buffer " .. thisbuf) -- view thisbuf in current window
+  vim.cmd("wincmd p")           -- go to previous window
+end
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -314,36 +341,6 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function ShowBufferline()
-  require('bufferline').setup {
-    options = {
-      offsets = { { filetype = 'neo-tree', padding = 1 } },
-      show_close_icon = false
-    }
-  }
-end
-
-create_command("BufferlineShow", ShowBufferline, {})
-
-------------------------------------------------------------------------------------------------------------------------
-
--- -- _json_to_jsonc
--- cmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
---   -- pattern = "*.json",
---   -- command = "set ft=jsonc"
---   callback = function()
---     if vim.fn.expand('%:p:h:t') == "User" then
---       if vim.fn.expand('%:t') == "settings.json" or
---           vim.fn.expand('%:t') == "keybindings.json" or
---           vim.fn.expand('%:t') == "tasks.json" then
---         vim.bo.filetype = "jsonc"
---       end
---     end
---   end,
--- })
-
-------------------------------------------------------------------------------------------------------------------------
-
 -- https://thevaluable.dev/vim-create-text-objects
 -- select indent by the same level:
 M.select_same_indent = function(skip_blank_line)
@@ -357,7 +354,6 @@ M.select_same_indent = function(skip_blank_line)
 
   local prev_line = vim.fn.line('.') - 1
   while vim.fn.indent(prev_line) == start_indent or match_blank_line(prev_line) do
-
     vim.cmd('-')
     prev_line = vim.fn.line('.') - 1
 
@@ -371,14 +367,12 @@ M.select_same_indent = function(skip_blank_line)
         break
       end
     end
-
   end
 
   vim.cmd('normal! 0V')
 
   local next_line = vim.fn.line('.') + 1
   while vim.fn.indent(next_line) == start_indent or match_blank_line(next_line) do
-
     vim.cmd('+')
     next_line = vim.fn.line('.') + 1
 
@@ -392,7 +386,6 @@ M.select_same_indent = function(skip_blank_line)
         break
       end
     end
-
   end
 end
 
@@ -401,7 +394,7 @@ end
 -- goto next/prev same level indent:
 M.next_same_indent = function(next)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   local current_line = vim.fn.line('.')
   local sign = next and '+' or '-'
 
@@ -419,14 +412,14 @@ M.next_same_indent = function(next)
   if start_indent ~= 0 then
     while vim.fn.indent(next_line) == start_indent do
       vim.cmd(sign)
-      next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
     end
   end
 
   -- scroll differrent indentation (supports indent = 0, skip blacklines)
-  while vim.fn.indent(next_line) ~= -1 and ( vim.fn.indent(next_line) ~= start_indent or string.match(vim.fn.getline(next_line), '^%s*$') ) do
+  while vim.fn.indent(next_line) ~= -1 and (vim.fn.indent(next_line) ~= start_indent or string.match(vim.fn.getline(next_line), '^%s*$')) do
     vim.cmd(sign)
-    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+    next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   end
 
   -- scroll to next indentation
@@ -434,15 +427,13 @@ M.next_same_indent = function(next)
 
   -- scroll to top of indentation noblacklines
   local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   if sign == '-' then
-
     -- next_line indent is start_indent, next_line is no_blankline
     while vim.fn.indent(next_line) == start_indent and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
       vim.cmd('-')
       next_line = vim.fn.line('.') - 1
     end
-
   end
 end
 
@@ -452,7 +443,7 @@ end
 M.next_different_indent = function(next)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
   local current_line = vim.fn.line('.')
-  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   local sign = next and '+' or '-'
 
   -- scroll no_blanklines (indent = 0) when going down
@@ -469,14 +460,14 @@ M.next_different_indent = function(next)
   if start_indent ~= 0 then
     while vim.fn.indent(next_line) == start_indent do
       vim.cmd(sign)
-      next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
     end
   end
 
   -- scroll blanklines (indent = -1 is when line is 0 or line is last+1 )
   while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') do
     vim.cmd(sign)
-    next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+    next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   end
 
   -- scroll to next indentation
@@ -484,17 +475,14 @@ M.next_different_indent = function(next)
 
   -- scroll to top of indentation noblacklines
   local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local next_line = next and ( vim.fn.line('.') + 1 ) or ( vim.fn.line('.') - 1 )
+  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   if sign == '-' then
-
     -- next_line indent is start_indent, next_line is no_blankline
     while vim.fn.indent(next_line) == start_indent and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
       vim.cmd('-')
       next_line = vim.fn.line('.') - 1
     end
-
   end
-
 end
 
 ------------------------------------------------------------------------------------------------------------------------

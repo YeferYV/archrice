@@ -58,11 +58,23 @@ telescope.setup {
       i = {
         ["<A-R>"] = edit_register,
 
-        ["<Tab>"] = function(prompt_bufnr) actions.toggle_selection(prompt_bufnr) actions.move_selection_next(prompt_bufnr) end,
-        ["<S-Tab>"] = function(prompt_bufnr) actions.toggle_selection(prompt_bufnr) actions.move_selection_previous(prompt_bufnr) end,
+        ["<Tab>"] = function(prompt_bufnr)
+          actions.toggle_selection(prompt_bufnr)
+          actions.move_selection_next(prompt_bufnr)
+        end,
+        ["<S-Tab>"] = function(prompt_bufnr)
+          actions.toggle_selection(prompt_bufnr)
+          actions.move_selection_previous(prompt_bufnr)
+        end,
 
-        ["<C-a>"] = function(prompt_bufnr) actions.add_selected_to_qflist(prompt_bufnr) actions.open_qflist(prompt_bufnr) end,
-        ["<A-A>"] = function(prompt_bufnr) actions.add_selected_to_loclist(prompt_bufnr) actions.open_loclist(prompt_bufnr) end,
+        ["<C-a>"] = function(prompt_bufnr)
+          actions.add_selected_to_qflist(prompt_bufnr)
+          actions.open_qflist(prompt_bufnr)
+        end,
+        ["<A-A>"] = function(prompt_bufnr)
+          actions.add_selected_to_loclist(prompt_bufnr)
+          actions.open_loclist(prompt_bufnr)
+        end,
 
         ["<C-d>"] = actions.preview_scrolling_down,
         ["<C-u>"] = actions.preview_scrolling_up,
@@ -85,8 +97,14 @@ telescope.setup {
 
         ["<C-c>"] = actions.close,
 
-        ["<C-s>"] = function(prompt_bufnr) actions.send_selected_to_qflist(prompt_bufnr) actions.open_qflist(prompt_bufnr) end,
-        ["<A-S>"] = function(prompt_bufnr) actions.send_selected_to_loclist(prompt_bufnr) actions.open_loclist(prompt_bufnr) end,
+        ["<C-s>"] = function(prompt_bufnr)
+          actions.send_selected_to_qflist(prompt_bufnr)
+          actions.open_qflist(prompt_bufnr)
+        end,
+        ["<A-S>"] = function(prompt_bufnr)
+          actions.send_selected_to_loclist(prompt_bufnr)
+          actions.open_loclist(prompt_bufnr)
+        end,
 
         ["<C-v>"] = actions.select_vertical,
         ["<A-V>"] = actions.select_horizontal,
@@ -105,11 +123,23 @@ telescope.setup {
       n = {
         ["R"] = edit_register,
 
-        ["<Tab>"] = function(prompt_bufnr) actions.toggle_selection(prompt_bufnr) actions.move_selection_next(prompt_bufnr) end,
-        ["<S-Tab>"] = function(prompt_bufnr) actions.toggle_selection(prompt_bufnr) actions.move_selection_previous(prompt_bufnr) end,
+        ["<Tab>"] = function(prompt_bufnr)
+          actions.toggle_selection(prompt_bufnr)
+          actions.move_selection_next(prompt_bufnr)
+        end,
+        ["<S-Tab>"] = function(prompt_bufnr)
+          actions.toggle_selection(prompt_bufnr)
+          actions.move_selection_previous(prompt_bufnr)
+        end,
 
-        ["a"] = function(prompt_bufnr) actions.add_selected_to_qflist(prompt_bufnr) actions.open_qflist(prompt_bufnr) end,
-        ["A"] = function(prompt_bufnr) actions.add_selected_to_loclist(prompt_bufnr) actions.open_loclist(prompt_bufnr) end,
+        ["a"] = function(prompt_bufnr)
+          actions.add_selected_to_qflist(prompt_bufnr)
+          actions.open_qflist(prompt_bufnr)
+        end,
+        ["A"] = function(prompt_bufnr)
+          actions.add_selected_to_loclist(prompt_bufnr)
+          actions.open_loclist(prompt_bufnr)
+        end,
 
         ["d"] = actions.preview_scrolling_down,
         ["u"] = actions.preview_scrolling_up,
@@ -133,8 +163,14 @@ telescope.setup {
         ["q"] = actions.close,
         ["<esc>"] = actions.close,
 
-        ["s"] = function(prompt_bufnr) actions.send_selected_to_qflist(prompt_bufnr) actions.open_qflist(prompt_bufnr) end,
-        ["S"] = function(prompt_bufnr) actions.send_selected_to_loclist(prompt_bufnr) actions.open_loclist(prompt_bufnr) end,
+        ["s"] = function(prompt_bufnr)
+          actions.send_selected_to_qflist(prompt_bufnr)
+          actions.open_qflist(prompt_bufnr)
+        end,
+        ["S"] = function(prompt_bufnr)
+          actions.send_selected_to_loclist(prompt_bufnr)
+          actions.open_loclist(prompt_bufnr)
+        end,
 
         ["t"] = actions.select_tab,
         ["v"] = actions.select_vertical,
@@ -238,16 +274,16 @@ telescope.setup {
   },
   extensions = {
     fzf = {
-      fuzzy = true, -- false will only do exact matching
+      fuzzy = true,                   -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
     file_browser = {
       -- theme = "ivy",
       auto_depth = true, -- finder unlimited depth
-      depth = 1, -- telescope show depth
+      depth = 1,         -- telescope show depth
       default_selection_index = 1,
       display_stat = {}, -- { date = true, size = true },
       grouped = true,

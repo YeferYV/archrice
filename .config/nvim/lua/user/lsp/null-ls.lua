@@ -41,26 +41,26 @@ local null_sources = {}
 --   end
 -- end
 
--- _stylua_config_if_installed
-for _, package in ipairs(mason_registry.get_installed_packages()) do
-  -- :lua vim.pretty_print(require("mason-registry").get_installed_packages())
-  -- :lua =require("mason-registry").get_installed_packages()[1].name
-  if package.name == "stylua" then
-    table.insert(
-      null_sources,
-      formatting[package.name].with {
-        extra_args = {
-          "--indent-width=2",
-          "--indent-type=Spaces",
-          "--call-parentheses=None",
-          "--collapse-simple-statement=Always",
-          -- "--quote-style=ForceSingle",
-          -- "--quote-style=AutoPreferDouble"
-        },
-      }
-    )
-  end
-end
+-- -- _stylua_config_if_installed
+-- for _, package in ipairs(mason_registry.get_installed_packages()) do
+--   -- :lua vim.pretty_print(require("mason-registry").get_installed_packages())
+--   -- :lua =require("mason-registry").get_installed_packages()[1].name
+--   if package.name == "stylua" then
+--     table.insert(
+--       null_sources,
+--       formatting[package.name].with {
+--         extra_args = {
+--           "--indent-width=2",
+--           "--indent-type=Spaces",
+--           "--call-parentheses=None",
+--           "--collapse-simple-statement=Always",
+--           -- "--quote-style=ForceSingle",
+--           -- "--quote-style=AutoPreferDouble"
+--         },
+--       }
+--     )
+--   end
+-- end
 
 null_ls.setup {
   sources = null_sources,

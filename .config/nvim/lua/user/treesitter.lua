@@ -10,7 +10,7 @@ configs.setup {
   autopairs = {
     enable = true,
   },
-  highlight = { -- enable highlighting for all file types
+  highlight = {    -- enable highlighting for all file types
     enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
     use_languagetree = true,
     additional_vim_regex_highlighting = true,
@@ -23,7 +23,7 @@ configs.setup {
   incremental_selection = {
     enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
     disable = { "yaml" },
-    keymaps = { -- mappings for incremental selection (visual mappings)
+    keymaps = {    -- mappings for incremental selection (visual mappings)
       -- init_selection = "gnn",         -- maps in normal mode to init the node/scope selection
       -- node_incremental = "grn",       -- increment to the upper named parent
       -- scope_incremental = "grc",      -- increment to the upper scope (as defined in locals.scm)
@@ -212,7 +212,7 @@ configs.setup {
   },
   textsubjects = {
     enable = true,
-    prev_selection = 'Q', -- (Optional) keymap to select the previous selection
+    prev_selection = 'Q',           -- (Optional) keymap to select the previous selection
     keymaps = {
       ['K'] = 'textsubjects-smart', -- useful for block of comments
       ['aK'] = 'textsubjects-container-outer',

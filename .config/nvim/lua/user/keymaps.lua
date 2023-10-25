@@ -122,7 +122,10 @@ keymap("i", "kj", "<ESC>", opts)
 
 -- Quick quit/write
 map("n", "<S-q>", function() vim.cmd("quit") end, opts)
-map("n", "<S-r>", function() vim.lsp.buf.format() vim.cmd("silent write") end, opts)
+map("n", "<S-r>", function()
+  vim.lsp.buf.format()
+  vim.cmd("silent write")
+end, opts)
 
 -- Quick Jump
 keymap("n", "J", "10gj", opts)
@@ -155,7 +158,7 @@ keymap("n", "<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", opts)
 keymap("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", opts)
 keymap("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", opts)
 keymap("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", opts)
-keymap("n", "g,", "g,", { noremap = true, silent = true, desc = "go forward in :changes" }) -- Formatting will lose track of changes
+keymap("n", "g,", "g,", { noremap = true, silent = true, desc = "go forward in :changes" })  -- Formatting will lose track of changes
 keymap("n", "g;", "g;", { noremap = true, silent = true, desc = "go backward in :changes" }) -- Formatting will lose track of changes
 keymap("n", "gb;", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
 keymap("n", "<C-;>", "<C-6>", { noremap = true, silent = true, desc = "go to last buffer" })
@@ -251,8 +254,10 @@ map({ "n", "o", "x" }, "gl", "`.", { silent = true, desc = "Jump to last change"
 -- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
 -- map({ "o" }, 'gk', '<cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "BlockComment textobj" })
 -- map({ "x" }, 'gk', ':<c-u>normal "zygkgv<cr>', { silent = true, desc = "BlockComment textobj" })
-map({ "o", "x" }, "gc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>", { silent = true, desc = "BlockComment textobj" })
-map({ "n" }, "vgc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>", { silent = true, desc = "BlockComment textobj" })
+map({ "o", "x" }, "gc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>",
+  { silent = true, desc = "BlockComment textobj" })
+map({ "n" }, "vgc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>",
+  { silent = true, desc = "BlockComment textobj" })
 map({ "x" }, 'gK', '<cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
 map({ "o" }, 'gK', ':<c-u>normal vgK<cr>', { silent = true, desc = "RestOfComment textobj" })
 
@@ -322,10 +327,14 @@ keymap("o", 'az', ":normal Vaf<CR>", { silent = true, desc = "outer fold textobj
 -- _nvim_various_textobjs: indentation textobj requires two parameters, first for
 -- exclusion of the starting border, second for the exclusion of ending border
 -- _vim_indent_object_(incrementalrepressing_+_visualrepeatable_+_vimrepeat_+_respectingblanklines_+_norespectslastblanklines(selectblanklines is vip))
-map({ "o", "x" }, "ii", '<cmd>lua require("various-textobjs").indentation("inner", "inner", "noBlanks")<cr>', { desc = "inner noblanks indentation textobj" })
-map({ "o", "x" }, "ai", '<cmd>lua require("various-textobjs").indentation("outer", "outer", "noBlanks")<cr>', { desc = "outer noblanks indentation textobj" })
-map({ "o", "x" }, "iI", '<cmd>lua require("various-textobjs").indentation("inner", "inner")<cr>', { desc = "inner indentation textobj" })
-map({ "o", "x" }, "aI", '<cmd>lua require("various-textobjs").indentation("outer", "outer")<cr>', { desc = "outer indentation textobj" })
+map({ "o", "x" }, "ii", '<cmd>lua require("various-textobjs").indentation("inner", "inner", "noBlanks")<cr>',
+  { desc = "inner noblanks indentation textobj" })
+map({ "o", "x" }, "ai", '<cmd>lua require("various-textobjs").indentation("outer", "outer", "noBlanks")<cr>',
+  { desc = "outer noblanks indentation textobj" })
+map({ "o", "x" }, "iI", '<cmd>lua require("various-textobjs").indentation("inner", "inner")<cr>',
+  { desc = "inner indentation textobj" })
+map({ "o", "x" }, "aI", '<cmd>lua require("various-textobjs").indentation("outer", "outer")<cr>',
+  { desc = "outer indentation textobj" })
 
 -- -- _vim_indent_object_(incrementalrepressing_+_visualrepeatable_+_vimrepeat_+_notrespectingblanklines_+_respectslastblanklines(selectblanklines is vip))
 -- -- _as_autocommand_since_vim-indent-object_overwrites_it
@@ -368,8 +377,10 @@ map({ "o", "x" }, "aI", '<cmd>lua require("various-textobjs").indentation("outer
 -- map({ "o", "x" }, "aY", "<Plug>(textobj-indent-same-a)", { silent = true, desc = "indent samelevel with_blankline textobj" })
 
 -- indent same level textobj:
-map({"x","o"}, "iy", ":<c-u> lua require('user.autocommands').select_same_indent(true)<cr>", { silent = true, desc = "same_indent skip_blankline textobj" })
-map({"x","o"}, "ay", ":<c-u> lua require('user.autocommands').select_same_indent(false)<cr>", { silent = true, desc = "same_indent with_blankline textobj" })
+map({ "x", "o" }, "iy", ":<c-u> lua require('user.autocommands').select_same_indent(true)<cr>",
+  { silent = true, desc = "same_indent skip_blankline textobj" })
+map({ "x", "o" }, "ay", ":<c-u> lua require('user.autocommands').select_same_indent(false)<cr>",
+  { silent = true, desc = "same_indent with_blankline textobj" })
 
 -- _clipboard_textobj_(vim.g defined in options.lua)
 -- vim.g.EasyClipEnableBlackHoleRedirect = false
@@ -483,8 +494,14 @@ map({ "n", "x", "o" }, "gpd", prev_diagnostic, { silent = true, desc = "Prev Dia
 
 -- _goto_function_definition_repeatable
 local next_funcdefinition, prev_funcdefinition = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal vaNf ]] vim.cmd [[ call feedkeys("") ]] end,
-  function() vim.cmd [[ normal valf ]] vim.cmd [[ call feedkeys("") ]] end
+  function()
+    vim.cmd [[ normal vaNf ]]
+    vim.cmd [[ call feedkeys("") ]]
+  end,
+  function()
+    vim.cmd [[ normal valf ]]
+    vim.cmd [[ call feedkeys("") ]]
+  end
 )
 map({ "n", "x", "o" }, "gnf", next_funcdefinition, { silent = true, desc = "Next FuncDefinition" })
 map({ "n", "x", "o" }, "gpf", prev_funcdefinition, { silent = true, desc = "Prev FuncDefinition" })
@@ -499,8 +516,14 @@ map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { silent = true, desc = "Prev Gi
 
 -- _goto_quotes_repeatable
 local next_quote, prev_quote = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal viNu ]] vim.cmd [[ call feedkeys("") ]] end,
-  function() vim.cmd [[ normal vilu ]] vim.cmd [[ call feedkeys("") ]] end
+  function()
+    vim.cmd [[ normal viNu ]]
+    vim.cmd [[ call feedkeys("") ]]
+  end,
+  function()
+    vim.cmd [[ normal vilu ]]
+    vim.cmd [[ call feedkeys("") ]]
+  end
 )
 map({ "n", "x", "o" }, "gnu", next_quote, { silent = true, desc = "Next Quote" })
 map({ "n", "x", "o" }, "gpu", prev_quote, { silent = true, desc = "Prev Quote" })
@@ -567,7 +590,10 @@ map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { silent = true, des
 -- _jump_edgeindent_repeatable_blankline
 local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal viiV$ ]] end,
-  function() vim.cmd [[ normal viio ]] FeedKeysCorrectly('<esc>_') end
+  function()
+    vim.cmd [[ normal viio ]]
+    FeedKeysCorrectly('<esc>_')
+  end
 )
 map({ "n", "x", "o" }, "<leader><leader>a", next_indent, { silent = true, desc = "End Indent" })
 map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc = "Start Indent" })
@@ -575,7 +601,10 @@ map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc =
 -- _jump_edgeindent_repeatable_skip_blankline
 local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal viIV$ ]] end,
-  function() vim.cmd [[ normal viIo ]] FeedKeysCorrectly('<esc>_') end
+  function()
+    vim.cmd [[ normal viIo ]]
+    FeedKeysCorrectly('<esc>_')
+  end
 )
 map({ "n", "x", "o" }, "<leader><leader>A", next_indent, { silent = true, desc = "End Indent" })
 map({ "n", "x", "o" }, "<leader><leader>I", prev_indent, { silent = true, desc = "Start Indent" })
@@ -628,15 +657,27 @@ map({ "n", "x", "o" }, "gPn", prev_around_numeral, { silent = true, desc = "Prev
 
 -- _vert_horz_incremental_(goto_repeatable)
 local vert_increment, vert_decrement = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal "zyanjvan"zp ]] FeedKeysCorrectly('<C-a>') end,
-  function() vim.cmd [[ normal "zyanjvan"zp ]] FeedKeysCorrectly('<C-x>') end
+  function()
+    vim.cmd [[ normal "zyanjvan"zp ]]
+    FeedKeysCorrectly('<C-a>')
+  end,
+  function()
+    vim.cmd [[ normal "zyanjvan"zp ]]
+    FeedKeysCorrectly('<C-x>')
+  end
 )
 map({ "n" }, "g+", vert_increment, { silent = true, desc = "Vert Increment" })
 map({ "n" }, "g-", vert_decrement, { silent = true, desc = "Vert Decrement" })
 
 local horz_increment, horz_decrement = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ normal "zyanvaNn"zp ]] FeedKeysCorrectly('<C-a>') end,
-  function() vim.cmd [[ normal "zyanvaNn"zp ]] FeedKeysCorrectly('<C-x>') end
+  function()
+    vim.cmd [[ normal "zyanvaNn"zp ]]
+    FeedKeysCorrectly('<C-a>')
+  end,
+  function()
+    vim.cmd [[ normal "zyanvaNn"zp ]]
+    FeedKeysCorrectly('<C-x>')
+  end
 )
 map({ "n" }, "gn+", horz_increment, { silent = true, desc = "Horz increment" })
 map({ "n" }, "gn-", horz_decrement, { silent = true, desc = "Horz Decrement" })

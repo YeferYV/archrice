@@ -202,7 +202,8 @@ lualine.setup({
     lualine_a = { branch },
     lualine_b = {},
     lualine_c = {},
-    lualine_x = { 'searchcount', show_macro_recording, diagnostics, diff, treesitterIcon, lspServer, 'filetype',spaces, number_of_lines }, -- "encoding"
+    lualine_x = { 'searchcount', show_macro_recording, diagnostics, diff, treesitterIcon, lspServer, 'filetype', spaces,
+      number_of_lines },                                                                                                                   -- "encoding"
     lualine_y = { location },
     lualine_z = { progress },
   },

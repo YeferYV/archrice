@@ -5,22 +5,22 @@ end
 
 local setup = {
   plugins = {
-    marks = true, -- shows a list of your marks on ' and `
-    registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+    marks = true,       -- shows a list of your marks on ' and `
+    registers = true,   -- shows your registers on " in NORMAL or <C-r> in INSERT mode
     spelling = {
-      enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+      enabled = true,   -- enabling this will show WhichKey when pressing z= to select spelling suggestions
       suggestions = 20, -- how many suggestions should be shown in the list?
     },
     -- the presets plugin, adds help for a bunch of default keybindings in Neovim
     -- No actual key bindings are created
     presets = {
-      operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-      motions = true, -- adds help for motions
+      operators = true,    -- adds help for operators like d, y, ... and registers them for motion / text object completion
+      motions = true,      -- adds help for motions
       text_objects = true, -- help for text objects triggered after entering an operator
-      windows = true, -- default bindings on <c-w>
-      nav = true, -- misc bindings to work with windows
-      z = true, -- bindings for folds, spelling and others prefixed with z
-      g = true, -- bindings for prefixed with g
+      windows = true,      -- default bindings on <c-w>
+      nav = true,          -- misc bindings to work with windows
+      z = true,            -- bindings for folds, spelling and others prefixed with z
+      g = true,            -- bindings for prefixed with g
     },
   },
   -- add operators that will trigger motion and text object completion
@@ -40,25 +40,25 @@ local setup = {
   },
   popup_mappings = {
     scroll_down = "<c-d>", -- binding to scroll down inside the popup
-    scroll_up = "<c-u>", -- binding to scroll up inside the popup
+    scroll_up = "<c-u>",   -- binding to scroll up inside the popup
   },
   window = {
-    border = "rounded", -- none, single, double, shadow
-    position = "bottom", -- bottom, top
-    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+    border = "rounded",       -- none, single, double, shadow
+    position = "bottom",      -- bottom, top
+    margin = { 1, 0, 1, 0 },  -- extra window margin [top, right, bottom, left]
     padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
     winblend = 0,
   },
   layout = {
-    height = { min = 4, max = 25 }, -- min and max height of the columns
-    width = { min = 20, max = 50 }, -- min and max width of the columns
-    spacing = 3, -- spacing between columns
-    align = "left", -- align columns left, center or right
+    height = { min = 4, max = 25 },                                                       -- min and max height of the columns
+    width = { min = 20, max = 50 },                                                       -- min and max width of the columns
+    spacing = 3,                                                                          -- spacing between columns
+    align = "left",                                                                       -- align columns left, center or right
   },
-  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+  ignore_missing = false,                                                                 -- enable this to hide mappings for which you didn't specify a label
   hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "<Plug>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-  show_help = true, -- show help message on the command line when the popup is visible
-  triggers = "auto", -- automatically setup triggers
+  show_help = true,                                                                       -- show help message on the command line when the popup is visible
+  triggers = "auto",                                                                      -- automatically setup triggers
   -- triggers = {"<leader>"} -- or specify a list manually
   triggers_blacklist = {
     -- list of mode / prefixes that should never be hooked by WhichKey
@@ -70,12 +70,12 @@ local setup = {
 }
 
 local opts = {
-  mode = "n", -- NORMAL mode
+  mode = "n",     -- NORMAL mode
   prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
+  buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true,  -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  nowait = true,  -- use `nowait` when creating keymaps
 }
 
 local mappings = {
@@ -95,6 +95,39 @@ local mappings = {
   ["<S-Tab>"] = { "which_key_ignore" },
 
   ["'"] = { "<Cmd>Telescope marks initial_mode=normal<CR>", "Marks" },
+  ["."] = { "<cmd>Telescope resume<cr>", "Telescope resume" },
+
+  [";"] = {
+    name = "Tabs",
+    C = { "<cmd>tabonly<cr>", "Close others Tabs" },
+    n = { "<cmd>tabnext<cr>", "Next Tab" },
+    p = { "<cmd>tabprevious<cr>", "Previous Tab" },
+    N = { "<cmd>+tabmove<cr>", "move tab to next tab" },
+    P = { "<cmd>-tabmove<cr>", "move tab to previous tab" },
+    t = {
+      function()
+        vim.cmd [[ tabnew ]]
+        vim.cmd [[ BufferlineShow ]]
+      end,
+      "New Tab"
+    },
+    x = { "<cmd>tabclose<cr>", "Close Tab" },
+    -- ["!"] = { "<cmd>tabmove 0<cr>", "move to #1 tab" },
+    -- ["("] = { "<cmd>tabmove $<cr>", "move to last tab" },
+    -- [":"] = { "<cmd>tabmove #<cr>", "move to recent tab" },
+    ["1"] = { "<cmd>tabnext 1<cr>", "go to #1 tab" },
+    ["2"] = { "<cmd>tabnext 2<cr>", "go to #2 tab" },
+    ["3"] = { "<cmd>tabnext 3<cr>", "go to #3 tab" },
+    ["4"] = { "<cmd>tabnext 4<cr>", "go to #4 tab" },
+    ["5"] = { "<cmd>tabnext 5<cr>", "go to #5 tab" },
+    ["6"] = { "<cmd>tabnext 6<cr>", "go to #6 tab" },
+    ["7"] = { "<cmd>tabnext 7<cr>", "go to #7 tab" },
+    ["8"] = { "<cmd>tabnext 8<cr>", "go to #8 tab" },
+    ["9"] = { "<cmd>tabnext 9<cr>", "go to #9 tab" },
+    [";"] = { "<cmd>tabnext #<cr>", "Recent Tab" },
+    ["<Tab>"] = { "<cmd>tabprevious<cr>", "Previous Tab" },
+    ["<S-Tab>"] = { "<cmd>tabnext<cr>", "Next Tab" },
+  },
 
   b = {
     name = "Buffer",
@@ -152,38 +185,6 @@ local mappings = {
     [";"] = { "<cmd>buffer #<cr>", "Recent buffer" },
   },
 
-  [";"] = {
-    name = "Tabs",
-    C = { "<cmd>tabonly<cr>", "Close others Tabs" },
-    n = { "<cmd>tabnext<cr>", "Next Tab" },
-    p = { "<cmd>tabprevious<cr>", "Previous Tab" },
-    N = { "<cmd>+tabmove<cr>", "move tab to next tab" },
-    P = { "<cmd>-tabmove<cr>", "move tab to previous tab" },
-    t = {
-      function()
-        vim.cmd [[ tabnew ]]
-        vim.cmd [[ BufferlineShow ]]
-      end,
-      "New Tab"
-    },
-    x = { "<cmd>tabclose<cr>", "Close Tab" },
-    -- ["!"] = { "<cmd>tabmove 0<cr>", "move to #1 tab" },
-    -- ["("] = { "<cmd>tabmove $<cr>", "move to last tab" },
-    -- [":"] = { "<cmd>tabmove #<cr>", "move to recent tab" },
-    ["1"] = { "<cmd>tabnext 1<cr>", "go to #1 tab" },
-    ["2"] = { "<cmd>tabnext 2<cr>", "go to #2 tab" },
-    ["3"] = { "<cmd>tabnext 3<cr>", "go to #3 tab" },
-    ["4"] = { "<cmd>tabnext 4<cr>", "go to #4 tab" },
-    ["5"] = { "<cmd>tabnext 5<cr>", "go to #5 tab" },
-    ["6"] = { "<cmd>tabnext 6<cr>", "go to #6 tab" },
-    ["7"] = { "<cmd>tabnext 7<cr>", "go to #7 tab" },
-    ["8"] = { "<cmd>tabnext 8<cr>", "go to #8 tab" },
-    ["9"] = { "<cmd>tabnext 9<cr>", "go to #9 tab" },
-    [";"] = { "<cmd>tabnext #<cr>", "Recent Tab" },
-    ["<Tab>"] = { "<cmd>tabprevious<cr>", "Previous Tab" },
-    ["<S-Tab>"] = { "<cmd>tabnext<cr>", "Next Tab" },
-  },
-
   c = {
     name = "Compiler",
     b = { "<cmd>!bash %<cr>", "Exec with bash" },
@@ -223,7 +224,6 @@ local mappings = {
   ["h"] = { "<cmd>noh<cr>", "NoHighlight" },
   ["e"] = { "<cmd>lua _G.neotree_blend=false<cr><cmd>Neotree toggle left<cr>", "Neotree Toggle" },
   ["o"] = { "<cmd>lua _G.neotree_blend=true<cr><cmd>Neotree focus<cr>", "Neotree focus" },
-  ["."] = { "<cmd>Telescope resume<cr>", "Telescope resume" },
   ["q"] = {
     function()
       _G.neotree_blend = true
@@ -270,7 +270,8 @@ local mappings = {
     h = { function() WhichkeyRepeat("lua vim.lsp.buf.hover()") end, "Hover" },
     H = { function() WhichkeyRepeat("lua vim.lsp.buf.signature_help()") end, "Signature" },
     I = { function() WhichkeyRepeat("lua vim.lsp.buf.implementation()") end, "Goto Implementation" },
-    L = { function() WhichkeyRepeat("lua vim.lsp.codelens.run()") end, "CodeLens" },
+    l = { function() WhichkeyRepeat("lua vim.lsp.codelens.refresh()") end, "CodeLens refresh" },
+    L = { function() WhichkeyRepeat("lua vim.lsp.codelens.run()") end, "CodeLens run" },
     n = { function() WhichkeyRepeat("lua vim.diagnostic.goto_next()") end, "Next Diagnostic", },
     o = { function() WhichkeyRepeat("lua vim.diagnostic.open_float()") end, "Open Diagnostic" },
     p = { function() WhichkeyRepeat("lua vim.diagnostic.goto_prev()") end, "Prev Diagnostic", },
