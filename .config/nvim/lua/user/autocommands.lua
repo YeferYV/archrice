@@ -135,93 +135,38 @@ vim.cmd [[
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- Last Active Tab
-vim.cmd [[
-  function! LastActiveTab()
-    if !exists('g:lasttab')
-      let g:lasttab = 1
-    endif
-    au TabLeave * let g:lasttab = tabpagenr()
-    exe "tabn ".g:lasttab
-  endfunction
-    " nnoremap <C-z> :call LastActiveTab()<CR>
-]]
+-- -- swap current window with the last visited window
+-- _G.SwapWindow = function()
+--   local thiswin = vim.fn.winnr()
+--   local thisbuf = vim.fn.bufnr("%")
+--   local lastwin = vim.fn.winnr("#")
+--   local lastbuf = vim.fn.winbufnr(lastwin)
+--
+--   vim.cmd( lastwin   .. "wincmd w") -- go to lastwin
+--   vim.cmd( "buffer " ..  thisbuf  ) -- view thisbuf in current window
+--   vim.cmd( thiswin   .. "wincmd w") -- go to thiswin
+--   vim.cmd( "buffer " ..  lastbuf  ) -- view lastbuf in current window
+-- end
 
--- SwitchWindow
-vim.cmd [[
-  function! SwitchWindow(count) abort
-    let l:current_buf = winbufnr(0)
-    exe "buffer" . winbufnr(a:count)
-    exe a:count . "wincmd w"
-    exe "buffer" . l:current_buf
-    wincmd p
-  endfunction
-  " nnoremap <C-x> :call SwitchWindow(v:count1)<CR>
-  " tnoremap <C-x> <C-\><C-n>:call SwitchWindow(v:count1)<CR><Esc>
-]]
+------------------------------------------------------------------------------------------------------------------------
 
--- SwitchWindow2
-vim.cmd [[
-  function! SwitchWindow2()
-    let thiswin = winnr()
-    let thisbuf = bufnr("%")
-    let lastwin = winnr("#")
-    let lastbuf = winbufnr(lastwin)
-    exe "buffer" . lastbuf
-    wincmd p
-    exe "buffer" . thisbuf
-    wincmd p
-  endfunction
-  " nnoremap <C-x> :call SwitchWindow2()<CR>
-  " tnoremap <C-x> <C-\><C-n>:call WinBufSwap()<CR><Esc>
-]]
-
--- Window Buffer Swap
-vim.cmd [[
-  function! WinBufSwap()
-    let thiswin = winnr()
-    let thisbuf = bufnr("%")
-    let lastwin = winnr("#")
-    let lastbuf = winbufnr(lastwin)
-
-    exec  lastwin . " wincmd w" ."|".
-        \ "buffer ". thisbuf ."|".
-        \ thiswin ." wincmd w" ."|".
-        \ "buffer ". lastbuf
-  endfunction
-
-  command! Wswap :call WinBufSwap()
-  " map <C-v> :call WinBufSwap()<CR>
-]]
-
--- Window Swap
-vim.cmd [[
-  function! MarkWindowSwap()
-    let g:markedWinNum = winnr()
-  endfunction
-
-  function! DoWindowSwap()
-    "Mark destination
-    let curNum = winnr()
-    let curBuf = bufnr( "%" )
-    exe g:markedWinNum . "wincmd w"
-    "Switch to source and shuffle dest->source
-    let markedBuf = bufnr( "%" )
-    "Hide and open so that we aren't prompted and keep history
-    exe 'hide buf' curBuf
-    "Switch to dest and shuffle source->dest
-    exe curNum . "wincmd w"
-    "Hide and open so that we aren't prompted and keep history
-    exe 'hide buf' markedBuf
-  endfunction
-  " nmap <silent> <C-m> :call MarkWindowSwap()<CR>
-  " nmap <silent> <C-x> :call DoWindowSwap()<CR>
-]]
+-- swap current window with the last visited window
+_G.SwapWindow = function()
+  local thiswin = vim.fn.winnr()
+  local thisbuf = vim.fn.bufnr("%")
+  local lastwin = vim.fn.winnr("#")
+  local lastbuf = vim.fn.winbufnr(lastwin)
+  vim.cmd("buffer " .. lastbuf) -- view lastbuf in current window
+  vim.cmd("wincmd p")           -- go to previous window
+  vim.cmd("buffer " .. thisbuf) -- view thisbuf in current window
+  vim.cmd("wincmd p")           -- go to previous window
+end
 
 ------------------------------------------------------------------------------------------------------------------------
 
 -- -- _toogle_neotree_cursor
 -- local toogle_neotree_cursor = augroup("_toogle_neotree_cursor", { clear = true })
+--
 -- cmd({"BufEnter","Filetype"}, {
 --   group = toogle_neotree_cursor,
 --   callback = function()
@@ -230,6 +175,7 @@ vim.cmd [[
 --     end
 --   end,
 -- })
+--
 -- cmd({"BufEnter","Filetype"}, {
 --   group = toogle_neotree_cursor,
 --   callback = function()
@@ -397,7 +343,6 @@ create_command("BufferlineShow", ShowBufferline, {})
 -- })
 
 ------------------------------------------------------------------------------------------------------------------------
-
 
 -- https://thevaluable.dev/vim-create-text-objects
 -- select indent by the same level:
