@@ -15,36 +15,35 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
---   פּ ﯟ   some other good icons
-local kind_icons = {
-  Text = "󰉿",
-  Method = "󰆧",
-  Function = "󰊕",
-  Constructor = "",
-  Field = " ",
-  Variable = "󰀫",
-  Class = "󰠱",
-  Interface = "",
-  Module = "",
-  Property = "󰜢",
-  Unit = "󰑭",
-  Value = "󰎠",
-  Enum = "",
-  Keyword = "󰌋",
-  Snippet = "",
-  Color = "󰏘",
-  File = "󰈙",
-  Reference = "",
-  Folder = "󰉋",
-  EnumMember = "",
-  Constant = "󰏿",
-  Struct = "",
-  Event = "",
-  Operator = "󰆕",
-  TypeParameter = " ",
-  Misc = " ",
-}
 -- see https://www.nerdfonts.com/cheat-sheet
+local kind_icons = {
+  Class = "",
+  Color = "󰏘",
+  Constant = "",
+  Constructor = "",
+  Enum = "",
+  EnumMember = "",
+  Event = "",
+  Field = "",
+  File = "",
+  Folder = "󰉋",
+  Function = "󰊕",
+  Interface = "",
+  Keyword = "󰌋",
+  Method = "",
+  Misc = " ",
+  Module = "",
+  Operator = "󰆕",
+  Property = "",
+  Reference = "",
+  Snippet = "",
+  Struct = "",
+  Text = "󰉿",
+  TypeParameter = "",
+  Unit = "󰑭",
+  Value = "",
+  Variable = "",
+}
 
 cmp.setup {
   snippet = {
@@ -63,7 +62,7 @@ cmp.setup {
     -- ["<C-k>"] = cmp.mapping.select_prev_item(),
     -- ["<C-j>"] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-1),
-    ['<C-f>'] = cmp.mapping.scroll_docs(1),
+    ['<C-u>'] = cmp.mapping.scroll_docs(1),
     -- ["<C-y>"] = cmp.config.disable,
     -- ["<C-e>"] = cmp.mapping {
     --   i = cmp.mapping.abort(),
@@ -136,7 +135,6 @@ cmp.setup {
       vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
       -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       vim_item.menu = ({
-        cmp_tabnine = "[TN]",
         nvim_lsp = "[LSP]",
         -- ultisnips = "[Ult]",
         -- vsnip = "[Vsnip]",
@@ -152,7 +150,6 @@ cmp.setup {
     end,
   },
   sources = {
-    { name = 'cmp_tabnine' },
     { name = "nvim_lsp" },
     -- { name = 'ultisnips' },
     -- { name = 'vsnip' },
