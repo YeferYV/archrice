@@ -12,7 +12,7 @@ mini_ai.setup({
   custom_textobjects = {
 
     -- a = mapped to args by mini.ai
-    -- A = mapped to WholeBuffer by mini.ai(custom_textobjects)
+    -- A = mapped to assignment by mini.ai
     -- b = alias to )]} by mini.ai
     -- B = alias to ]} by nvim
     -- c = mapped to word-column by textobj-word-column
@@ -40,8 +40,7 @@ mini_ai.setup({
     -- w = mapped to word by nvim
     -- W = mapped to Word by nvim
     -- x = mapped to hexadecimal by mini.ai
-    -- y = mapped to Indent by vim-textobj-indent
-    -- Y = mapped to Indent-same  by vim-textobj-indent
+    -- y = mapped to select_same_indent  by keymaps.lua
     -- z = mapped to fold by keymaps.lua
     -- Z = mapped to closefold by nvim-various-textobjs
 
@@ -54,9 +53,9 @@ mini_ai.setup({
     L = spec_treesitter({ a = '@loop.outer', i = '@loop.inner', }),
     P = spec_treesitter({ a = '@parameter.outer', i = '@parameter.inner', }),
     R = spec_treesitter({ a = '@return.outer', i = '@return.inner', }),
+    ["A"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
     ["="] = spec_treesitter({ a = '@assignment.rhs', i = '@assignment.lhs', }),
-    ["+"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
-    ["*"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
+    ["#"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
 
     -- Tweak argument textobject:
     a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }), -- brackets = { '%b()', '%b[]', '%b{}' },
@@ -85,7 +84,7 @@ mini_ai.setup({
     -- x = { 'x()x()x' },
 
     -- Whole buffer:
-    A = function()
+    ["*"] = function()
       local from = { line = 1, col = 1 }
       local to = {
         line = vim.fn.line('$'),

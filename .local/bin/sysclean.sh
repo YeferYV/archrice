@@ -66,7 +66,6 @@ pipewire-pulse \
 pkgconf \
 playerctl \
 polybar \
-pywal-16-colors \
 redshift \
 ripgrep \
 rofi \
@@ -101,6 +100,7 @@ zram-generator \
 zsh-autosuggestions \
 zsh-fast-syntax-highlighting
 
+# pywal-16-colors \
 # xorg-xwininfo \
 # polkit \
 # libertinus-font \

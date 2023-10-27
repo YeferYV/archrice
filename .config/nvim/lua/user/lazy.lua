@@ -140,7 +140,7 @@ local plugins = {
   { "jay-babu/mason-nvim-dap.nvim",      commit = "aa7f489903460f2c2e15a6a874c8b933722fe109" }, -- autoconfigured debuggers
   {
     "glepnir/lspsaga.nvim",
-    commit = "44af2ab1fee6bf166a001f7f006284a13737b45e",
+    commit = "199eb00822f65b811f43736ba65ab7e16501125d",
     event = "LspAttach",
     config = function() require("user.lspsaga") end
   },
@@ -237,7 +237,7 @@ local plugins = {
   },
   {
     "stevearc/aerial.nvim",
-    commit = "7371322c60120a56bcc833c407de96be42c18172",
+    commit = "3a3baf0930444c78d19964fdb401bd3a6a23270f",
     event = "LspAttach",
     config = function() require("user.aerial") end
   },
@@ -264,16 +264,16 @@ local plugins = {
       -- {
       --   'sonjiku/yawnc.nvim'
       -- },
-      {
-        'oncomouse/lushwal.nvim',
-        commit = "ff3598395270c7f64d4dff5b15845a531abc4bc7",
-        cmd = { "LushwalCompile" },
-        dependencies = {
-          { "rktjmp/lush.nvim",       commit = "a8f0f7b9f837887f13a61d67b40ae26188fe4d62" },
-          { "rktjmp/shipwright.nvim", commit = "ab70e80bb67b7ed3350bec89dd73473539893932" }
-        },
-        -- config = function() vim.g.lushwal_configuration = { compile_to_vimscript = false } end
-      }
+      -- {
+      --   'oncomouse/lushwal.nvim',
+      --   commit = "ff3598395270c7f64d4dff5b15845a531abc4bc7",
+      --   cmd = { "LushwalCompile" },
+      --   dependencies = {
+      --     { "rktjmp/lush.nvim",       commit = "a8f0f7b9f837887f13a61d67b40ae26188fe4d62" },
+      --     { "rktjmp/shipwright.nvim", commit = "ab70e80bb67b7ed3350bec89dd73473539893932" }
+      --   },
+      --   -- config = function() vim.g.lushwal_configuration = { compile_to_vimscript = false } end
+      -- }
     }
   },
 

@@ -55,12 +55,12 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
 
   # root doesn't support yay multi-install
   # yes | yay -S --noconfirm --mflags "--skippgpcheck" ttf-unifont &&
+  # yes | yay -S --noconfirm pywal-16-colors                       &&
   yes | yay -S --noconfirm bspwm-git                             &&
   yes | yay -S --noconfirm cht.sh-git                            &&
   yes | yay -S --noconfirm dragon-drop                           &&
   yes | yay -S --noconfirm gtk-theme-arc-gruvbox-git             &&
   yes | yay -S --noconfirm htop-vim                              &&
-  yes | yay -S --noconfirm pywal-16-colors                       &&
   yes | yay -S --noconfirm siji-git                              &&
   yes | yay -S --noconfirm snapper-rollback                      &&
   yes | yay -S --noconfirm touchcursor-linux-git                 &&

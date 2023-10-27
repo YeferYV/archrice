@@ -230,7 +230,7 @@ aerial.setup({
 
   -- When you fold code with za, zo, or zc, update the aerial tree as well.
   -- Only works when manage_folds = true
-  link_folds_to_tree = true,
+  link_folds_to_tree = false, -- true causes up/down in aerial window not working
 
   -- Fold code when you open/collapse symbols in the tree.
   -- Only works when manage_folds = true
