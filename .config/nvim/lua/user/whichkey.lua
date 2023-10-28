@@ -146,10 +146,10 @@ local mappings = {
         require('telescope.builtin').buffers(
           require('telescope.themes').get_dropdown {
             previewer = false,
-            initial_mode = 'insert'
+            initial_mode = 'normal'
           })
       end,
-      "Telescope Buffer"
+      "Telescope Buffer dropdown-theme"
     },
     C = { "<cmd>%bd|e#|bd#<cr>", "Close others Buffers" },
     s = { "<cmd>BufferLineCyclePrev<cr>", "Previous Buffer" },
@@ -215,7 +215,8 @@ local mappings = {
     function()
       require('telescope.builtin').find_files(
         require('telescope.themes').get_dropdown {
-          previewer = false
+          previewer = false,
+          initial_mode = 'insert'
         })
     end,
     "Find Files",
@@ -279,32 +280,37 @@ local mappings = {
     Q = { "<cmd>Telescope loclist initial_mode=normal<cr>", "Telescope QuickFix LocList" },
     r = { function() WhichkeyRepeat("lua vim.lsp.buf.references()") end, "References" },
     R = { function() WhichkeyRepeat("lua vim.lsp.buf.rename()") end, "Rename" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Telescope Document Symbols" },
-    S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Telescope Dynamic Workspace Symbols", },
-    T = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Telescope Workspace Symbols", },
+    s = { "<cmd>Telescope lsp_document_symbols initial_mode=normal<cr>", "Telescope Document Symbols" },
+    S = { "<cmd>Telescope lsp_dynamic_workspace_symbols initial_mode=normal<cr>", "Telescope Dynamic Workspace Symbols", },
+    T = { "<cmd>Telescope lsp_workspace_symbols initial_mode=normal<cr>", "Telescope Workspace Symbols", },
     t = { function() WhichkeyRepeat("lua vim.lsp.buf.type_definition()") end, "Goto TypeDefinition" },
-    v = { "<cmd>Telescope diagnostics<cr>", "Telescope View Diagnostics", },
-    V = { "<cmd>Telescope lsp_references initial_mode=normal<cr>", "Telescope View References" },
-    w = { "<cmd>Telescope lsp_implementations initial_mode=normal<cr>", "Telescope View Implementations" },
-    W = { "<cmd>Telescope lsp_definitions initial_mode=normal<cr>", "Telescope View Definitions" },
-    z = { "<cmd>AerialToggle<cr>", "Symbols outline" },
-    Z = { "<cmd>AerialToggle float<cr>", "Symbols outline (float)" },
+    v = {
+      function()
+        require('telescope.builtin').lsp_references({
+          show_line = false, -- the previewer already highlights the lsp_reference line
+          initial_mode = 'normal'
+        })
+      end,
+      "Telescope View References" },
+    V = { "<cmd>Telescope diagnostics initial_mode=normal theme=ivy<cr>", "Telescope View Diagnostics" },
+    w = { "<cmd>Telescope lsp_definitions initial_mode=normal show_line=false<cr>", "Telescope View Definitions" },
+    W = { "<cmd>Telescope lsp_implementations initial_mode=normal show_line=false<cr>", "Telescope View Definitions" },
   },
 
   p = {
     name = "Peek LspSaga",
-    a = { function() WhichkeyRepeat("Lspsaga code_action") end, "Code Action" },
+    A = { function() WhichkeyRepeat("Lspsaga code_action") end, "Code Action" },
     b = { function() WhichkeyRepeat("Lspsaga show_buf_diagnostics") end, "Show Buf Diagnostics" },
-    c = { function() WhichkeyRepeat("Lspsaga incoming_calls") end, "Incomming Calls" },
+    c = { function() WhichkeyRepeat("Lspsaga incoming_calls") end, "Incoming Calls" },
     C = { function() WhichkeyRepeat("Lspsaga outgoing_calls") end, "outgoing Calls" },
     d = { function() WhichkeyRepeat("Lspsaga peek_definition") end, "Peek Definition" },
-    D = { function() WhichkeyRepeat("Lspsaga goto_definition") end, "Peek Definition" },
-    f = { function() WhichkeyRepeat("Lspsaga lsp_finder") end, "Finder" },
+    D = { function() WhichkeyRepeat("Lspsaga goto_definition") end, "Go to Definition" },
+    f = { function() WhichkeyRepeat("Lspsaga finder") end, "Finder" },
     h = { function() WhichkeyRepeat("Lspsaga hover_doc") end, "Hover" },
     n = { function() WhichkeyRepeat("Lspsaga diagnostic_jump_next") end, "Next Diagnostics" },
     N = {
       function()
-        WhichkeyRepeat('require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })')
+        WhichkeyRepeat("lua require('lspsaga.diagnostic'):goto_next({ severity = vim.diagnostic.severity.ERROR })")
       end,
       "Next Error"
     },
@@ -313,7 +319,7 @@ local mappings = {
     p = { function() WhichkeyRepeat("Lspsaga diagnostic_jump_prev") end, "Prev Diagnostics" },
     P = {
       function()
-        WhichkeyRepeat('require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })')
+        WhichkeyRepeat("lua require('lspsaga.diagnostic'):goto_prev({ severity = vim.diagnostic.severity.ERROR })")
       end,
       "Prev Error"
     },
@@ -338,7 +344,7 @@ local mappings = {
 
   s = {
     name = "Search",
-    b = { "<cmd>Telescope buffers initial_mode=normal<cr>", "Buffers" },
+    b = { "<cmd>Telescope buffers initial_mode=insert<cr>", "Buffers" },
     B = { "<cmd>Telescope current_buffer_fuzzy_find theme=ivy<cr>", "Ripgrep" },
     c = {
       function()

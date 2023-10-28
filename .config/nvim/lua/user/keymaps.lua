@@ -587,27 +587,27 @@ local next_paragraph, prev_paragraph = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "<leader><leader>)", next_paragraph, { silent = true, desc = "Next Paragraph" })
 map({ "n", "x", "o" }, "<leader><leader>(", prev_paragraph, { silent = true, desc = "Prev Paragraph" })
 
--- _jump_edgeindent_repeatable_blankline
-local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+-- _jump_indent_repeatable_with_blankline
+local next_indent_wb, prev_indent_wb = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal viiV$ ]] end,
   function()
     vim.cmd [[ normal viio ]]
     FeedKeysCorrectly('<esc>_')
   end
 )
-map({ "n", "x", "o" }, "<leader><leader>a", next_indent, { silent = true, desc = "End Indent" })
-map({ "n", "x", "o" }, "<leader><leader>i", prev_indent, { silent = true, desc = "Start Indent" })
+map({ "n", "x", "o" }, "<leader><leader>a", next_indent_wb, { silent = true, desc = "End Indent with_blankline" })
+map({ "n", "x", "o" }, "<leader><leader>i", prev_indent_wb, { silent = true, desc = "Start Indent with_blanline" })
 
--- _jump_edgeindent_repeatable_skip_blankline
-local next_indent, prev_indent = ts_repeat_move.make_repeatable_move_pair(
+-- _jump_indent_repeatable_skip_blankline
+local next_indent_sb, prev_indent_sb = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd [[ normal viIV$ ]] end,
   function()
     vim.cmd [[ normal viIo ]]
     FeedKeysCorrectly('<esc>_')
   end
 )
-map({ "n", "x", "o" }, "<leader><leader>A", next_indent, { silent = true, desc = "End Indent" })
-map({ "n", "x", "o" }, "<leader><leader>I", prev_indent, { silent = true, desc = "Start Indent" })
+map({ "n", "x", "o" }, "<leader><leader>A", next_indent_sb, { silent = true, desc = "End Indent skip_blankline" })
+map({ "n", "x", "o" }, "<leader><leader>I", prev_indent_sb, { silent = true, desc = "Start Indent skip_blankline" })
 
 -- _jump_edgefold_repeatable
 local next_fold, prev_fold = ts_repeat_move.make_repeatable_move_pair(

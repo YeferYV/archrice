@@ -160,17 +160,18 @@ local plugins = {
   -- { 'nvim-treesitter/playground'},
   -- { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" }, -- incremental-repressing + respects-blanklines + vimrepeat + VisualRepeatable(e.g mini.comment is noVisualRepeable)
   { "echasnovski/mini.nvim",             commit = "2d70ae2b0faade0b5ab8524e155f47ca829db5f2" },
-  -- {
-  --   "kana/vim-textobj-user",
-  --   commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933",
-  --   event = "VeryLazy",
-  --   dependencies = {
-  --     -- { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" },
-  --     -- { "pianohacker/vim-textobj-indented-paragraph", commit = "376f478ab5cb45bcb434eedbd7c513ad145a99b4" },
-  --     -- { "kana/vim-textobj-indent", commit = "deb76867c302f933c8f21753806cbf2d8461b548" },
-  --     -- { "kana/vim-textobj-fold", commit = "78bfa22163133b0ca6cda63b5b5015ed4409b2ee" },
-  --   }
-  -- },
+  {
+    "kana/vim-textobj-user",
+    commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933",
+    event = "VeryLazy",
+    dependencies = {
+      -- { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" },
+      -- { "pianohacker/vim-textobj-indented-paragraph", commit = "376f478ab5cb45bcb434eedbd7c513ad145a99b4" },
+      -- { "kana/vim-textobj-indent", commit = "deb76867c302f933c8f21753806cbf2d8461b548" },
+      -- { "kana/vim-textobj-fold", commit = "78bfa22163133b0ca6cda63b5b5015ed4409b2ee" },
+      { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" },
+    }
+  },
   {
     "nvim-treesitter/nvim-treesitter",
     commit = "9161093fc7e13b12aa5bc86c641768c049d43a26",
@@ -179,9 +180,8 @@ local plugins = {
       { "RRethy/nvim-treesitter-textsubjects",         commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
     }
   },
-  { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33", event = "VeryLazy" },
-  { "mg979/vim-visual-multi",             commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a", event = "VeryLazy" },
-  { "svermeulen/vim-easyclip",            commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
+  { "mg979/vim-visual-multi",  commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a", event = "VeryLazy" },
+  { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
     commit = "c0aa3ff33eaf9e7bc827ea918f92ac47d6037118",
