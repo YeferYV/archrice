@@ -411,7 +411,7 @@ local mappings = {
     ["<TAB>"] = {
       function()
         vim.cmd [[ wincmd T ]]
-        vim.cmd [[ BufferlineShow ]]
+        vim.cmd [[ ShowBufferline ]]
       end,
       "Terminal to Tab"
     },
@@ -554,8 +554,8 @@ local mappings = {
       end
       , "Toggle Background"
     },
-    h = { function() require('user.autocommands').EnableAutoNoHighlightSearch() end, "Disable AutoNoHighlightSearch" },
-    H = { function() require('user.autocommands').DisableAutoNoHighlightSearch() end, "Enable AutoNoHighlightSearch" },
+    h = { "<cmd>EnableAutoNoHighlightSearch<cr>", "Disable AutoNoHighlightSearch" },
+    H = { "<cmd>DisableAutoNoHighlightSearch<cr>", "Enable AutoNoHighlightSearch" },
     i = {
       function()
         local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")
@@ -602,7 +602,7 @@ local mappings = {
     },
     -- u = {
     --   function()
-    --     GoToParentIndent()
+    --     vim.cmd("GoToParentIndent")
     --     vim.call("repeat#set", "0 uu")
     --   end,
     --   "Jump to current_context",

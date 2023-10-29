@@ -8,26 +8,6 @@ local create_command = vim.api.nvim_create_user_command
 ------------------------------------------------------------------------------------------------------------------------
 
 vim.cmd [[
-  " augroup _alpha
-  "   autocmd!
-  "   autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-  " augroup end
-
-  " augroup _autostart_codi
-  "   autocmd!
-  "   au BufEnter *.js Codi
-  "   au BufEnter *.py Codi
-  " augroup end
-
-  " augroup _auto_resize
-  "   autocmd!
-  "   autocmd VimResized * tabdo wincmd =
-  " augroup end
-
-  " augroup _disable_neotree_status
-  "   autocmd!
-  "   au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "neo-tree" | set laststatus=0 | else | set laststatus=2 | endif
-  " augroup end
 
   " augroup _enable_terminal_insert_and_hide_terminal_statusline
   "   autocmd!
@@ -45,23 +25,16 @@ vim.cmd [[
   "   autocmd TermClose          * if &filetype != 'toggleterm' | call feedkeys("i") | endif
   " augroup end
 
-  augroup _filetype_vimcommentary_support
+  augroup _filetype
     autocmd!
-    autocmd FileType sxhkd setlocal commentstring=#\ %s
-  augroup end
-
-  augroup _general_settings
-    autocmd!
+    autocmd FileType gitcommit           setlocal spell
+    autocmd FileType markdown            setlocal spell
+    autocmd FileType qf                  set      nobuflisted
     autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
-    autocmd BufWinEnter * :set formatoptions-=cro
-    autocmd FileType qf set nobuflisted
   augroup end
 
-  augroup _git
-    autocmd!
-    autocmd FileType gitcommit setlocal wrap
-    autocmd FileType gitcommit setlocal spell
+  augroup _hightlight_yank
+    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
   augroup end
 
   augroup _hightlight_whitespaces
@@ -75,7 +48,7 @@ vim.cmd [[
 
   augroup _jump_to_last_position_on_reopen
     autocmd!
-    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
   augroup end
 
   " augroup _lsp_autoformat
@@ -85,12 +58,7 @@ vim.cmd [[
 
   augroup _lspsaga_highlights_overwrite
     autocmd!
-    au BufReadPost * hi LspSagaWinbarSep guifg=#495466
-  augroup end
-
-  augroup _markdown
-    autocmd!
-    autocmd FileType markdown setlocal spell
+    autocmd BufReadPost * hi LspSagaWinbarSep guifg=#495466
   augroup end
 
   " augroup _save_folding
@@ -101,15 +69,10 @@ vim.cmd [[
 
   augroup _stop_newlines_commented
     autocmd!
-  " au FileType * set fo-=c fo-=r fo-=o
+    " au BufWinEnter * :set formatoptions-=cro
+    " au FileType * set fo-=c fo-=r fo-=o
     au BufEnter * set fo-=c fo-=r fo-=o
   augroup end
-
-  " augroup _toogle_neotree_cursor
-  "   autocmd!
-  "   autocmd BufEnter * if &filetype == 'neo-tree' | hi Cursor guifg=none guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor | endif
-  "   autocmd BufEnter * if &filetype != 'neo-tree' | setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20 | endif
-  " augroup end
 
   augroup _mouse_menu
     aunmenu PopUp
@@ -135,63 +98,10 @@ vim.cmd [[
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function ShowBufferline()
-  require('bufferline').setup {
-    options = {
-      offsets = { { filetype = 'neo-tree', padding = 1 } },
-      show_close_icon = false
-    }
-  }
-end
-
-create_command("BufferlineShow", ShowBufferline, {})
-
-------------------------------------------------------------------------------------------------------------------------
-
--- -- _json_to_jsonc
--- cmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
---   -- pattern = "*.json",
---   -- command = "set ft=jsonc"
---   callback = function()
---     if vim.fn.expand('%:p:h:t') == "User" then
---       if vim.fn.expand('%:t') == "settings.json" or
---           vim.fn.expand('%:t') == "keybindings.json" or
---           vim.fn.expand('%:t') == "tasks.json" then
---         vim.bo.filetype = "jsonc"
---       end
---     end
---   end,
--- })
-
-------------------------------------------------------------------------------------------------------------------------
-
--- -- _toogle_neotree_cursor
--- local toogle_neotree_cursor = augroup("_toogle_neotree_cursor", { clear = true })
---
--- cmd({"BufEnter","Filetype"}, {
---   group = toogle_neotree_cursor,
---   callback = function()
---     if vim.bo.filetype ~= "neo-tree" then
---       vim.cmd[[setlocal guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20]]
---     end
---   end,
--- })
---
--- cmd({"BufEnter","Filetype"}, {
---   group = toogle_neotree_cursor,
---   callback = function()
---     if vim.bo.filetype == "neo-tree" then
---       vim.cmd[[hi Cursor guibg=red blend=100 | setlocal guicursor=n:Cursor/lCursor]]
---     end
---   end,
--- })
-
-------------------------------------------------------------------------------------------------------------------------
-
 -- _enable_terminal_insert_and_hide_terminal_statusline
 local hide_terminal_statusline = augroup("_enable_terminal_insert_and_hide_terminal_statusline", { clear = true })
 
--- cmd({ "BufEnter", "Filetype" }, {
+-- autocmd({ "BufEnter", "Filetype" }, {
 --   group = hide_terminal_statusline,
 --   pattern = "term://*",
 --   command = "startinsert"
@@ -206,13 +116,6 @@ autocmd({ "TermEnter", "TermOpen" }, {
     vim.cmd [[hi ExtraWhitespace guibg=none]]
   end,
 })
-
--- cmd({ "TermLeave" }, {
---   group = hide_terminal_statusline,
---   callback = function()
---     require('lualine').hide({ unhide = true })
---   end,
--- })
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -245,23 +148,97 @@ autocmd({ "TermClose" }, {
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- -- swap current window with the last visited window
--- _G.SwapWindow = function()
---   local thiswin = vim.fn.winnr()
---   local thisbuf = vim.fn.bufnr("%")
---   local lastwin = vim.fn.winnr("#")
---   local lastbuf = vim.fn.winbufnr(lastwin)
---
---   vim.cmd( lastwin   .. "wincmd w") -- go to lastwin
---   vim.cmd( "buffer " ..  thisbuf  ) -- view thisbuf in current window
---   vim.cmd( thiswin   .. "wincmd w") -- go to thiswin
---   vim.cmd( "buffer " ..  lastbuf  ) -- view lastbuf in current window
--- end
+function ToggleDiagnostics()
+  if vim.g.diagnosticsEnabled == "on" or vim.g.diagnosticsEnabled == nil then
+    vim.g.diagnosticsEnabled = "off"
+    vim.diagnostic.config({ virtual_text = false })
+    vim.cmd [[
+      augroup _toggle_virtualtext_insertmode
+      autocmd InsertEnter * lua vim.diagnostic.config({ virtual_text = false })
+      autocmd InsertLeave * lua vim.diagnostic.config({ virtual_text = true })
+      augroup end
+    ]]
+  else
+    vim.g.diagnosticsEnabled = "on"
+    vim.diagnostic.config({ virtual_text = true })
+    vim.cmd [[ autocmd! _toggle_virtualtext_insertmode ]] -- remove the autocmd, `:autocmd _toggle_virtualtext_insertmode` to view it
+  end
+end
+
+create_command("ToggleDiagnostics", ToggleDiagnostics, {})
+
+------------------------------------------------------------------------------------------------------------------------
+
+function ShowBufferline()
+  require('bufferline').setup {
+    options = {
+      offsets = { { filetype = 'neo-tree', padding = 1 } },
+      show_close_icon = false
+    }
+  }
+end
+
+create_command("ShowBufferline", ShowBufferline, {})
+
+------------------------------------------------------------------------------------------------------------------------
+
+-- -- _json_to_jsonc
+-- autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
+--   -- pattern = "*.json",
+--   -- command = "set ft=jsonc"
+--   callback = function()
+--     if vim.fn.expand('%:p:h:t') == "User" then
+--       if vim.fn.expand('%:t') == "settings.json" or
+--           vim.fn.expand('%:t') == "keybindings.json" or
+--           vim.fn.expand('%:t') == "tasks.json" then
+--         vim.bo.filetype = "jsonc"
+--       end
+--     end
+--   end,
+-- })
+
+------------------------------------------------------------------------------------------------------------------------
+
+function EnableAutoNoHighlightSearch()
+  vim.on_key(function(char)
+    if vim.fn.mode() == "n" then
+      local new_hlsearch = vim.tbl_contains({ "<Up>", "<Down>", "<CR>", "n", "N", "*", "#", "?", "/" },
+        vim.fn.keytrans(char))
+      if vim.opt.hlsearch:get() ~= new_hlsearch then vim.cmd [[ noh ]] end
+    end
+  end, vim.api.nvim_create_namespace "auto_hlsearch")
+end
+
+create_command("EnableAutoNoHighlightSearch", EnableAutoNoHighlightSearch, {})
+
+function DisableAutoNoHighlightSearch()
+  vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"])
+  vim.cmd [[ set hlsearch ]]
+end
+
+create_command("DisableAutoNoHighlightSearch", DisableAutoNoHighlightSearch, {})
+
+EnableAutoNoHighlightSearch() -- autostart
+
+------------------------------------------------------------------------------------------------------------------------
+
+function GoToParentIndent()
+  local ok, start = require("indent_blankline.utils").get_current_context(
+    vim.g.indent_blankline_context_patterns,
+    vim.g.indent_blankline_use_treesitter_scope
+  )
+  if ok then
+    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
+    vim.cmd [[normal! _]]
+  end
+end
+
+create_command("GoToParentIndent", GoToParentIndent, {})
 
 ------------------------------------------------------------------------------------------------------------------------
 
 -- swap current window with the last visited window
-_G.SwapWindow = function()
+function SwapWindow()
   local thiswin = vim.fn.winnr()
   local thisbuf = vim.fn.bufnr("%")
   local lastwin = vim.fn.winnr("#")
@@ -272,43 +249,13 @@ _G.SwapWindow = function()
   vim.cmd("wincmd p")           -- go to previous window
 end
 
-------------------------------------------------------------------------------------------------------------------------
-
-M.EnableAutoNoHighlightSearch = function()
-  vim.on_key(function(char)
-    if vim.fn.mode() == "n" then
-      local new_hlsearch = vim.tbl_contains({ "<Up>", "<Down>", "<CR>", "n", "N", "*", "#", "?", "/" },
-        vim.fn.keytrans(char))
-      if vim.opt.hlsearch:get() ~= new_hlsearch then vim.cmd [[ noh ]] end
-    end
-  end, vim.api.nvim_create_namespace "auto_hlsearch")
-end
-
-M.DisableAutoNoHighlightSearch = function()
-  vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"])
-  vim.cmd [[ set hlsearch ]]
-end
-
-M.EnableAutoNoHighlightSearch() -- autostart
+create_command("SwapWindow", SwapWindow, {})
 
 ------------------------------------------------------------------------------------------------------------------------
 
 _G.FeedKeysCorrectly = function(keys)
   local feedableKeys = vim.api.nvim_replace_termcodes(keys, true, false, true)
   vim.api.nvim_feedkeys(feedableKeys, "n", true)
-end
-
-------------------------------------------------------------------------------------------------------------------------
-
-_G.GoToParentIndent = function()
-  local ok, start = require("indent_blankline.utils").get_current_context(
-    vim.g.indent_blankline_context_patterns,
-    vim.g.indent_blankline_use_treesitter_scope
-  )
-  if ok then
-    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-    vim.cmd [[normal! _]]
-  end
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -391,56 +338,8 @@ end
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- goto next/prev same level indent:
-M.next_same_indent = function(next)
-  local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
-  local current_line = vim.fn.line('.')
-  local sign = next and '+' or '-'
-
-  -- scroll no_blanklines (indent = 0) when going down
-  if string.match(vim.fn.getline(current_line), '^%s*$') == nil then
-    if sign == '+' then
-      while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
-        vim.cmd('+')
-        next_line = vim.fn.line('.') + 1
-      end
-    end
-  end
-
-  -- scroll same indentation (indent != 0)
-  if start_indent ~= 0 then
-    while vim.fn.indent(next_line) == start_indent do
-      vim.cmd(sign)
-      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
-    end
-  end
-
-  -- scroll differrent indentation (supports indent = 0, skip blacklines)
-  while vim.fn.indent(next_line) ~= -1 and (vim.fn.indent(next_line) ~= start_indent or string.match(vim.fn.getline(next_line), '^%s*$')) do
-    vim.cmd(sign)
-    next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
-  end
-
-  -- scroll to next indentation
-  vim.cmd(sign)
-
-  -- scroll to top of indentation noblacklines
-  local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
-  if sign == '-' then
-    -- next_line indent is start_indent, next_line is no_blankline
-    while vim.fn.indent(next_line) == start_indent and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
-      vim.cmd('-')
-      next_line = vim.fn.line('.') - 1
-    end
-  end
-end
-
-------------------------------------------------------------------------------------------------------------------------
-
--- goto next/prev different level indent:
-M.next_different_indent = function(next)
+-- goto next/prev same/different level indent:
+M.next_indent = function(next, level)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
   local current_line = vim.fn.line('.')
   local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
@@ -464,18 +363,26 @@ M.next_different_indent = function(next)
     end
   end
 
-  -- scroll blanklines (indent = -1 is when line is 0 or line is last+1 )
-  while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') do
-    vim.cmd(sign)
-    next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
+  if level == "same_level" then
+    -- scroll differrent indentation (supports indent = 0, skip blacklines)
+    while vim.fn.indent(next_line) ~= -1 and (vim.fn.indent(next_line) ~= start_indent or string.match(vim.fn.getline(next_line), '^%s*$')) do
+      vim.cmd(sign)
+      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
+    end
+  else -- level == "different_level"
+    -- scroll blanklines (indent = -1 is when line is 0 or line is last+1 )
+    while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') do
+      vim.cmd(sign)
+      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
+    end
   end
 
   -- scroll to next indentation
   vim.cmd(sign)
 
   -- scroll to top of indentation noblacklines
-  local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
+  start_indent = vim.fn.indent(vim.fn.line('.'))
+  next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   if sign == '-' then
     -- next_line indent is start_indent, next_line is no_blankline
     while vim.fn.indent(next_line) == start_indent and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
