@@ -14,19 +14,20 @@ dashboard.section.header.val = {
   [[ ]],
 }
 dashboard.section.buttons.val = {
-  dashboard.button("p", " " .. " Find Project", ":Telescope projects initial_mode=normal<cr>"),
-  dashboard.button("f", " " .. " Find File", ":Telescope find_files initial_mode=normal<cr>"),
-  dashboard.button("o", "󰈙 " .. " Recents", ":Telescope oldfiles initial_mode=normal<cr>"),
-  dashboard.button("w", "󰈭 " .. " Find Word", ":Telescope live_grep  initial_mode=normal<cr>"),
-  dashboard.button("n", " " .. " New File", ":enew<cr>"),
-  dashboard.button("m", " " .. " Bookmarks", ":Telescope marks initial_mode=normal<cr>"),
+  dashboard.button("p", " " .. " Find Project", ":Telescope projects     initial_mode=normal<cr>"),
+  dashboard.button("f", " " .. " Find File   ", ":Telescope find_files   initial_mode=normal<cr>"),
+  dashboard.button("o", "󰈙 " .. " Recents     ", ":Telescope oldfiles     initial_mode=normal<cr>"),
+  dashboard.button("w", "󰈭 " .. " Find Word   ", ":Telescope live_grep    initial_mode=normal<cr>"),
+  dashboard.button("n", " " .. " New File    ", ":enew<cr>"),
+  dashboard.button("m", " " .. " Bookmarks   ", ":Telescope marks        initial_mode=normal<cr>"),
   dashboard.button("b", "󰉖 " .. " File Browser", ":Telescope file_browser initial_mode=normal<cr>"),
-  dashboard.button("l", " " .. " Explorer", ":lua _LF_TOGGLE(vim.api.nvim_buf_get_name(0),'tabreplace')<cr>"),
-  dashboard.button("t", " " .. " Terminal",
-    ":lua vim.cmd[[ tabedit | terminal ]] vim.cmd[[ tabclose # ]] vim.cmd[[ set ft=tab-terminal nonumber laststatus=0 ]]<cr>"),
-  dashboard.button("T", " " .. " Tmux",
-    ":lua vim.cmd[[ tabnew | terminal tmux ]] vim.cmd[[ tabclose # ]] vim.cmd[[ set ft=tab-terminal nonumber laststatus=0 ]]<cr>"),
-  dashboard.button("s", " " .. " Last Session", ":SessionManager load_last_session<cr>"),
+  dashboard.button("l", " " .. " Explorer    ", ":lua _LF_TOGGLE(vim.api.nvim_buf_get_name(0),'tabreplace')<cr>"),
+  dashboard.button("t", " " .. " Terminal    ",
+    "<cmd>lua vim.cmd[[ tabedit | terminal ]]     vim.cmd[[ tabclose # ]] vim.cmd[[ set ft=tab-terminal nonumber laststatus=0 ]]<cr>"),
+  dashboard.button("T", " " .. " Tmux        ",
+    "<cmd>lua vim.cmd[[ tabnew | terminal tmux ]] vim.cmd[[ tabclose # ]] vim.cmd[[ set ft=tab-terminal nonumber laststatus=0 ]]<cr>"),
+  dashboard.button("s", " " .. " Last Session",
+    "<cmd>lua require('mini.sessions').read(require('mini.sessions').get_latest(), { verbose = false })<cr>"),
 }
 local function footer()
   return ""

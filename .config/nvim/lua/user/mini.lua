@@ -3,7 +3,29 @@ if not status_ok then
   return
 end
 
+local function write_session()
+  local session_path = vim.fn.stdpath("data") .. "/session"
+  if not vim.loop.fs_stat(session_path) then vim.fn.mkdir(session_path, "p") end
+
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  if buf_name ~= "" then
+    local buf_name_sneakcase = string.gsub(buf_name, "/", '_') .. "_"
+    require("mini.sessions").write(buf_name_sneakcase, { verbose = false })
+  end
+end
+
 local spec_treesitter = mini_ai.gen_spec.treesitter
+
+--- local gen_ai_spec = require('mini.extra').gen_ai_spec
+---   require('mini.ai').setup({
+---     custom_textobjects = {
+---       B = gen_ai_spec.buffer(),
+---       D = gen_ai_spec.diagnostic(),
+---       I = gen_ai_spec.indent(),
+---       L = gen_ai_spec.line(),
+---       N = gen_ai_spec.number(),
+---     },
+---   })
 
 mini_ai.setup({
 
@@ -12,31 +34,42 @@ mini_ai.setup({
   custom_textobjects = {
 
     -- a = mapped to args by mini.ai
-    -- A = mapped to assignment by mini.ai
+    -- A = mapped to @assignment by mini.ai
     -- b = alias to )]} by mini.ai
-    -- B = alias to ]} by nvim
+    -- B = mapped to @block by nvim
     -- c = mapped to word-column by textobj-word-column
     -- C = mapped to Word-Column by textobj-word-column
-    -- D = mapped to doubleSquareBrackets by nvim-various-textobjs
+    -- d = mapped to greedyOuterIndentation by nvim-various-textobjs
+    -- e = mapped to nearEoL by nvim-various-textobjs
     -- f = mapped to function.call by mini.ai
+    -- F = mapped to @function by mini.ai
+    -- g = mapped to @comment by mini.ai
+    -- G = mapped to @conditional by mini.ai
+    -- h = mapped to html-Attribute by nvim-various-textobjs
     -- i = mapped to indentation by mini.indent
     -- I = mapped to Indentation by mini.indent
-    -- k = mapped to key by nvim-various-textobjs
+    -- j = mapped to cssSelector by nvim-various-textobjs
+    -- k = mapped to key by mini.ai
     -- K = mapped to container by textsubjects
-    -- l = mapped to last by mini.ai
-    -- m = mapped to last-insert by keymaps.lua
+    -- l = mapped to +last by mini.ai
+    -- L = mapped to @loop by mini.ai
+    -- m = mapped to chainMember by nvim-various-textobjs
+    -- M = mapped to mdFencedCodeBlock by nvim-various-textobjs
     -- n = mapped to number by nvim-various-textobjs
-    -- N = mapped to next by mini.ai
+    -- N = mapped to +next by mini.ai
     -- p = mapped to paragraph by nvim
-    -- q = alias to '"` by mini.ai
-    -- r = mapped to whitespace by mini.ai
-    -- R = mapped to Return by mini.ai
+    -- P = mapped to @parameer by nvim
+    -- o = mapped to whitespace by mini.ai
+    -- q = mapped to @call by mini.ai
+    -- Q = mapped to @class by mini.ai
+    -- r = mapped to restOfWindow by mini.ai
+    -- R = mapped to @return by mini.ai
     -- s = mapped to sentence by nvim
     -- S = mapped to Subword by nvim-various-textobjs
     -- t = mapped to tag by mini.ai
-    -- u = mapped to uotes by mini.ai(custom_textobjects)
-    -- U = mapped to url by nvim-various-textobjs
-    -- v = mapped to value by nvim-various-textobjs
+    -- u = mapped to uotes by mini.ai
+    -- U = mapped to pyTripleQuotes by nvim-various-textobjs
+    -- v = mapped to value by mini.ai
     -- w = mapped to word by nvim
     -- W = mapped to Word by nvim
     -- x = mapped to hexadecimal by mini.ai
@@ -44,54 +77,64 @@ mini_ai.setup({
     -- z = mapped to fold by keymaps.lua
     -- Z = mapped to closefold by nvim-various-textobjs
 
-    q = spec_treesitter({ a = '@call.outer', i = '@call.inner', }),
-    Q = spec_treesitter({ a = '@class.outer', i = '@class.inner', }),
-    g = spec_treesitter({ a = '@comment.outer', i = '@comment.inner', }),
-    G = spec_treesitter({ a = '@conditional.outer', i = '@conditional.inner', }),
-    B = spec_treesitter({ a = '@block.outer', i = '@block.inner', }),
-    F = spec_treesitter({ a = '@function.outer', i = '@function.inner', }),
-    L = spec_treesitter({ a = '@loop.outer', i = '@loop.inner', }),
-    P = spec_treesitter({ a = '@parameter.outer', i = '@parameter.inner', }),
-    R = spec_treesitter({ a = '@return.outer', i = '@return.inner', }),
-    ["A"] = spec_treesitter({ a = '@assignment.outer', i = '@assignment.inner', }),
-    ["="] = spec_treesitter({ a = '@assignment.rhs', i = '@assignment.lhs', }),
-    ["#"] = spec_treesitter({ a = '@number.outer', i = '@number.inner', }),
+    B = spec_treesitter({ a = "@block.outer", i = "@block.inner" }),
+    q = spec_treesitter({ a = "@call.outer", i = "@call.inner" }),
+    Q = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
+    g = spec_treesitter({ a = "@comment.outer", i = "@comment.inner" }),
+    G = spec_treesitter({ a = "@conditional.outer", i = "@conditional.inner" }),
+    F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
+    L = spec_treesitter({ a = "@loop.outer", i = "@loop.inner" }),
+    P = spec_treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
+    R = spec_treesitter({ a = "@return.outer", i = "@return.inner" }),
+    ["A"] = spec_treesitter({ a = "@assignment.outer", i = "@assignment.inner" }),
+    ["="] = spec_treesitter({ a = "@assignment.rhs", i = "@assignment.lhs" }),
+    ["#"] = spec_treesitter({ a = "@number.outer", i = "@number.inner" }),
+
+    -- pair text object
+    -- ['_'] = mini.ai.gen_spec.pair('_', '_', { type = 'greedy' }),
+    -- ['<'] = mini.ai.gen_spec.pair('<', '>', { type = 'balanced' }),
+    -- ['>'] = mini.ai.gen_spec.pair('<', '>', { type = 'non-balanced' }),
 
     -- Tweak argument textobject:
-    a = require('mini.ai').gen_spec.argument({ brackets = { '%b()' } }), -- brackets = { '%b()', '%b[]', '%b{}' },
+    -- a = mini_ai.gen_spec.argument({ brackets = { '%b()', '%b[]', '%b{}' }, separator = '[,;]', exclude_regions = { '%b""', "%b''" } }),
 
     -- Disable brackets alias in favor of builtin block textobject:
     -- b = false,
     -- b = { { '%b()', '%b[]', '%b{}' }, '^.().*().$' },
 
+    -- Tweak function call to not detect dot in function name
+    -- f = mini.ai.gen_spec.function_call({ name_pattern = '[%w_]' }),
+
+    -- html/jsx attribute (first {regex} captures tag, second {regex,regex,regex} filters)
+    -- h = { '%f[%s]%s+[^%s<>=]+=[^%s<>]+', '^%s+().*()$' }, -- broked at whitespaces -- https://github.com/echasnovski/mini.nvim/issues/151
+    -- h = { { '(%w+=").-(")' }, '^.().*().$' }, -- Pattern in single curly bracket makes the double curly bracket with catpuring group `(some caputure)` work
+    h = { { "<(%w-)%f[^<%w][^<>]->.-</%1>" }, { "%f[%w]%w+=()%b{}()", '%f[%w]%w+=()%b""()', "%f[%w]%w+=()%b''()" } }, -- %f[%w]%w+ is equivalent to lua (%w+) since mini.ai is not greedy
+
     -- key-value textobj :help mini.ai (line 300)
     -- the pattern .- matches any sequence of characters (except newline characters) (including whitespaces)
-    k = { { '\n.-[=:]', '^.-[=:]' }, '^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]' }, -- .- -> don't be greedy let %s- to exist
-    v = { { '[=:]()%s*().-%s*()[;,]()', '[=:]=?()%s*().*()().$' } },            -- Pattern in double curly bracket equals fallback
-
-    -- quotes/uotes:
-    u = { { "%b''", '%b""', '%b``' }, '^.().*().$' }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
+    k = { { "\n.-[=:]", "^.-[=:]" }, "^%s*()().-()%s-()=?[!=<>\\+-\\*]?[=:]" }, -- .- -> don't be greedy let %s- to exist while .* is greedy
+    v = { { "[=:]()%s*().-%s*()[;,]()", "[=:]=?()%s*().*()().$" } },            -- Pattern in double curly bracket equals fallback
 
     -- number/hexadecimalcolor textobj:
     -- the pattern %f[%d]%d+ ensures there is a %d before start matching (non %d before %d+)(useful to stop .*)
-    n = { '[-+]?()%f[%d]%d+()%.?%d*' }, -- %f[%d] to make jumping to next group of number instead of next digit
-    x = { '#()%x%x%x%x%x%x()' },
+    n = { "[-+]?()%f[%d]%d+()%.?%d*" }, -- %f[%d] to make jumping to next group of number instead of next digit
+    x = { "#()%x%x%x%x%x%x()" },
 
     -- _whitespace_textobj:
-    r = { '%S()%s+()%S' },
+    o = { "%S()%s+()%S" },
 
-    -- Now `vax` should select `xxx` and `vix` - middle `x`:
-    -- x = { 'x()x()x' },
+    -- quotes/uotes:
+    u = { { "%b''", '%b""', "%b``" }, "^.().*().$" }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
 
-    -- Whole buffer:
-    ["*"] = function()
-      local from = { line = 1, col = 1 }
-      local to = {
-        line = vim.fn.line('$'),
-        col = math.max(vim.fn.getline('$'):len(), 1)
-      }
-      return { from = from, to = to }
-    end,
+    -- -- Whole buffer:
+    -- ["+"] = function()
+    --   local from = { line = 1, col = 1 }
+    --   local to = {
+    --     line = vim.fn.line('$'),
+    --     col = math.max(vim.fn.getline('$'):len(), 1)
+    --   }
+    --   return { from = from, to = to }
+    -- end,
 
     -- -- indent delimited by blanklines textobj:
     -- i = function()
@@ -122,18 +165,18 @@ mini_ai.setup({
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     -- Main textobject prefixes
-    around = 'a',
-    inside = 'i',
+    around = "a",
+    inside = "i",
 
     -- Next/last variants
-    around_next = 'aN',
-    inside_next = 'iN',
-    around_last = 'al',
-    inside_last = 'il',
+    around_next = "aN",
+    inside_next = "iN",
+    around_last = "al",
+    inside_last = "il",
 
     -- Move cursor to corresponding edge of `a` textobject
-    goto_left = 'g[',
-    goto_right = 'g]',
+    goto_left = "g[",
+    goto_right = "g]",
   },
 
   -- Number of lines within which textobject is searched
@@ -142,12 +185,14 @@ mini_ai.setup({
   -- How to search for object (first inside current line, then inside
   -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
   -- 'cover_or_nearest', 'next', 'previous', 'nearest'.
-  search_method = 'cover_or_next',
+  search_method = "cover_or_next",
+
+  -- Whether to disable showing non-error feedback
+  silent = false,
 
 })
 
 require('mini.align').setup({
-
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
     start = 'ga',
@@ -192,7 +237,6 @@ require('mini.align').setup({
     pre_merge = {},
     merge = nil,
   },
-
 })
 
 require('mini.bracketed').setup({
@@ -223,7 +267,6 @@ require('mini.bracketed').setup({
 })
 
 require('mini.comment').setup({
-
   -- Options which control module behavior
   options = {
     -- Function to compute custom 'commentstring' (optional)
@@ -248,22 +291,71 @@ require('mini.comment').setup({
     -- Toggle comment on current line
     comment_line = 'gcc',
 
-    -- Define 'comment' textobject (like `dgc` - delete whole comment block)
+    -- Toggle comment on visual selection
+    comment_visual = 'gc',
+
     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
     textobject = '', -- mapped as `gc` in keymaps.lua
   },
+
   -- Hook functions to be executed at certain stage of commenting
   hooks = {
     -- Before successful commenting. Does nothing by default.
-    pre = function() require('ts_context_commentstring.internal').update_commentstring() end,
+    pre = function() end,
     -- After successful commenting. Does nothing by default.
     post = function() end,
   },
+})
 
+require('mini.completion').setup({
+  -- Delay (debounce type, in ms) between certain Neovim event and action.
+  -- This can be used to (virtually) disable certain automatic actions by
+  -- setting very high delay time (like 10^7).
+  delay = { completion = 10 ^ 7, info = 100, signature = 50 },
+
+  -- Configuration for action windows:
+  -- - `height` and `width` are maximum dimensions.
+  -- - `border` defines border (as in `nvim_open_win()`).
+  window = {
+    info = { height = 25, width = 80, border = 'single' },
+    signature = { height = 25, width = 80, border = 'single' },
+  },
+
+  -- Way of how module does LSP completion
+  lsp_completion = {
+    -- `source_func` should be one of 'completefunc' or 'omnifunc'.
+    source_func = 'completefunc',
+
+    -- `auto_setup` should be boolean indicating if LSP completion is set up
+    -- on every `BufEnter` event.
+    auto_setup = true,
+
+    -- `process_items` should be a function which takes LSP
+    -- 'textDocument/completion' response items and word to complete. Its
+    -- output should be a table of the same nature as input items. The most
+    -- common use-cases are custom filtering and sorting. You can use
+    -- default `process_items` as `MiniCompletion.default_process_items()`.
+    -- process_items = --<function: filters out snippets; sorts by LSP specs>,
+  },
+
+  -- Fallback action. It will always be run in Insert mode. To use Neovim's
+  -- built-in completion (see `:h ins-completion`), supply its mapping as
+  -- string. Example: to use 'whole lines' completion, supply '<C-x><C-l>'.
+  -- fallback_action = --<function: like `<C-n>` completion>,
+
+  -- Module mappings. Use `''` (empty string) to disable one. Some of them
+  -- might conflict with system mappings.
+  mappings = {
+    force_twostep = '<C-Space>',  -- Force two-step completion
+    force_fallback = '<A-Space>', -- Force fallback completion
+  },
+
+  -- Whether to set Vim's settings for better experience (modifies
+  -- `shortmess` and `completeopt`)
+  set_vim_settings = true,
 })
 
 require('mini.indentscope').setup({
-
   draw = {
     -- Delay (in ms) between event and start of drawing scope indicator
     delay = 100,
@@ -305,7 +397,223 @@ require('mini.indentscope').setup({
 
   -- Which character to use for drawing scope indicator
   symbol = '',
+})
 
+-- require("mini.jump").setup({
+--   -- Module mappings. Use `''` (empty string) to disable one.
+--   mappings = {
+--     forward = 'f',
+--     backward = 'F',
+--     forward_till = 't',
+--     backward_till = 'T',
+--     repeat_jump = '<BS>',
+--   },
+--
+--   -- Delay values (in ms) for different functionalities. Set any of them to
+--   -- a very big number (like 10^7) to virtually disable.
+--   delay = {
+--     -- Delay between jump and highlighting all possible jumps
+--     highlight = 250,
+--
+--     -- Delay between jump and automatic stop if idle (no jump is done)
+--     idle_stop = 10000000,
+--   },
+-- })
+
+require('mini.jump2d').setup({
+  -- Function producing jump spots (byte indexed) for a particular line.
+  -- For more information see |MiniJump2d.start|.
+  -- If `nil` (default) - use |MiniJump2d.default_spotter|
+  spotter = nil,
+
+  -- Characters used for labels of jump spots (in supplied order)
+  labels = 'abcdefghijklmnopqrstuvwxyz',
+
+  -- Options for visual effects
+  view = {
+    -- Whether to dim lines with at least one jump spot
+    dim = false,
+
+    -- How many steps ahead to show. Set to big number to show all steps.
+    n_steps_ahead = 0,
+  },
+
+  -- Which lines are used for computing spots
+  allowed_lines = {
+    blank = true,         -- Blank line (not sent to spotter even if `true`)
+    cursor_before = true, -- Lines before cursor line
+    cursor_at = true,     -- Cursor line
+    cursor_after = true,  -- Lines after cursor line
+    fold = true,          -- Start of fold (not sent to spotter even if `true`)
+  },
+
+  -- Which windows from current tabpage are used for visible lines
+  allowed_windows = {
+    current = true,
+    not_current = true,
+  },
+
+  -- Functions to be executed at certain events
+  hooks = {
+    before_start = nil, -- Before jump start
+    after_jump = nil,   -- After jump was actually done
+  },
+
+  -- Module mappings. Use `''` (empty string) to disable one.
+  mappings = {
+    start_jumping = '<CR>',
+  },
+
+  -- Whether to disable showing non-error feedback
+  silent = false,
+})
+
+require('mini.map').setup({
+  -- Highlight integrations (none by default)
+  integrations = {
+    require('mini.map').gen_integration.builtin_search(),
+    require('mini.map').gen_integration.diagnostic(),
+    require('mini.map').gen_integration.gitsigns(),
+  },
+
+  -- Symbols used to display data
+  symbols = {
+    -- Encode symbols. See `:h MiniMap.config` for specification and
+    -- `:h MiniMap.gen_encode_symbols` for pre-built ones.
+    -- Default: solid blocks with 3x2 resolution.
+    encode = nil,
+
+    -- Scrollbar parts for view and line. Use empty string to disable any.
+    scroll_line = '█',
+    scroll_view = '┃',
+  },
+
+  -- Window options
+  window = {
+    -- Whether window is focusable in normal way (with `wincmd` or mouse)
+    focusable = true,
+
+    -- Side to stick ('left' or 'right')
+    side = 'right',
+
+    -- Whether to show count of multiple integration highlights
+    show_integration_count = false,
+
+    -- Total width
+    width = 10,
+
+    -- Value of 'winblend' option
+    winblend = 25,
+  },
+})
+
+require('mini.operators').setup({
+  -- Each entry configures one operator.
+  -- `prefix` defines keys mapped during `setup()`: in Normal mode
+  -- to operate on textobject and line, in Visual - on selection.
+
+  -- Evaluate text and replace with output
+  evaluate = {
+    prefix = '', -- 'g=',
+
+    -- Function which does the evaluation
+    func = nil,
+  },
+
+  -- Exchange text regions
+  exchange = {
+    prefix = 'gY',
+
+    -- Whether to reindent new text to match previous indent
+    reindent_linewise = true,
+  },
+
+  -- Multiply (duplicate) text
+  multiply = {
+    prefix = '', -- 'gm',
+
+    -- Function which can modify text before multiplying
+    func = nil,
+  },
+
+  -- Replace text with register
+  replace = {
+    prefix = 'gy',
+
+    -- Whether to reindent new text to match previous indent
+    reindent_linewise = true,
+  },
+
+  -- Sort text
+  sort = {
+    prefix = 'gz',
+
+    -- Function which does the sort
+    func = nil,
+  }
+})
+
+-- require('mini.pairs').setup({
+--   -- In which modes mappings from this `config` should be created
+--   modes = { insert = true, command = false, terminal = false },
+--
+--   -- Global mappings. Each right hand side should be a pair information, a
+--   -- table with at least these fields (see more in |MiniPairs.map|):
+--   -- - <action> - one of "open", "close", "closeopen".
+--   -- - <pair> - two character string for pair to be used.
+--   -- By default pair is not inserted after `\`, quotes are not recognized by
+--   -- `<CR>`, `'` does not insert pair after a letter.
+--   -- Only parts of tables can be tweaked (others will use these defaults).
+--   mappings = {
+--     ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
+--     ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
+--     ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
+--
+--     [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+--     [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+--     ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
+--
+--     ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
+--     ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
+--     ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
+--   },
+-- })
+
+require('mini.sessions').setup({
+  -- Whether to read latest session if Neovim opened without file arguments
+  autoread = false,
+
+  -- Whether to write current session before quitting Neovim
+  autowrite = true,
+
+  -- Directory where global sessions are stored (use `''` to disable)
+  -- directory = vim.fn.stdpath("data") .. "session",  --<"session" subdir of user data directory from |stdpath()|>,
+
+  -- File for local session (use `''` to disable)
+  file = 'Session.vim',
+
+  -- Whether to force possibly harmful actions (meaning depends on function)
+  force = { read = false, write = true, delete = true },
+
+  -- Hook functions for actions. Default `nil` means 'do nothing'.
+  hooks = {
+    -- Before successful action
+    pre = {
+      read = nil,
+      -- write = require("mini.sessions").write(vim.fn.expand('%:t') .. "__"),
+      write = write_session(),
+      delete = nil
+    },
+    -- After successful action
+    post = {
+      read = nil,
+      write = nil,
+      delete = nil
+    },
+  },
+
+  -- Whether to print session path after action
+  verbose = { read = false, write = false, delete = true },
 })
 
 require('mini.splitjoin').setup({
@@ -355,89 +663,38 @@ require('mini.surround').setup({
 
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = {
-    add = 'ys',            -- Add surrounding in Normal and Visual modes
-    delete = 'ds',         -- Delete surrounding
-    find = 'zf',           -- Find surrounding (to the right)
-    find_left = 'zF',      -- Find surrounding (to the left)
-    highlight = 'zh',      -- Highlight surrounding
-    replace = 'cs',        -- Replace surrounding
-    update_n_lines = 'zn', -- Update `n_lines`
+    add = 'gsa',            -- Add surrounding in Normal and Visual modes
+    delete = 'gsd',         -- Delete surrounding
+    find = 'gsf',           -- Find surrounding (to the right)
+    find_left = 'gsF',      -- Find surrounding (to the left)
+    highlight = 'gsh',      -- Highlight surrounding
+    replace = 'gsr',        -- Replace surrounding
+    update_n_lines = 'gsn', -- Update `n_lines`
 
-    suffix_last = 'l',     -- Suffix to search with "prev" method
-    suffix_next = 'N',     -- Suffix to search with "next" method
+    suffix_last = 'l',      -- Suffix to search with "prev" method
+    suffix_next = 'N',      -- Suffix to search with "next" method
   },
 
   -- Number of lines within which surrounding is searched
   n_lines = 20,
+
+  -- Whether to respect selection type:
+  -- - Place surroundings on separate lines in linewise mode.
+  -- - Place surroundings on each line in blockwise mode.
+  respect_selection_type = false,
 
   -- How to search for surrounding (first inside current line, then inside
   -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
   -- 'cover_or_nearest', 'next', 'prev', 'nearest'. For more details,
   -- see `:h MiniSurround.config`.
   search_method = 'cover',
+
+  -- Whether to disable showing non-error feedback
+  silent = false,
 })
 
-require('mini.map').setup({
-  -- Highlight integrations (none by default)
-  integrations = {
-    require('mini.map').gen_integration.builtin_search(),
-    require('mini.map').gen_integration.diagnostic(),
-    require('mini.map').gen_integration.gitsigns(),
-  },
-
-  -- Symbols used to display data
-  symbols = {
-    -- Encode symbols. See `:h MiniMap.config` for specification and
-    -- `:h MiniMap.gen_encode_symbols` for pre-built ones.
-    -- Default: solid blocks with 3x2 resolution.
-    encode = nil,
-
-    -- Scrollbar parts for view and line. Use empty string to disable any.
-    scroll_line = '█',
-    scroll_view = '┃',
-  },
-
-  -- Window options
-  window = {
-    -- Whether window is focusable in normal way (with `wincmd` or mouse)
-    focusable = true,
-
-    -- Side to stick ('left' or 'right')
-    side = 'right',
-
-    -- Whether to show count of multiple integration highlights
-    show_integration_count = false,
-
-    -- Total width
-    width = 10,
-
-    -- Value of 'winblend' option
-    winblend = 25,
-  },
+require('mini.trailspace').setup({
+  -- Highlight only in normal buffers (ones with empty 'buftype'). This is
+  -- useful to not show trailing whitespace where it usually doesn't matter.
+  only_in_normal_buffers = true,
 })
-
--- require('mini.pairs').setup({
---   -- In which modes mappings from this `config` should be created
---   modes = { insert = true, command = false, terminal = false },
---
---   -- Global mappings. Each right hand side should be a pair information, a
---   -- table with at least these fields (see more in |MiniPairs.map|):
---   -- - <action> - one of "open", "close", "closeopen".
---   -- - <pair> - two character string for pair to be used.
---   -- By default pair is not inserted after `\`, quotes are not recognized by
---   -- `<CR>`, `'` does not insert pair after a letter.
---   -- Only parts of tables can be tweaked (others will use these defaults).
---   mappings = {
---     ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
---     ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
---     ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
---
---     [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
---     [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
---     ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
---
---     ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
---     ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
---     ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
---   },
--- })

@@ -37,7 +37,7 @@ local options = {
   tabstop = 2,               -- insert 2 spaces for a tab
   termguicolors = true,      -- set term gui colors (most terminals support this)
   timeoutlen = 500,          -- time to wait for a mapped sequence to complete (in milliseconds)
-  -- undofile = true,        -- enable persistent undo
+  undofile = false,          -- enable persistent undo
   updatetime = 300,          -- faster completion (4000ms default)
   virtualedit = "all",       -- allow cursor bypass end of line
   visualbell = true,         -- visual bell instead of beeping
@@ -59,15 +59,6 @@ vim.opt.formatoptions:remove({ "c", "r", "o" }) -- don't insert the current comm
 vim.g.codeium_no_map_tab = true
 vim.g.indent_object_ignore_blank_line = false
 vim.g.diagnostics_enabled = true -- enable diagnostics at start
-
--- _easyclip
-vim.g.EasyClipAutoFormat = 1
-vim.g.textobj_space_no_default_key_mappings = true
-vim.g.EasyClipUseCutDefaults = false
-vim.g.EasyClipEnableBlackHoleRedirect = false
-vim.g.EasyClipUseYankDefaults = false
-vim.g.EasyClipUsePasteDefaults = false
-vim.g.EasyClipUsePasteToggleDefaults = false
 
 -- _nvim_ufo
 vim.o.foldcolumn = "1"    -- '0' is not bad

@@ -38,7 +38,7 @@ $SUDO pacman -Sy --noconfirm base-devel git glibc ||
 }
 
 # Neovim:
-$SUDO curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.2/nvim.appimage && $SUDO chmod +x /usr/local/bin/nvim
+$SUDO curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.4/nvim.appimage && $SUDO chmod +x /usr/local/bin/nvim
 
 # AUR:
 $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_x86_64.tar.gz | $SUDO tar -xzf- --strip-components=1 --directory="/usr/local/bin" "yay_12.1.2_x86_64/yay"

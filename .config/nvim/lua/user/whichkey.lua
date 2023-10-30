@@ -20,6 +20,7 @@ local setup = {
       windows = true,      -- default bindings on <c-w>
       nav = true,          -- misc bindings to work with windows
       z = true,            -- bindings for folds, spelling and others prefixed with z
+      v = true,            -- bindings for prefixed with g
       g = true,            -- bindings for prefixed with g
     },
   },
@@ -51,7 +52,7 @@ local setup = {
   },
   layout = {
     height = { min = 4, max = 25 },                                                       -- min and max height of the columns
-    width = { min = 20, max = 50 },                                                       -- min and max width of the columns
+    width = { min = 20, max = 40 },                                                       -- min and max width of the columns
     spacing = 3,                                                                          -- spacing between columns
     align = "left",                                                                       -- align columns left, center or right
   },
@@ -89,16 +90,22 @@ local mappings = {
   ["7"] = "which_key_ignore",
   ["8"] = "which_key_ignore",
   ["9"] = "which_key_ignore",
-  ["v"] = "which_key_ignore", -- vertical ToggleTerm
-  ["V"] = "which_key_ignore", -- horizontal ToggleTerm
   ["<Tab>"] = { "which_key_ignore" },
   ["<S-Tab>"] = { "which_key_ignore" },
 
   ["'"] = { "<Cmd>Telescope marks initial_mode=normal<CR>", "Marks" },
   ["."] = { "<cmd>Telescope resume<cr>", "Telescope resume" },
 
+  ["<space>"] = {
+    name = "Motion",
+    ["p"] = { '"*p', "Paste after (second_clip)" },
+    ["P"] = { '"*P', "Paste before (second_clip)" },
+    ["y"] = { '"*y', "Yank (second_clip)" },
+    ["Y"] = { '"*yg_', "Yank forward (second_clip)" },
+  },
+
   [";"] = {
-    name = "Tabs",
+    name = "Tab",
     C = { "<cmd>tabonly<cr>", "Close others Tabs" },
     n = { "<cmd>tabnext<cr>", "Next Tab" },
     p = { "<cmd>tabprevious<cr>", "Previous Tab" },
@@ -268,8 +275,8 @@ local mappings = {
     d = { function() WhichkeyRepeat("lua vim.lsp.buf.definition()") end, "Goto Definition" },
     D = { function() WhichkeyRepeat("lua vim.lsp.buf.declaration()") end, "Goto Declaration" },
     F = { function() WhichkeyRepeat("lua vim.lsp.buf.format()") end, "Format" },
-    h = { function() WhichkeyRepeat("lua vim.lsp.buf.hover()") end, "Hover" },
-    H = { function() WhichkeyRepeat("lua vim.lsp.buf.signature_help()") end, "Signature" },
+    h = { function() WhichkeyRepeat("lua vim.lsp.buf.signature_help()") end, "Signature" },
+    H = { function() WhichkeyRepeat("lua vim.lsp.buf.hover()") end, "Hover" },
     I = { function() WhichkeyRepeat("lua vim.lsp.buf.implementation()") end, "Goto Implementation" },
     l = { function() WhichkeyRepeat("lua vim.lsp.codelens.refresh()") end, "CodeLens refresh" },
     L = { function() WhichkeyRepeat("lua vim.lsp.codelens.run()") end, "CodeLens run" },
@@ -395,11 +402,11 @@ local mappings = {
 
   S = {
     name = "Session",
-    l = { "<cmd>SessionManager! load_last_session<cr>", "Load last session" },
-    s = { "<cmd>SessionManager! save_current_session<cr>", "Save this session" },
-    d = { "<cmd>SessionManager! delete_session<cr>", "Delete session" },
-    f = { "<cmd>SessionManager! load_session<cr>", "Search sessions" },
-    ["."] = { "<cmd>SessionManager! load_current_dir_session<cr>", "Load current directory session" },
+    D = { "<cmd>lua require('mini.sessions').select('delete')<cr>", "Delete sessions" },
+    F = { "<cmd>lua require('mini.sessions').select('read')<cr>", "Find sessions" },
+    L = { "<cmd>lua require('mini.sessions').read('saved_session')<cr>", "Load saved session" },
+    l = { "<cmd>lua require('mini.sessions').read(require('mini.sessions').get_latest())<cr>", "Load last session" },
+    S = { "<cmd>lua require('mini.sessions').write('saved_session')<cr>", "Save this session" },
   },
 
   t = {
@@ -635,6 +642,9 @@ local mappings = {
     [";"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
   },
 
+  v = { "<Cmd>ToggleTerm direction=vertical   size=70<CR>", "which_key_ignore" },
+  V = { "<Cmd>ToggleTerm direction=horizontal size=10<CR>", "which_key_ignore" },
+
   w = {
     name = "Window",
     b = { "<cmd>lua SwapWindow()<cr>", "SwapWindow (last visited node)" },
@@ -662,8 +672,8 @@ local mappings = {
       end,
       "window to Tab"
     },
-    v = { "<cmd>vsplit<cr>", "split vertical" },
-    V = { "<cmd>split<cr>", "split horizontal" },
+    v = { "<cmd>vsplit<cr>", "Split vertical" },
+    V = { "<cmd>split<cr>", "Split horizontal" },
     w = { "<cmd>new<cr>", "New horizontal window" },
     W = { "<cmd>vnew<cr>", "New vertical window" },
     x = { "<cmd>wincmd q<cr>", "Close window" },
@@ -671,15 +681,12 @@ local mappings = {
     [":"] = { "<C-w>p<cmd>call SwitchWindow2()<cr>", "Move to recent window" },
     ["="] = { "<C-w>=", "Reset windows sizes" },
   },
-  y = {
-    name = "second clipboard",
-    ["p"] = { '"*p', "Paste After" },
-    ["P"] = { '"*P', "Paste Before" },
-    ["y"] = { '"*yg_', "Yank Forward" },
-    ["Y"] = { '"*Y', "Yank Line" },
-  },
   z = {
     name = "folding",
+    ["a"] = { "za", "Toggle fold under cursor" },
+    ["A"] = { "zA", "Toggle all folds under cursor" },
+    ["c"] = { "zc", "Close fold under cursor" },
+    ["C"] = { "zC", "Close all folds under cursor" },
     ["j"] = { "zj", "next fold" },
     ["k"] = { "zk", "previous fold" },
     ["J"] = { "]z", "go to bottom of current fold" },
@@ -688,10 +695,17 @@ local mappings = {
     ["E"] = { "zE", "remove all fold" },
     ["i"] = { "<cmd>set foldlevel=0 foldlevelstart=-1 foldmethod=indent<cr>", "fold all indentation" },
     ["m"] = { "<cmd>set foldlevel=99 foldlevelstart=99 foldmethod=manual<cr>", "manual fold" },
+    -- ["M"] = { "<cmd>lua require('ufo').closeAllFolds()<cr>", "Close All Folds" },
+    ["M"] = { "zM", "Close All Folds" },
     ["s"] = { "<cmd>mkview<cr>", "save folds" },
     ["l"] = { "<cmd>loadview<cr>", "load folds" },
     ["p"] = { "zfip", "fold paragraph" },
     ["P"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, "peek FoldedLines" },
+    ["o"] = { "zo", "open fold under cursor" },
+    ["O"] = { "zO", "fold all folds under cursor" },
+    ["r"] = { "zr", "fold less" },
+    -- ["R"] = { "<cmd>lua require('ufo').openAllFolds()<cr>", "Open All Folds" },
+    ["R"] = { "zR", "Open All Folds" },
     ["}"] = { "zfa}", "fold curly-bracket block" },
     ["]"] = { "zfa]", "fold square-bracket block" },
     [")"] = { "zfa)", "fold parenthesis block" },
@@ -704,33 +718,50 @@ which_key.setup(setup)
 which_key.register(mappings, opts)
 
 local mini_textobj = {
-  q = '@call',
-  Q = '@class',
-  g = '@comment',
-  G = '@conditional',
-  B = '@block',
-  F = '@function',
-  L = '@loop',
-  P = '@parameter',
-  R = '@return',
-  ["="] = '@assignment.side',
-  ["+"] = '@assignment.whole',
-  ["*"] = '@number',
-  ['a'] = 'Function Parameters',
-  ['A'] = 'Whole Buffer',
+  ['a'] = 'function args',
+  ['A'] = '@assingment',
   ['b'] = 'Alias )]}',
-  ['f'] = 'Function Definition',
-  ['k'] = 'Key',
-  ['n'] = 'Number',
-  ['p'] = 'Paragraph',
+  ["B"] = '@block',
+  ["c"] = 'word-column',
+  ["C"] = 'Word-Column',
+  ["d"] = 'greedyOuterIndentation',
+  ["e"] = 'nearEndOfLine',
+  ['f'] = 'function call',
+  ["F"] = '@function',
+  ["g"] = '@comment',
+  ["G"] = '@conditional',
+  ['h'] = 'html atribute',
+  ['i'] = 'indentation noblanks',
+  ['I'] = 'Indentation',
+  ['j'] = 'cssSelector',
+  ['k'] = 'key',
+  ["l"] = '+Last',
+  ["L"] = '@loop',
+  ["m"] = 'chainMember',
+  ["M"] = 'mdFencedCodeBlock',
+  ['n'] = 'number',
+  ['N'] = '+Next',
+  ['o'] = 'whitespace',
+  ['p'] = 'paragraph',
+  ["P"] = '@parameter',
+  ["q"] = '@call',
+  ["Q"] = '@class',
+  ["r"] = 'restOfWindow',
+  ["R"] = '@return',
   ['s'] = 'Sentence',
-  ['t'] = 'Tag',
+  ['S'] = 'Subword',
+  ['t'] = 'tag',
   ['u'] = 'Alias "\'`',
-  ['v'] = 'Value',
-  ['w'] = 'Word',
-  ['x'] = 'Hex',
-  ['y'] = 'Whitespace',
-  ['z'] = 'ClosedFold',
+  ['U'] = 'pyTripleQuotes',
+  ['v'] = 'value',
+  ['w'] = 'word',
+  ['W'] = 'WORD',
+  ['x'] = 'hex',
+  ['y'] = 'same_indent',
+  ['z'] = 'fold',
+  ['Z'] = 'ClosedFold',
+  ["="] = '@assignment.rhs-lhs',
+  ["#"] = '@number',
   ['?'] = 'Prompt',
   ['('] = 'Same as )',
   ['['] = 'Same as ]',
@@ -750,25 +781,168 @@ local mini_textobj = {
   -- `!@#$%^&*()_+-=[]{};'\:"|,./<>?
 }
 
-which_key.register({
-  mode = { "o", "x" },
+local textobj = {
+  -- ["Q"] = { "Textsubjects Prev Selection" },
+  -- ["K"] = { "Textsubjects Smart" },
+  ["$"] = "End of line",
+  ["%"] = "Matching character: '()', '{}', '[]'",
+  [","] = "Prev TS textobj",
+  [";"] = "Next TS textobj",
+  ["0"] = "Start of line",
+  ["^"] = "Start of line (non-blank)",
+  ["{"] = "Previous empty line",
+  ["}"] = "Next empty line",
+  ["<BS> "] = "Next SneakForward",
+  ["<CR> "] = "Start 2d jumping",
+  ["<M-i>"] = "illuminate word",
+  ["<M-n>"] = "illuminate next",
+  ["<M-p>"] = "illuminate prev",
+  ["<S-BS> "] = "Prev SneakForward",
+  ["b"] = "Previous word",
+  ["e"] = "Next end of word",
+  ["f"] = "Move to next char",
+  ["F"] = "Move to previous char",
+  ["G"] = "Last line",
+  ["t"] = "Move before next char",
+  ["T"] = "Move before previous char",
+  ["w"] = "Next word",
+  ["z"] = "Sneak_s",
+  ["Z"] = "Sneak_S",
+
+  -- ["aK"] = { "Textsubjects Container Outer" },
+  -- ["iK"] = { "Textsubjects Container Inner" },
   ["i"] = mini_textobj,
   ["il"] = { name = "+Last", mini_textobj },
   ["iN"] = { name = "+Next", mini_textobj },
   ["a"] = mini_textobj,
   ["al"] = { name = "+Last", mini_textobj },
   ["aN"] = { name = "+Next", mini_textobj },
-  ["Q"] = { "Textsubjects Prev Selection" },
-  ["K"] = { "Textsubjects Smart" },
-  ["aK"] = { "Textsubjects Container Outer" },
-  ["iK"] = { "Textsubjects Container Inner" },
-})
 
-which_key.register({
-  mode = { "n" },
+  ["g{"] = { "braces linewise textobj" },
+  ["g}"] = { "braces linewise textobj" },
   ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around" }, mini_textobj),
   ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around" }, mini_textobj),
-})
+  -- ["ga"] = { "Align (operator)" },                               -- only visual and normal mode
+  -- ["gA"] = { "Preview Align (operator)" },                       -- only visual and normal mode
+  ["gb"] = { "SneakLabeled forward" },
+  ["gB"] = { "SneakLabeled backward" },
+  ["gc"] = { "BlockComment textobj" },
+  ["gC"] = { "RestOfComment textobj" },
+  ["gd"] = { "Diagnostic textobj" },
+  ["ge"] = { "Previous end of word textobj" },
+  ["gE"] = { "Previous end of WORD textobj" },
+  ["gf"] = { "Next find textobj" },
+  ["gF"] = { "Prev find textobj" },
+  ["gg"] = { "First line textobj" },
+  ["gh"] = { "Git hunk textobj" },
+  ["gi"] = { "Goto Insert textobj" },
+  ["gj"] = { "GoDown when wrapped textobj" },
+  ["gk"] = { "GoUp when wrapped textobj" },
+  ["gK"] = { "ColumnDown textobj" },
+  ["gl"] = { "Jump toLastChange textobj" },
+  ["gL"] = { "Url textobj" },
+  ["gm"] = { "Last change textobj" },
+  ["gn"] = { name = "+next" },
+  ["go"] = { "Sneak forward (s/S to next/prev match)" },
+  ["gO"] = { "Sneak backward (s/S to next/prev match)" },
+  ["gp"] = { name = "+previous" },
+  ["gq"] = { "SneakLabel forward" },
+  ["gQ"] = { "SneakLabel backward" },
+  ["gr"] = { "RestOfWindow textobj" },
+  ["gR"] = { "VisibleWindow textobj" },
+  ["gs"] = { "Surround textobj" },
+  ["gS"] = { "JoinSplit textobj" },
+  ["gT"] = { "toNextClosingBracket textobj" },
+  ["gt"] = { "toNextQuotationMark textobj" },
+  -- ["gu"] = { "to lowercase" },                                   -- only visual and normal mode
+  -- ["gU"] = { "to Uppercase" },                                   -- only visual and normal mode
+  -- ["gv"] = { "last selected" },                                  -- only visual and normal mode
+  -- ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" }, -- only visual and normal mode
+  -- ["gx"] = { "Blackhole register" },                             -- only visual and normal mode
+  -- ["gx"] = { "Blackhole linewise" },                             -- only visual and normal mode
+  -- ["gy"] = { "replace with register" },                          -- only visual and normal mode
+  -- ["gY"] = { "exchange text" },                                  -- only visual and normal mode
+  -- ["gz"] = { "sort" },                                           -- only visual and normal mode
+}
+
+local operator_motion = {
+  -- ["gq"] = vim.tbl_extend("force", { name = "+SplitJoin comment 80chars" }, textobj),       -- only visual and normal mode (cursor_position at start)
+  -- ["g<c-a>"] = { "Numbers ascending" },                                                     -- only visual and normal mode
+  -- ["g<c-x>"] = { "Numbers descending" },                                                    -- only visual and normal mode
+  ["="] = vim.tbl_extend("force", { name = "+autoindent (dot to repeat)" }, textobj),
+  [">"] = { name = "+indent right (dot to repeat)" },
+  ["<"] = { name = "+indent left (dot to repeat)" },
+  ["g,"] = { "go forward in :changes" },
+  ["g;"] = { "go backward in :changes" },
+  ["g<"] = vim.tbl_extend("force", { name = "+goto StarOf textobj (dot to repeat)" }, textobj),
+  ["g>"] = vim.tbl_extend("force", { name = "+goto EndOf textobj (dot to repeat)" }, textobj),
+  ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around (mini textobj only)" }, mini_textobj),  -- "g<" does it better
+  ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around (mini textobj only)" }, mini_textobj), -- "g>" does it better
+  ["ga"] = vim.tbl_extend("force", { name = "+align (dot to repeat)" }, textobj),
+  ["gA"] = vim.tbl_extend("force", { name = "+preview align (dot to repeat)" }, textobj),
+  ["gb"] = { "SneakLabeled forward" },
+  ["gB"] = { "SneakLabeled backward" },
+  ["gc"] = { name = "+comment (dot to repeat)" },
+  ["gd"] = { "goto definition" },
+  ["ge"] = { "goto previous endOfWord" },
+  ["gE"] = { "goto previous endOfWord" },
+  ["gf"] = { "goto file under cursor" },
+  ["gg"] = { "goto first line" },
+  ["gh"] = { "paste LastSearch register (dot to repeat)" },
+  ["gi"] = { "goto insert" },
+  ["gj"] = { "goto Down (when wrapped)" },
+  ["gk"] = { "goto Up (when wrapped)" },
+  ["gl"] = { "goto last change" },
+  ["gm"] = { "goto mid window" },
+  ["gM"] = { "goto mid line" },
+  ["gn"] = { name = "+next (;, to repeat)" },
+  ["go"] = { "Sneak forward (sS to repeat)" },
+  ["gO"] = { "Sneak backward (sS to repeat)" },
+  ["gp"] = { name = "+previous (;, to repeat)" },
+  ["gq"] = { "SneakLabel forward (sS to repeat )" },
+  ["gQ"] = { "SneakLabel backward (sS to repeat)" },
+  ["gr"] = { "Redo register (dot to paste forward)" },
+  ["gR"] = { "Redo register (dot to paste backward)" }, -- (overwrites "replace mode")
+  ["gs"] = { name = "+Surround (dot to repeat)" },
+  ["gS"] = { "SplitJoin args (dot to repeat)" },
+  ["gt"] = { "goto next tab" },
+  ["gT"] = { "goto prev tab" },
+  ["gu"] = { name = "+toLowercase (dot to repeat)" },                                                       -- only visual and normal mode
+  ["gU"] = { name = "+toUppercase (dot to repeat)" },                                                       -- only visual and normal mode
+  ["gv"] = { "last selected" },                                                                             -- only visual and normal mode
+  ["gw"] = vim.tbl_extend("force", { name = "+SplitJoin coments/lines 80chars (dot to repeat)" }, textobj), -- only visual and normal mode (maintains cursor_position)
+  ["gx"] = vim.tbl_extend("force", { name = "+Blackhole register (dot to repeat)" }, textobj),              -- only visual and normal mode (overwrites "open with system")
+  ["gX"] = { "Blackhole linewise (dot to repeat)" },                                                        -- only visual and normal mode
+  ["gy"] = { name = "+replace with register (dot to repeat)" },                                             -- only visual and normal mode
+  ["gY"] = { name = "+exchange text" },                                                                     -- only visual and normal mode
+  ["gz"] = { name = "+sort (dot to repeat)" },                                                              -- only visual and normal mode
+  ["g+"] = { "Increment number (dot to repeat)" },                                                          -- only visual and normal mode
+  ["g-"] = { "Decrement number (dot to repeat)" },                                                          -- only visual and normal mode
+}
+
+local visual_action = {
+  ["ga"] = { "Align" },                                          -- only visual and normal mode
+  ["gA"] = { "Preview Align" },                                  -- only visual and normal mode
+  ["gu"] = { "to lowercase" },                                   -- only visual and normal mode
+  ["gU"] = { "to Uppercase" },                                   -- only visual and normal mode
+  ["gv"] = { "last selected" },                                  -- only visual and normal mode
+  ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" }, -- only visual and normal mode
+  ["gx"] = { "Blackhole register" },                             -- only visual and normal mode
+  ["gX"] = { "Blackhole linewise" },                             -- only visual and normal mode
+  ["gy"] = { "replace with register" },                          -- only visual and normal mode
+  ["gY"] = { "exchange text" },                                  -- only visual and normal mode
+  ["gz"] = { "sort" },                                           -- only visual and normal mode
+  ["g+"] = { "Increment number" },                               -- only visual and normal mode
+  ["g-"] = { "Decrement number" },                               -- only visual and normal mode
+  ["<leader><leader>p"] = { "Paste (second_clip)" },             -- only visual and normal mode
+  ["<leader><leader>P"] = { "Paste forward (second_clip)" },     -- only visual and normal mode
+  ["<leader><leader>y"] = { "Yank (second_clip)" },              -- only visual and normal mode
+  ["<leader><leader>Y"] = { "Yank forward (second_clip)" },      -- only visual and normal mode
+}
+
+which_key.register({ mode = { "o", "x" }, textobj })
+which_key.register({ mode = { "n" }, operator_motion })
+which_key.register({ mode = { "x" }, visual_action })
 
 -- Disable some operators (like v)
 -- make sure to run this code before calling setup()

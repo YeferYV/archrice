@@ -32,17 +32,6 @@ local opts = {
 local plugins = {
 
   -- Automation
-  -- { 'tpope/vim-commentary', event = "VeryLazy" },
-  -- {
-  --   "numToStr/Comment.nvim",
-  --   commit = "5f01c1a89adafc52bf34e3bf690f80d9d726715d",
-  --   config = true
-  -- },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    commit = "729d83ecb990dc2b30272833c213cc6d49ed5214",
-    event = "VeryLazy"
-  },
   {
     "windwp/nvim-autopairs", -- Autopairs, integrates with both cmp and treesitter
     commit = "0fd6519d44eac3a6736aafdb3fe9da916c3701d4",
@@ -94,12 +83,12 @@ local plugins = {
     },
     config = function() require("user.cmp") end
   },
-  {
-    "ray-x/lsp_signature.nvim",
-    commit = "1fdc742af68f4725a22c05c132f971143be447fc",
-    event = { "InsertEnter" },
-    config = function() require "lsp_signature".on_attach({ hint_enable = false }) end
-  },
+  -- {
+  --   "ray-x/lsp_signature.nvim",
+  --   commit = "1fdc742af68f4725a22c05c132f971143be447fc",
+  --   event = { "InsertEnter" },
+  --   config = function() require "lsp_signature".on_attach({ hint_enable = false }) end
+  -- },
 
   -- DAP
   {
@@ -146,8 +135,12 @@ local plugins = {
   },
 
   -- Motions
-  { "tpope/vim-repeat",                  commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a", event = "VeryLazy" },
-  { "justinmk/vim-sneak",                commit = "93395f5b56eb203e4c8346766f258ac94ea81702", event = "VeryLazy" },
+  {
+    "justinmk/vim-sneak",
+    commit = "93395f5b56eb203e4c8346766f258ac94ea81702",
+    event = "VeryLazy",
+    dependencies = { "tpope/vim-repeat", commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a" },
+  },
 
   -- Status-Line
   { "nvim-lualine/lualine.nvim",         commit = "c28a7427c3fb29322db136f0564ec58807b26747" },
@@ -155,11 +148,10 @@ local plugins = {
   { "Allianaab2m/nvim-material-icon-v3", commit = "89a89f7fa20330b21c93f4446bf99c20e7cea8d8" },
 
   -- Text-Objects
-  -- { 'wellle/targets.vim'},
   -- { "godlygeek/tabular"},
   -- { 'nvim-treesitter/playground'},
   -- { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" }, -- incremental-repressing + respects-blanklines + vimrepeat + VisualRepeatable(e.g mini.comment is noVisualRepeable)
-  { "echasnovski/mini.nvim",             commit = "2d70ae2b0faade0b5ab8524e155f47ca829db5f2" },
+  { "echasnovski/mini.nvim",             commit = "e8a413b1a29f05bb556a804ebee990eb54479586" },
   {
     "kana/vim-textobj-user",
     commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933",
@@ -174,42 +166,21 @@ local plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    commit = "9161093fc7e13b12aa5bc86c641768c049d43a26",
+    commit = "c36681bb496ebce2946867459ed08774cb61788c",
     dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "b55fe6175f0001347a433c9df358c8cbf8a4e90f" },
-      { "RRethy/nvim-treesitter-textsubjects",         commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
+      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "e69a504baf2951d52e1f1fbb05145d43f236cbf1" },
+      -- { "RRethy/nvim-treesitter-textsubjects",         commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
     }
   },
   { "mg979/vim-visual-multi",  commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a", event = "VeryLazy" },
-  { "svermeulen/vim-easyclip", commit = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
     commit = "c0aa3ff33eaf9e7bc827ea918f92ac47d6037118",
     config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
   },
-  -- _surround_code_blocks
-  -- { 'tpope/vim-surround' },
-  -- {
-  --   "kylechui/nvim-surround",
-  --   commit = "6cc6b54d3728a17e34bb5c9b9db05c7e5690813d",
-  --   config = {
-  --       keymaps = {
-  --         insert          = '<C-g>z',
-  --         insert_line     = '<C-g>Z',
-  --         normal          = 'yz',
-  --         normal_cur      = 'YZ',
-  --         normal_line     = 'yzz',
-  --         normal_cur_line = 'YZZ',
-  --         visual          = 'z',
-  --         visual_line     = 'Z',
-  --         delete          = 'dz',
-  --         change          = 'cz',
-  --       }
-  --   }
-  -- },
 
   -- TUI
-  { "akinsho/toggleterm.nvim",             commit = "b86982429325112d2b20c6d0cc7a5c4b182ab705" },
+  { "akinsho/toggleterm.nvim", commit = "b86982429325112d2b20c6d0cc7a5c4b182ab705" },
   {
     "nvim-telescope/telescope.nvim",
     commit = "942fe5faef47b21241e970551eba407bc10d9547",
@@ -228,11 +199,10 @@ local plugins = {
   { "ahmedkhalf/project.nvim",             commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   {
     "folke/which-key.nvim",
-    commit = "4b73390eec680b4c061ea175eb32c0ff3412271d",
+    commit = "4433e5ec9a507e5097571ed55c02ea9658fb268a",
     dependencies = {
       -- { "mrjones2014/legendary.nvim" },
       { "machakann/vim-columnmove", commit = "21a43d809a03ff9bf9946d983d17b3a316bf7a64" },
-      { "phaazon/hop.nvim",         commit = "90db1b2c61b820e230599a04fedcd2679e64bd07", config = true },
     },
   },
   {
@@ -245,11 +215,6 @@ local plugins = {
     "goolord/alpha-nvim",
     commit = "dafa11a6218c2296df044e00f88d9187222ba6b0",
     dependencies = {
-      {
-        "Shatur/neovim-session-manager",
-        commit = "d1883f30921193f3cff4537e27514e454e0331e9",
-        config = { autoload_mode = "disabled" }
-      },
       {
         "NvChad/nvim-colorizer.lua",
         commit = "dde3084106a70b9a79d48f426f6d6fec6fd203f7",

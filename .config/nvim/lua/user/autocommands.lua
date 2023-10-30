@@ -37,14 +37,14 @@ vim.cmd [[
     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
   augroup end
 
-  augroup _hightlight_whitespaces
-    autocmd!
-    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-    highlight ExtraWhitespace ctermbg=red guibg=red
-    autocmd InsertLeave * redraw!
-    match ExtraWhitespace /\s\+$\| \+\ze\t/
-    autocmd BufWritePre * :%s/\s\+$//e
-  augroup end
+  " augroup _hightlight_whitespaces
+  "   autocmd!
+  "   autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+  "   highlight ExtraWhitespace ctermbg=red guibg=red
+  "   autocmd InsertLeave * redraw!
+  "   match ExtraWhitespace /\s\+$\| \+\ze\t/
+  "   autocmd BufWritePre * :%s/\s\+$//e
+  " augroup end
 
   augroup _jump_to_last_position_on_reopen
     autocmd!

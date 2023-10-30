@@ -498,12 +498,12 @@ neotree.setup({
       open_tabnew_showbuffer = function(state)
         state.commands["open_tabnew"](state)
         vim.cmd("Neotree show")
-        vim.cmd [[ BufferlineShow ]]
+        vim.cmd [[ ShowBufferline ]]
       end,
 
       open_tabdrop_showbuffer = function(state)
         state.commands["open_tab_drop"](state)
-        vim.cmd [[ BufferlineShow ]]
+        vim.cmd [[ ShowBufferline ]]
       end,
 
       open_unfocus = function(state)
