@@ -891,6 +891,7 @@ local operator_motion = {
   ["gh"] = { "paste LastSearch register (dot to repeat)" },
   ["gi"] = { "goto insert" },
   ["gj"] = { "goto Down (when wrapped)" },
+  ["gJ"] = { "Join below Line" },
   ["gk"] = { "goto Up (when wrapped)" },
   ["gl"] = { "goto last change" },
   ["gm"] = { "goto mid window" },

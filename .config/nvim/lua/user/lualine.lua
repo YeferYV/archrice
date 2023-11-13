@@ -21,6 +21,12 @@ local colors = {
   red      = '#ec5f67',
 }
 
+local branch = {
+  "branch",
+  icons_enabled = true,
+  icon = "",
+}
+
 local diagnostics = {
   "diagnostics",
   sources = { "nvim_diagnostic" },
@@ -38,15 +44,54 @@ local diff = {
   cond = hide_in_width
 }
 
-local branch = {
-  "branch",
-  icons_enabled = true,
-  icon = "",
-}
-
 local location = {
   "location",
   padding = 0,
+}
+
+-- https://github.com/nvim-lualine/lualine.nvim/pull/620
+local lspServer = {
+  function()
+    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local clients = vim.lsp.get_active_clients()
+    if next(clients) == nil then
+      return 'No Lsp'
+    end
+    local clientNames = {}
+    for _, client in ipairs(clients) do
+      local filetypes = client.config.filetypes
+      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+        -- return client.name
+        table.insert(clientNames, client.name)
+      end
+    end
+    if #clientNames == 0 then
+      return 'No Lsp'
+    end
+    local msg = ''
+    local maxClientsToPrint = 3
+    local separator = '·'
+    for i = 1, math.min(maxClientsToPrint, #clientNames) do
+      msg = msg .. (i == 1 and '' or separator) .. clientNames[i]
+    end
+    if #clientNames > maxClientsToPrint then
+      msg = msg .. separator .. '+' .. (#clientNames - maxClientsToPrint)
+    end
+    return msg
+  end,
+  icon = ' ',
+  color = { fg = '#ffffff', gui = 'bold' },
+}
+
+local neotree_status = {
+  color = { fg = '#ff8800', gui = 'none' },
+  function()
+    if vim.bo.filetype == "neo-tree" then
+      return '󰉓'
+    else
+      return ''
+    end
+  end
 }
 
 local number_of_lines = {
@@ -85,65 +130,6 @@ local show_macro_recording = {
   end
 }
 
-local treesitterIcon = {
-  color = { fg = '#224422', gui = 'bold' },
-  function() --
-    if next(vim.treesitter.highlighter.active) ~= nil then
-      return " "
-    end
-    return ""
-  end,
-}
-
--- https://github.com/nvim-lualine/lualine.nvim/pull/620
-local lspServer = {
-  function()
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-    local clients = vim.lsp.get_active_clients()
-    if next(clients) == nil then
-      return 'No Lsp'
-    end
-    local clientNames = {}
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        -- return client.name
-        table.insert(clientNames, client.name)
-      end
-    end
-    if #clientNames == 0 then
-      return 'No Lsp'
-    end
-    local msg = ''
-    local maxClientsToPrint = 3
-    local separator = '·'
-    for i = 1, math.min(maxClientsToPrint, #clientNames) do
-      msg = msg .. (i == 1 and '' or separator) .. clientNames[i]
-    end
-    if #clientNames > maxClientsToPrint then
-      msg = msg .. separator .. '+' .. (#clientNames - maxClientsToPrint)
-    end
-    return msg
-  end,
-  icon = ' ',
-  color = { fg = '#ffffff', gui = 'bold' },
-}
-
-local function path() return vim.fn.fnamemodify(vim.fn.getcwd(), ':~') end
-
-local function spaces() return " " .. vim.api.nvim_buf_get_option(0, "shiftwidth") end
-
-local neotree_status = {
-  color = { fg = '#ff8800', gui = 'none' },
-  function()
-    if vim.bo.filetype == "neo-tree" then
-      return '󰉓'
-    else
-      return ''
-    end
-  end
-}
-
 local toggleterm_status = {
   color = { fg = '#31B53E', gui = 'none' },
   function()
@@ -157,6 +143,20 @@ local toggleterm_status = {
     end
   end
 }
+
+local treesitterIcon = {
+  color = { fg = '#224422', gui = 'bold' },
+  function() --
+    if next(vim.treesitter.highlighter.active) ~= nil then
+      return " "
+    end
+    return ""
+  end,
+}
+
+local function path() return vim.fn.fnamemodify(vim.fn.getcwd(), ':~') end
+local function spaces() return " " .. vim.api.nvim_buf_get_option(0, "shiftwidth") end
+local function codeium() return "{…}" .. vim.fn["codeium#GetStatusString"]() end
 
 local my_extension = {
   sections = {
@@ -202,8 +202,9 @@ lualine.setup({
     lualine_a = { branch },
     lualine_b = {},
     lualine_c = {},
-    lualine_x = { 'searchcount', show_macro_recording, diagnostics, diff, treesitterIcon, lspServer, 'filetype', spaces,
-      number_of_lines },                                                                                                                   -- "encoding"
+    lualine_x = { 'searchcount', show_macro_recording, diagnostics, diff, codeium, treesitterIcon, lspServer, 'filetype',
+      spaces,
+      number_of_lines }, -- "encoding"
     lualine_y = { location },
     lualine_z = { progress },
   },

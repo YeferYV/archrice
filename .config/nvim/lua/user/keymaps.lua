@@ -201,13 +201,13 @@ map("x", "g}", "aB$o0", { silent = true, desc = "braces linewise textobj" })
 map("o", "g}", "<cmd>normal! vaB$o0<cr>", { silent = true, desc = "braces linewise textobj" })
 
 -- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
--- map({ "o" }, 'gC', '<cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
+-- map({ "o" }, 'gC', '<cmd>lua require("mini.comment").textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
 -- map({ "x" }, 'gC', ':<c-u>normal "zygCgv<cr>', { silent = true, desc = "RestOfComment textobj" })
-map({ "o", "x" }, "gc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>",
+map({ "o" }, "gc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>",
   { silent = true, desc = "BlockComment textobj" })
 map({ "n" }, "vgc", "<cmd>lua require('various-textobjs').multiCommentedLines()<cr>",
   { silent = true, desc = "BlockComment textobj" })
-map({ "x" }, 'gC', '<cmd>lua MiniComment.textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
+map({ "x" }, 'gC', '<cmd>lua require("mini.comment").textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
 map({ "o" }, 'gC', ':<c-u>normal vgC<cr>', { silent = true, desc = "RestOfComment textobj" })
 
 -- _find_textobj_(dot-repeat_supported)
