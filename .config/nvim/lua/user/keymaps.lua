@@ -52,7 +52,7 @@ keymap("n", "U", "@:", opts)
 
 -- Save file as sudo
 -- keymap("c","w!!","execute 'silent! write !sudo tee % >/dev/null' <bar> edit!",opts)
-keymap("c", "w!!", "w !sudo tee %", opts)
+keymap("c", "#w", "w !sudo tee %<cr>", opts)
 
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
@@ -63,19 +63,19 @@ keymap("v", ">", ">gv", opts)
 -- keymap("n", "[q", ":cprevious<CR>", opts)
 -- keymap("n", "]l", ":lnext<CR>", opts)
 -- keymap("n", "[l", ":lprevious<CR>", opts)
-keymap("n", "<right>", ":bnext<CR>", opts)
-keymap("n", "<left>", ":bprevious<CR>", opts)
-keymap("n", "<Home>", ":tabprevious<CR>", opts)
-keymap("n", "<End>", ":tabnext<CR>", opts)
-keymap("n", "<Insert>", ":tabnext #<CR>", opts)
-keymap("t", "<Home>", "<C-\\><C-n>:tabprevious<CR>", opts)
-keymap("t", "<End>", "<C-\\><C-n>:tabnext<CR>", opts)
-keymap("t", "<Insert>", "<C-\\><C-n>:tabnext #<CR>", opts)
-keymap("n", "<Tab>", ":bnext<CR>", opts)
-keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
+keymap("n", "<Home>", ":tabprevious<CR>", { silent = true, desc = "prev tab" })
+keymap("n", "<End>", ":tabnext<CR>", { silent = true, desc = "next tab" })
+keymap("n", "<Insert>", ":tabnext #<CR>", { silent = true, desc = "last tab" })
+keymap("t", "<Home>", "<C-\\><C-n>:tabprevious<CR>", { silent = true, desc = "prev tab" })
+keymap("t", "<End>", "<C-\\><C-n>:tabnext<CR>", { silent = true, desc = "next tab" })
+keymap("t", "<Insert>", "<C-\\><C-n>:tabnext #<CR>", { silent = true, desc = "next tab" })
+keymap("n", "<right>", ":bnext<CR>", { silent = true, desc = "next buffer" })
+keymap("n", "<left>", ":bprevious<CR>", { silent = true, desc = "prev buffer" })
+keymap("n", "<Tab>", ":bnext<CR>", opts)                 -- replaced by <right>
+keymap("n", "<S-Tab>", ":bprevious<CR>", opts)           -- replaced by <left>
+keymap("n", "<leader><Tab>", ":tabnext<CR>", opts)       -- replaced by "gt"
+keymap("n", "<leader><S-Tab>", ":tabprevious<CR>", opts) -- replaced by "gT"
 keymap("n", "<leader>x", ":bp | bd #<CR>", { silent = true, desc = "Close Buffer" })
-keymap("n", "<leader><Tab>", ":tabnext<CR>", opts)
-keymap("n", "<leader><S-Tab>", ":tabprevious<CR>", opts)
 keymap("n", "<leader>X", ":tabclose<CR>", { silent = true, desc = "Close Tab" })
 
 -- Resize with arrows
@@ -92,12 +92,6 @@ map({ 'n', 't' }, '<M-Right>', require('smart-splits').resize_right, opts)
 -- keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 -- keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
--- vim-visual-multi
--- keymap("n", "<C-n>", "<Plug>(VM-Add-Under)", { silent = true, desc = "add cursor under" })
--- keymap("x", "<C-n>", "<Plug>(VM-Find-Subword-Under)", { silent = true, desc = "find subword under" })
-keymap("n", "<A-j>", "<Plug>(VM-Add-Cursor-Down)", { silent = true, desc = "add cursor down" })
-keymap("n", "<A-k>", "<Plug>(VM-Add-Cursor-Up)", { silent = true, desc = "add cursor up" })
-
 -- Intellisense
 -- map("i", "<A-h>", "<Plug>(copilot-dismiss)", { expr = true, silent = true })
 -- map("i", "<A-j>", "<Plug>(copilot-next)", { expr = true, silent = true })
@@ -109,7 +103,8 @@ map('i', '<A-k>', function() return vim.fn['codeium#CycleCompletions'](-1) end, 
 map('i', '<A-l>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
 
 -- position navigation (in wezterm <C-i> outputs Tab)
-keymap("n", "<C-I>", "<C-i>", opts) -- <C-UpperCase> is the same as <C-LowerCase>
+keymap("n", "<C-I>", "<C-i>", { silent = true, desc = "next cursor position" }) -- <C-UpperCase> is the same as <C-LowerCase>
+keymap("n", "<C-O>", "<C-o>", { silent = true, desc = "prev cursor position" }) -- <C-UpperCase> is the same as <C-LowerCase>
 
 -- Replace all/visual_selected
 keymap("n", "<C-s>", ":%s//g<Left><Left>", { noremap = true, silent = false, desc = "Replace in Buffer" })
@@ -146,34 +141,6 @@ keymap("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", opts)
 keymap("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", opts)
 keymap("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", opts)
 
--- goto textobj edge:
-map("n", "g<", function() return GotoTextObj("") end, { expr = true, silent = true, desc = "StartOf TextObj" })
-map("n", "g>", function() return GotoTextObj(":normal `[v`]<cr><esc>") end,
-  { expr = true, silent = true, desc = "EndOf TextObj" })
-
--- goto changes:
-keymap("n", "g,", "g,", { noremap = true, silent = true, desc = "go forward in :changes" })  -- Formatting will lose track of changes
-keymap("n", "g;", "g;", { noremap = true, silent = true, desc = "go backward in :changes" }) -- Formatting will lose track of changes
-
--- paste LastSearch Register:
-keymap("n", "gh", '"/p', { silent = true, desc = "paste lastSearch register" })
-
--- Redo Register:
-keymap("n", "gr", '"1p', { silent = true, desc = "Redo register (dot to Paste forward the rest of register)" })
-keymap("n", "gR", '"1P', { silent = true, desc = "Redo register (dot to Paste backward the rest of register)" })
-
--- Blackhole register:
-map({ "n", "x" }, "gx", '"_d', { silent = true, desc = "Blackhole Motion/Selected" })
-map({ "n", "x" }, "gX", '"_D', { silent = true, desc = "Blackhole Linewise" })
-
--- Visual increment/decrement numbers:
--- map("n", "g<c-a>", "<c-a>", { noremap = true, silent = true, desc = "numbers ascending" })
--- map("n", "g<c-x>", "<c-x>", { noremap = true, silent = true, desc = "numbers descending" })
--- map("x", "g<c-a>", "g<c-a>", { noremap = true, silent = true, desc = "numbers ascending" })
--- map("x", "g<c-x>", "g<c-x>", { noremap = true, silent = true, desc = "numbers descending" })
-map({ "n", "x" }, "g+", "<C-a>", { noremap = true, silent = true, desc = "Increment number (dot to repeat)" })
-map({ "n", "x" }, "g-", "<C-x>", { noremap = true, silent = true, desc = "Decrement number (dot to repeat)" })
-
 -- visual actions:
 -- keymap('x', '<leader>g/', '"zy:s/<C-r>z//g<Left><Left>', { silent = true, desc = "Replace selected_text" })
 -- keymap("x", "<leader>g|", ":'<,'>!column -t<CR>", { noremap = true, silent = true, desc = "Format Column" }) -- replaced by mini.align
@@ -189,6 +156,71 @@ keymap("x", '<leader><leader>P', 'g_"*P', { noremap = true, silent = true, desc 
 -- keymap("x", '<leader>ya', 'y:let @* .= @0<cr>', { noremap = true, silent = true, desc = "Yank append (second_clip)" }) -- "Redo register" does it better
 keymap("x", '<leader><leader>y', '"*y', { noremap = true, silent = true, desc = "Yank (second_clip)" })
 keymap("x", '<leader><leader>Y', 'g_"*y', { noremap = true, silent = true, desc = "Yank forward (second_clip)" })
+
+-- ╭─────────╮
+-- │ Motions │
+-- ╰─────────╯
+
+-- Navigate code with search labels:
+map({ "n", "x", "o" }, "s", function() require("flash").jump() end, { silent = true, desc = "Flash" })
+map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end, { silent = true, desc = "Flash Treesitter" })
+map({ "n", "x", "o" }, "<cr>", function() require("flash").jump({ continue = true }) end,
+  { silent = true, desc = "Continue Last Flash search" })
+-- map({ "o" }, "r", function() require("flash").remote() end, { silent = true, desc = "Remote Flash" })
+map({ "x", "o" }, "R", function() require("flash").treesitter_search() end,
+  { silent = true, desc = "Treesitter Flash Search" })
+map({ "c" }, "<c-s>", function() require("flash").toggle() end, { desc = "Toggle Flash Search" })
+
+-- goto textobj edge:
+map("n", "g<", function() return GotoTextObj("") end, { expr = true, silent = true, desc = "StartOf TextObj" })
+map("n", "g>", function() return GotoTextObj(":normal `[v`]<cr><esc>") end,
+  { expr = true, silent = true, desc = "EndOf TextObj" })
+
+-- goto changes:
+keymap("n", "g,", "g,", { noremap = true, silent = true, desc = "go forward in :changes" })  -- Formatting will lose track of changes
+keymap("n", "g;", "g;", { noremap = true, silent = true, desc = "go backward in :changes" }) -- Formatting will lose track of changes
+
+-- Multi cursors:
+-- keymap("n", "<C-n>", "<Plug>(VM-Find-Under)", { silent = true, desc = "add virtual cursor (select and find)" })
+-- keymap("x", "<C-n>", "<Plug>(VM-Find-Subword-Under)", { silent = true, desc = "add virtual cursor (find selected)" })
+-- keymap("n", "<C-Down>", "<Plug>(VM-Add-Cursor-Down)", { silent = true, desc = "add virtual cursor down (tab to extend mode)" })
+-- keymap("n", "<C-Up>", "<Plug>(VM-Add-Cursor-Up)", { silent = true, desc = "add virtual cursor up (tab to extend mode)" })
+-- keymap("n", "<A-j>", "<Plug>(VM-Select-Cursor-Down)", { silent = true, desc = "add virtual cursor down (tab to cursor mode)" })
+-- keymap("n", "<A-k>", "<Plug>(VM-Select-Cursor-Up)", { silent = true, desc = "add virtual cursor up (tab to cursor mode)" })
+keymap("n", "gb", "<Plug>(VM-Find-Under)", { silent = true, desc = "add virtual cursor (select and find)" })
+keymap("x", "gb", "<Plug>(VM-Find-Subword-Under)", { silent = true, desc = "add virtual cursor (find selected)" })
+keymap("n", "go", "<Plug>(VM-Add-Cursor-Down)",
+  { silent = true, desc = "add virtual cursor down (tab to extend/cursor mode)" })
+keymap("n", "gO", "<Plug>(VM-Add-Cursor-Up)",
+  { silent = true, desc = "add virtual cursor up (tab to extend/cursor mode)" })
+keymap("x", "go", "<Plug>(VM-Visual-Add)", { silent = true, desc = "visual select to virtual cursor(n to add forward)" })
+keymap("x", "gO", "<Plug>(VM-Visual-Add)", { silent = true, desc = "visual select to virtual cursor(N to add backward)" })
+keymap("n", "g|", "<Plug>(VM-Motion-|)", { silent = true, desc = "same column for all virtual cursors" })
+keymap("x", "g|", "<Plug>(VM-Visual-Add)<Plug>(VM-Motion-|)",
+  { silent = true, desc = "same column for all virtual cursors" })
+keymap("n", "g\\", "<Plug>(VM-Add-Cursor-At-Pos)",
+  { silent = true, desc = "add virtual cursor at current position (eg after search/jump)" })
+keymap("x", "g\\", "<esc><Plug>(VM-Add-Cursor-At-Pos)",
+  { silent = true, desc = "add virtual cursor at current position (eg after search/jump)" })
+
+-- paste LastSearch Register:
+keymap("n", "gh", '"/p', { silent = true, desc = "paste lastSearch register" })
+
+-- Redo Register:
+keymap("n", "gr", '"1p', { silent = true, desc = "Redo register (dot to Paste forward the rest of register)" })
+keymap("n", "gR", '"1P', { silent = true, desc = "Redo register (dot to Paste backward the rest of register)" })
+
+-- Blackhole register:
+map({ "n", "x" }, "gx", '"_d', { silent = true, desc = "Blackhole Motion/Selected" })
+map({ "n", "x" }, "gX", '"_D', { silent = true, desc = "Blackhole Linewise" })
+
+-- Visual increment/decrement numbers:
+map("n", "g<Up>", "<c-a>", { noremap = true, silent = true, desc = "numbers ascending" })
+map("n", "g<Down>", "<c-x>", { noremap = true, silent = true, desc = "numbers descending" })
+map("x", "g<Up>", "g<c-a>", { noremap = true, silent = true, desc = "numbers ascending" })
+map("x", "g<Down>", "g<c-x>", { noremap = true, silent = true, desc = "numbers descending" })
+map({ "n", "x" }, "g+", "<C-a>", { noremap = true, silent = true, desc = "Increment number (dot to repeat)" })
+map({ "n", "x" }, "g-", "<C-x>", { noremap = true, silent = true, desc = "Decrement number (dot to repeat)" })
 
 -- ╭───────────────────────────────────────╮
 -- │ Text Objects with "g" (dot to repeat) │
@@ -213,6 +245,13 @@ map({ "o" }, 'gC', ':<c-u>normal vgC<cr>', { silent = true, desc = "RestOfCommen
 -- _find_textobj_(dot-repeat_supported)
 map({ "o", "x" }, "gf", "gn", { noremap = true, silent = true, desc = "Next find textobj" })
 map({ "o", "x" }, "gF", "gN", { noremap = true, silent = true, desc = "Prev find textobj" })
+
+map({ 'n', 'x', 'o' }, 'gI', '<cmd>lua require"illuminate".textobj_select()<cr>',
+  { silent = true, desc = "select reference" })
+map({ 'n', 'x', 'o' }, 'gN', '<cmd>lua require"illuminate".goto_next_reference(wrap)<cr>',
+  { silent = true, desc = "goto next reference" })
+map({ 'n', 'x', 'o' }, 'gP', '<cmd>lua require"illuminate".goto_prev_reference(wrap)<cr>',
+  { silent = true, desc = "goto prev reference" })
 
 -- _git_hunk_(next/prev_autojump_unsupported)
 map({ 'o', 'x' }, 'gh', ':<C-U>Gitsigns select_hunk<CR>', { silent = true, desc = "Git hunk textobj" })
@@ -328,22 +367,6 @@ map({ "x", "o" }, "iy", ":<c-u> lua require('user.autocommands').select_same_ind
 map({ "x", "o" }, "ay", ":<c-u> lua require('user.autocommands').select_same_indent(false)<cr>",
   { silent = true, desc = "same_indent with_blankline textobj" })
 
--- ╭─────────╮
--- │ Motions │
--- ╰─────────╯
-
--- _sneak_keymaps
-map({ "n", "x", "o" }, "f", "<Plug>Sneak_f", { silent = true, desc = "Move to next char" })
-map({ "n", "x", "o" }, "F", "<Plug>Sneak_F", { silent = true, desc = "Move to prev char" })
-map({ "n", "x", "o" }, "t", "<Plug>Sneak_t", { silent = true, desc = "Move before next char" })
-map({ "n", "x", "o" }, "T", "<Plug>Sneak_T", { silent = true, desc = "Move before prev char" })
-map({ "n", "x", "o" }, "go", "<Plug>Sneak_s", { silent = true, desc = "Move to next 2chars" })
-map({ "n", "x", "o" }, "gO", "<Plug>Sneak_S", { silent = true, desc = "Move to prev 2chars" })
-map({ "n", "x", "o" }, "gq", "<Plug>SneakLabel_s", { silent = true, desc = "Move to next 2chars labeled" })
-map({ "n", "x", "o" }, "gQ", "<Plug>SneakLabel_S", { silent = true, desc = "Move to prev 2chars labeled" })
-map({ "n", "x", "o" }, "gb", "<Plug>SneakLabel_s<cr>", { silent = true, desc = "label 2chars" })
-map({ "n", "x", "o" }, "gB", "<Plug>SneakLabel_S<cr>", { silent = true, desc = "label 2chars" })
-
 -- ╭──────────────────────────────────────────╮
 -- │ Repeatable Pair - motions using <leader> │
 -- ╰──────────────────────────────────────────╯
@@ -353,16 +376,6 @@ map({ "n", "x", "o" }, "gB", "<Plug>SneakLabel_S<cr>", { silent = true, desc = "
 local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
 map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { silent = true, desc = "Next TS textobj" })
 map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { silent = true, desc = "Prev TS textobj" })
-
--- _sneak_repeatable
-vim.cmd [[ command SneakForward execute "normal \<Plug>Sneak_;" ]]
-vim.cmd [[ command SneakBackward execute "normal \<Plug>Sneak_," ]]
-local next_sneak, prev_sneak = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.cmd [[ SneakForward ]] end,
-  function() vim.cmd [[ SneakBackward ]] end
-)
-map({ "n", "x", "o" }, "s", next_sneak, { silent = true, desc = "Next SneakForward" })
-map({ "n", "x", "o" }, "S", prev_sneak, { silent = true, desc = "Prev SneakForward" })
 
 -- _columnmove_repeatable
 vim.g.columnmove_strict_wbege = 0 -- skips inner-paragraph whitespaces for wbege

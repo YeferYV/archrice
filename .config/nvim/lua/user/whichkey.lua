@@ -792,22 +792,18 @@ local textobj = {
   ["^"] = "Start of line (non-blank)",
   ["{"] = "Previous empty line",
   ["}"] = "Next empty line",
-  ["<BS> "] = "Next SneakForward",
-  ["<CR> "] = "Start 2d jumping",
-  ["<M-i>"] = "illuminate word",
-  ["<M-n>"] = "illuminate next",
-  ["<M-p>"] = "illuminate prev",
-  ["<S-BS> "] = "Prev SneakForward",
+  ["<CR> "] = "Continue Last Flash search",
   ["b"] = "Previous word",
   ["e"] = "Next end of word",
   ["f"] = "Move to next char",
   ["F"] = "Move to previous char",
   ["G"] = "Last line",
+  ["R"] = "Treesitter Flash Search",
+  ["s"] = "Flash",
+  ["S"] = "Flash Treesitter",
   ["t"] = "Move before next char",
   ["T"] = "Move before previous char",
   ["w"] = "Next word",
-  ["z"] = "Sneak_s",
-  ["Z"] = "Sneak_S",
 
   -- ["aK"] = { "Textsubjects Container Outer" },
   -- ["iK"] = { "Textsubjects Container Inner" },
@@ -822,10 +818,9 @@ local textobj = {
   ["g}"] = { "braces linewise textobj" },
   ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around" }, mini_textobj),
   ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around" }, mini_textobj),
-  -- ["ga"] = { "Align (operator)" },                               -- only visual and normal mode
-  -- ["gA"] = { "Preview Align (operator)" },                       -- only visual and normal mode
-  ["gb"] = { "SneakLabeled forward" },
-  ["gB"] = { "SneakLabeled backward" },
+  -- ["ga"] = { "Align (operator)" },                     -- only visual and normal mode
+  -- ["gA"] = { "Preview Align (operator)" },             -- only visual and normal mode
+  -- ["gb"] = { "add virtual cursor (select and find)" }, -- only visual and normal mode
   ["gc"] = { "BlockComment textobj" },
   ["gC"] = { "RestOfComment textobj" },
   ["gd"] = { "Diagnostic textobj" },
@@ -836,6 +831,7 @@ local textobj = {
   ["gg"] = { "First line textobj" },
   ["gh"] = { "Git hunk textobj" },
   ["gi"] = { "Goto Insert textobj" },
+  ["gI"] = { "select reference (under cursor)" },
   ["gj"] = { "GoDown when wrapped textobj" },
   ["gk"] = { "GoUp when wrapped textobj" },
   ["gK"] = { "ColumnDown textobj" },
@@ -843,32 +839,36 @@ local textobj = {
   ["gL"] = { "Url textobj" },
   ["gm"] = { "Last change textobj" },
   ["gn"] = { name = "+next" },
-  ["go"] = { "Sneak forward (s/S to next/prev match)" },
-  ["gO"] = { "Sneak backward (s/S to next/prev match)" },
+  ["gN"] = { "Next reference textobj" },
+  -- ["go"] = { "add virtual cursor down" }, -- only visual and normal mode
+  -- ["gO"] = { "add virtual cursor up" },   -- only visual and normal mode
   ["gp"] = { name = "+previous" },
-  ["gq"] = { "SneakLabel forward" },
-  ["gQ"] = { "SneakLabel backward" },
+  ["gP"] = { "Prev reference textobj" },
+  -- ["gq"] = { "SplitJoin comment/lines 80chars (dot to repeat)" }, -- only visual and normal mode (cursor_position at start)
   ["gr"] = { "RestOfWindow textobj" },
   ["gR"] = { "VisibleWindow textobj" },
   ["gs"] = { "Surround textobj" },
   ["gS"] = { "JoinSplit textobj" },
   ["gT"] = { "toNextClosingBracket textobj" },
   ["gt"] = { "toNextQuotationMark textobj" },
-  -- ["gu"] = { "to lowercase" },                                   -- only visual and normal mode
-  -- ["gU"] = { "to Uppercase" },                                   -- only visual and normal mode
-  -- ["gv"] = { "last selected" },                                  -- only visual and normal mode
-  -- ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" }, -- only visual and normal mode
-  -- ["gx"] = { "Blackhole register" },                             -- only visual and normal mode
-  -- ["gx"] = { "Blackhole linewise" },                             -- only visual and normal mode
-  -- ["gy"] = { "replace with register" },                          -- only visual and normal mode
-  -- ["gY"] = { "exchange text" },                                  -- only visual and normal mode
-  -- ["gz"] = { "sort" },                                           -- only visual and normal mode
+  -- ["gu"] = { "to lowercase" },                                                   -- only visual and normal mode
+  -- ["gU"] = { "to Uppercase" },                                                   -- only visual and normal mode
+  -- ["gv"] = { "last selected" },                                                  -- only visual and normal mode
+  -- ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" },                 -- only visual and normal mode
+  -- ["gx"] = { "Blackhole register" },                                             -- only visual and normal mode
+  -- ["gX"] = { "Blackhole linewise" },                                             -- only visual and normal mode
+  -- ["gy"] = { "replace with register" },                                          -- only visual and normal mode
+  -- ["gY"] = { "exchange text" },                                                  -- only visual and normal mode
+  -- ["gz"] = { "sort" },                                                           -- only visual and normal mode
+  -- ["g+"] = { "Increment number (dot to repeat)" },                               -- only visual and normal mode
+  -- ["g-"] = { "Decrement number (dot to repeat)" },                               -- only visual and normal mode
+  -- ["g|"] = { "same column for all virtual cursors" },                            -- only visual and normal mode
+  -- ["g\\"] = { "add virtual cursor at current position (eg after search/jump)" }, -- only visual and normal mode
+  -- ["g<Up>"] = { "Numbers ascending" },                                           -- only visual and normal mode
+  -- ["g<Down>"] = { "Numbers descending" },                                        -- only visual and normal mode
 }
 
 local operator_motion = {
-  -- ["gq"] = vim.tbl_extend("force", { name = "+SplitJoin comment 80chars" }, textobj),       -- only visual and normal mode (cursor_position at start)
-  -- ["g<c-a>"] = { "Numbers ascending" },                                                     -- only visual and normal mode
-  -- ["g<c-x>"] = { "Numbers descending" },                                                    -- only visual and normal mode
   ["="] = vim.tbl_extend("force", { name = "+autoindent (dot to repeat)" }, textobj),
   [">"] = { name = "+indent right (dot to repeat)" },
   ["<"] = { name = "+indent left (dot to repeat)" },
@@ -880,8 +880,7 @@ local operator_motion = {
   ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around (mini textobj only)" }, mini_textobj), -- "g>" does it better
   ["ga"] = vim.tbl_extend("force", { name = "+align (dot to repeat)" }, textobj),
   ["gA"] = vim.tbl_extend("force", { name = "+preview align (dot to repeat)" }, textobj),
-  ["gb"] = { "SneakLabeled forward" },
-  ["gB"] = { "SneakLabeled backward" },
+  ["gb"] = { "add virtual cursor (select and find)" }, -- only visual and normal mode
   ["gc"] = { name = "+comment (dot to repeat)" },
   ["gd"] = { "goto definition" },
   ["ge"] = { "goto previous endOfWord" },
@@ -890,6 +889,7 @@ local operator_motion = {
   ["gg"] = { "goto first line" },
   ["gh"] = { "paste LastSearch register (dot to repeat)" },
   ["gi"] = { "goto insert" },
+  ["gI"] = { "select reference (under cursor)" },
   ["gj"] = { "goto Down (when wrapped)" },
   ["gJ"] = { "Join below Line" },
   ["gk"] = { "goto Up (when wrapped)" },
@@ -897,48 +897,61 @@ local operator_motion = {
   ["gm"] = { "goto mid window" },
   ["gM"] = { "goto mid line" },
   ["gn"] = { name = "+next (;, to repeat)" },
-  ["go"] = { "Sneak forward (sS to repeat)" },
-  ["gO"] = { "Sneak backward (sS to repeat)" },
+  ["gN"] = { "goto next reference" },
+  ["go"] = { "add virtual cursor down (tab to extend/cursor mode)" }, -- only visual and normal mode
+  ["gO"] = { "add virtual cursor up (tab to extend/cursor mode)" },   -- only visual and normal mode
   ["gp"] = { name = "+previous (;, to repeat)" },
-  ["gq"] = { "SneakLabel forward (sS to repeat )" },
-  ["gQ"] = { "SneakLabel backward (sS to repeat)" },
+  ["gP"] = { "goto prev reference" },
+  ["gq"] = vim.tbl_extend("force", { name = "+SplitJoin comment/lines 80chars (dot to repeat)" }, textobj), -- only visual and normal mode (cursor_position at start)
   ["gr"] = { "Redo register (dot to paste forward)" },
-  ["gR"] = { "Redo register (dot to paste backward)" }, -- (overwrites "replace mode")
+  ["gR"] = { "Redo register (dot to paste backward)" },                                                     -- (overwrites "replace mode")
   ["gs"] = { name = "+Surround (dot to repeat)" },
   ["gS"] = { "SplitJoin args (dot to repeat)" },
   ["gt"] = { "goto next tab" },
   ["gT"] = { "goto prev tab" },
-  ["gu"] = { name = "+toLowercase (dot to repeat)" },                                                       -- only visual and normal mode
-  ["gU"] = { name = "+toUppercase (dot to repeat)" },                                                       -- only visual and normal mode
-  ["gv"] = { "last selected" },                                                                             -- only visual and normal mode
-  ["gw"] = vim.tbl_extend("force", { name = "+SplitJoin coments/lines 80chars (dot to repeat)" }, textobj), -- only visual and normal mode (maintains cursor_position)
-  ["gx"] = vim.tbl_extend("force", { name = "+Blackhole register (dot to repeat)" }, textobj),              -- only visual and normal mode (overwrites "open with system")
-  ["gX"] = { "Blackhole linewise (dot to repeat)" },                                                        -- only visual and normal mode
-  ["gy"] = { name = "+replace with register (dot to repeat)" },                                             -- only visual and normal mode
-  ["gY"] = { name = "+exchange text" },                                                                     -- only visual and normal mode
-  ["gz"] = { name = "+sort (dot to repeat)" },                                                              -- only visual and normal mode
-  ["g+"] = { "Increment number (dot to repeat)" },                                                          -- only visual and normal mode
-  ["g-"] = { "Decrement number (dot to repeat)" },                                                          -- only visual and normal mode
+  ["gu"] = { name = "+toLowercase (dot to repeat)" },                                                               -- only visual and normal mode
+  ["gU"] = { name = "+toUppercase (dot to repeat)" },                                                               -- only visual and normal mode
+  ["gv"] = { "last selected" },                                                                                     -- only visual and normal mode
+  ["gw"] = vim.tbl_extend("force", { name = "+SplitJoin coments/lines 80chars (keeps cursor position)" }, textobj), -- only visual and normal mode (maintains cursor_position)
+  ["gx"] = vim.tbl_extend("force", { name = "+Blackhole register (dot to repeat)" }, textobj),                      -- only visual and normal mode (overwrites "open with system")
+  ["gX"] = { "Blackhole linewise (dot to repeat)" },                                                                -- only visual and normal mode
+  ["gy"] = { name = "+replace with register (dot to repeat)" },                                                     -- only visual and normal mode
+  ["gY"] = { name = "+exchange text" },                                                                             -- only visual and normal mode
+  ["gz"] = { name = "+sort (dot to repeat)" },                                                                      -- only visual and normal mode
+  ["g+"] = { "Increment number (dot to repeat)" },                                                                  -- only visual and normal mode
+  ["g-"] = { "Decrement number (dot to repeat)" },                                                                  -- only visual and normal mode
+  ["g|"] = { "same column for all virtual cursors" },                                                               -- only visual and normal mode
+  ["g\\"] = { "add virtual cursor at current position (eg after search/jump)" },                                    -- only visual and normal mode
+  ["g<Up>"] = { "Numbers ascending" },                                                                              -- only visual and normal mode
+  ["g<Down>"] = { "Numbers descending" },                                                                           -- only visual and normal mode
 }
 
 local visual_action = {
-  ["ga"] = { "Align" },                                          -- only visual and normal mode
-  ["gA"] = { "Preview Align" },                                  -- only visual and normal mode
-  ["gu"] = { "to lowercase" },                                   -- only visual and normal mode
-  ["gU"] = { "to Uppercase" },                                   -- only visual and normal mode
-  ["gv"] = { "last selected" },                                  -- only visual and normal mode
-  ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" }, -- only visual and normal mode
-  ["gx"] = { "Blackhole register" },                             -- only visual and normal mode
-  ["gX"] = { "Blackhole linewise" },                             -- only visual and normal mode
-  ["gy"] = { "replace with register" },                          -- only visual and normal mode
-  ["gY"] = { "exchange text" },                                  -- only visual and normal mode
-  ["gz"] = { "sort" },                                           -- only visual and normal mode
-  ["g+"] = { "Increment number" },                               -- only visual and normal mode
-  ["g-"] = { "Decrement number" },                               -- only visual and normal mode
-  ["<leader><leader>p"] = { "Paste (second_clip)" },             -- only visual and normal mode
-  ["<leader><leader>P"] = { "Paste forward (second_clip)" },     -- only visual and normal mode
-  ["<leader><leader>y"] = { "Yank (second_clip)" },              -- only visual and normal mode
-  ["<leader><leader>Y"] = { "Yank forward (second_clip)" },      -- only visual and normal mode
+  ["ga"] = { "Align" },                                                          -- only visual and normal mode
+  ["gA"] = { "Preview Align" },                                                  -- only visual and normal mode
+  ["gb"] = { "add virtual cursor (find selected)" },                             -- only visual and normal mode
+  ["go"] = { "visual select to virtual cursor(n to add forward)" },              -- only visual and normal mode
+  ["gO"] = { "visual select to virtual cursor(N to add backward)" },             -- only visual and normal mode
+  ["gq"] = { "SplitJoin comments/lines (limited at 80 chars)" },                 -- only visual and normal mode
+  ["gu"] = { "to lowercase" },                                                   -- only visual and normal mode
+  ["gU"] = { "to Uppercase" },                                                   -- only visual and normal mode
+  ["gv"] = { "last selected" },                                                  -- only visual and normal mode
+  ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" },                 -- only visual and normal mode
+  ["gx"] = { "Blackhole register" },                                             -- only visual and normal mode
+  ["gX"] = { "Blackhole linewise" },                                             -- only visual and normal mode
+  ["gy"] = { "replace with register" },                                          -- only visual and normal mode
+  ["gY"] = { "exchange text" },                                                  -- only visual and normal mode
+  ["gz"] = { "sort" },                                                           -- only visual and normal mode
+  ["g+"] = { "Increment number (dot to repeat)" },                               -- only visual and normal mode
+  ["g-"] = { "Decrement number (dot to repeat)" },                               -- only visual and normal mode
+  ["g|"] = { "same column for all virtual cursors" },                            -- only visual and normal mode
+  ["g\\"] = { "add virtual cursor at current position (eg after search/jump)" }, -- only visual and normal mode
+  ["g<Up>"] = { "Numbers ascending" },                                           -- only visual and normal mode
+  ["g<Down>"] = { "Numbers descending" },                                        -- only visual and normal mode
+  ["<leader><leader>p"] = { "Paste (second_clip)" },                             -- only visual and normal mode
+  ["<leader><leader>P"] = { "Paste forward (second_clip)" },                     -- only visual and normal mode
+  ["<leader><leader>y"] = { "Yank (second_clip)" },                              -- only visual and normal mode
+  ["<leader><leader>Y"] = { "Yank forward (second_clip)" },                      -- only visual and normal mode
 }
 
 which_key.register({ mode = { "o", "x" }, textobj })

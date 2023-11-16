@@ -135,11 +135,12 @@ local plugins = {
   },
 
   -- Motions
+  { "mg979/vim-visual-multi",            commit = "aec289a9fdabaa0ee6087d044d75b32e12084344", event = "VeryLazy" },
   {
-    "justinmk/vim-sneak",
-    commit = "93395f5b56eb203e4c8346766f258ac94ea81702",
+    "folke/flash.nvim",
+    commit = "48817af25f51c0590653bbc290866e4890fe1cbe",
     event = "VeryLazy",
-    dependencies = { "tpope/vim-repeat", commit = "24afe922e6a05891756ecf331f39a1f6743d3d5a" },
+    opts = {},
   },
 
   -- Status-Line
@@ -172,7 +173,6 @@ local plugins = {
       -- { "RRethy/nvim-treesitter-textsubjects",         commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
     }
   },
-  { "mg979/vim-visual-multi",  commit = "724bd53adfbaf32e129b001658b45d4c5c29ca1a", event = "VeryLazy" },
   {
     "chrisgrieser/nvim-various-textobjs",
     commit = "c0aa3ff33eaf9e7bc827ea918f92ac47d6037118",
@@ -180,7 +180,7 @@ local plugins = {
   },
 
   -- TUI
-  { "akinsho/toggleterm.nvim", commit = "b86982429325112d2b20c6d0cc7a5c4b182ab705" },
+  { "akinsho/toggleterm.nvim",             commit = "b86982429325112d2b20c6d0cc7a5c4b182ab705" },
   {
     "nvim-telescope/telescope.nvim",
     commit = "942fe5faef47b21241e970551eba407bc10d9547",
