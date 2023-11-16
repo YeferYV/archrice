@@ -114,7 +114,7 @@ local plugins = {
   -- { "github/copilot.vim" },
   {
     "Exafunction/codeium.vim",
-    commit = "41b718e550b26a34075b79a50128cf853b2b917e",
+    commit = "1efe2a2cdf516094bdb211aa8a1d45ef01836207",
     event = "InsertEnter"
   },
 
@@ -301,23 +301,34 @@ local plugins = {
   },
   -- { "rcarriga/nvim-notify",
   --   commit = "bdd647f61a05c9b8a57c83b78341a0690e9c29d7",
+  --   event = "VeryLazy",
   --   config = function()
   --     require("notify").setup({ stages = "fade" })
   --     require("telescope").load_extension("notify")
   --     vim.notify = require("notify")
   --   end
   -- },
-  -- { "folke/noice.nvim",
-  --   commit = "a83b5fb9e24ecb220fa1255a9b7957dcd7b22783",
-  --   config = {
-  --     messages = { view_search = false },
-  --     presets = {
-  --       bottom_search = true, -- use a classic bottom cmdline for search
-  --       command_palette = true, -- position the cmdline and popupmenu together
-  --       lsp_doc_border = true, -- add a border to hover docs and signature help
-  --     },
-  --   }
-  -- },
+  {
+    "folke/noice.nvim",
+    commit = "92433164e2f7118d4122c7674c3834d9511722ba",
+    event = "VeryLazy",
+    opts = {
+      messages = { view_search = false },
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      presets = {
+        bottom_search = true,   -- use a classic bottom cmdline for search
+        command_palette = true, -- position the cmdline and popupmenu together
+        lsp_doc_border = true,  -- add a border to hover docs and signature help
+      },
+    }
+  },
+
 }
 
 lazy.setup(plugins, opts)
