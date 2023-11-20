@@ -101,7 +101,7 @@ local plugins = {
   -- File-Explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
-    commit = "2b2f74828eeb02cf29d6b21aa32eedadadc94ca7",
+    commit = "230ff118613fa07138ba579b89d13ec2201530b9",
     cmd = "Neotree",
     dependencies = {
       { "MunifTanjim/nui.nvim",          commit = "1f43b13d133eb4b4f53a4485379d9afa58808389" },
@@ -299,8 +299,9 @@ local plugins = {
       }
     }
   },
-  -- { "rcarriga/nvim-notify",
-  --   commit = "bdd647f61a05c9b8a57c83b78341a0690e9c29d7",
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   commit = "e4a2022f4fec2d5ebc79afa612f96d8b11c627b3",
   --   event = "VeryLazy",
   --   config = function()
   --     require("notify").setup({ stages = "fade" })

@@ -230,8 +230,8 @@ local mappings = {
   },
 
   ["h"] = { "<cmd>noh<cr>", "NoHighlight" },
-  ["e"] = { "<cmd>lua _G.neotree_blend=false<cr><cmd>Neotree toggle left<cr>", "Neotree Toggle" },
-  ["o"] = { "<cmd>lua _G.neotree_blend=true<cr><cmd>Neotree focus<cr>", "Neotree focus" },
+  ["e"] = { "<cmd>lua _G.neotree_blend=false<cr><cmd>Neotree toggle last left<cr>", "Neotree Toggle" },
+  ["o"] = { "<cmd>lua _G.neotree_blend=true<cr><cmd>Neotree focus last <cr>", "Neotree focus" },
   ["q"] = {
     function()
       _G.neotree_blend = true
@@ -367,10 +367,17 @@ local mappings = {
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     H = { "<cmd>Telescope highlights<cr>", "Find Highlights" },
     m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    n = { "<cmd>Telescope neoclip initial_mode=normal<cr>", "NeoClip" },
-    N = { "<cmd>Telescope notify initial_mode=normal<cr>", "Search notifications" },
-    O = { "<cmd>lua require('notify').history()<cr>", "History notifications" },
-    o = { "<cmd>Telescope file_browser initial_mode=normal<cr>", "Open File Browser" },
+    ["n"] = {
+      name = "noice",
+      a = { function() require("noice").cmd("all") end, "Noice All" },
+      d = { function() require("noice").cmd("dismiss") end, "Noice Dismiss All" },
+      h = { function() require("noice").cmd("history") end, "Noice History" },
+      l = { function() require("noice").cmd("last") end, "Noice Last Message" },
+      t = { "<cmd>Noice telescope<cr>", "Noice Telescope" },
+    },
+    N = { "<cmd>Telescope neoclip initial_mode=normal<cr>", "NeoClip" },
+    o = { "<cmd>Telescope oldfiles initial_mode=normal<cr>", "Open Recent File" },
+    O = { "<cmd>Telescope file_browser initial_mode=normal<cr>", "Open File Browser" },
     -- O = {
     --   function()
     --     require 'telescope'.extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') })
@@ -380,9 +387,9 @@ local mappings = {
     p = { "<cmd>Telescope projects<cr>", "Projects" },
     q = { "<cmd>Telescope quickfixhistory initial_mode=normal<cr>", "Telescope QuickFix History" },
     Q = { "<cmd>Telescope quickfix initial_mode=normal<cr>", "Telescope QuickFix" },
-    r = { "<cmd>Telescope oldfiles initial_mode=normal<cr>", "Open Recent File" },
     R = { "<cmd>Telescope registers initial_mode=normal<cr>", "Registers" },
     s = { "<cmd>Telescope grep_string<cr>", "Grep string under cursor" },
+    y = { "<cmd>Telescope notify initial_mode=normal<cr>", "Telescope Notify(extension)" },
     z = {
       function()
         local aerial_avail, _ = pcall(require, "aerial")
