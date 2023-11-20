@@ -544,18 +544,7 @@ local mappings = {
       , "Toggle cmdheight"
     },
     C = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
-    d = {
-      function()
-        if vim.g.diagnostics_enabled then
-          vim.diagnostic.disable()
-          vim.g.diagnostics_enabled = false
-        else
-          vim.diagnostic.enable()
-          vim.g.diagnostics_enabled = true
-        end
-      end,
-      "Toggle Diagnostics"
-    },
+    d = { "<cmd>ToggleDiagnostics<cr>", "Toggle Diagnostics" },
     G = {
       function()
         if vim.g.ToggleNormal == nil then
@@ -630,20 +619,7 @@ local mappings = {
       end,
       "Jump to current_context",
     },
-    v = {
-      function()
-        local function bool2str(bool) return bool and "on" or "off" end
-
-        if vim.g.diagnostics_enabled then
-          vim.g.diagnostics_enabled = false
-        else
-          vim.g.diagnostics_enabled = true
-        end
-
-        vim.diagnostic.config(require("user.lsp.handlers").setup(bool2str(vim.g.diagnostics_enabled)))
-      end,
-      "Toggle VirtualText"
-    },
+    v = { "<cmd>ToggleVirtualText<cr>", "Toggle VirtualText" },
     -- w = { "<cmd>set winbar=%@<cr>", "enable winbar" },
     -- W = { "<cmd>set winbar=  <cr>", "disable winbar" },
     [";"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList

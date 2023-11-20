@@ -148,40 +148,6 @@ autocmd({ "TermClose" }, {
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function ToggleDiagnostics()
-  if vim.g.diagnosticsEnabled == "on" or vim.g.diagnosticsEnabled == nil then
-    vim.g.diagnosticsEnabled = "off"
-    vim.diagnostic.config({ virtual_text = false })
-    vim.cmd [[
-      augroup _toggle_virtualtext_insertmode
-      autocmd InsertEnter * lua vim.diagnostic.config({ virtual_text = false })
-      autocmd InsertLeave * lua vim.diagnostic.config({ virtual_text = true })
-      augroup end
-    ]]
-  else
-    vim.g.diagnosticsEnabled = "on"
-    vim.diagnostic.config({ virtual_text = true })
-    vim.cmd [[ autocmd! _toggle_virtualtext_insertmode ]] -- remove the autocmd, `:autocmd _toggle_virtualtext_insertmode` to view it
-  end
-end
-
-create_command("ToggleDiagnostics", ToggleDiagnostics, {})
-
-------------------------------------------------------------------------------------------------------------------------
-
-function ShowBufferline()
-  require('bufferline').setup {
-    options = {
-      offsets = { { filetype = 'neo-tree', padding = 1 } },
-      show_close_icon = false
-    }
-  }
-end
-
-create_command("ShowBufferline", ShowBufferline, {})
-
-------------------------------------------------------------------------------------------------------------------------
-
 -- -- _json_to_jsonc
 -- autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
 --   -- pattern = "*.json",
@@ -237,6 +203,19 @@ create_command("GoToParentIndent", GoToParentIndent, {})
 
 ------------------------------------------------------------------------------------------------------------------------
 
+function ShowBufferline()
+  require("bufferline").setup({
+    options = {
+      offsets = { { filetype = "neo-tree", padding = 1 } },
+      show_close_icon = false,
+    },
+  })
+end
+
+create_command("ShowBufferline", ShowBufferline, {})
+
+------------------------------------------------------------------------------------------------------------------------
+
 -- swap current window with the last visited window
 function SwapWindow()
   local thiswin = vim.fn.winnr()
@@ -250,6 +229,36 @@ function SwapWindow()
 end
 
 create_command("SwapWindow", SwapWindow, {})
+
+------------------------------------------------------------------------------------------------------------------------
+
+function ToggleDiagnostics()
+  if vim.g.diagnostics_enabled then
+    vim.diagnostic.disable()
+    vim.g.diagnostics_enabled = false
+  else
+    vim.diagnostic.enable()
+    vim.g.diagnostics_enabled = true
+  end
+end
+
+create_command("ToggleDiagnostics", ToggleDiagnostics, {})
+
+------------------------------------------------------------------------------------------------------------------------
+
+function ToggleVirtualText()
+  local function bool2str(bool) return bool and "on" or "off" end
+
+  if vim.g.diagnostics_enabled then
+    vim.g.diagnostics_enabled = false
+  else
+    vim.g.diagnostics_enabled = true
+  end
+
+  vim.diagnostic.config(require("user.lsp.handlers").setup(bool2str(vim.g.diagnostics_enabled)))
+end
+
+create_command("ToggleVirtualText", ToggleDiagnostics, {})
 
 ------------------------------------------------------------------------------------------------------------------------
 
