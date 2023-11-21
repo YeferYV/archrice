@@ -80,6 +80,15 @@ local plugins = {
       { "hrsh7th/cmp-nvim-lsp",         commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef" }, -- lsp completions
       { "L3MON4D3/LuaSnip",             commit = "bc8ec05022743d3f08bda7a76c6bb5e9a9024581" }, --snippet engine
       { "rafamadriz/friendly-snippets", commit = "8d91ba2dc2421a54981115f61b914974f938fa77" }, -- a bunch of snippets to use
+      {
+        "roobert/tailwindcss-colorizer-cmp.nvim",
+        commit = "8d91ba2dc2421a54981115f61b914974f938fa77",
+        config = function()
+          -- require("cmp").config.formatting = { format = require("tailwindcss-colorizer-cmp").formatter }     -- from doc but not working
+          -- require("cmp").setup({ formatting = { format = require("tailwindcss-colorizer-cmp").formatter } }) -- from issue #5 but not working
+          require("tailwindcss-colorizer-cmp").setup({ color_square_width = 1 })
+        end,
+      },
     },
     config = function() require("user.cmp") end
   },
