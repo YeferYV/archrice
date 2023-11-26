@@ -208,6 +208,16 @@ lfub () {
 zle -N lfub
 bindkey '\eu' 'lfub'
 
+function y() { yazi --cwd-file=$HOME/.yazi; cd $(cat $HOME/.yazi); printf '\x1b[A\x1b[K' }
+
+function yacd() {
+  yazi --cwd-file=$HOME/.yazi $@
+  cd $(cat $HOME/.yazi);
+  zle reset-prompt
+}
+zle -N yacd
+bindkey '\ey' 'yacd'
+
 ## fmz_file_manager ( dependency `yay -S stpv-git` )
 fmzcd () {
     tmp=$(mktemp)
