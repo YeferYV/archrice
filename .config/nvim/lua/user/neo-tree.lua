@@ -611,10 +611,10 @@ neotree.setup({
       mappings = {
         ["<bs>"] = "navigate_up",
         ["."] = "set_root",
-        ["o"] = "getchild_open",
+        ["o"] = "quit_on_open",
         ["h"] = "getparent_closenode",
         ["H"] = "toggle_hidden",
-        ["l"] = "quit_on_open",
+        ["l"] = "getchild_open",
         ["L"] = "open_unfocus",
         ["i"] = "print_path",
         ["<down>"] = "nav_down",
