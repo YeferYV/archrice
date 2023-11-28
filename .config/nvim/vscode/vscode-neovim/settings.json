@@ -162,6 +162,8 @@
         { "key": "W", "name": "View All Definition", "command": "editor.action.revealDefinitionAside" },
         { "key": "z", "name": "Symbols Outline", "command": "outline.focus" },
         { "key": "\\", "name": "Format document", "command": "editor.action.formatDocument" },
+        { "key": "<", "name": "Prev Reference", "command": "editor.action.wordHighlight.prev" },
+        { "key": ">", "name": "Next Reference", "command": "editor.action.wordHighlight.next" },
       ]
     },
     {
@@ -293,7 +295,8 @@
         { "key": "b", "name": "Toggle activity bar", "command": "workbench.action.toggleActivityBarVisibility" },
         { "key": "B", "name": "Toggle menu bar", "command": "workbench.action.toggleMenuBar" },
         { "key": "f", "name": "Toggle full screen", "command": "workbench.action.toggleFullScreen" },
-        { "key": "h", "name": "Toggle highlight search", "command": "vscode-neovim.send", "args": "<cmd>:nohl<cr>" },
+        { "key": "h", "name": "Enable AutoNoHighlightSearch", "command": "vscode-neovim.send", "args": "<cmd>EnableAutoNoHighlightSearch<cr>" },
+        { "key": "H", "name": "Disable AutoNoHighlightSearch", "command": "vscode-neovim.send", "args": "<cmd>DisableAutoNoHighlightSearch<cr>" },
         { "key": "m", "name": "Toggle maximized panel", "command": "workbench.action.toggleMaximizedPanel" },
         { "key": "M", "name": "Toggle Minimap", "command": "editor.action.toggleMinimap" },
         { "key": "n", "name": "Go to Next Fold", "command": "editor.gotoNextFold" },
@@ -363,7 +366,7 @@
   ],
 
   "console-ninja.featureSet": "Community", // disable pro prompt
-  "emmet.includeLanguages": { "javascript": "javascriptreact" }, // emmet support for javascriptreact
+  "emmet.includeLanguages": { "javascript": "javascriptreact", "typescript": "typescriptreact" },
   "html.format.maxPreserveNewLines": 120,
   "css.format.maxPreserveNewLines": 120,
   "json.format.keepLines": true,

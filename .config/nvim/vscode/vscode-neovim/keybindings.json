@@ -159,9 +159,11 @@
   // Toggle Completion
   { "key": "ctrl+space", "command": "editor.action.triggerSuggest", "when": "!suggestWidgetVisible && textInputFocus" },
   { "key": "ctrl+space", "command": "hideSuggestWidget", "when": "suggestWidgetVisible && textInputFocus" },
+  { "key": "ctrl+shift+space", "command": "editor.action.triggerParameterHints", "when": "editorHasSignatureHelpProvider && editorTextFocus" },
+  { "key": "ctrl+shift+space", "command": "closeParameterHints", "when": "editorFocus && parameterHintsVisible" },
+  { "key": "ctrl+alt+space", "command": "toggleSuggestionFocus", "when": "suggestWidgetVisible && textInputFocus" },
 
   // Completion Navigation (pgdown/pgup scrolls suggestion's preview focused)
-  { "key": "ctrl+shift+space", "command": "toggleSuggestionFocus", "when": "suggestWidgetVisible && textInputFocus" },
   { "key": "alt+j", "command": "editor.action.inlineSuggest.showNext", "when": "inlineSuggestionVisible && neovim.mode == 'insert'" },
   { "key": "alt+k", "command": "editor.action.inlineSuggest.showPrevious", "when": "inlineSuggestionVisible && neovim.mode == 'insert'" },
   { "key": "alt+l", "command": "editor.action.inlineSuggest.commit", "when": "inlineSuggestionVisible && neovim.mode == 'insert'" },
@@ -190,12 +192,13 @@
   { "key": "ctrl+shift+tab", "command": "workbench.action.previousEditor" },
 
   // VScode-neovim
-  // { "key": "shift+r", "command": "vscode-neovim.send", "args": "<cmd>lua vim.fn.VSCodeCall('editor.action.format') vim.fn.VSCodeCall('workbench.action.files.save')<cr>", "when": "editorTextFocus && neovim.mode == normal", },
-  { "key": "shift+r", "command": "vscode-neovim.send", "args": "<cmd>call VSCodeCall('editor.action.format')<cr><cmd>call VSCodeCall('workbench.action.files.save')<cr>", "when": "editorTextFocus && neovim.mode == normal" },
-  { "key": "alt+/", "command": "vscode-neovim.send", "args": "<cmd>lua vim.fn.VSCodeNotify('editor.action.commentLine')<cr>", "when": "inputFocus && neovim.mode == 'visual' || neovim.mode == 'visualLine' || neovim.mode == 'visualBlock'" },
-  { "key": "alt+/", "command": "vscode-neovim.send", "args": "<Cmd>call VSCodeNotify('editor.action.commentLine')<CR>", "when": "inputFocus && neovim.mode == 'normal'" },
-  { "key": "ctrl+space", "command": "vscode-neovim.send", "args": "<C-space>", "when": "editorTextFocus && neovim.mode != insert" },
   { "key": "shift+q", "command": "workbench.action.closeActiveEditor", "when": "editorTextFocus && neovim.mode == normal" },
+  {
+    "key": "shift+r",
+    "command": "vscode-neovim.send",
+    "args": "<cmd>lua require('vscode-neovim').call('editor.action.format') require('vscode-neovim').call('workbench.action.files.save')<cr>",
+    "when": "editorTextFocus && neovim.mode == normal"
+  },
 
   // Find/Search (conflicting keymaps)
   { "key": "alt+w", "command": "-workbench.action.terminal.toggleFindWholeWord", "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
