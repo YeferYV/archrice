@@ -1,6 +1,6 @@
 #!/bin/sh
 
-[ -z "$1" ] && exit 
+[ -z "$1" ] && exit
 
 W_SCREEN=$(xdotool getdisplaygeometry | awk '{print $1}')
 H_SCREEN=$(xdotool getdisplaygeometry | awk '{print $2}')
@@ -8,18 +8,19 @@ X=$(xdotool getwindowfocus getwindowgeometry | grep Position | sed -e 's/,/ /g' 
 Y=$(xdotool getwindowfocus getwindowgeometry | grep Position | sed -e 's/,/ /g' | awk '{print $3}')
 W=$(xdotool getwindowfocus getwindowgeometry | grep Geometry | sed -e 's/x/ /g' | awk '{print $2}')
 H=$(xdotool getwindowfocus getwindowgeometry | grep Geometry | sed -e 's/x/ /g' | awk '{print $3}')
+BORDER=2 # 1px left + 1 px right || 1px up + 1px down
 
 case "$1" in
-  left)      horizontal=0                      ; vertical=$((Y)) ;;
-  right)     horizontal=$((W_SCREEN - W - 4 )) ; vertical=$((Y)) ;; #2px+2px border
-  up)        horizontal=$((X ))                ; vertical=0 ;;
-  down)      horizontal=$((X ))                ; vertical=$((H_SCREEN - H - 4 )) ;; #2px+2px border 
-  moveleft)  horizontal=$((X - $2))            ; vertical=$((Y )) ;;
-  moveright) horizontal=$((X + $2))            ; vertical=$((Y )) ;;
-  moveup)    horizontal=$((X ))                ; vertical=$((Y - $2)) ;;
-  movedown)  horizontal=$((X ))                ; vertical=$((Y + $2)) ;;
-  # increase)  horizontal=$((H+20))              ; vertical=$((W+20)) ;;
-  # decrease)  horizontal=$((H-20))              ; vertical=$((W-20)) ;;
+  left)      horizontal=0                           ; vertical=$((Y)) ;;
+  right)     horizontal=$((W_SCREEN - W - BORDER )) ; vertical=$((Y)) ;;
+  up)        horizontal=$((X ))                     ; vertical=0 ;;
+  down)      horizontal=$((X ))                     ; vertical=$((H_SCREEN - H - BORDER )) ;;
+  moveleft)  horizontal=$((X - $2))                 ; vertical=$((Y )) ;;
+  moveright) horizontal=$((X + $2))                 ; vertical=$((Y )) ;;
+  moveup)    horizontal=$((X ))                     ; vertical=$((Y - $2)) ;;
+  movedown)  horizontal=$((X ))                     ; vertical=$((Y + $2)) ;;
+  # increase)  horizontal=$((H+20))                   ; vertical=$((W+20)) ;;
+  # decrease)  horizontal=$((H-20))                   ; vertical=$((W-20)) ;;
 esac
 # xdotool getwindowfocus windowsize $horizontal $vertical
 xdotool getwindowfocus windowmove $horizontal $vertical

@@ -82,8 +82,13 @@ super + {t,shift + t,d,e}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-super + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
+super + ctrl + {m,x,y,z,slash}
+	bspc node --flag {marked,locked,sticky,private,hidden}
+
+# show hidden nodes one by one
+super + ctrl + shift + slash
+  bspc node $(bspc query -N -n .hidden.local.window | head -n1) --flag hidden=off
+  # bspc node $(bspc query -N -n .hidden -d focused | head -n1) --flag hidden=off # show all hidden nodes
 
 # set/reset virtual monitor (to the left corner)
 super + ctrl + v
@@ -102,7 +107,10 @@ super + ctrl + v
 # focus the node in the given direction
 super + {h,j,k,l}
 	{ DIR=west FALLBACK=prev; , DIR=south; , DIR=north; , DIR=east FALLBACK=next; } \
-	bspc node -f $DIR || bspc node -f $FALLBACK.leaf
+	bspc node -f $DIR.!sticky.!hidden || bspc node -f $FALLBACK.leaf.!sticky.!hidden
+	# bspc node -f $DIR.!marked || bspc node -f $FALLBACK.leaf.!marked   # for manually marked windows
+	# bspc node -f $DIR.!private || bspc node -f $FALLBACK.leaf.!private # for floating windows
+	# bspc node -f $DIR || bspc node -f $FALLBACK.leaf
 	# bspc node -f $DIR || bspc node -f $FALLBACK.window
 
 # Swap focused window with the one in the given direction
