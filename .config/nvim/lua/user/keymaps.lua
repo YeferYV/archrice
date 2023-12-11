@@ -292,6 +292,17 @@ keymap("n", "gh", '"/p', { silent = true, desc = "paste lastSearch register" })
 keymap("n", "gr", '"1p', { silent = true, desc = "Redo register (dot to Paste forward the rest of register)" })
 keymap("n", "gR", '"1P', { silent = true, desc = "Redo register (dot to Paste backward the rest of register)" })
 
+-- Word-Column textobj (with whitespaces)
+map(
+  { "n", "x" },
+  "gW",
+  function()
+    vim.cmd([[ execute "normal \<c-v>\<Plug>(columnmove-E)" ]])
+    vim.cmd([[ execute "normal \<Plug>(VM-Visual-Add)e" ]])
+  end,
+  { silent = true, desc = "word-column multicursor" }
+)
+
 -- Blackhole register:
 map({ "n", "x" }, "gx", '"_d', { silent = true, desc = "Blackhole Motion/Selected" })
 map({ "n", "x" }, "gX", '"_D', { silent = true, desc = "Blackhole Linewise" })

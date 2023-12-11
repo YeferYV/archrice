@@ -230,6 +230,18 @@ local mappings = {
   },
 
   ["h"] = { "<cmd>noh<cr>", "NoHighlight" },
+  ["m"] = {
+    function()
+      require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+    end,
+    "mini files (current file)",
+  },
+  ["M"] = {
+    function()
+      require("mini.files").open(vim.loop.cwd(), true)
+    end,
+    "mini files (cwd)",
+  },
   ["e"] = { "<cmd>lua _G.neotree_blend=false<cr><cmd>Neotree toggle last left<cr>", "Neotree Toggle" },
   ["o"] = { "<cmd>lua _G.neotree_blend=true<cr><cmd>Neotree focus last <cr>", "Neotree focus" },
   ["q"] = {
@@ -260,9 +272,9 @@ local mappings = {
     r = { function() WhichkeyRepeat("lua require 'gitsigns'.reset_hunk()") end, "Reset Hunk" },
     R = { function() WhichkeyRepeat("lua require 'gitsigns'.reset_buffer()") end, "Reset Buffer" },
     s = { function() WhichkeyRepeat("lua require 'gitsigns'.stage_hunk()") end, "Stage Hunk" },
-    u = { function() WhichkeyRepeat("lua require 'gitsigns'.undo_stage_hunk()") end, "Undo Stage Hunk" },
-    o = { function() WhichkeyRepeat("Gitsigns diffthis HEAD") end, "Open ChangedFile/Diff" },
-    O = { "<cmd>Telescope git_status initial_mode=normal<cr>", "Open All ChangedFile/Diff" },
+    S = { function() WhichkeyRepeat("lua require 'gitsigns'.undo_stage_hunk()") end, "Undo Stage Hunk" },
+    o = { function() WhichkeyRepeat("Gitsigns diffthis HEAD") end, "Open Diff (file changes)" },
+    O = { "<cmd>Telescope git_status initial_mode=normal<cr>", "Open All Diff (file changes)" },
     b = { "<cmd>Telescope git_branches initial_mode=normal<cr>", "Checkout Branch" },
     c = { "<cmd>Telescope git_commits initial_mode=normal<cr>", "Checkout Commit" },
   },
@@ -557,8 +569,8 @@ local mappings = {
       end
       , "Toggle Background"
     },
-    h = { "<cmd>EnableAutoNoHighlightSearch<cr>", "Disable AutoNoHighlightSearch" },
-    H = { "<cmd>DisableAutoNoHighlightSearch<cr>", "Enable AutoNoHighlightSearch" },
+    h = { "<cmd>EnableAutoNoHighlightSearch<cr>", "Enable AutoNoHighlightSearch" },
+    H = { "<cmd>DisableAutoNoHighlightSearch<cr>", "Disable AutoNoHighlightSearch" },
     i = {
       function()
         local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")
@@ -666,10 +678,10 @@ local mappings = {
   },
   z = {
     name = "folding",
-    ["a"] = { "za", "Toggle fold under cursor" },
-    ["A"] = { "zA", "Toggle all folds under cursor" },
-    ["c"] = { "zc", "Close fold under cursor" },
-    ["C"] = { "zC", "Close all folds under cursor" },
+    ["a"] = { "za", "Toggle fold" },
+    ["A"] = { "zA", "Toggle folds recursively" },
+    ["c"] = { "zc", "Close fold" },
+    ["C"] = { "zC", "Close fold recursively" },
     ["j"] = { "zj", "next fold" },
     ["k"] = { "zk", "previous fold" },
     ["J"] = { "]z", "go to bottom of current fold" },
@@ -684,8 +696,8 @@ local mappings = {
     ["l"] = { "<cmd>loadview<cr>", "load folds" },
     ["p"] = { "zfip", "fold paragraph" },
     ["P"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, "peek FoldedLines" },
-    ["o"] = { "zo", "open fold under cursor" },
-    ["O"] = { "zO", "fold all folds under cursor" },
+    ["o"] = { "zo", "open fold" },
+    ["O"] = { "zO", "open fold recursively" },
     ["r"] = { "zr", "fold less" },
     -- ["R"] = { "<cmd>lua require('ufo').openAllFolds()<cr>", "Open All Folds" },
     ["R"] = { "zR", "Open All Folds" },
@@ -706,7 +718,7 @@ local mini_textobj = {
   ['b'] = 'Alias )]}',
   ["B"] = '@block',
   ["c"] = 'word-column',
-  ["C"] = 'Word-Column',
+  ["C"] = 'WORD-column',
   ["d"] = 'greedyOuterIndentation',
   ["e"] = 'nearEndOfLine',
   ['f'] = 'function call',
@@ -822,11 +834,9 @@ local textobj = {
   ["gL"] = { "Url textobj" },
   ["gm"] = { "Last change textobj" },
   ["gn"] = { name = "+next" },
-  ["gN"] = { "Next reference textobj" },
   -- ["go"] = { "add virtual cursor down" }, -- only visual and normal mode
   -- ["gO"] = { "add virtual cursor up" },   -- only visual and normal mode
   ["gp"] = { name = "+previous" },
-  ["gP"] = { "Prev reference textobj" },
   -- ["gq"] = { "SplitJoin comment/lines 80chars (dot to repeat)" }, -- only visual and normal mode (cursor_position at start)
   ["gr"] = { "RestOfWindow textobj" },
   ["gR"] = { "VisibleWindow textobj" },
@@ -838,6 +848,7 @@ local textobj = {
   -- ["gU"] = { "to Uppercase" },                                                   -- only visual and normal mode
   -- ["gv"] = { "last selected" },                                                  -- only visual and normal mode
   -- ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" },                 -- only visual and normal mode
+  -- ["gW"] = { "word-column multicursor" },                                        -- only visual and normal mode
   -- ["gx"] = { "Blackhole register" },                                             -- only visual and normal mode
   -- ["gX"] = { "Blackhole linewise" },                                             -- only visual and normal mode
   -- ["gy"] = { "replace with register" },                                          -- only visual and normal mode
@@ -880,11 +891,9 @@ local operator_motion = {
   ["gm"] = { "goto mid window" },
   ["gM"] = { "goto mid line" },
   ["gn"] = { name = "+next (;, to repeat)" },
-  ["gN"] = { "goto next reference" },
-  ["go"] = { "add virtual cursor down (tab to extend/cursor mode)" }, -- only visual and normal mode
-  ["gO"] = { "add virtual cursor up (tab to extend/cursor mode)" },   -- only visual and normal mode
+  ["go"] = { "add virtual cursor down (tab to extend/cursor mode)" },                                       -- only visual and normal mode
+  ["gO"] = { "add virtual cursor up (tab to extend/cursor mode)" },                                         -- only visual and normal mode
   ["gp"] = { name = "+previous (;, to repeat)" },
-  ["gP"] = { "goto prev reference" },
   ["gq"] = vim.tbl_extend("force", { name = "+SplitJoin comment/lines 80chars (dot to repeat)" }, textobj), -- only visual and normal mode (cursor_position at start)
   ["gr"] = { "Redo register (dot to paste forward)" },
   ["gR"] = { "Redo register (dot to paste backward)" },                                                     -- (overwrites "replace mode")
@@ -896,6 +905,7 @@ local operator_motion = {
   ["gU"] = { name = "+toUppercase (dot to repeat)" },                                                               -- only visual and normal mode
   ["gv"] = { "last selected" },                                                                                     -- only visual and normal mode
   ["gw"] = vim.tbl_extend("force", { name = "+SplitJoin coments/lines 80chars (keeps cursor position)" }, textobj), -- only visual and normal mode (maintains cursor_position)
+  ["gW"] = { "word-column multicursor" },                                                                           -- only visual and normal mode
   ["gx"] = vim.tbl_extend("force", { name = "+Blackhole register (dot to repeat)" }, textobj),                      -- only visual and normal mode (overwrites "open with system")
   ["gX"] = { "Blackhole linewise (dot to repeat)" },                                                                -- only visual and normal mode
   ["gy"] = { name = "+replace with register (dot to repeat)" },                                                     -- only visual and normal mode
@@ -920,6 +930,7 @@ local visual_action = {
   ["gU"] = { "to Uppercase" },                                                   -- only visual and normal mode
   ["gv"] = { "last selected" },                                                  -- only visual and normal mode
   ["gw"] = { "SplitJoin comments/lines (limited at 80 chars)" },                 -- only visual and normal mode
+  ["gW"] = { "word-column multicursor" },                                        -- only visual and normal mode
   ["gx"] = { "Blackhole register" },                                             -- only visual and normal mode
   ["gX"] = { "Blackhole linewise" },                                             -- only visual and normal mode
   ["gy"] = { "replace with register" },                                          -- only visual and normal mode
