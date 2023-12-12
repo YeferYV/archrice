@@ -262,21 +262,72 @@ create_command("ToggleVirtualText", ToggleDiagnostics, {})
 
 ------------------------------------------------------------------------------------------------------------------------
 
+-- to support "<cmd>, <esc>..." (ctrl keys unsupported) alternatives:
+-- vim.api.nvim_feedkeys() -- accepts escape sequences
+-- vim.api.nvim_input() -- accepts ctrl keys and escape sequences
+-- vim.api.nvim_buf_set_keys(0, 0, 0, 0, '<C-V>') -- send keys at especific location
 _G.FeedKeysCorrectly = function(keys)
   local feedableKeys = vim.api.nvim_replace_termcodes(keys, true, false, true)
   vim.api.nvim_feedkeys(feedableKeys, "n", true)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
+-- select from the start of text object to cursor position
+function _G.__to_start_of_textobj(motion)
+  if motion == nil then
+    vim.o.operatorfunc = "v:lua.__to_start_of_textobj"
+    return "m'g@"
+  end
 
-function GotoTextObj_Callback()
-  FeedKeysCorrectly(vim.g.dotargs)
+  if motion == "char" then
+    vim.api.nvim_feedkeys("`[v`'", "n", true)
+  elseif motion == "line" then
+    vim.api.nvim_feedkeys("`[V`'", "n", true)
+  elseif motion == "block" then
+    vim.api.nvim_feedkeys("`[\22`'", "n", true)
+  end
 end
 
-_G.GotoTextObj = function(action)
-  vim.g.dotargs = action
+-- select from cursor position to rest of text object
+function _G.__to_end_of_textobj(motion)
+  if motion == nil then
+    vim.o.operatorfunc = "v:lua.__to_end_of_textobj"
+    return "m'g@"
+  end
+
+  if motion == "char" then
+    vim.api.nvim_feedkeys("`'v`]", "n", true)
+  elseif motion == "line" then
+    vim.api.nvim_feedkeys("`'V`]", "n", true)
+  elseif motion == "block" then
+    vim.api.nvim_feedkeys("`'\22`]", "n", true)
+  end
+end
+
+------------------------------------------------------------------------------------------------------------------------
+
+function GotoTextObj_Callback()
+  -- vim.api.nvim_input(vim.g.dotargs) -- slow and has whichkey conflicts (to reproduce "vg<ii")
+  vim.api.nvim_feedkeys(vim.g.dotargs, "n", true)
+end
+
+_G.GotoTextObj = function(motion, selection_char, selection_line, selection_block)
+  vim.g.dotargs = motion
+
+  if vim.fn.mode() == "v" then
+    vim.g.dotargs = selection_char
+  end
+
+  if vim.fn.mode() == "V" then
+    vim.g.dotargs = selection_line
+  end
+
+  if vim.fn.mode() == "\22" then
+    vim.g.dotargs = selection_block
+  end
+
   vim.o.operatorfunc = 'v:lua.GotoTextObj_Callback'
-  return "g@"
+  return "<esc>m'g@"
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -287,6 +338,7 @@ function WhichKeyRepeat_Callback()
   if vim.g.dotthirdcmd ~= nil then vim.cmd(vim.g.dotthirdcmd) end
 end
 
+-- https://www.vikasraj.dev/blog/vim-dot-repeat
 _G.WhichkeyRepeat = function(firstcmd, secondcmd, thirdcmd)
   vim.g.dotfirstcmd = firstcmd
   vim.g.dotsecondcmd = secondcmd

@@ -712,7 +712,7 @@ local mappings = {
 which_key.setup(setup)
 which_key.register(mappings, opts)
 
-local mini_textobj = {
+local ai_textobj = {
   ['a'] = 'function args',
   ['A'] = '@assingment',
   ['b'] = 'Alias )]}',
@@ -776,7 +776,7 @@ local mini_textobj = {
   -- `!@#$%^&*()_+-=[]{};'\:"|,./<>?
 }
 
-local textobj = {
+local g_textobj = {
   -- ["Q"] = { "Textsubjects Prev Selection" },
   -- ["K"] = { "Textsubjects Smart" },
   ["$"] = "End of line",
@@ -802,17 +802,17 @@ local textobj = {
 
   -- ["aK"] = { "Textsubjects Container Outer" },
   -- ["iK"] = { "Textsubjects Container Inner" },
-  ["i"] = mini_textobj,
-  ["il"] = { name = "+Last", mini_textobj },
-  ["iN"] = { name = "+Next", mini_textobj },
-  ["a"] = mini_textobj,
-  ["al"] = { name = "+Last", mini_textobj },
-  ["aN"] = { name = "+Next", mini_textobj },
+  ["i"] = ai_textobj,
+  ["il"] = { name = "+Last", ai_textobj },
+  ["iN"] = { name = "+Next", ai_textobj },
+  ["a"] = ai_textobj,
+  ["al"] = { name = "+Last", ai_textobj },
+  ["aN"] = { name = "+Next", ai_textobj },
 
   ["g{"] = { "braces linewise textobj" },
   ["g}"] = { "braces linewise textobj" },
-  ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around" }, mini_textobj),
-  ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around" }, mini_textobj),
+  ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around" }, ai_textobj),
+  ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around" }, ai_textobj),
   -- ["ga"] = { "Align (operator)" },                     -- only visual and normal mode
   -- ["gA"] = { "Preview Align (operator)" },             -- only visual and normal mode
   -- ["gb"] = { "add virtual cursor (select and find)" }, -- only visual and normal mode
@@ -863,17 +863,17 @@ local textobj = {
 }
 
 local operator_motion = {
-  ["="] = vim.tbl_extend("force", { name = "+autoindent (dot to repeat)" }, textobj),
+  ["="] = vim.tbl_extend("force", { name = "+autoindent (dot to repeat)" }, g_textobj),
   [">"] = { name = "+indent right (dot to repeat)" },
   ["<"] = { name = "+indent left (dot to repeat)" },
   ["g,"] = { "go forward in :changes" },
   ["g;"] = { "go backward in :changes" },
-  ["g<"] = vim.tbl_extend("force", { name = "+goto StarOf textobj (dot to repeat)" }, textobj),
-  ["g>"] = vim.tbl_extend("force", { name = "+goto EndOf textobj (dot to repeat)" }, textobj),
-  ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around (mini textobj only)" }, mini_textobj),  -- "g<" does it better
-  ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around (mini textobj only)" }, mini_textobj), -- "g>" does it better
-  ["ga"] = vim.tbl_extend("force", { name = "+align (dot to repeat)" }, textobj),
-  ["gA"] = vim.tbl_extend("force", { name = "+preview align (dot to repeat)" }, textobj),
+  ["g<"] = vim.tbl_extend("force", { name = "+goto StarOf textobj (dot to repeat)" }, g_textobj),         -- only visual and normal mode
+  ["g>"] = vim.tbl_extend("force", { name = "+goto EndOf textobj (dot to repeat)" }, g_textobj),          -- only visual and normal mode
+  ["g["] = vim.tbl_extend("force", { name = "+Cursor to Left Around (mini textobj only)" }, ai_textobj),  -- supports operator pending mode, doesn't reset cursor like "g<a"
+  ["g]"] = vim.tbl_extend("force", { name = "+Cursor to Rigth Around (mini textobj only)" }, ai_textobj), -- supports operator pending mode, doesn't reset cursor like "g>a"
+  ["ga"] = vim.tbl_extend("force", { name = "+align (dot to repeat)" }, g_textobj),
+  ["gA"] = vim.tbl_extend("force", { name = "+preview align (dot to repeat)" }, g_textobj),
   ["gb"] = { "add virtual cursor (select and find)" }, -- only visual and normal mode
   ["gc"] = { name = "+comment (dot to repeat)" },
   ["gd"] = { "goto definition" },
@@ -891,35 +891,36 @@ local operator_motion = {
   ["gm"] = { "goto mid window" },
   ["gM"] = { "goto mid line" },
   ["gn"] = { name = "+next (;, to repeat)" },
-  ["go"] = { "add virtual cursor down (tab to extend/cursor mode)" },                                       -- only visual and normal mode
-  ["gO"] = { "add virtual cursor up (tab to extend/cursor mode)" },                                         -- only visual and normal mode
+  ["go"] = { "add virtual cursor down (tab to extend/cursor mode)" },                                         -- only visual and normal mode
+  ["gO"] = { "add virtual cursor up (tab to extend/cursor mode)" },                                           -- only visual and normal mode
   ["gp"] = { name = "+previous (;, to repeat)" },
-  ["gq"] = vim.tbl_extend("force", { name = "+SplitJoin comment/lines 80chars (dot to repeat)" }, textobj), -- only visual and normal mode (cursor_position at start)
+  ["gq"] = vim.tbl_extend("force", { name = "+SplitJoin comment/lines 80chars (dot to repeat)" }, g_textobj), -- only visual and normal mode (cursor_position at start)
   ["gr"] = { "Redo register (dot to paste forward)" },
-  ["gR"] = { "Redo register (dot to paste backward)" },                                                     -- (overwrites "replace mode")
+  ["gR"] = { "Redo register (dot to paste backward)" },                                                       -- (overwrites "replace mode")
   ["gs"] = { name = "+Surround (dot to repeat)" },
   ["gS"] = { "SplitJoin args (dot to repeat)" },
   ["gt"] = { "goto next tab" },
   ["gT"] = { "goto prev tab" },
-  ["gu"] = { name = "+toLowercase (dot to repeat)" },                                                               -- only visual and normal mode
-  ["gU"] = { name = "+toUppercase (dot to repeat)" },                                                               -- only visual and normal mode
-  ["gv"] = { "last selected" },                                                                                     -- only visual and normal mode
-  ["gw"] = vim.tbl_extend("force", { name = "+SplitJoin coments/lines 80chars (keeps cursor position)" }, textobj), -- only visual and normal mode (maintains cursor_position)
-  ["gW"] = { "word-column multicursor" },                                                                           -- only visual and normal mode
-  ["gx"] = vim.tbl_extend("force", { name = "+Blackhole register (dot to repeat)" }, textobj),                      -- only visual and normal mode (overwrites "open with system")
-  ["gX"] = { "Blackhole linewise (dot to repeat)" },                                                                -- only visual and normal mode
-  ["gy"] = { name = "+replace with register (dot to repeat)" },                                                     -- only visual and normal mode
-  ["gY"] = { name = "+exchange text" },                                                                             -- only visual and normal mode
-  ["gz"] = { name = "+sort (dot to repeat)" },                                                                      -- only visual and normal mode
-  ["g+"] = { "Increment number (dot to repeat)" },                                                                  -- only visual and normal mode
-  ["g-"] = { "Decrement number (dot to repeat)" },                                                                  -- only visual and normal mode
-  ["g|"] = { "same column for all virtual cursors" },                                                               -- only visual and normal mode
-  ["g\\"] = { "add virtual cursor at current position (eg after search/jump)" },                                    -- only visual and normal mode
-  ["g<Up>"] = { "Numbers ascending" },                                                                              -- only visual and normal mode
-  ["g<Down>"] = { "Numbers descending" },                                                                           -- only visual and normal mode
+  ["gu"] = { name = "+toLowercase (dot to repeat)" },                                                                 -- only visual and normal mode
+  ["gU"] = { name = "+toUppercase (dot to repeat)" },                                                                 -- only visual and normal mode
+  ["gv"] = { "last selected" },                                                                                       -- only visual and normal mode
+  ["gw"] = vim.tbl_extend("force", { name = "+SplitJoin coments/lines 80chars (keeps cursor position)" }, g_textobj), -- only visual and normal mode (maintains cursor_position)
+  ["gW"] = { "word-column multicursor" },                                                                             -- only visual and normal mode
+  ["gx"] = vim.tbl_extend("force", { name = "+Blackhole register (dot to repeat)" }, g_textobj),                      -- only visual and normal mode (overwrites "open with system")
+  ["gX"] = { "Blackhole linewise (dot to repeat)" },                                                                  -- only visual and normal mode
+  ["gy"] = { name = "+replace with register (dot to repeat)" },                                                       -- only visual and normal mode
+  ["gY"] = { name = "+exchange text" },                                                                               -- only visual and normal mode
+  ["gz"] = { name = "+sort (dot to repeat)" },                                                                        -- only visual and normal mode
+  ["g+"] = { "Increment number (dot to repeat)" },                                                                    -- only visual and normal mode
+  ["g-"] = { "Decrement number (dot to repeat)" },                                                                    -- only visual and normal mode
+  ["g|"] = { "same column for all virtual cursors" },                                                                 -- only visual and normal mode
+  ["g\\"] = { "add virtual cursor at current position (eg after search/jump)" },                                      -- only visual and normal mode
+  ["g<Up>"] = { "Numbers ascending" },                                                                                -- only visual and normal mode
+  ["g<Down>"] = { "Numbers descending" },                                                                             -- only visual and normal mode
 }
 
 local visual_action = {
+  ["g<"] = { "+goto StarOf textobj (dot to repeat)" },                           -- only visual and normal mode
   ["ga"] = { "Align" },                                                          -- only visual and normal mode
   ["gA"] = { "Preview Align" },                                                  -- only visual and normal mode
   ["gb"] = { "add virtual cursor (find selected)" },                             -- only visual and normal mode
@@ -948,7 +949,7 @@ local visual_action = {
   ["<leader><leader>Y"] = { "Yank forward (second_clip)" },                      -- only visual and normal mode
 }
 
-which_key.register({ mode = { "o", "x" }, textobj })
+which_key.register({ mode = { "o", "x" }, g_textobj })
 which_key.register({ mode = { "n" }, operator_motion })
 which_key.register({ mode = { "x" }, visual_action })
 

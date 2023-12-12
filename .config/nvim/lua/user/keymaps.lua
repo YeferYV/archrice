@@ -199,17 +199,22 @@ map(
   { desc = "Toggle Flash Search" }
 )
 
--- goto textobj edge:
+-- vim.keymap.set("n", "vg<", _G.__to_start_of_textobj, { expr = true, desc = "Select from startOf TextObj" })
+-- vim.keymap.set("n", "vg>", _G.__to_end_of_textobj, { expr = true, desc = "Selcect to endOf TextObj" })
+
 map(
-  "n",
+  { "n", "x" },
   "g<",
-  function() return GotoTextObj("") end,
+  -- function() return GotoTextObj("`[", "`[v``", "`[V``", "`[\x16`'") end,
+  function() return GotoTextObj("`<", "`<v`'", "`<V`'", "`<\22`'") end,
   { expr = true, silent = true, desc = "StartOf TextObj" }
 )
+
 map(
-  "n",
+  { "n", "x" },
   "g>",
-  function() return GotoTextObj(":normal `[v`]<cr><esc>") end,
+  -- function() return GotoTextObj("`]", "``v`]", "``V`]", "`'\x16`]") end,
+  function() return GotoTextObj("`>", "`'v`>", "`'V`>", "`'\22`>") end,
   { expr = true, silent = true, desc = "EndOf TextObj" }
 )
 
