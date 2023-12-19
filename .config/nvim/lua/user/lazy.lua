@@ -129,7 +129,7 @@ local plugins = {
 
   -- LSP
   { "neovim/nvim-lspconfig",             commit = "e683951a35ade60f9e1768ef770bb42ffcc1d2b7" }, -- enable LSP
-  { "jose-elias-alvarez/null-ls.nvim",   commit = "5855128178fa78293acdfb5b4e41ef046779240b" }, -- for formatters and linters
+  { "nvimtools/none-ls.nvim",            commit = "ef09f14eab78ca6ce3bee1ddc73db5511f5cd953" }, -- for formatters and linters
   { "b0o/SchemaStore.nvim",              commit = "a592fbe98959d13014b022ec1b1418498309019c" }, -- jsonls schema completions
   { "RRethy/vim-illuminate",             commit = "a2907275a6899c570d16e95b9db5fd921c167502" },
   { "williamboman/mason.nvim",           commit = "2311d9d883eb709ad9979a726a38c5ce1343b63c", config = true },
