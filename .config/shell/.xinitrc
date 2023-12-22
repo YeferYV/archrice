@@ -6,6 +6,9 @@ dunst &
 ## enable docker/root's nvim clipboard
 # xhost +
 
+## disable annoying beep
+xset -b
+
 ## music player daemon
 # mpd &
 # mpDris2 &

@@ -224,6 +224,7 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # novnc
 # obs-studio
 # os-prober
+# otf-latinmodern-math
 # pamixer
 # paru-bin
 # pavucontrol

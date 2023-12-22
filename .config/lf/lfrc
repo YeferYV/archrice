@@ -1,4 +1,5 @@
 # v1m:ft=cfg
+
 # set '-eu' options for shell commands
 # These options are used to have safer shell commands. Option '-e' is used to
 # exit on error and option '-u' is used to give error for unset variables.
@@ -16,99 +17,61 @@ set shell /bin/bash
 # commands accordingly.
 set ifs "\n"
 
-set icons
 set hidden true
+set icons
+set mouse true
 set period 1
-set previewer        ~/.config/lf/lf-wiki-previewer/lf_kitty_preview
-set cleaner          ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
-# set previewer      ~/.config/lf/lf-wiki-previewer/lf_sixel_preview
-# set cleaner        ~/.config/lf/lf-wiki-previewer/lf_sixel_clean
+set ratios 1:2
+set scrolloff 50
 set cursoractivefmt  "\033[40m" # "\033[7m\033[30m\033[46m"
 set cursorparentfmt  "\033[40m" # "\033[7m\033[30m\033[46m"
 set cursorpreviewfmt "\033[40m" # "\033[7m\033[30m\033[46m"
 set promptfmt        "[1;90m%w "
-set mouse true
-set scrolloff 50
-set ratios 1:2
+set previewer        ~/.config/lf/lf-wiki-previewer/lf_kitty_preview
+set cleaner          ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
+# set previewer      ~/.config/lf/lf-wiki-previewer/lf_sixel_preview
+# set cleaner        ~/.config/lf/lf-wiki-previewer/lf_sixel_clean
+
+# $lf -remote "send $id set previewer '$HOME/.config/lf/previewer'"
+# $lf -remote "send $id set cleaner   '$HOME/.config/lf/cleaner'"
 
 #######################
 ##  Global_keymaps  ##
 #####################
 
-#--- execute current file (must be executable)
-map <a-x> $$f
-map <a-X> %$f
-map <c-x> !$f
-map <c-X> :$f
-
-#--- Ranger's open_with
-cmd shell-open-with        $ $@   $fx
-cmd shell-pipe-open-with   % "$@" $fx
-cmd shell-wait-open-with   ! $@   $fx
-cmd shell-async-open-with  & $@   $fx
-
+cmd bm-dirs                $ lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' $HOME/.config/shell/bm-dirs | fzf | sed 's/\${.*-// ; s/}//' | envsubst)"
 cmd draganddrop            & dragon-drop -a -x $fx
 # cmd duplicatelf          & nohup sh -c "export LF_CD=true && $TERMINAL"                 >/dev/null 2>&1
 # cmd duplicatelf          & nohup                             $TERMINAL -e "lf"          >/dev/null 2>&1
 # cmd duplicateterm        $ nohup                             $TERMINAL start --cwd=$PWD >/dev/null 2>&1
 cmd duplicatelf            & setsid -f env LF_CD=true          $TERMINAL start --cwd=$PWD
 cmd duplicateterm          & setsid -f                         $TERMINAL start --cwd=$PWD
+cmd mediainfo              $ mediainfo $f | less
+cmd fzf_filemanager        $ ~/.config/lf/fmz-img/fmz
+cmd fzf_preview_ueberzug   $ ~/.config/lf/fmz-img/fzf_ueberzug
+cmd ueberzug_image         $ ~/.config/lf/fmz-img/img 0 0 $(tput cols) $(tput lines) $f
 # cmd mkdir                $ mkdir  -p "$(echo $* | tr ' ' '\ ')"
 # cmd touch                $ touch     "$(echo $* | tr ' ' '\ ')"
 # cmd trash-onefile        $ mkdir -p $HOME/.cache/Trash    && mv $f "$HOME/.cache/Trash/$(basename $f)-$(date '+%y%m%d-%H-%M-%S')"
 
-cmd trash ${{
-  mkdir -p $HOME/.cache/Trash
-  basename -a $fx | xargs -I var mv var "$HOME/.cache/Trash/var-$(date '+%y%m%d-%H-%M-%S')"
-}}
+# /etc/zsh/zprofile may overwrite tmux $PATH
+cmd mpv_in_tmux_detach     $ tmux detach -E                                 "mpv --vo=sixel,kitty,x11 --quiet $fx && tmux attach-session"
+cmd mpv_in_tmux_popup      $ tmux popup -w 110 -h 30 -x 60 -y 1 -E          "mpv --vo=tct $fx"
+# cmd mpv_in_tmux_split    $ tmux split-window -h \; send-keys              "mpv --vo=sixel,kitty,x11 --quiet --pause $fx && exit" 'Enter'
+# cmd mpv_in_tmux_window   $ tmux new-window      \; send-keys              "mpv --vo=sixel,kitty,x11 --quiet --pause $fx && exit" 'Enter'
+cmd mpv_in_wezterm_pane    $ wezterm cli split-pane --horizontal -- bash -c "mpv --vo=kitty,sixel,x11 --quiet $fx"
+cmd mpv_in_wezterm_tab     $ wezterm cli spawn                   -- bash -c "mpv --vo=kitty,sixel,x11 --quiet $fx"
+cmd kitty_web_browser      $ wezterm cli split-pane --horizontal -- bash -c "awrit \"file://$f\""
 
-#--- To refresh numbers of colums
-cmd onecol ${{
-  lf -remote "send $id set nopreview"
-  lf -remote "send $id set ratios 1"
-}}
-map <a-!> onecol
+cmd one_column   ${{ lf -remote "send $id :set nopreview; set ratios 1" }}
+cmd two_column   ${{ lf -remote "send $id :set ratios 1:2; set preview"  }}
+cmd three_column ${{ lf -remote "send $id :set ratios 1:2:3; set preview"  }}
 
-cmd onemorecol ${{
-  lf -remote "send $id set ratios 1:2"
-  lf -remote "send $id set preview"
-}}
-map <a-@> onemorecol
-
-cmd morecol ${{
-  lf -remote "send $id set ratios 1:2:3"
-  lf -remote "send $id set preview"
-}}
-map <a-\#> morecol
-
-#--- To change numbers of colums
-map <a-$> $lf -command "set nopreview; set ratios 1"
-map <a-%> $lf -command "set preview; set ratios 1:2"
-map <a-^> $lf -command "set preview; set ratios 1:2:3"
-
-cmd on-cd &{{
-    # '&' commands run silently in background (which is what we want here),
-    # but are not connected to stdout.
-    # To make sure our escape sequence still reaches stdout we pipe it to /dev/tty
-
-    # Show current directory in window title with last path instead of full path
-    printf "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007" > /dev/tty
-}}
-# also run at startup
-# on-cd
-
-cmd open ${{
-    #"sudo -E env "PATH=$PATH" lf" https://unix.stackexchange.com/questions/83191/how-to-make-sudo-preserve-path
-    case $(file --dereference --brief --mime-type $f) in
-        text/*|*/json|*/javascript)  printf "\033]0; ${f##*/} \007" > /dev/tty; $EDITOR $fx ;;
-	      image/*)                     basename -a $fx | $SWALLOWER sxiv -baio ;;
-	      audio/*)                     basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --force-window --playlist=- ;;
-	      video/*)                     basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --playlist=- ;;
-        application/pdf)                               $SWALLOWER zathura $fx ;;
-        #*) for f in $fx; do xdg-open $f           &>/dev/null &;;
-        *)  for f in $fx; do setsid -f $OPENER $f   >/dev/null 2>&1; done;;
-    esac
-}}
+# Ranger's open_with (it will execute if no arguments):
+cmd shell-open-with        $ $@   $fx
+cmd shell-pipe-open-with   % "$@" $fx
+cmd shell-wait-open-with   ! $@   $fx
+cmd shell-async-open-with  & $@   $fx
 
 cmd cmd_scrolldown &{{
 	# Retrieve the current preview offset.
@@ -129,15 +92,6 @@ cmd cmd_scrollup &{{
 	lf -remote "send $id reload"
 }}
 
-cmd cmd_redraw_up :{{
-	$(echo 1 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
-  up
-  redraw
-  $lf -remote "send $id reload"
-  # $lf -remote "send $id up && send $id redraw"
-  %wc -l "$fx"
-}}
-
 cmd cmd_redraw_down :{{
 	$(echo 1 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
   down
@@ -147,15 +101,45 @@ cmd cmd_redraw_down :{{
   %wc -l "$fx"
 }}
 
-cmd setbg ${{
-  # ln -sf $fx ~/.local/share/bg
-  cp -f $fx ~/.local/share/bg
-  wal --cols16 -s -i $fx -o ~/.config/wal/postrun
+cmd cmd_redraw_up :{{
+	$(echo 1 >"$LF_SCROLLINGPREVIEW_TEMPDIR/offset")
+  up
+  redraw
+  $lf -remote "send $id reload"
+  # $lf -remote "send $id up && send $id redraw"
+  %wc -l "$fx"
 }}
 
-cmd tmuxtty ${{
-  # stty echo
-  ( exec </dev/tty; exec <&1; TMUX= tmux new $1 )
+cmd copyto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Copy to where?"
+  dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
+	for x in $fx; do
+		eval cp -ivr \"$x\" \"$dest\"
+	done &&
+	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+}}
+
+cmd moveto ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	clear; echo "Move to where?"
+  dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
+	for x in $fx; do
+		eval mv -iv \"$x\" \"$dest\"
+	done &&
+	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
+}}
+
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+  stty echo
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "delete?[y/N]"
+	read ans
+	[ $ans = "y" ] && rm -rf -- $fx
 }}
 
 cmd fzf_preview ${{
@@ -187,7 +171,7 @@ cmd fzf_preview ${{
   }}
 
 # https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
-cmd fzf_rg ${{
+cmd fzf_ripgrep ${{
     # Switch between Ripgrep launcher mode (CTRL-R) and fzf filtering mode (CTRL-F)
     RG_PREFIX="rg --column --glob='!.git/' --hidden --line-number --no-heading --color=always --smart-case"
     INITIAL_QUERY="${*:-}"
@@ -216,40 +200,48 @@ cmd fzf_rg ${{
     [ -n "${selected[0]}" ] && nvim       "${selected[0]}" "+${selected[1]}"
   }}
 
-cmd delete ${{
-	clear; tput cup $(($(tput lines)/3)); tput bold
-  stty echo
-	set -f
-	printf "%s\n\t" "$fx"
-	printf "delete?[y/N]"
-	read ans
-	[ $ans = "y" ] && rm -rf -- $fx
+cmd move_to_trash ${{
+  mkdir -p $HOME/.cache/Trash
+  basename -a $fx | xargs -I var mv var "$HOME/.cache/Trash/var-$(date '+%y%m%d-%H-%M-%S')"
 }}
 
-cmd moveto ${{
-	clear; tput cup $(($(tput lines)/3)); tput bold
-	set -f
-	clear; echo "Move to where?"
-  dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf \ )" &&
-	for x in $fx; do
-		eval mv -iv \"$x\" \"$dest\"
-	done &&
-	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
+# cmd on-quit ${{ ( $LFCD ) 2>/dev/null && unset LFCD && cd $PWD && zsh }} # open shell
+cmd on-cd &{{
+    # '&' commands run silently in background (which is what we want here),
+    # but are not connected to stdout.
+    # To make sure our escape sequence still reaches stdout we pipe it to /dev/tty
+
+    # Show current directory in window title with last path instead of full path
+    printf "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007" > /dev/tty
+}}
+# also run at startup
+# on-cd
+
+cmd open ${{
+    #"sudo -E env "PATH=$PATH" lf" https://unix.stackexchange.com/questions/83191/how-to-make-sudo-preserve-path
+    case $(file --dereference --brief --mime-type $f) in
+        text/*|*/json|*/javascript)  printf "\033]0; ${f##*/} \007" > /dev/tty; $EDITOR $fx ;;
+	      image/*)                     basename -a $fx | $SWALLOWER sxiv -baio ;;
+	      audio/*)                     basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --force-window --playlist=- ;;
+	      video/*)                     basename -a $fx | $SWALLOWER mpv --vo=x11,sixel,kitty --playlist=- ;;
+        application/pdf)                               $SWALLOWER zathura $fx ;;
+        #*) for f in $fx; do xdg-open $f           &>/dev/null &;;
+        *)  for f in $fx; do setsid -f $OPENER $f   >/dev/null 2>&1; done;;
+    esac
 }}
 
-cmd copyto ${{
-	clear; tput cup $(($(tput lines)/3)); tput bold
-	set -f
-	clear; echo "Copy to where?"
-  dest="$(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)" &&
-	for x in $fx; do
-		eval cp -ivr \"$x\" \"$dest\"
-	done &&
-	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+cmd setbg ${{
+  # ln -sf $fx ~/.local/share/bg
+  cp -f $fx ~/.local/share/bg
+  (command -v wal) && wal --cols16 -s -i $fx -o ~/.config/wal/postrun || ( xwallpaper --zoom "$HOME/.local/share/bg" & disown )
+}}
+
+cmd tmuxtty ${{
+  # stty echo
+  ( exec </dev/tty; exec <&1; TMUX= tmux new $1 )
 }}
 
 # extract the current file with the right command
-# (xkcd link: https://xkcd.com/1168/)
 cmd extract ${{
     set -f
     case $f in
@@ -273,11 +265,11 @@ cmd zip ${{
 
 # Bindings
 # map <m-1> ???
-map <m-2>     : updir
-map <m-3>     : open
+map <m-2>   : updir
+map <m-3>   : open
 
-map <a-j>     : down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
-map <a-k>     : up;   redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map <a-j>   : down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
+map <a-k>   : up;   redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
 
 map <c-j>     cmd_redraw_down
 map <c-k>     cmd_redraw_up
@@ -290,51 +282,33 @@ map a       rename # at the very end
 map A       push a<c-u> # new rename
 map b       setbg $f
 map B     $ vidir $fx
-map C       copyto
-map D       trash
-map gbk   $ mpv --vo=kitty --really-quiet $fx
-map gbs   $ mpv --vo=sixel --really-quiet $fx
-map gbt   $ mpv --vo=tct   --really-quiet $fx
-map gbg   $ $SWALLOWER mpv --vo=gpu $fx
-map gbx   $ $SWALLOWER mpv --vo=x11 $fx
-map gbc   $ $SWALLOWER code $fx
-map gbl   $ $SWALLOWER libreoffice --nologo $fx
-map gbn   $ $SWALLOWER neovide $fx
+map D       move_to_trash
+map g1      one_column
+map g2      two_column
+map g3      three_column
+map gbd     bm-dirs
 map gdt     duplicateterm
 map gdl     duplicatelf
 map gdd     draganddrop
-map gfr     fzf_rg
-map gfk     fzf_preview "./fmz-img/fzf_kit"                                 # kitty fzf
-map gfs     fzf_preview "./fmz-img/fzf_six"                                 # sixel fzf
-map gfu   $ ~/.config/lf/fmz-img/fzf_ub                                     # ueberzug fzf
-map gfi   $ ~/.config/lf/fmz-img/img 0 0 $(tput cols) $(tput lines) $f      # ueberzug viewer
-map gff   $ ~/.config/lf/fmz-img/fmz                                        # yay -S stpv-git
+map gff     fzf_filemanager                    # fzf file manager (stpv for preview)
+map gfi     ueberzug_image                     # ueberzug image
+map gfk     fzf_preview "./fmz-img/fzf_kitty"  # fzf kitty preview
+map gfr     fzf_ripgrep                        # fzf ripgrep
+map gfs     fzf_preview "./fmz-img/fzf_sixel"  # fzf sixel preview
+map gfu     fzf_preview_ueberzug               # fzf ueberzug preview
+map gii     mediainfo
 map gll   $ lazygit
-map glk   $ lf -remote "send $id select '$(KITTY_PID=1000 fzfp)'"           # yay -S stpv-git
-map glw   $ lf -remote "send $id select '$(fzf --bind='alt-p:execute-silent((tput cup 2 $(($COLUMNS/2)); wezterm imgcat --width $(($COLUMNS/2)) {})>/dev/tty)')'" # wezterm fzf
-map glg   $ lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' $HOME/.config/shell/bm-dirs | fzf | sed "s/\${.*-// ; s/}//" | envsubst)"     # go to env
-map gmm   ! mediainfo $f | less && xdotool key KP_Enter
-map gmi     imgcat
-map gmo     sixel
-# map gms ! tput cup 0 5 && img2sixel --width $(($(tput cols)*15/2)) $fx
+map gsg   $ $SWALLOWER mpv --vo=gpu $fx
+map gsc   $ $SWALLOWER code $fx
+map gsl   $ $SWALLOWER libreoffice --nologo $fx
+map gsn   $ $SWALLOWER neovide $fx
+map gSo     shell-open-with
+map gSw     shell-wait-open-with
+map gSa     shell-async-open-with
+map gSp     shell-pipe-open-with
 map gtl     tmuxtty lf
 map gtz     tmuxtty zsh
-map gtd   $ tmux detach -E                                 "mpv --vo=sixel,kitty,x11 --quiet $fx && tmux attach-session" # /etc/zsh/zprofile may overwrite tmux $PATH
-map gtp   $ tmux popup -w 110 -h 37 -x 60 -y 1 -E          "mpv --vo=tct                     $fx"
-map gts   $ tmux split-window -h \; send-keys              "mpv --vo=sixel,kitty,x11 --quiet $fx && exit" 'Enter'
-map gtw   $ tmux new-window      \; send-keys              "mpv --vo=sixel,kitty,x11 --quiet $fx && exit" 'Enter'
-map gws   $ wezterm cli split-pane --horizontal -- bash -c "mpv --vo=kitty,sixel,x11 --quiet $fx"
-map gww   $ wezterm cli spawn                   -- bash -c "mpv --vo=kitty,sixel,x11 --quiet $fx"
-map gwf   $ wezterm cli split-pane --horizontal -- bash -c "awrit \"file://$f\""
-map gwj   : down; redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
-map gwk   : up;   redraw; &[[ $f =~ .png|.jpg ]] && (tput cup 1 55 && wezterm imgcat --width 50% $f) >/dev/tty &
-map Po      push :shell-open-with<space>
-map Pp      push :shell-pipe-open-with<space>
-map Pw      push :shell-wait-open-with<space>
-map Pa      push :shell-async-open-with<space>
-map Pg      push :$sr<space>google<space>
-map Py      push :$ytfzf<space>-t<space>
-map Pv      push :$nvim<space>
+map gwf     awrit_kitty_web_browser
 map J       push 10j
 map K       push 10k
 
@@ -343,7 +317,14 @@ map I     $ LESSOPEN='| ~/.config/lf/lf-wiki-previewer/lf_sixel_preview %s' less
 map o     & mimeopen $fx >/dev/null 2>&1                           #'setsid -f' unneeded
 map O     & wezterm cli split-pane -- bash -c "mimeopen --ask $fx" #'setsid -f' breaks prompt
 
-map M       moveto
+map M
+map Mk    $ mpv --vo=kitty --really-quiet $fx
+map Ms    $ mpv --vo=sixel --really-quiet $fx
+map Mt    $ mpv --vo=tct   --really-quiet $fx
+map Md      mpv_in_tmux_detach
+map Mp      mpv_in_tmux_popup
+map MP      mpv_in_wezterm_pane
+map MT      mpv_in_wezterm_tab
 map S     $ zsh
 map X       extract
 map Y     $ printf "%s" "$fx" | xclip -selection clipboard

@@ -20,6 +20,7 @@ case "$1" in
     *.7z)   7z l "$1";;
     *.pdf)  pdftotext "$1" -;;
     *.six) (tput cup $((y)) $((x)) && cat "$1") >/dev/tty ; exit 1 ;;
+    *.mp4|*.mkv)  ( ffmpeg -ss 00:10 -i "$1" -frames 1 -f image2 /tmp/ffmpeg.png -y && img2sixel -w $((w*8)) /tmp/ffmpeg.png  ) > /dev/tty && exit 1 ;;
     *.jpg|*.png) ( tput cup $((y)) $((x)) && img2sixel -w $((w*8)) "$1" | sed 's/#/\n#/g') >/dev/tty && exit 1 ;;
 
     # # https://github.com/gokcehan/lf/pull/840
