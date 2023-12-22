@@ -75,7 +75,10 @@ local plugins = {
   },
 
   -- UI
-  { 'olivercederborg/poimandres.nvim' },
+  {
+    'olivercederborg/poimandres.nvim',
+    cond = not vim.g.vscode,
+  },
 
 }
 
@@ -95,11 +98,8 @@ vim.opt.laststatus = 3            -- laststatus=3 global status line (line betwe
 vim.opt.number = true             -- set numbered lines
 vim.opt.numberwidth = 4           -- set number column width to 2 {default 4}
 vim.opt.preserveindent = true     -- Preserve indent structure as much as possible
-vim.opt.scrolloff = 8             -- vertical scrolloff
 vim.opt.shiftwidth = 2            -- the number of spaces inserted for each indentation
 vim.opt.showmode = false          -- we don't need to see things like -- INSERT -- anymore
-vim.opt.sidescrolloff = 8         -- horizontal scrolloff
-vim.opt.signcolumn = "yes"        -- always show the sign column, otherwise it would shift the text each time
 vim.opt.smartcase = true          -- smart case
 vim.opt.smartindent = true        -- make indenting smarter again
 vim.opt.splitbelow = true         -- force all horizontal splits to go below current window
@@ -118,13 +118,14 @@ vim.g.indent_object_ignore_blank_line = false
 
 if not vim.g.vscode then
   require("poimandres").setup({ disable_background = true })
-  vim.cmd [[
-    color poimandres
-    hi Comment guifg=#444444 guibg=none
-    hi Visual  guifg=none    guibg=#1c1c1c
-    au VimEnter * :TSEnable highlight"
-    set virtualedit=all
-  ]]
+  vim.opt.scrolloff = 8       -- vertical scrolloff
+  vim.opt.sidescrolloff = 8   -- horizontal scrolloff
+  vim.opt.signcolumn = "yes"  -- always show the sign column, otherwise it would shift the text each time
+  vim.opt.virtualedit = "all" -- allow cursor bypass end of line
+  vim.cmd [[ au VimEnter * :TSEnable highlight" ]]
+  vim.cmd [[ color poimandres ]]
+  vim.api.nvim_set_hl(0, "Comment", { fg = "#444444", bg = "NONE" })
+  vim.api.nvim_set_hl(0, "Visual", { fg = "NONE", bg = "#1c1c1c" })
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -184,13 +185,26 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 
 function GotoTextObj_Callback()
-  FeedKeysCorrectly(vim.g.dotargs)
+  vim.api.nvim_feedkeys(vim.g.dotargs, "n", true)
 end
 
-_G.GotoTextObj = function(action)
-  vim.g.dotargs = action
+_G.GotoTextObj = function(motion, selection_char, selection_line, selection_block)
+  vim.g.dotargs = motion
+
+  if vim.fn.mode() == "v" then
+    vim.g.dotargs = selection_char
+  end
+
+  if vim.fn.mode() == "V" then
+    vim.g.dotargs = selection_line
+  end
+
+  if vim.fn.mode() == "\22" then
+    vim.g.dotargs = selection_block
+  end
+
   vim.o.operatorfunc = 'v:lua.GotoTextObj_Callback'
-  return "g@"
+  return "<esc>m'g@"
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -200,10 +214,12 @@ end
 M.select_same_indent = function(skip_blank_line)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
 
+  function is_blank_line(line) return string.match(vim.fn.getline(line), '^%s*$') end
+
   if skip_blank_line then
     match_blank_line = function(line) return false end
   else
-    match_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
+    match_blank_line = function(line) return is_blank_line(line) end
   end
 
   local prev_line = vim.fn.line('.') - 1
@@ -213,7 +229,7 @@ M.select_same_indent = function(skip_blank_line)
 
     -- exit loop if there's no indentation
     if skip_blank_line then
-      if vim.fn.indent(prev_line) == 0 and string.match(vim.fn.getline(prev_line), '^%s*$') then
+      if vim.fn.indent(prev_line) == 0 and is_blank_line(prev_line) then
         break
       end
     else
@@ -232,7 +248,7 @@ M.select_same_indent = function(skip_blank_line)
 
     -- exit loop if there's no indentation
     if skip_blank_line then
-      if vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') then
+      if vim.fn.indent(next_line) == 0 and is_blank_line(next_line) then
         break
       end
     else
@@ -252,10 +268,12 @@ M.next_indent = function(next, level)
   local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   local sign = next and '+' or '-'
 
+  function is_blank_line(line) return string.match(vim.fn.getline(line), '^%s*$') end
+
   -- scroll no_blanklines (indent = 0) when going down
-  if string.match(vim.fn.getline(current_line), '^%s*$') == nil then
+  if is_blank_line(current_line) == nil then
     if sign == '+' then
-      while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
+      while vim.fn.indent(next_line) == 0 and is_blank_line(next_line) == nil do
         vim.cmd('+')
         next_line = vim.fn.line('.') + 1
       end
@@ -272,13 +290,13 @@ M.next_indent = function(next, level)
 
   if level == "same_level" then
     -- scroll differrent indentation (supports indent = 0, skip blacklines)
-    while vim.fn.indent(next_line) ~= -1 and (vim.fn.indent(next_line) ~= start_indent or string.match(vim.fn.getline(next_line), '^%s*$')) do
+    while vim.fn.indent(next_line) ~= -1 and (vim.fn.indent(next_line) ~= start_indent or is_blank_line(next_line)) do
       vim.cmd(sign)
       next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
     end
   else -- level == "different_level"
     -- scroll blanklines (indent = -1 is when line is 0 or line is last+1 )
-    while vim.fn.indent(next_line) == 0 and string.match(vim.fn.getline(next_line), '^%s*$') do
+    while vim.fn.indent(next_line) == 0 and is_blank_line(next_line) do
       vim.cmd(sign)
       next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
     end
@@ -287,12 +305,12 @@ M.next_indent = function(next, level)
   -- scroll to next indentation
   vim.cmd(sign)
 
-  -- scroll to top of indentation noblacklines
+  -- scroll to top of indentation no_blanklines
   start_indent = vim.fn.indent(vim.fn.line('.'))
   next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   if sign == '-' then
     -- next_line indent is start_indent, next_line is no_blankline
-    while vim.fn.indent(next_line) == start_indent and string.match(vim.fn.getline(next_line), '^%s*$') == nil do
+    while vim.fn.indent(next_line) == start_indent and is_blank_line(next_line) == nil do
       vim.cmd('-')
       next_line = vim.fn.line('.') - 1
     end
@@ -537,7 +555,7 @@ if not status_ok then return end
 configs.setup {
   ensure_installed = { "python", "bash", "javascript", "json", "html", "css", "c", "lua" },
   autopairs = {
-    enable = true,
+    enable = false,
   },
   highlight = {     -- enable highlighting for all file types
     enable = false, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
@@ -857,17 +875,17 @@ map(
   { desc = "Toggle Flash Search" }
 )
 
--- goto textobj edge:
 map(
-  "n",
+  { "n", "x" },
   "g<",
-  function() return GotoTextObj("") end,
+  function() return GotoTextObj("`<", "`<v`'", "`<V`'", "`<\22`'") end,
   { expr = true, silent = true, desc = "StartOf TextObj" }
 )
+
 map(
-  "n",
+  { "n", "x" },
   "g>",
-  function() return GotoTextObj(":normal `[v`]<cr><esc>") end,
+  function() return GotoTextObj("`>", "`'v`>", "`'V`>", "`'\22`>") end,
   { expr = true, silent = true, desc = "EndOf TextObj" }
 )
 
