@@ -1,415 +1,4 @@
 {
-  "vscode-neovim.neovimInitVimPaths.win32": "~/.config/nvim/vscode/vscode-neovim/init.lua",
-  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/vscode/vscode-neovim/init.lua",
-  "vscode-neovim.useCtrlKeysForNormalMode": true,
-  "extensions.experimental.affinity": { "asvetliakov.vscode-neovim": 1 },
-  "whichkey.bindings": [
-    { "key": " ", "name": "tmux copy mode", "command": "workbench.action.tasks.runTask", "args": "tmux-copy-mode" },
-    { "key": ".", "name": "Repeat Which-key", "command": "whichkey.repeatMostRecent" },
-    { "key": "/", "name": "Comment", "command": "editor.action.commentLine" },
-    { "key": "?", "name": "FZF Wich-key", "command": "whichkey.searchBindings" },
-    {
-      "key": "b",
-      "name": "Buffers/Editors...",
-      "bindings": [
-        { "key": ";", "name": "Recent editor", "commands": [ "workbench.action.quickOpenPreviousRecentlyUsedEditor", "workbench.action.acceptSelectedQuickOpenItem" ] },
-        { "key": "b", "name": "Find editors", "command": "workbench.action.showAllEditors" },
-        { "key": "B", "name": "Recent editors", "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor" },
-        { "key": "C", "name": "Close other editors", "command": "workbench.action.closeOtherEditors" },
-        { "key": "s", "name": "Previous editor", "command": "workbench.action.previousEditor" },
-        { "key": "f", "name": "Next editor", "command": "workbench.action.nextEditor" },
-        { "key": "S", "name": "Move editor left in group", "command": "workbench.action.moveEditorLeftInGroup" },
-        { "key": "F", "name": "Move editor right in group", "command": "workbench.action.moveEditorRightInGroup" },
-        { "key": "h", "name": "Move editor into left group", "command": "workbench.action.moveEditorToLeftGroup" },
-        { "key": "j", "name": "Move editor into below group", "command": "workbench.action.moveEditorToBelowGroup" },
-        { "key": "k", "name": "Move editor into above group", "command": "workbench.action.moveEditorToAboveGroup" },
-        { "key": "l", "name": "Move editor into right group", "command": "workbench.action.moveEditorToRightGroup" },
-        { "key": "t", "name": "New untitled editor", "command": "workbench.action.files.newUntitledFile" },
-        { "key": "u", "name": "Reopen closed editor", "command": "workbench.action.reopenClosedEditor" },
-        { "key": "x", "name": "Close active editor", "command": "workbench.action.closeActiveEditor" },
-        { "key": "y", "name": "Copy buffer to clipboard", "commands": [ "editor.action.selectAll", "editor.action.clipboardCopyAction", "cancelSelection" ] }
-      ]
-    },
-    {
-      "key": "d",
-      "name": "Debug...",
-      "bindings": [
-        { "key": "b", "name": "Toggle breakpoint", "command": "editor.debug.action.toggleBreakpoint" },
-        { "key": "B", "name": "Toggle inline breakpoint", "command": "editor.debug.action.toggleInlineBreakpoint" },
-        { "key": "c", "name": "Continue debug", "command": "workbench.action.debug.continue" },
-        { "key": "i", "name": "Step into", "command": "workbench.action.debug.stepInto" },
-        { "key": "o", "name": "Step over", "command": "workbench.action.debug.stepOver" },
-        { "key": "O", "name": "Step out", "command": "workbench.action.debug.stepOut" },
-        { "key": "j", "name": "Jump to cursor", "command": "debug.jumpToCursor" },
-        { "key": "s", "name": "Start debug", "command": "workbench.action.debug.start" },
-        { "key": "S", "name": "Stop debug", "command": "workbench.action.debug.stop" },
-        { "key": "p", "name": "Pause debug", "command": "workbench.action.debug.pause" },
-        { "key": "q", "name": "Quokka start", "command": "quokka.makeQuokkaFromExistingFile" },
-        { "key": "Q", "name": "Quokka stop", "commands": [ "quokka.stopAll", "workbench.action.toggleAuxiliaryBar" ] },
-        { "key": "r", "name": "Restart debug", "command": "workbench.action.debug.restart" },
-        { "key": "R", "name": "Run without debugging", "command": "workbench.action.debug.run" },
-        { "key": "t", "name": "Toggle REPL", "command": "workbench.debug.action.toggleRepl" },
-        { "key": "v", "name": "Focus on watch window", "command": "workbench.debug.action.focusWatchView" },
-        { "key": "V", "name": "Add to watch", "command": "editor.debug.action.selectionToWatch" },
-        { "key": "w", "name": "Wolf start", "command": "wolf.barkAtCurrentFile" },
-        { "key": "W", "name": "Wolf stop", "command": "wolf.stopBarking" }
-      ]
-    },
-    {
-      "key": "e",
-      "name": "Toggle Explorer",
-      "type": "conditional",
-      "bindings": [
-        { "key": "", "name": "default", "command": "workbench.view.explorer" },
-        { "key": "when:sideBarVisible && explorerViewletVisible", "name": "Hide explorer", "command": "workbench.action.toggleSidebarVisibility" }
-      ]
-    },
-    {
-      "key": "E",
-      "name": "Emmet (insert mode only)...",
-      "bindings": [
-        { "key": "a", "name": "select outward item", "command": "editor.emmet.action.balanceOut" },
-        { "key": "i", "name": "select inward item", "command": "editor.emmet.action.balanceIn" },
-        { "key": "n", "name": "select next item", "command": "editor.emmet.action.selectNextItem" },
-        { "key": "p", "name": "select prev item", "command": "editor.emmet.action.selectPrevItem" },
-      ]
-    },
-    {
-      "key": "f",
-      "name": "Find & Replace...",
-      "bindings": [
-        { "key": "f", "name": "File", "command": "editor.action.startFindReplaceAction" },
-        { "key": "r", "name": "Rename", "command": "editor.action.rename" },
-        { "key": "s", "name": "Symbol/Function", "command": "workbench.action.gotoSymbol" },
-        { "key": "p", "name": "Project", "command": "workbench.action.replaceInFiles" }
-      ]
-    },
-    {
-      "key": "g",
-      "name": "Git...",
-      "bindings": [
-        { "key": "/", "name": "Gitlens Search Commits", "command": "gitlens.showCommitSearch" },
-        { "key": "a", "name": "Stage", "command": "git.stage" },
-        { "key": "b", "name": "Checkout Branch", "command": "git.checkout" },
-        { "key": "B", "name": "Gitlens Browse", "command": "gitlens.openFileInRemote" },
-        { "key": "c", "name": "Commit Changes", "command": "git.commit" },
-        { "key": "C", "name": "Gitlens Cherry Pick", "command": "gitlens.views.cherryPick" },
-        { "key": "d", "name": "Delete Branch", "command": "git.deleteBranch" },
-        { "key": "f", "name": "Fetch", "command": "git.fetch" },
-        { "key": "F", "name": "Pull From", "command": "git.pullFrom" },
-        { "key": "g", "name": "lazygit", "command": "workbench.action.tasks.runTask", "args": "lazygit" },
-        { "key": "G", "name": "Graph", "command": "git-graph.view" },
-        { "key": "h", "name": "Gitlens Heatmap", "command": "gitlens.toggleFileHeatmap" },
-        { "key": "H", "name": "History", "command": "git.viewFileHistory" },
-        { "key": "I", "name": "Init", "command": "git.init" },
-        { "key": "j", "name": "Next Change", "command": "workbench.action.editor.nextChange" },
-        { "key": "k", "name": "Previous Change", "command": "workbench.action.editor.previousChange" },
-        { "key": "l", "name": "Gitlens Toggle Line Blame", "command": "gitlens.toggleLineBlame" },
-        { "key": "L", "name": "GitLens Toggle", "command": "gitlens.toggleCodeLens" },
-        { "key": "m", "name": "Merge", "command": "git.merge" },
-        { "key": "o", "name": "Open ChangedFile/Diff", "command": "git.openChange" },
-        { "key": "O", "name": "Open All ChangedFile/Diff", "command": "git.openAllChanges" },
-        { "key": "p", "name": "Preview Next Hunk", "command": "editor.action.dirtydiff.next" },
-        { "key": "P", "name": "Preview Previous Hunk", "command": "editor.action.dirtydiff.previous" },
-        { "key": "r", "name": "Reset hunk", "command": "git.revertSelectedRanges" },
-        { "key": "s", "name": "Stash", "command": "workbench.view.scm" },
-        { "key": "S", "name": "Gitlens Status", "command": "gitlens.showQuickRepoStatus" },
-        { "key": "t", "name": "Create Tag", "command": "git.createTag" },
-        { "key": "T", "name": "Delete Tag", "command": "git.deleteTag" },
-        { "key": "u", "name": "Unstage", "command": "git.unstage" },
-        { "key": "<", "name": "Pull", "command": "git.pull" },
-        { "key": ">", "name": "Push", "command": "git.push" },
-      ]
-    },
-    {
-      "key": "i",
-      "name": "Insert...",
-      "bindings": [
-        { "key": "j", "name": "Insert line below", "command": "editor.action.insertLineAfter" },
-        { "key": "k", "name": "Insert line above", "command": "editor.action.insertLineBefore" },
-        { "key": "s", "name": "Insert snippet", "command": "editor.action.insertSnippet" }
-      ]
-    },
-    {
-      "key": "l",
-      "name": "LSP...",
-      "bindings": [
-        { "key": "a", "name": "Auto Fix", "command": "editor.action.autoFix" },
-        { "key": "A", "name": "Code Action Refactor", "command": "editor.action.refactor" },
-        { "key": "c", "name": "View Calls Hierarchy", "command": "references-view.showCallHierarchy" },
-        { "key": "d", "name": "Go to Definition", "command": "editor.action.revealDefinition" },
-        { "key": "D", "name": "Go to Declaration", "command": "editor.action.revealDeclaration" },
-        { "key": "F", "name": "Format", "command": "editor.action.format" },
-        { "key": "h", "name": "Hover", "command": "editor.action.showHover" },
-        { "key": "H", "name": "Signature help", "command": "editor.action.triggerParameterHints" },
-        { "key": "I", "name": "Go to Implementation", "command": "editor.action.goToImplementation" },
-        { "key": "l", "name": "Jump to last change", "command": "workbench.action.navigateToLastEditLocation" },
-        { "key": "n", "name": "Next Problem", "command": "editor.action.marker.next" },
-        { "key": "N", "name": "Next Problem (Proj)", "command": "editor.action.marker.nextInFiles" },
-        { "key": "o", "name": "Open Diagnostics/Errors", "command": "editor.action.marker.next" },
-        { "key": "p", "name": "Prev Problem", "command": "editor.action.marker.prev" },
-        { "key": "P", "name": "Prev Problem (Proj)", "command": "editor.action.marker.prevInFiles" },
-        { "key": "q", "name": "Diagnostic List", "command": "workbench.actions.view.problems" },
-        { "key": "Q", "name": "Quick Fix", "command": "editor.action.quickFix" },
-        { "key": "r", "name": "Go to References", "command": "editor.action.goToReferences" },
-        { "key": "R", "name": "Rename", "command": "editor.action.rename" },
-        { "key": "s", "name": "Go To Symbol", "command": "workbench.action.gotoSymbol" },
-        { "key": "S", "name": "Show All Symbols", "command": "workbench.action.showAllSymbols" },
-        { "key": "t", "name": "Go to typedefinition", "command": "editor.action.goToTypeDefinition" },
-        { "key": "v", "name": "View All Diagnostics", "command": "workbench.actions.view.problems" },
-        { "key": "V", "name": "View All References", "command": "references-view.find" },
-        { "key": "w", "name": "View All Implementations", "command": "references-view.findImplementations" },
-        { "key": "W", "name": "View All Definition", "command": "editor.action.revealDefinitionAside" },
-        { "key": "z", "name": "Symbols Outline", "command": "outline.focus" },
-        { "key": "\\", "name": "Format document", "command": "editor.action.formatDocument" },
-        { "key": "<", "name": "Prev Reference", "command": "editor.action.wordHighlight.prev" },
-        { "key": ">", "name": "Next Reference", "command": "editor.action.wordHighlight.next" },
-      ]
-    },
-    {
-      "key": "m",
-      "name": "Mark...",
-      "bindings": [
-        { "key": "c", "name": "Clear Bookmarks", "command": "bookmarks.clear" },
-        { "key": "j", "name": "Next Bookmark", "command": "bookmarks.jumpToNext" },
-        { "key": "k", "name": "Previous Bookmark", "command": "bookmarks.jumpToPrevious" },
-        { "key": "l", "name": "List Bookmarks", "command": "bookmarks.listFromAllFiles" },
-        { "key": "r", "name": "Refresh Bookmarks", "command": "bookmarks.refresh" },
-        { "key": "t", "name": "Toggle Bookmark", "command": "bookmarks.toggle" },
-        { "key": "s", "name": "Show Bookmarks", "command": "workbench.view.extension.bookmarks" }
-      ]
-    },
-    {
-      "key": "o",
-      "name": "Focus Explorer",
-      "command": "workbench.view.explorer"
-    },
-    {
-      "key": "O",
-      "name": "Open...",
-      "bindings": [
-        { "key": "d", "name": "Directory", "command": "workbench.action.files.openFolder" },
-        { "key": "r", "name": "Recent", "command": "workbench.action.openRecent" },
-        { "key": "f", "name": "File", "command": "workbench.action.files.openFile" }
-      ]
-    },
-    {
-      "key": "p",
-      "name": "Peek...",
-      "bindings": [
-        { "key": "c", "name": "Calls Hierarchy", "command": "editor.showCallHierarchy" },
-        { "key": "d", "name": "Definition", "command": "editor.action.peekDefinition" },
-        { "key": "D", "name": "Declaration", "command": "editor.action.peekDeclaration" },
-        { "key": "h", "name": "Show Hover", "command": "editor.action.showHover" },
-        { "key": "H", "name": "Hover Definition", "command": "editor.action.showDefinitionPreviewHover" },
-        { "key": "I", "name": "Implementation", "command": "editor.action.peekImplementation" },
-        { "key": "p", "name": "Toggle Peek Focus", "command": "togglePeekWidgetFocus" },
-        { "key": "r", "name": "References", "command": "editor.action.referenceSearch.trigger" },
-        { "key": "t", "name": "Type Definition", "command": "editor.action.peekTypeDefinition" },
-      ]
-    },
-    {
-      "key": "s",
-      "name": "Search...",
-      "bindings": [
-        { "key": "f", "name": "Files", "command": "workbench.action.quickOpen" },
-        { "key": "t", "name": "Text in Files", "command": "workbench.action.findInFiles" },
-        { "key": "T", "name": "Text in Folder", "command": "filesExplorer.findInFolder" },
-        { "key": "E", "name": "Editor Search ", "command": "search.action.openNewEditor" }
-      ]
-    },
-    {
-      "key": "S",
-      "name": "Show...",
-      "bindings": [
-        { "key": "e", "name": "Show explorer", "command": "workbench.action.toggleSidebarVisibility" },
-        { "key": "s", "name": "Show search", "command": "workbench.view.search" },
-        { "key": "g", "name": "Show source control", "command": "workbench.view.scm" },
-        { "key": "t", "name": "Show test", "command": "workbench.view.extension.test" },
-        { "key": "r", "name": "Show remote explorer", "command": "workbench.view.remote" },
-        { "key": "x", "name": "Show extensions", "command": "workbench.view.extensions" },
-        { "key": "o", "name": "Show problem", "command": "workbench.actions.view.problems" },
-        { "key": "O", "name": "Show output", "command": "workbench.action.output.toggleOutput" },
-        { "key": "d", "name": "Show debug console", "command": "workbench.debug.action.toggleRepl" }
-      ]
-    },
-    {
-      "key": "t",
-      "name": "Terminal...",
-      "bindings": [
-
-        // Tmux-toggle
-        { "key": " ", "name": "Scrollback Buffer", "command": "workbench.action.terminal.focusAccessibleBuffer" },
-        { "key": "0", "name": "Focus tabs view", "command": "workbench.action.terminal.focusTabs" },
-        { "key": "1", "name": "Focus index 1", "command": "workbench.action.terminal.focusAtIndex1" },
-        { "key": "2", "name": "Focus index 2", "command": "workbench.action.terminal.focusAtIndex2" },
-        { "key": "3", "name": "Focus index3", "command": "workbench.action.terminal.focusAtIndex3" },
-        { "key": "4", "name": "Focus index4", "command": "workbench.action.terminal.focusAtIndex4" },
-        { "key": "5", "name": "Focus index5", "command": "workbench.action.terminal.focusAtIndex5" },
-        { "key": "6", "name": "Focus index6", "command": "workbench.action.terminal.focusAtIndex5" },
-        { "key": "7", "name": "Focus index7", "command": "workbench.action.terminal.focusAtIndex5" },
-        { "key": "8", "name": "Focus index8", "command": "workbench.action.terminal.focusAtIndex5" },
-        { "key": "9", "name": "Focus index9", "command": "workbench.action.terminal.focusAtIndex5" },
-        { "key": "b", "name": "Move terminal to buffer", "command": "workbench.action.terminal.moveToEditor" },
-        { "key": "B", "name": "Move buffer to terminal", "command": "workbench.action.terminal.moveToTerminalPanel" },
-        { "key": "c", "name": "Create terminal group", "command": "workbench.action.terminal.newInActiveWorkspace" },
-
-        // Tmux-panes
-        { "key": ";", "name": "Quick OpenTerm", "command": "workbench.action.quickOpenTerm" },
-        { "key": "!", "name": "Break panel", "command": "workbench.action.terminal.unsplit" },
-        { "key": "z", "name": "Toggle maximized panel", "command": "workbench.action.toggleMaximizedPanel" },
-        { "key": "-", "name": "Join panel (instances)", "command": "workbench.action.terminal.joinInstance" },
-        { "key": "+", "name": "Join panel (select)", "command": "workbench.action.terminal.join" },
-        { "key": "x", "name": "Close panel", "command": "workbench.action.terminal.kill" },
-        { "key": "s", "name": "Focus previous terminal group", "command": "workbench.action.terminal.focusPrevious" },
-        { "key": "f", "name": "Focus next terminal group", "command": "workbench.action.terminal.focusNext" },
-        { "key": "S", "name": "Move panel to Last position", "commands": [ "workbench.action.terminal.moveToEditor", "workbench.action.terminal.moveToTerminalPanel" ] },
-        { "key": "F", "name": "Move panel to Last position", "commands": [ "workbench.action.terminal.moveToEditor", "workbench.action.terminal.moveToTerminalPanel" ] },
-        { "key": "h", "name": "Focus previous panel", "command": "workbench.action.terminal.focusPreviousPane" },
-        { "key": "j", "name": "Focus next panel", "command": "workbench.action.terminal.focusNextPane" },
-        { "key": "k", "name": "Focus previous panel", "command": "workbench.action.terminal.focusPreviousPane" },
-        { "key": "l", "name": "Focus next panel", "command": "workbench.action.terminal.focusNextPane" },
-        { "key": "H", "name": "Resize Panel left", "command": "workbench.action.terminal.resizePaneLeft" },
-        { "key": "J", "name": "Resize Panel down", "command": "workbench.action.terminal.resizePaneDown" },
-        { "key": "K", "name": "Resize Panel up", "command": "workbench.action.terminal.resizePaneUp" },
-        { "key": "L", "name": "Resize Panel right", "command": "workbench.action.terminal.resizePaneRight" },
-
-        // tmux-windows
-        { "key": ",", "name": "Rename terminal", "command": "workbench.action.terminal.rename" },
-        { "key": "n", "name": "Focus next terminal group", "command": "workbench.action.terminal.focusNext" },
-        { "key": "p", "name": "Focus previous terminal group", "command": "workbench.action.terminal.focusPrevious" },
-        { "key": "v", "name": "Vertical Tab terminal inActiveWorkspace", "command": "workbench.action.terminal.splitInActiveWorkspace" },
-        { "key": "V", "name": "Horizontal Tab terminal inActiveWorkspace", "commands": [ "workbench.action.terminal.split", "workbench.action.moveActiveEditorGroupDown" ] },
-        // { "key": "%", "name": "tmux split vertical", "command": "workbench.action.tasks.runTask", "args": "tmux-split-vertical" },
-        // { "key": "\"", "name": "tmux split horizontal", "command": "workbench.action.tasks.runTask", "args": "tmux-split-horizontal" },
-        { "key": "\\", "name": "Focus terminal", "command": "workbench.action.terminal.toggleTerminal" },
-        { "key": "t", "name": "Toggle terminal", "command": "workbench.action.togglePanel" },
-        { "key": "T", "name": "New Tab terminal", "command": "workbench.action.createTerminalEditor" },
-        { "key": ">", "name": "New Tab (side) terminal", "command": "workbench.action.createTerminalEditorSide" },
-      ]
-    },
-    {
-      "key": "u",
-      "name": "UI toggles...",
-      "bindings": [
-        { "key": "b", "name": "Toggle activity bar", "command": "workbench.action.toggleActivityBarVisibility" },
-        { "key": "B", "name": "Toggle menu bar", "command": "workbench.action.toggleMenuBar" },
-        { "key": "f", "name": "Toggle full screen", "command": "workbench.action.toggleFullScreen" },
-        { "key": "h", "name": "Enable AutoNoHighlightSearch", "command": "vscode-neovim.send", "args": "<cmd>EnableAutoNoHighlightSearch<cr>" },
-        { "key": "H", "name": "Disable AutoNoHighlightSearch", "command": "vscode-neovim.send", "args": "<cmd>DisableAutoNoHighlightSearch<cr>" },
-        { "key": "m", "name": "Toggle maximized panel", "command": "workbench.action.toggleMaximizedPanel" },
-        { "key": "M", "name": "Toggle Minimap", "command": "editor.action.toggleMinimap" },
-        { "key": "n", "name": "Go to Next Fold", "command": "editor.gotoNextFold" },
-        { "key": "p", "name": "Go to Previous Fold", "command": "editor.gotoPreviousFold" },
-        { "key": "P", "name": "Toggle panel visibility", "command": "workbench.action.togglePanel" },
-        { "key": "q", "name": "Toggle quokka", "command": "quokka.toggle" },
-        { "key": "s", "name": "Toggle sidebar visibility", "command": "workbench.action.toggleSidebarVisibility" },
-        { "key": "S", "name": "Toggle sec-sidebar visibility", "command": "workbench.action.toggleAuxiliaryBar" },
-        { "key": "t", "name": "Select theme", "command": "workbench.action.selectTheme" },
-        { "key": "T", "name": "Toggle tab visibility", "command": "workbench.action.toggleTabsVisibility" },
-        { "key": "u", "name": "Go to Parent Fold", "commands": [ "editor.gotoParentFold", "cursorHome" ] },
-        { "key": "U", "name": "Go to Bracket", "command": "editor.action.jumpToBracket" },
-        { "key": "x", "name": "Extensions", "command": "workbench.view.extensions" },
-        { "key": "z", "name": "Toggle zen mode", "command": "workbench.action.toggleZenMode" },
-        { "key": "Z", "name": "Zoom reset", "command": "editor.action.fontZoomReset" }
-      ]
-    },
-    { "key": "v", "name": "Vertical split", "commands": [ "workbench.action.positionPanelRight", "workbench.action.terminal.focus" ] },
-    { "key": "V", "name": "Horizontal split", "commands": [ "workbench.action.positionPanelBottom", "workbench.action.terminal.focus" ] },
-    {
-      "key": "w",
-      "name": "Window...",
-      "bindings": [
-        { "key": ";", "name": "Recent editor group", "commands": [ "workbench.action.quickOpenPreviousRecentlyUsedEditor", "workbench.action.acceptSelectedQuickOpenItem" ] },
-        { "key": "c", "name": "Combine all editors", "command": "workbench.action.joinAllGroups" },
-        { "key": "C", "name": "Close all editor groups", "command": "workbench.action.closeAllGroups" },
-        { "key": "f", "name": "Focus editor group", "command": "workbench.action.focusActiveEditorGroup" },
-        { "key": "h", "name": "Move editor group left", "command": "workbench.action.moveActiveEditorGroupLeft" },
-        { "key": "j", "name": "Move editor group down", "command": "workbench.action.moveActiveEditorGroupDown" },
-        { "key": "k", "name": "Move editor group up", "command": "workbench.action.moveActiveEditorGroupUp" },
-        { "key": "l", "name": "Move editor group right", "command": "workbench.action.moveActiveEditorGroupRight" },
-        { "key": "H", "name": "Decrease editor group", "command": "workbench.action.decreaseViewSize" },
-        { "key": "J", "name": "Increase editor group", "command": "workbench.action.increaseViewSize" },
-        { "key": "K", "name": "Decrease editor group", "command": "workbench.action.decreaseViewSize" },
-        { "key": "L", "name": "Increase editor group", "command": "workbench.action.increaseViewSize" },
-        { "key": "m", "name": "Maximize editor group", "command": "workbench.action.minimizeOtherEditors" },
-        { "key": "M", "name": "Maximize editor group and hide side bar", "command": "workbench.action.maximizeEditor" },
-        { "key": "n", "name": "Focus next editor group", "command": "workbench.action.focusNextGroup" },
-        { "key": "p", "name": "Focus previous editor group", "command": "workbench.action.focusPreviousGroup" },
-        { "key": "t", "name": "Toggle editor group sizes", "command": "workbench.action.toggleEditorWidths" },
-        { "key": "v", "name": "Split Vertical", "command": "workbench.action.splitEditor" },
-        { "key": "V", "name": "Split Horizontal", "command": "workbench.action.splitEditorDown" },
-        { "key": "x", "name": "Close editor group", "command": "workbench.action.closeEditorsInGroup" },
-        { "key": "=", "name": "Reset editor group sizes", "command": "workbench.action.evenEditorWidths" }
-      ]
-    },
-    { "key": "x", "name": "Close active editor", "command": "workbench.action.closeActiveEditor" },
-    {
-      "key": "y",
-      "name": "Sync...",
-      "bindings": [
-        { "key": "c", "name": "Sync Show Conflicts", "command": "workbench.userDataSync.actions.showConflicts" },
-        { "key": "d", "name": "Sync Show Data", "command": "workbench.userDataSync.actions.showSyncedData" },
-        { "key": "n", "name": "Sync Now", "command": "workbench.userDataSync.actions.syncNow" },
-        { "key": "l", "name": "Sync Logs", "command": "workbench.userDataSync.actions.showLog" }
-      ]
-    },
-    {
-      "key": "z",
-      "name": "folding...",
-      "bindings": [
-        { "key": "f", "name": "Fold", "command": "editor.fold" },
-        { "key": "u", "name": "Unfold", "command": "editor.unfold" },
-        { "key": "t", "name": "Toggle Fold", "command": "editor.toggleFold" },
-      ]
-    }
-  ],
-
-  "console-ninja.featureSet": "Community", // disable pro prompt
-  "emmet.includeLanguages": { "javascript": "javascriptreact", "typescript": "typescriptreact" },
-  "html.format.maxPreserveNewLines": 120,
-  "css.format.maxPreserveNewLines": 120,
-  "json.format.keepLines": true,
-  "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.pylanceLspClientEnabled": true,
-  "[html]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "[css][scss][less]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-    "editor.defaultFormatter": "vscode.css-language-features"
-  },
-  "[json][jsonc]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[javascript][javascriptreact][typescript]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-
-  "editor.accessibilitySupport": "off",
-  "editor.cursorBlinking": "solid",
-  "editor.cursorSurroundingLines": 4,
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.fontFamily": "'CaskaydiaCove Nerd Font','Bedstead','Font Awesome 6 Free Solid'",
-  "editor.fontLigatures": true,
-  "editor.fontSize": 13,
-  "editor.fontWeight": 400,
-  "editor.formatOnSave": false,
-  // "editor.guides.bracketPairs": true,
-  // "editor.guides.bracketPairsHorizontal": true,
-  // "editor.lineHeight": 1.1,
-  "editor.linkedEditing": true, // Html tags
-  "editor.inlineSuggest.enabled": true, // Copilot suggestion
-  "editor.inlineSuggest.suppressSuggestions": false, // lsp priority over copilot
-  "editor.minimap.enabled": false,
-  // "editor.quickSuggestions": { "other": "on", "comments": "off", "strings": "off" }, // lsp suggestion
-  // "editor.quickSuggestionsDelay": 10,
-  "editor.renderLineHighlight": "none",
-  // "editor.suggest.preview": true, // lsp inline-preview/gosh-text
-  "editor.tabSize": 2,
   "editor.tokenColorCustomizations": {
     "[Hacker]": {
       "textMateRules": [
@@ -427,90 +16,21 @@
             "punctuation.end.definition.comment",
             "punctuation.start.definition.comment"
           ],
-          "settings": {
-            "foreground": "#5c5c5c"
-          }
+          "settings": { "foreground": "#5c5c5c" }
         },
-        {
-          "name": "Constants",
-          "scope": [
-            "constant.language",
-            "constant.numeric"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#1cff1c" }
-        },
-        {
-          "name": "Tags",
-          "scope": [
-            "entity.name.tag",
-            "punctuation.definition.tag"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#7574a5" }
-        },
-        {
-          "scope": [ "meta.tag" ], // tag <p></p>
-          "settings": { "fontStyle": "", "foreground": "#cccccc" }
-        },
-        {
-          "scope": [ "meta.block" ], // tag <p></p>
-          "settings": { "fontStyle": "", "foreground": "#0A0B0A" }
-        },
-        {
-          "scope": "entity.other.attribute-name", // tag atribute
-          "settings": { "fontStyle": "", "foreground": "#87a1c5" }
-        },
-        {
-          "scope": "keyword", // import, export, default, return
-          "settings": { "fontStyle": "bold", "foreground": "#5c5cff" }
-        },
-        {
-          "scope": "keyword.operator", // =,==, &&, <, > ...
-          "settings": { "fontStyle": "", "foreground": "#5c5cff" }
-        },
-        {
-          "name": "Variables",
-          "scope": [
-            "support.variable.property",
-            "variable.other.property"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#87a1c5" }
-        },
-        {
-          "scope": "storage.type.function",
-          "settings": { "fontStyle": "", "foreground": "#4141ff" }
-        }
+        { "name": "Constants", "scope": [ "constant.language", "constant.numeric" ], "settings": { "fontStyle": "", "foreground": "#1cff1c" } },
+        { "name": "Function", "scope": "storage.type.function", "settings": { "fontStyle": "", "foreground": "#4141ff" } },
+        { "name": "Tag Atribute", "scope": "entity.other.attribute-name", "settings": { "fontStyle": "", "foreground": "#87a1c5" } },
+        { "name": "Tag Block", "scope": [ "meta.block" ], "settings": { "fontStyle": "", "foreground": "#0A0B0A" } },
+        { "name": "Tag Punctuation", "scope": [ "entity.name.tag", "punctuation.definition.tag" ], "settings": { "fontStyle": "", "foreground": "#7574a5" } },
+        { "name": "Tag <p></p>", "scope": [ "meta.tag" ], "settings": { "fontStyle": "", "foreground": "#cccccc" } },
+        { "name": "Variables", "scope": [ "support.variable.property", "variable.other.property" ], "settings": { "fontStyle": "", "foreground": "#87a1c5" } },
+        { "name": "import, export, default, return", "scope": "keyword", "settings": { "fontStyle": "bold", "foreground": "#5c5cff" } },
+        { "name": "=,==, &&, <, > ...", "scope": "keyword.operator", "settings": { "fontStyle": "", "foreground": "#5c5cff" } }
       ]
     },
     "[Tokyo Night Dark]": {
       "textMateRules": [
-        {
-          "name": "Tags",
-          "scope": [
-            "entity.name.tag",
-            "punctuation.definition.tag"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#7574a5" }
-        },
-        {
-          "scope": "support.class.component.js", // <component></component>
-          "settings": { "fontStyle": "bold", "foreground": "#6e51a2" }
-        },
-        {
-          "scope": "variable.other.readwrite.alias", // import <variable>
-          "settings": { "fontStyle": "", "foreground": "#6e51a2" }
-        },
-        {
-          "scope": "entity.other.attribute-name", // tag atribute
-          "settings": { "fontStyle": "", "foreground": "#91b4d5" }
-        },
-        {
-          "name": "Constants",
-          "scope": [
-            "constant.language",
-            "constant.numeric"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#1cff1c" }
-        },
         {
           "name": "Keywords",
           "scope": [
@@ -520,73 +40,28 @@
           ],
           "settings": { "fontStyle": "", "foreground": "#9d7cd8" }
         },
-        {
-          "name": "Parameters",
-          "scope": [
-            "variable.parameter",
-            "variable.parameter.function.language.special"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#c0caf5" }
-        },
-        {
-          "scope": "storage.type.function",
-          "settings": { "fontStyle": "bold", "foreground": "#6e51a2" }
-        }
+        { "name": "<component></component>", "scope": "support.class.component.js", "settings": { "fontStyle": "bold", "foreground": "#6e51a2" } },
+        { "name": "Constants", "scope": [ "constant.language", "constant.numeric" ], "settings": { "fontStyle": "", "foreground": "#1cff1c" } },
+        { "name": "Function", "scope": "storage.type.function", "settings": { "fontStyle": "bold", "foreground": "#6e51a2" } },
+        { "name": "Import <variable>", "scope": "variable.other.readwrite.alias", "settings": { "fontStyle": "", "foreground": "#6e51a2" } },
+        { "name": "Parameters", "scope": [ "variable.parameter", "variable.parameter.function.language.special" ], "settings": { "fontStyle": "", "foreground": "#c0caf5" } },
+        { "name": "Tag Atribute", "scope": "entity.other.attribute-name", "settings": { "fontStyle": "", "foreground": "#91b4d5" } },
+        { "name": "Tag Punctuation", "scope": [ "entity.name.tag", "punctuation.definition.tag" ], "settings": { "fontStyle": "", "foreground": "#7574a5" } }
       ]
     },
     "[Poimandres Alternate]": {
       "textMateRules": [
-        {
-          "name": "Tags",
-          "scope": [
-            "entity.name.tag",
-            "punctuation.definition.tag"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#515171" }
-        },
-        {
-          "scope": "support.class.component.js", // <component></component>
-          "settings": { "fontStyle": "", "foreground": "#5de4c7" }
-        },
-        // {
-        //   "scope": "variable.other.readwrite.alias", // import <variable>
-        //   "settings": { "fontStyle": "", "foreground": "#5fb3a1" }
-        // },
-        {
-          "scope": "entity.other.attribute-name", // tag atribute
-          "settings": { "fontStyle": "italic", "foreground": "#91b4d5" }
-        },
-        {
-          "scope": "keyword.control.import",
-          "settings": { "fontStyle": "", "foreground": "#a6accd" }
-        },
-        {
-          "name": "Keywords",
-          "scope": [
-            "keyword.control.export",
-            "keyword.control.default"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#91b4d5" }
-        },
-        {
-          "name": "Variables",
-          "scope": [
-            "support.variable.property",
-            "variable.other.property"
-          ],
-          "settings": { "fontStyle": "", "foreground": "#add7ff" }
-        }
+        { "name": "<component></component>", "scope": "support.class.component.js", "settings": { "fontStyle": "", "foreground": "#5de4c7" } },
+        { "name": "Import <variable>", "scope": "variable.other.readwrite.alias", "settings": { "fontStyle": "", "foreground": "#5fb3a1" } },
+        { "name": "Import", "scope": "keyword.control.import", "settings": { "fontStyle": "", "foreground": "#a6accd" } },
+        { "name": "Keywords", "scope": [ "keyword.control.export", "keyword.control.default" ], "settings": { "fontStyle": "", "foreground": "#91b4d5" } },
+        { "name": "Tag Atribute", "scope": "entity.other.attribute-name", "settings": { "fontStyle": "italic", "foreground": "#91b4d5" } },
+        { "name": "Tag Punctuation", "scope": [ "entity.name.tag", "punctuation.definition.tag" ], "settings": { "fontStyle": "", "foreground": "#515171" } },
+        { "name": "Variables", "scope": [ "support.variable.property", "variable.other.property" ], "settings": { "fontStyle": "", "foreground": "#add7ff" } }
       ]
     }
   },
-  // "explorer.excludeGitIgnore": true,
-  // "explorer.fileNesting.enabled": true,
-  "explorer.confirmDelete": false,
-  "explorer.decorations.colors": false,
-  "files.exclude": {
-    "node_modules": true
-  },
-  "files.trimTrailingWhitespace": true,
+
   "workbench.colorCustomizations": {
     "editorBracketHighlight.foreground1": "#88ff88",
     "editorBracketHighlight.foreground2": "#494e62",
@@ -594,22 +69,26 @@
     "editorBracketHighlight.foreground4": "#44ff44",
     "editorBracketHighlight.foreground5": "#4444ff",
     "editorBracketHighlight.foreground6": "#87a1c5",
-    "[Hacker]": {
-      // "editorCursor.background": "#555555",
-      // "editorCursor.foreground": "#aaaaaa",
-      // "terminalCursor.background": "#000000",
-      // "terminalCursor.foreground": "#ffffff",
-      // "scrollbarSlider.background": "#55555555",
-      "editorGroup.border": "#55555555",
+    "terminal.ansiBrightBlack": "#555555",
+    "terminal.ansiBrightBlue": "#1c1cff",
+    "terminal.ansiBrightCyan": "#008888",
+    "terminal.ansiBrightGreen": "#00ff00",
+    "terminal.ansiBrightMagenta": "#880088",
+    "terminal.ansiBrightRed": "#ff0000",
+    "terminal.ansiBrightWhite": "#ff4400",
+    "terminal.ansiBrightYellow": "#ffff00",
 
+    "[Hacker]": {
       "diffEditor.removedTextBackground": "#c0577620",
       "diffEditor.removedTextBorder": "#c0577600",
       "diffEditor.insertedTextBackground": "#a7ecb720",
       "diffEditor.insertedTextBorder": "#a7ecb700",
 
+      // "editorCursor.background": "#555555",
+      // "editorCursor.foreground": "#aaaaaa",
+      "editorGroup.border": "#55555555",
       "editor.selectionBackground": "#55555555",
       "editor.selectionHighlightBackground": "#33333333", // references highlights
-
       "editor.wordHighlightStrongBackground": "#33333333",
       "editor.wordHighlightBackground": "#33333333",
       "editorLineNumber.foreground": "#55555555",
@@ -618,18 +97,23 @@
       "editorSuggestWidget.focusHighlightForeground": "#7574d5", // suggestion typed(matching) selected
       "editorSuggestWidget.highlightForeground": "#7574d5", //suggestion typed(matching)
       "editorSuggestWidget.selectedBackground": "#55555555", // suggestion selected
+
+      // "scrollbarSlider.background": "#55555555",
       "focusBorder": "#555555", // suggestion preview border
+      "quickInputList.focusForeground": "#bbbbbb",
+      "quickInputList.focusBackground": "#55555555",
+      "sideBar.background": "#0a0b0a",
+
       "list.activeSelectionBackground": "#090909", // explorer focused opened file
       "list.activeSelectionForeground": "#5555ff", // explorer focused opened file
       "list.inactiveSelectionBackground": "#181818", // explorer unfocused opened file
       "list.focusAndSelectionOutline": "#555555", // explorer focused opened file border
       "list.focusForeground": "#bbbbbb", // explorer selected fg
       "list.focusBackground": "#181818", // explorer selected bg
-      "quickInputList.focusForeground": "#bbbbbb",
-      "quickInputList.focusBackground": "#55555555",
-      "sideBar.background": "#0a0b0a",
+
       "terminal.foreground": "#b3b3b3",
       "terminal.background": "#000000",
+      "terminal.selectionBackground": "#4d52f8",
       "terminal.ansiBlack": "#222222",
       "terminal.ansiBlue": "#5555cc",
       "terminal.ansiCyan": "#7acaca",
@@ -637,23 +121,42 @@
       "terminal.ansiMagenta": "#8855ff",
       "terminal.ansiRed": "#bb0000",
       "terminal.ansiWhite": "#ffffff",
-      "terminal.ansiYellow": "#bbbb00",
-      "terminal.ansiBrightBlack": "#555555",
-      "terminal.ansiBrightBlue": "#1c1cff",
-      "terminal.ansiBrightCyan": "#008888",
-      "terminal.ansiBrightGreen": "#00ff00",
-      "terminal.ansiBrightMagenta": "#880088",
-      "terminal.ansiBrightRed": "#ff0000",
-      "terminal.ansiBrightWhite": "#ff4400",
-      "terminal.ansiBrightYellow": "#ffff00",
-      "terminal.selectionBackground": "#4d52f8"
+      "terminal.ansiYellow": "#bbbb00"
     },
     "[Tokyo Night Dark][Poimandres Alternate]": {
+      "editorGroup.border": "#252525",
+      "editorOverviewRuler.border": "#252525",
+      "editorSuggestWidget.selectedBackground": "#55555555", // suggestion selected
       "focusBorder": "#33467c", // suggestion preview border
       "list.activeSelectionBackground": "#0a0a0d", // explorer focused opened file
       "list.activeSelectionForeground": "#2ac3de", // explorer focused opened file
       "quickInputList.focusBackground": "#1c1d29",
-      "quickInputList.focusForeground": "#c0caf5"
+      "quickInputList.focusForeground": "#c0caf5",
+      "panel.border": "#252525", // terminal border
+      "scrollbarSlider.background": "#868bc415",
+      "scrollbarSlider.hoverBackground": "#868bc410",
+      "scrollbarSlider.activeBackground": "#868bc422",
+
+      // Tokyo-night-dark
+      "terminal.border": "#3c3c3c", // split pane border
+      "terminal.ansiBlack": "#15161e",
+      "terminal.ansiRed": "#f7768e",
+      "terminal.ansiGreen": "#41a6b5",
+      "terminal.ansiYellow": "#e0af68",
+      "terminal.ansiBlue": "#7aa2f7",
+      "terminal.ansiMagenta": "#bb9af7",
+      "terminal.ansiCyan": "#7dcfff",
+      "terminal.ansiWhite": "#787c99",
+
+      // // Poimandres
+      // "terminal.ansiBlack": "#171922",
+      // "terminal.ansiRed": "#d0679d",
+      // "terminal.ansiGreen": "#5DE4c7",
+      // "terminal.ansiYellow": "#fffac2",
+      // "terminal.ansiBlue": "#89ddff",
+      // "terminal.ansiMagenta": "#f087bd",
+      // "terminal.ansiCyan": "#ADD7FF",
+      // "terminal.ansiWhite": "#ffffff",
     },
     "[poimandres-noitalics][poimandres-storm][Tokyo Night Ported Nvim][Tokyo Night]": { // transparent background
       "activityBar.background": "#0c0c0c",
@@ -669,42 +172,87 @@
       "tab.inactiveBackground": "#0c0c0c"
     }
   },
-  "debug.inlineValues": "on",
-  "diffEditor.renderSideBySide": true,
+
   // "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
   // "javascript.referencesCodeLens.enabled": true,
   // "javascript.referencesCodeLens.showOnAllFunctions": true,
-  "material-icon-theme.folders.color": "#A1A1A1",
-  "material-icon-theme.folders.theme": "specific",
+  "console-ninja.featureSet": "Community", // disable pro prompt
+  "html.format.maxPreserveNewLines": 120,
+  "css.format.maxPreserveNewLines": 120,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.pylanceLspClientEnabled": true,
   "python.defaultInterpreterPath": "/bin/python",
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
+  "[html]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[css][scss][less]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[json][jsonc]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[javascript][javascriptreact][typescript]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+
+  // "editor.cursorSmoothCaretAnimation": "on",
+  // "editor.guides.bracketPairs": true,
+  // "editor.guides.bracketPairsHorizontal": true,
+  // "editor.lineHeight": 1.1,
+  // "editor.quickSuggestions": { "other": "on", "comments": "off", "strings": "off" }, // lsp suggestion
+  // "editor.quickSuggestionsDelay": 10,
+  // "editor.suggest.preview": true, // lsp inline-preview/gosh-text
+  "editor.cursorBlinking": "solid",
+  "editor.cursorSurroundingLines": 4,
+  "editor.fontFamily": "'CaskaydiaCove Nerd Font','Bedstead','Font Awesome 6 Free Solid'",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 13,
+  "editor.fontWeight": 400,
+  "editor.formatOnSave": false,
+  "editor.inlineSuggest.enabled": true, // Copilot suggestion
+  "editor.inlineSuggest.suppressSuggestions": false, // lsp priority over copilot
+  "editor.minimap.enabled": false,
+  "editor.renderLineHighlight": "none",
+  "editor.tabSize": 2,
+
+  // "explorer.excludeGitIgnore": true,
+  // "explorer.fileNesting.enabled": true,
+  "debug.inlineValues": "on",
+  "diffEditor.experimental.showEmptyDecorations": false,
+  "diffEditor.renderSideBySide": true,
+  "explorer.confirmDelete": false,
+  "explorer.decorations.colors": false,
+  "files.exclude": { "node_modules": true },
+  "material-icon-theme.folders.color": "#A1A1A1",
+  "material-icon-theme.folders.theme": "specific",
   "scm.alwaysShowActions": true,
   "search.defaultViewMode": "tree",
   "security.workspace.trust.untrustedFiles": "open",
   "terminal.integrated.fontFamily": "'3270 Nerd Font','TerminessTTF Nerd Font','Font Awesome 6 Free Solid'",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": 500,
-  "terminal.integrated.commandsToSkipShell": [
-    "whichkey.show",
-    "workbench.action.terminal.focusAccessibleBuffer"
-  ],
-  "terminal.integrated.sendKeybindingsToShell": false, // shell will not trigger keybindings.json (for tmux)
   "terminal.integrated.scrollback": 10000,
-  // "terminal.integrated.shellIntegration.enabled": false,
+  "terminal.integrated.sendKeybindingsToShell": false, // shell will not trigger keybindings.json (for tmux)
   "window.customMenuBarAltFocus": false,
   "window.enableMenuBarMnemonics": false,
+  "window.menuBarVisibility": "hidden",
   "wolf.logErrors": true,
   "wolf.pythonPath": "/usr/bin/python",
-  "workbench.colorTheme": "Hacker",
-  // "workbench.editor.enablePreviewFromQuickOpen": true,
+
   // "workbench.editor.enablePreview": false,
-  "workbench.editor.untitled.hint": "hidden",
-  "workbench.iconTheme": "material-icon-theme",
+  // "workbench.editor.enablePreviewFromQuickOpen": true,
+  // "workbench.editor.untitled.hint": "hidden",
   // "workbench.panel.defaultLocation": "right",
   // "workbench.sideBar.location": "right"
   // "workbench.startupEditor": "none",
-  "window.menuBarVisibility": "hidden",
-  "diffEditor.experimental.showEmptyDecorations": false,
+  "workbench.colorTheme": "Hacker",
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.iconTheme": "material-icon-theme",
 }
