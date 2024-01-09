@@ -19,8 +19,8 @@ xset -b
 ## screen temperature
 redshift -O 4444 &
 
-## xmodmaps and xcapes
-remaps &
+## touchcursor-like + xcapes-like remaps
+sudo kanata --cfg ~/.config/kanata/simple.kbd &
 
 ## space-leader remapping
 # touchcursor &

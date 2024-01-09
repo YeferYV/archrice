@@ -204,7 +204,7 @@ super + {alt,ctrl} + e
     }
 
 # focus the last node
-{XF86DOS, shift + space, super + semicolon}
+{shift + space, super + semicolon}
 	bspc node -f last
 
 # fzf alt-tab
@@ -417,14 +417,6 @@ super + shift + {Left,Down,Up,Right}
 #F{1,2,3,4,5,6,7,8,9,10}
 #	xdotool key {exclam,at,numbersign,dollar,percent,asciicircum,ampersand,asterisk,parenleft,parenright}
 
-# super/alt click
-{XF86Finance,XF86Game}
-  xdotool click {1,2}
-
-# mouse scroll
-XF86Launch{8,9}
-  xdotool click {4,5}
-
 # super volume
 super + XF86Audio{Raise,Lower}Volume
   pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
@@ -460,18 +452,6 @@ super + {F11,F12}
 # chromium next-toggle-prev
 super + KP_{Right,Begin,Left}
   playerctl --player=chromium {next,play-pause,previous}
-
-# chromium play-pause
-XF86Launch{1,4}
-  playerctl --player=chromium play-pause
-
-# chromium rewind-forward
-XF86Launch{2,3}
-	playerctl --player=chromium position {5-,5+}
-
-# chromium play-paus,rewind
-XF86Shop
-  playerctl --player=chromium play-pause
 
 # mpv next-toggle-prev
 mod1 + KP_{Right,Begin,Left}
