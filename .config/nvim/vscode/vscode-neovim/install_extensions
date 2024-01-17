@@ -1,11 +1,10 @@
 #!/usr/bin/bash
 
 # code --profile VSCode-Neovim --list-extensions
-code --profile VSCode-Neovim --install-extension asvetliakov.vscode-neovim
 code --profile VSCode-Neovim --install-extension bradlc.vscode-tailwindcss
 code --profile VSCode-Neovim --install-extension brenix.hacker-theme
 code --profile VSCode-Neovim --install-extension christian-kohler.path-intellisense
-code --profile VSCode-Neovim --install-extension Codeium.codeium
+code --profile VSCode-Neovim --install-extension sourcegraph.cody-ai
 code --profile VSCode-Neovim --install-extension DanielPriestley.poimandres-alternate
 code --profile VSCode-Neovim --install-extension dlasagno.wal-theme
 code --profile VSCode-Neovim --install-extension drewxs.tokyo-night-dark
@@ -15,5 +14,5 @@ code --profile VSCode-Neovim --install-extension PKief.material-icon-theme
 code --profile VSCode-Neovim --install-extension rangav.vscode-thunder-client
 code --profile VSCode-Neovim --install-extension traBpUkciP.wolf
 code --profile VSCode-Neovim --install-extension usernamehw.errorlens
-code --profile VSCode-Neovim --install-extension VSpaceCode.whichkey
+code --profile VSCode-Neovim --install-extension yeferyv.retronvim
 code --profile VSCode-Neovim --install-extension WallabyJs.console-ninja

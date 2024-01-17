@@ -221,6 +221,8 @@
   "editor.minimap.enabled": false,
   "editor.renderLineHighlight": "none",
   "editor.tabSize": 2,
+  "extensions.experimental.affinity": { "asvetliakov.vscode-neovim": 1 },
+  "vscode-neovim.neovimInitVimPaths.win32": "$VSCODE_PORTABLE/extensions/yeferyv.retronvim-0.0.1/nvim/init.lua",
 
   // "explorer.excludeGitIgnore": true,
   // "explorer.fileNesting.enabled": true,
@@ -235,11 +237,17 @@
   "scm.alwaysShowActions": true,
   "search.defaultViewMode": "tree",
   "security.workspace.trust.untrustedFiles": "open",
+  "telemetry.telemetryLevel": "off",
   "terminal.integrated.fontFamily": "'3270 Nerd Font','TerminessTTF Nerd Font','Font Awesome 6 Free Solid'",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": 500,
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.sendKeybindingsToShell": false, // shell will not trigger keybindings.json (for tmux)
+  "terminal.integrated.env.windows": {
+    "EDITOR": "nvim -u ${env:VSCODE_PORTABLE}/extensions/yeferyv.retronvim-0.0.1/nvim/init.lua",
+    "WEZTERM_EXECUTABLE": "yazi needs this env for images",
+    // "PATH": "${env:HOMEPATH}/scoop/apps/git/current/usr/bin;${env:PATH}",
+  },
   "window.customMenuBarAltFocus": false,
   "window.enableMenuBarMnemonics": false,
   "window.menuBarVisibility": "hidden",

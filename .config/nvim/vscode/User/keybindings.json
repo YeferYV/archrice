@@ -37,11 +37,11 @@
   // line navigation
   { "key": "alt+j", "command": "workbench.action.quickOpenSelectNext", "when": "inQuickOpen" },
   { "key": "alt+k", "command": "workbench.action.quickOpenSelectPrevious", "when": "inQuickOpen" },
-  { "key": "alt+h", "command": "type", "args": { "text": "10h" }, "when": "inputFocus && vim.mode == 'Normal'" },
-  { "key": "alt+j", "command": "type", "args": { "text": "10gj" }, "when": "!inQuickOpen && inputFocus && vim.mode == 'Normal'" },
-  { "key": "alt+k", "command": "type", "args": { "text": "10gk" }, "when": "!inQuickOpen && inputFocus && vim.mode == 'Normal'" },
-  { "key": "alt+l", "command": "type", "args": { "text": "10l" }, "when": "inputFocus && vim.mode == 'Normal'" },
-  { "key": "alt+v", "command": "type", "args": { "text": "V" }, "when": "inputFocus && vim.mode == 'Normal'" },
+  { "key": "alt+h", "command": "vim.remap", "args": { "after": [ "1", "0", "h" ] }, "when": "inputFocus && vim.mode == 'Normal'" },
+  { "key": "alt+j", "command": "vim.remap", "args": { "after": [ "1", "0", "j" ] }, "when": "!inQuickOpen && inputFocus && vim.mode == 'Normal'" },
+  { "key": "alt+k", "command": "vim.remap", "args": { "after": [ "1", "0", "k" ] }, "when": "!inQuickOpen && inputFocus && vim.mode == 'Normal'" },
+  { "key": "alt+l", "command": "vim.remap", "args": { "after": [ "1", "0", "l" ] }, "when": "inputFocus && vim.mode == 'Normal'" },
+  { "key": "alt+v", "command": "vim.remap", "args": { "after": [ "V" ] }, "when": "!terminalFocus && inputFocus && neovim.mode == 'normal'" },
 
   // Buffer Navigation
   { "key": "alt+s", "command": "workbench.action.previousEditor" },
