@@ -22,23 +22,23 @@ countdown() {
 # ps aux | grep cronbat | awk '{print $2}' | xargs kill -9 && killall notify-send
 
 # DON'T EVEN DARE TO COMMENT THIS CODE OUT
-date +%T | awk -F ':' '($1 >= 23 && $2 == 50)' | xargs -I_ [ -z _ ] || (echo "23:50 hours 🛌 lights out" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 23 && $2 == 40)' | xargs -I_ [ -z _ ] || (echo "23:40 hours 🛌 still redeyes? " | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 23 && $2 == 30)' | xargs -I_ [ -z _ ] || (echo "23:30 hours 🛌 follow your own rules " | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 23 && $2 == 20)' | xargs -I_ [ -z _ ] || (echo "23:20 hours 🛌 less energy more migraine" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 23 && $2 == 10)' | xargs -I_ [ -z _ ] || (echo "23:10 hours 🛌 sleeping late equals sleepy next day" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 23 && $2 == 00)' | xargs -I_ [ -z _ ] || (echo "23:00 hours 🛌 go bed, listen podcats" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 22 && $2 == 50)' | xargs -I_ [ -z _ ] || (echo "22:50 hours 🛌 sleep boy health is first, glasses?" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 22 && $2 == 40)' | xargs -I_ [ -z _ ] || (echo "22:40 hours 🛌 work smart than harder" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 22 && $2 == 30)' | xargs -I_ [ -z _ ] || (echo "22:30 hours 🛌 slow time, follow the rules" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 22 && $2 == 20)' | xargs -I_ [ -z _ ] || (echo "22:20 hours 🛌 use your time wisely" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-# date +%T | awk -F ':' '($1 >= 22 && $2 == 10)' | xargs -I_ [ -z _ ] || (echo "22:10 hours 🛌 4AM rule, feeling untired, study math, bysnappy" | tee >(festival --tts)  && countdown 600 && sudo poweroff)
-# date +%T | awk -F ':' '($1 >= 22 && $2 == 00)' | xargs -I_ [ -z _ ] || (echo "22:00 hours 🛌 wakeup before the enemy, challenge yourself" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-# date +%T | awk -F ':' '($1 >= 21 && $2 == 50)' | xargs -I_ [ -z _ ] || (echo "21:50 hours 🛌 feeling slow, low cognition" | tee >(festival --tts) && countdown 600 && sudo poweroff)
-date +%T | awk -F ':' '($1 >= 21 && $2 == 50) {exit 1}' || (festival --tts <<<"$(date +%T) hours 💤 waking late++" && notify-send -u low "$(date +%T) hours 💤")
-date +%T | awk -F ':' '($1 >= 21 && $2 ~".0") {print $1":"$2}' | festival --tts
-date +%T | awk -F ':' '($1 ~ "." && $2 == 00) {print $1":"$2}' | festival --tts
-cat /sys/class/power_supply/BAT0/status | awk '$1 == "Discharging" {exit 1}' &&
-cat /sys/class/power_supply/BAT0/capacity | awk ' $1 >= 95 {system("festival --tts <<<complete-charge") }'
-cat /sys/class/power_supply/BAT0/status | awk '$1 == "Charging" {exit 1}' &&
+date +%T | awk -F ':' '($1 >= 23 && $2 == 50)' | xargs -I_ [ -z _ ] || (echo "23:50 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 23 && $2 == 40)' | xargs -I_ [ -z _ ] || (echo "23:40 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 23 && $2 == 30)' | xargs -I_ [ -z _ ] || (echo "23:30 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 23 && $2 == 20)' | xargs -I_ [ -z _ ] || (echo "23:20 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 23 && $2 == 10)' | xargs -I_ [ -z _ ] || (echo "23:10 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 23 && $2 == 00)' | xargs -I_ [ -z _ ] || (echo "23:00 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 22 && $2 == 50)' | xargs -I_ [ -z _ ] || (echo "22:50 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 22 && $2 == 40)' | xargs -I_ [ -z _ ] || (echo "22:40 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 22 && $2 == 30)' | xargs -I_ [ -z _ ] || (echo "22:30 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 22 && $2 == 20)' | xargs -I_ [ -z _ ] || (echo "22:20 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+# date +%T | awk -F ':' '($1 >= 22 && $2 == 10)' | xargs -I_ [ -z _ ] || (echo "22:10 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+# date +%T | awk -F ':' '($1 >= 22 && $2 == 00)' | xargs -I_ [ -z _ ] || (echo "22:00 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+# date +%T | awk -F ':' '($1 >= 21 && $2 == 50)' | xargs -I_ [ -z _ ] || (echo "21:50 hours 🛌" | tee >(festival --tts) && countdown 600 && sudo poweroff)
+date +%T | awk -F ':' '($1 >= 21 && $2 == 50) {exit 1}'        || (festival --tts <<<"$(date +%T) hours 💤" && notify-send -u low "$(date +%T) hours 💤")
+date +%T | awk -F ':' '($1 >= 21 && $2 ~".0") {print $1":"$2}' |   festival --tts
+date +%T | awk -F ':' '($1 ~ "." && $2 == 00) {print $1":"$2}' |   festival --tts
+cat /sys/class/power_supply/BAT0/status   | awk '$1 == "Discharging" {exit 1}' &&
+cat /sys/class/power_supply/BAT0/capacity | awk '$1 >= 95 {system("festival --tts <<<complete-charge") }'
+cat /sys/class/power_supply/BAT0/status   | awk '$1 == "Charging" {exit 1}' &&
 cat /sys/class/power_supply/BAT0/capacity | awk '$1 <= 10 {system("festival --tts <<<"$1"-percent") } ; $1 <= 5 {system("notify-send -u critical " $1 "% discharging\n") }'
