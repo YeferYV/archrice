@@ -48,10 +48,13 @@ alias \
 
 # _vim_tmux_status_aliases_
 alias \
+  avim="NVIM_APPNAME=archrice nvim" \
+  cvim="NVIM_APPNAME=nvchad nvim" \
   lvim="NVIM_APPNAME=lunarvim nvim" \
-  vi="NVIM_APPNAME=nvchad nvim" \
-  vim="NVIM_APPNAME=astronvim nvim" \
-  vscodevim="NVIM_APPNAME=vscode-neovim nvim" \
+  rvim="NVIM_APPNAME=retronvim nvim" \
+  svim="NVIM_APPNAME=sixelrice nvim" \
+  tvim="NVIM_APPNAME=astronvim nvim" \
+  zvim="NVIM_APPNAME=lazyvim nvim" \
 	nvim_diff="nvim -d" \
 	nvim_terminal="nvim -c 'set nonumber | terminal zsh'" \
 	tmux_conf="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \

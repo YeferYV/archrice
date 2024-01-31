@@ -55,9 +55,9 @@
 
 (deflayer arrows
   _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    @yaz spc  bspc esc  _    left down up   rght _    _    _
-  _    _    _    _    _    _    @ñ   _    _    _    _    _
+  _    _    @sh  @vim _    _    _    _    _    _    _    _    _    _
+  _    @mw↑ spc  bspc @yaz @laz left down up   rght @mw↓ _    _
+  _    @za  @zr  caps _    _    @ñ   _    _    _    _    _
   _    _    _              _              _    _    _
 )
 
@@ -82,8 +82,8 @@
   dvk (layer-switch dvorak)
   qwr (layer-switch qwerty)
 
-  ;; tap for capslk, hold for lctl
-  cap (tap-hold 200 200 caps lctl)
+  ;; tap for esc, hold for lctl
+  cap (tap-hold 200 200 esc lctl)
 
   ;; tap for backspace, hold for lshift
   sft (tap-hold 200 200 bspc rsft)
@@ -97,9 +97,29 @@
   ;; press one key in yazi layout
   yaz (one-shot 500 (layer-while-held yazi-find))
 
+  ;; open shell inside yazi
+  2 2
+  sh (macro S-; s h spc - c spc ' p o w e r s h e l l spc - n o l o g o spc @2 S-. / d e v / n u l l spc S-\ S-\ spc S-4 S-(s h e l l) ' ret)
+
+  ;; open neovim inside yazi
+  1 1
+  vim (macro S-; s h spc - c spc S-' t e s t spc S-4 S-(a p p d a t a) spc S-7 S-7 spc n v i m spc ' S-5 @1 ' spc S-\ S-\ spc n v i m spc S-4 S-8 S-' ret)
+
+  ;; open lazygit inside yazi
+  laz (macro S-; l a z y g i t ret)
+
+  ;; zoxide add current working directory inside yazi
+  za (macro ; z o x i d e spc a d d spc . ret )
+
+  ;; zoxide remove current working directory inside yazi
+  zr (macro ; z o x i d e spc r e m o v e spc . ret )
+
   ;; unicode outputs
   ñ   (unicode ñ)
 
+  ;; mouse scrolling
+  mw↑ (mwheel-up 50 120)
+  mw↓ (mwheel-down 50 120)
 )
 
 ;; The `lrld` action stands for "live reload". This will re-parse everything

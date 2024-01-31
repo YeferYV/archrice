@@ -7,7 +7,7 @@ dunst &
 # xhost +
 
 ## disable annoying beep
-xset -b
+xset b off
 
 ## music player daemon
 # mpd &
@@ -20,6 +20,7 @@ xset -b
 redshift -O 4444 &
 
 ## touchcursor-like + xcapes-like remaps
+# sudo kanata --cfg ~/.config/kanata/simple.kbd && read & disown
 sudo kanata --cfg ~/.config/kanata/simple.kbd &
 
 ## space-leader remapping

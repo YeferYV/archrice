@@ -40,7 +40,7 @@ set cleaner          ~/.config/lf/lf-wiki-previewer/lf_kitty_clean
 #####################
 
 cmd bm-dirs                $ lf -remote "send $id cd $(awk '{ gsub(/#.*/, ""); } !/^$/ { print $2 }' $HOME/.config/shell/bm-dirs | fzf | sed 's/\${.*-// ; s/}//' | envsubst)"
-cmd draganddrop            & dragon-drop -a -x $fx
+cmd draganddrop            & $DRAG_ON_DROP --all --and-exit $fx
 # cmd duplicatelf          & nohup sh -c "export LF_CD=true && $TERMINAL"                 >/dev/null 2>&1
 # cmd duplicatelf          & nohup                             $TERMINAL -e "lf"          >/dev/null 2>&1
 # cmd duplicateterm        $ nohup                             $TERMINAL start --cwd=$PWD >/dev/null 2>&1

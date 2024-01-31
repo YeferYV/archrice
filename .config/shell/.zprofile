@@ -16,6 +16,7 @@ export TERM="xterm-256color" # inside docker TERM is xterm which makes tmux 8 co
 export BAT_THEME="base16"
 export BROWSER="google-chrome-stable"
 export EDITOR="nvim"
+export DRAG_ON_DROP="dragon-drop"
 export OPENER="gio open" #"xdg-open"
 export PAGER="less"
 export SHELL="$(which zsh)"
