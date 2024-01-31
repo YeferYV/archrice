@@ -29,63 +29,66 @@ echo "$(tput -T ansi setaf 3) Installing Packages... $(tput -T ansi sgr0)"
 $SUDO sed -i 's/#Color/Color/'                         /etc/pacman.conf
 $SUDO sed -i 's/#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 $SUDO sed -i '/ParallelDownloads/a\ILoveCandy'         /etc/pacman.conf
-$SUDO pacman -Sy --noconfirm base-devel git glibc ||
+$SUDO pacman -Sy --noconfirm --needed base-devel lazygit ||
 {
   $SUDO pacman-key --init
   $SUDO pacman-key --populate
   $SUDO pacman -Sy  --noconfirm archlinux-keyring
-  $SUDO pacman -Syu --noconfirm base-devel git
+  $SUDO pacman -Syu --noconfirm base-devel glibc lazygit
 }
 
 # Neovim:
-$SUDO curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.4/nvim.appimage && $SUDO chmod +x /usr/local/bin/nvim
+$SUDO curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.5/nvim.appimage && $SUDO chmod +x /usr/local/bin/nvim
 
 # AUR:
 $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_x86_64.tar.gz | $SUDO tar -xzf- --strip-components=1 --directory="/usr/local/bin" "yay_12.1.2_x86_64/yay"
-# $SUDO rm -rf /var/cache/private/yay /var/cache/yay
 
-# Browser:
-# yes | yay -S --noconfirm google-chrome
-
-# Editor:
-# yes | yay -S visual-studio-code-bin
+# pacman -S --noconfirm --needed gtk3 wget xdg-user-dirs
+# curl -L https://raw.githubusercontent.com/ivan-hc/AM-Application-Manager/main/APP-MANAGER -o ~/.local/bin/appman && chmod +x ~/.local/bin/appman && mkdir -p ~/.config/appman && echo ".local/appimage" > ~/.config/appman/appman-config
+# [ -e ~/.local/appimage ]  && echo "skipping appman install ..." || ~/.local/bin/appman install \
+#   code \
+#   google-chrome \
+#   wezterm
 
 # GUI dependencies: (yay as root requires systemd)
 [ ! -e /.dockerenv ] && {
 
   # root doesn't support yay multi-install
   # yes | yay -S --noconfirm --mflags "--skippgpcheck" ttf-unifont &&
+  # yes | yay -S --noconfirm htop-vim                              &&
+  # yes | yay -S --noconfirm gtk-theme-arc-gruvbox-git             &&
   # yes | yay -S --noconfirm pywal-16-colors                       &&
+  # yes | yay -S --noconfirm google-chrome                         &&
+  # yes | yay -S --noconfirm visual-studio-code-bin                &&
   yes | yay -S --noconfirm bspwm-git                             &&
   yes | yay -S --noconfirm cht.sh-git                            &&
   yes | yay -S --noconfirm dragon-drop                           &&
-  yes | yay -S --noconfirm gtk-theme-arc-gruvbox-git             &&
-  yes | yay -S --noconfirm htop-vim                              &&
   yes | yay -S --noconfirm kanata-bin                            &&
+  yes | yay -S --noconfirm light                                 &&
   yes | yay -S --noconfirm siji-git                              &&
-  yes | yay -S --noconfirm snapper-rollback                      &&
   yes | yay -S --noconfirm zsh-fast-syntax-highlighting          &&
-  yes | $SUDO pacman -S --noconfirm \
+  yes | $SUDO pacman -S --noconfirm --needed \
   broadcom-wl \
   btrfs-progs \
   cronie \
   dosfstools \
   dmenu \
   dunst \
+  exa \
   exfat-utils \
   festival-us \
   gnome-keyring \
   kitty \
   libnotify \
-  light \
   man-db \
-  mediainfo \
   moreutils \
   mpc \
   mpd \
   mpv-mpris \
   ncmpcpp \
   network-manager-applet \
+  noto-fonts \
+  noto-fonts-emoji \
   ntfs-3g \
   perl-file-mimeinfo \
   picom \
@@ -97,6 +100,9 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   snapper \
   sxhkd \
   sxiv \
+  ttf-3270-nerd \
+  ttf-firacode-nerd \
+  ttf-font-awesome \
   unclutter \
   wezterm \
   xdo \
@@ -113,41 +119,32 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
 }
 
 # Non GUI dependencies:
-$SUDO pacman -S --noconfirm \
-bat \
-fzf \
-ghostscript \
-imagemagick \
-lazygit \
-lf \
-libsixel \
-mpv \
-pipewire-pulse \
-poppler \
-ripgrep \
-starship \
-stow \
-unzip \
-xclip \
-zsh-autosuggestions \
-&& true | $SUDO pacman -Scc || ( printf "$(tput -T ansi setaf 1) Installing Non GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
+$SUDO pacman -S --noconfirm --needed \
+  bat \
+  fzf \
+  ghostscript \
+  imagemagick \
+  lf \
+  libsixel \
+  mpv \
+  pipewire-pulse \
+  poppler \
+  ripgrep \
+  starship \
+  stow \
+  unzip \
+  xclip \
+  zsh-autosuggestions \
+  && true | $SUDO pacman -Scc || ( printf "$(tput -T ansi setaf 1) Installing Non GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
 
 echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 
 # Optional:
 # 8188eu-aircrack-dkms-git
-# abook
 # acpi
 # aircrack-ng
-# alacritty
 # alttab-git
 # arandr
-# arandr
-# atool
-# base
-# bashtop
-# bc
-# bcm43142-firmware
 # bedstead-fonts-powerline
 # binfmt-qemu-static
 # blackarch-keyring
@@ -156,15 +153,11 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # brave-bin
 # bsp-layout
 # bsptab-git
-# cdrtools
 # cheat-git
 # cheat-sh
-# chromium
 # command-not-found
 # cool-retro-term
 # devour
-# dialog
-# djvulibre
 # dmenu
 # docker
 # dwm
@@ -177,29 +170,16 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # fzf-tab-bin-git
 # gimp
 # grub
-# grub-btrfs
-# gvim
 # hashcat
-# highlight
 # htop-vim-git
-# i3-gaps
-# i3-vim-syntax-git
-# i3status
 # intel-ucode
-# lazygit
-# lf-sixel-git
 # libreoffice
 # libsixel
-# libxft-bgra
 # linux
 # linux-firmware
 # linux-headers
-# linux-wifi-hotspot
 # lunarvim-git
-# mlocate
-# mlterm
-# moreutils
-# mpv-full
+# mediainfo
 # mtools
 # mupdf-tools
 # mutt-wizard-git
@@ -210,59 +190,39 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # neovim-moonlight-git
 # neovim-nebulous-git
 # neovim-nordic-git
-# nerd-fonts-cascadia-code
-# nerd-fonts-hack
 # networkmanager
 # newsboat
 # ngrok
 # nmap
 # nodejs-how2
 # notcurses
+# noto-fonts-cjk
 # novnc
 # obs-studio
 # os-prober
 # otf-latinmodern-math
-# pamixer
 # paru-bin
 # pavucontrol
 # pcmanfm-gtk3
-# pfetch
 # polkit-gnome
-# pulseaudio-alsa
 # pulsemixer
-# python-ueberzug-git
 # pywal
 # qemu-user-static
-# ranger-sixel
-# rxvt-unicode
 # scrcpy
 # sgtk-menu
 # simple-mtpfs
-# sixel-tmux-git
 # skippy-xd-git
-# spaceship-prompt
-# spotify
-# spotify-adblock-git
-# spotify-adkiller-git
 # sshfs
 # stpv-git
-# sxhkhm-git
-# task-spooler
-# terminus-font
-# termplay
 # tigervnc
 # tmate
 # transmission-cli
 # transmission-gtk
-# trash-cli
 # tsserver
-# ttf-hack
-# ttf-unifont
-# ueberzug
+# ttf-cascadia-code-nerd
+# ttf-terminus-nerd
+# ueberzugpp
 # unrar
-# urxvt-perls
-# vim-aquarium
-# vim-dracula
 # vimv-git
 # visual-studio-code-bin
 # vscodium-bin

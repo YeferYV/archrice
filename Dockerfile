@@ -23,7 +23,8 @@ RUN useradd -mG wheel drksl; \
 RUN pacman -Sy --noconfirm bat fzf lazygit libsixel lf ripgrep starship tmux unzip xclip zsh glibc \
   && curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_x86_64.tar.gz | tar -xzf- --strip-components=1 --directory="/usr/local/bin" "yay_12.1.2_x86_64/yay" \
   && curl -L https://github.com/neovim/neovim/releases/download/v0.9.1/nvim.appimage                               --create-dirs --output "/usr/local/bin/nvim" && chmod +x /usr/local/bin/nvim \
-  && sudo -u "drksl" -s -- sh -c "yes | yay -S  --noconfirm ghostscript imagemagick mpv openssh pipewire-pulse poppler stow zsh-autosuggestions zsh-fast-syntax-highlighting"
+  && sudo -u "drksl" -s -- sh -c "yes | yay -S  --noconfirm ghostscript imagemagick mpv openssh pipewire-pulse poppler stow zsh-autosuggestions zsh-fast-syntax-highlighting" \
+  && yes | yay -Scc
 
 # locales for zsh-autosuggestions:
 RUN sed -i 's/#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen && locale-gen
@@ -47,12 +48,8 @@ RUN mkdir -p $HOME/.local \
   && cd $HOME/.config/dotfiles/archrice \
   && stow --restow --verbose --target="$HOME"/.config .config \
   && stow --restow --verbose --target="$HOME"/.local .local \
-  && ln -sf "$HOME"/.config/shell/.zprofile "$HOME"/.zprofile
-
-# clean:
-RUN  mkdir $HOME/.cache/zsh \
-  && rm -rf $HOME/{.bash_logout,.bash_profile,.bashrc} \
-  && yes | yay -Scc
+  && ln -sf "$HOME"/.config/shell/.zprofile "$HOME"/.zprofile \
+  && rm -rf $HOME/{.bash_logout,.bash_profile,.bashrc}
 
 # openssh:
 # RUN  sudo /usr/bin/ssh-keygen -A && echo "sudo /sbin/sshd" >>$HOME/.zprofile
