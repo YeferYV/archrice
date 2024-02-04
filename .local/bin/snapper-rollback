@@ -1,0 +1,15 @@
+#!/bin/bash
+
+[ -z "$1"                             ] && echo "usage: './snapper-rollback <your-snapshot-number>'"                                               && exit
+[ ! -e "/mnt/btrfsroot/@"             ] && echo "/mnt/btrfsroot/@ not found, try: 'sudo mount -o subvolid=5 /dev/<your-partition> /mnt/btrfsroot'" && exit
+[ ! -e "/mnt/btrfsroot/@snapshots/$1" ] && echo "/mnt/btrfsroot/@snapshots/$1 not found, try: 'sudo ./snapper-rollback <your-snapshot-number>'"    && exit
+
+read -p "A backup will be saved (and overwritten) to: /mnt/btrfsroot/@.old. continue? [y/N] " answer
+[ "$answer" != "y" ] && exit
+
+[ -e "/mnt/btrfsroot/@.old" ] && sudo btrfs subvolume delete /mnt/btrfsroot/@.old
+sudo mv                                                      /mnt/btrfsroot/@                      /mnt/btrfsroot/@.old
+sudo btrfs subvolume snapshot                                /mnt/btrfsroot/@snapshots/$1/snapshot /mnt/btrfsroot/@
+sudo btrfs subvolume set-default                             /mnt/btrfsroot/@
+
+printf "reboot to apply changes"
