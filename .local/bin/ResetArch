@@ -132,7 +132,6 @@ $SUDO pacman -S --noconfirm --needed \
   ripgrep \
   starship \
   stow \
-  unzip \
   xclip \
   zsh-autosuggestions \
   && true | $SUDO pacman -Scc || ( printf "$(tput -T ansi setaf 1) Installing Non GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )

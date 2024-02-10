@@ -238,4 +238,4 @@ sudo -u "$USER" -s -- <<'====' # with '====' or "====" makes USER=drknss, with j
   snapper -c home create -d "after RiceArch(commit $(git rev-list --count --all))"
 }
 
-printf "\e[1;32mDone!\e[0m\n"
+printf "\e[1;32mDone! Reboot to apply changes\e[0m\n"

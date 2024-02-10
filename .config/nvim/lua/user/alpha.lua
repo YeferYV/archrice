@@ -19,7 +19,7 @@ dashboard.section.buttons.val = {
   dashboard.button("o", "󰈙 " .. " Recents     ", ":Telescope oldfiles     initial_mode=normal<cr>"),
   dashboard.button("w", "󰈭 " .. " Find Word   ", ":Telescope live_grep    initial_mode=normal<cr>"),
   dashboard.button("n", " " .. " New File    ", ":enew<cr>"),
-  dashboard.button("m", " " .. " Bookmarks   ", ":Telescope marks        initial_mode=normal<cr>"),
+  dashboard.button("r", " " .. " Bookmarks   ", ":Telescope marks        initial_mode=normal<cr>"),
   dashboard.button("m", " " .. " Mini Files",
     ":lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true) <cr>"),
   dashboard.button("q", " " .. " Neotree",
