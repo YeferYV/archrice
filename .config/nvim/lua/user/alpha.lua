@@ -22,7 +22,7 @@ dashboard.section.buttons.val = {
   dashboard.button("r", " " .. " Bookmarks   ", ":Telescope marks        initial_mode=normal<cr>"),
   dashboard.button("m", " " .. " Mini Files",
     ":lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true) <cr>"),
-  dashboard.button("q", " " .. " Neotree",
+  dashboard.button("q", "󰙅 " .. " Neotree",
     ":lua _G.neotree_blend = true; vim.cmd [[ Neotree filesystem reveal float ]] <cr>"),
   dashboard.button("r", "󰉖 " .. " File Browser",
     ":Telescope file_browser initial_mode=normal<cr>"),

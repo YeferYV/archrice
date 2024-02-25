@@ -205,8 +205,9 @@ sudo -u "$USER" -s -- <<'====' # with '====' or "====" makes USER=drknss, with j
     mkdir -p "$HOME"/.local
     stow --restow --verbose --target="$HOME"/.config .config
     stow --restow --verbose --target="$HOME"/.local  .local
-    ln -sf "$HOME"/.config/shell/.zprofile "$HOME"/.zprofile
-    ln -sf "$HOME"/.config/shell/.xinitrc  "$HOME"/.xinitrc
+    ln -sf "$HOME"/.config/shell/.festivalrc "$HOME"/.festivalrc"
+    ln -sf "$HOME"/.config/shell/.zprofile   "$HOME"/.zprofile
+    ln -sf "$HOME"/.config/shell/.xinitrc    "$HOME"/.xinitrc
 
   }
 
