@@ -82,7 +82,7 @@ local plugins = {
       { "rafamadriz/friendly-snippets", commit = "8d91ba2dc2421a54981115f61b914974f938fa77" }, -- a bunch of snippets to use
       {
         "roobert/tailwindcss-colorizer-cmp.nvim",
-        commit = "8d91ba2dc2421a54981115f61b914974f938fa77",
+        commit = "bc25c56083939f274edcfe395c6ff7de23b67c50",
         config = function()
           -- require("cmp").config.formatting = { format = require("tailwindcss-colorizer-cmp").formatter }     -- from doc but not working
           -- require("cmp").setup({ formatting = { format = require("tailwindcss-colorizer-cmp").formatter } }) -- from issue #5 but not working
