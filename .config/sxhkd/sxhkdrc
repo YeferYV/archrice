@@ -57,7 +57,7 @@ super + shift + z
 super + alt + {q,r}
 	bspc {quit,wm -r}
 
-# close and kill
+# close and kill window
 super + {_,shift +} x
 	bspc node -{c,k}
 
@@ -175,7 +175,7 @@ super + shift + backslash
 super + ctrl + apostrophe
   bspc config borderless_singleton {true,false}
 
-# toggle singleton border
+# toggle gaps
 super + ctrl + backslash
 	{ \
 		bspc config window_gap -1 & bspc config border_width 1; \
@@ -232,11 +232,11 @@ alt + Tab
 super + {Tab,grave}
 	bspc {node,desktop} -f last
 
-# swap the last node/desktop
+# swap the last desktop
 super + shift + {Tab,grave}
 	bspc {node,desktop} -s last
 
-# swap the last node/desktop
+# swap the last node
 super + space
 	bspc node -f {last}.local.!hidden.window && \
 	bspc node -s last

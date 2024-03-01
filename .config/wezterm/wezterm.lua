@@ -354,7 +354,7 @@ return {
         wezterm.run_child_process({ "wezterm", "cli", "move-pane-to-new-tab" })
       end)
     },
-    { key = "q",          mods = "LEADER",     action = "QuickSelect" },
+    -- { key = "q",          mods = "LEADER",     action = "QuickSelect" },
 
     -- {key="i", mods="CTRL", action={SendKey={key="i", mods="CTRL"}}}, -- default:tab
     -- {key="[", mods="CTRL", action={SendKey={key="[", mods="CTRL"}}}, -- default:esc
@@ -390,10 +390,10 @@ return {
     },
 
     -- quick select
-    { key = "q",          mods = "CTRL|SHIFT", action = wezterm.action.QuickSelect },
+    -- { key = " ",          mods = "CTRL|SHIFT", action = wezterm.action.QuickSelect },
     {
-      key = "u",
-      mods = "CTRL|SHIFT",
+      key = " ",
+      mods = "CTRL|ALT",
       action = wezterm.action.QuickSelectArgs {
         label = "open url",
         patterns = {
