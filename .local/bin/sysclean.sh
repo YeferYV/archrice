@@ -39,7 +39,6 @@ light \
 linux \
 linux-firmware \
 man-db \
-moreutils \
 mpc \
 mpd \
 mpv-mpris \

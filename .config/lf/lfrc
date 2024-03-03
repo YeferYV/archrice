@@ -263,6 +263,27 @@ cmd zip ${{
     rm -rf $1
 }}
 
+cmd bulkrename ${{
+    tmpfile_old="$(mktemp)"
+    tmpfile_new="$(mktemp)"
+
+    [ -n "$fs" ] && fs=$(basename -a $fs) || fs=$(ls)
+
+    echo "$fs" > "$tmpfile_old"
+    echo "$fs" > "$tmpfile_new"
+    $EDITOR "$tmpfile_new"
+
+    [ "$(wc -l < "$tmpfile_old")" -eq "$(wc -l < "$tmpfile_new")" ] || { rm -f "$tmpfile_old" "$tmpfile_new"; exit 1; }
+
+    paste "$tmpfile_old" "$tmpfile_new" | while IFS="$(printf '\t')" read -r src dst
+    do
+        [ "$src" = "$dst" ] || [ -e "$dst" ] || mv -- "$src" "$dst"
+    done
+
+    rm -f "$tmpfile_old" "$tmpfile_new"
+    lf -remote "send $id unselect"
+}}
+
 # Bindings
 # map <m-1> ???
 map <m-2>   : updir
@@ -281,7 +302,7 @@ map <enter> shell
 map a       rename # at the very end
 map A       push a<c-u> # new rename
 map b       setbg $f
-map B     $ vidir $fx
+map B       bulkrename
 map D       move_to_trash
 map g1      one_column
 map g2      two_column

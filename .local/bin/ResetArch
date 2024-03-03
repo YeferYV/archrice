@@ -81,7 +81,6 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   kitty \
   libnotify \
   man-db \
-  moreutils \
   mpc \
   mpd \
   mpv-mpris \
