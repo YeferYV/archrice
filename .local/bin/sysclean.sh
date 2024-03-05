@@ -63,7 +63,6 @@ starship \
 stow \
 sxhkd \
 sxiv \
-ttf-3270-nerd \
 ttf-firacode-nerd \
 ttf-font-awesome \
 unclutter \

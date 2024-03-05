@@ -179,6 +179,7 @@ install_user() {
 
 install_locales(){
   # timedatectl set-ntp true && hwclock --systohc
+  # timedatectl set-timezone US/Central
   ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
   sed -i 's/#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
   locale-gen

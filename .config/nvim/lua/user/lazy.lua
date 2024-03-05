@@ -163,16 +163,9 @@ local plugins = {
   -- { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" }, -- incremental-repressing + respects-blanklines + vimrepeat + VisualRepeatable(e.g mini.comment is noVisualRepeable)
   { "echasnovski/mini.nvim",             commit = "e8a413b1a29f05bb556a804ebee990eb54479586" },
   {
-    "kana/vim-textobj-user",
-    commit = "41a675ddbeefd6a93664a4dc52f302fe3086a933",
+    "coderifous/textobj-word-column.vim", -- delimited by comments or indentation
+    commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33",
     event = "VeryLazy",
-    dependencies = {
-      -- { "saihoooooooo/vim-textobj-space", commit = "d4dc141aad3ad973a0509956ce753dfd0fc87114" },
-      -- { "pianohacker/vim-textobj-indented-paragraph", commit = "376f478ab5cb45bcb434eedbd7c513ad145a99b4" },
-      -- { "kana/vim-textobj-indent", commit = "deb76867c302f933c8f21753806cbf2d8461b548" },
-      -- { "kana/vim-textobj-fold", commit = "78bfa22163133b0ca6cda63b5b5015ed4409b2ee" },
-      { "coderifous/textobj-word-column.vim", commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33" }, -- delimited by comments or indentation
-    }
   },
   {
     "nvim-treesitter/nvim-treesitter",

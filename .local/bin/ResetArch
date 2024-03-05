@@ -99,7 +99,6 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.1.2/yay_12.1.2_
   snapper \
   sxhkd \
   sxiv \
-  ttf-3270-nerd \
   ttf-firacode-nerd \
   ttf-font-awesome \
   unclutter \
@@ -219,6 +218,7 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # tsserver
 # ttf-cascadia-code-nerd
 # ttf-terminus-nerd
+# ttf-3270-nerd
 # ueberzugpp
 # unrar
 # vimv-git
