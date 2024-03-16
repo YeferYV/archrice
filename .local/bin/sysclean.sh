@@ -101,8 +101,6 @@ zsh-fast-syntax-highlighting
 # newsboat \
 # librewolf-bin \
 # arkenfox-user.js \
-# noto-fonts \
-# noto-fonts-emoji \
 # wireplumber \
 # pulsemixer \
 # sc-im \

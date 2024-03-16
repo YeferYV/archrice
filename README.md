@@ -866,102 +866,80 @@
 
 <details><summary></summary>
 
-| Keymap                                           | Description                                                |
-| ------------------------------------------------ | ---------------------------------------------------------- |
-| `super + Return`                                 | Open wezterm                                               |
-| `ctrl + {_, shift} + Return`                     | Dunst close/reopen notification                            |
-| `super + Escape`                                 | Stop cronbat                                               |
-| `super + shift + Escape`                         | Reload sxhkd configuration                                 |
-| `super + alt + {Left,Down,Up,Right}`             | Add to tabbed container                                    |
-| `super + z`                                      | Create/remove from tabbed container (tabc required)        |
-| `super + shift + z`                              | Toggle autoattach in tabbed container (tabc required)      |
-| `super + alt + {q,r}`                            | Quit/restart bspwm                                         |
-| `super + {_,shift +} x`                          | Close and kill window                                      |
-| `super + m`                                      | Alternate between tiled and monocle layout                 |
-| `super + ctrl + u`                               | Send newest marked node to newest preselected node         |
-| `super + g`                                      | Swap current node and biggest window                       |
-| `super + {t,shift + t,d,e}`                      | Set window state {tiled,pseudo_tiled,floating,fullscreen}  |
-| `super + ctrl + {m,x,y,z,slash}`                 | Set node flags {marked,locked,sticky,private,hidden}       |
-| `super + ctrl + shift + slash`                   | Show hidden nodes one by one                               |
-| `super + ctrl + v`                               | Set/reset virtual monitor                                  |
-| `super + {h,j,k,l}`                              | Focus node in given direction                              |
-| `super + shift + {h,j,k,l}`                      | Swap focused window in given direction                     |
-| `super + ctrl + {p,b,comma,period}`              | Focus node {parent,brother,first,second}                   |
-| `super + {_,shift + }c`                          | Focus the next/previous window in the current desktop      |
-| `super + {s,f}`                                  | Focus the next/previous desktop in the current monitor     |
-| `super + shift + {s,f}`                          | Swap the next/previous desktop in the current monitor      |
-| `super + bracketleft`                            | No/reset gaps size border_width 1                          |
-| `super + bracketright`                           | No/reset gaps size border_width 2                          |
-| `super + shift + bracket{left,right}`            | Increase/decrease gap size by 1                            |
-| `super + ctrl + bracket{left,right}`             | Increase/decrease gap size by 2                            |
-| `super + apostrophe`                             | Toggle node border by 1                                    |
-| `super + backslash`                              | Toggle node border by 2                                    |
-| `super + shift + apostrophe`                     | Toggle desktop border by 1                                 |
-| `super + shift + backslash`                      | Toggle desktop border by 2                                 |
-| `super + ctrl + apostrophe`                      | Toggle singleton border                                    |
-| `super + ctrl + backslash`                       | Toggle gaps                                                |
-| `super + ctrl + d`                               | Rofi drun (dmenu for .desktop apps)                        |
-| `super + {alt,ctrl} + e`                         | Rofi emoji                                                 |
-| `{shift + space, super + semicolon}`             | Focus the last node                                        |
-| `super + alt + z`                                | Fzf alt-tab                                                |
-| `alt + Tab`                                      | Rofi alt-tab                                               |
-| `super + {Tab,grave}`                            | Focus the last node/desktop                                |
-| `super + shift + {Tab,grave}`                    | Swap the last desktop                                      |
-| `super + space`                                  | Swap the last node                                         |
-| `super + {o,i}`                                  | Focus the older or newer node in the focus history         |
-| `super + {_,shift + }{1-9,0,minus,equal}`        | Focus or send to the given desktop                         |
-| `super + control + {_,shift +} r`                | Rotate focused tree CCW/CW                                 |
-| `super + control + {Right, Left}`                | Rotate the current nodes parent                            |
-| `super + control + {Down, Up}`                   | Rotate the current node focused                            |
-| `super + ctrl + {h,j,k,l}`                       | Preselect the direction                                    |
-| `super + ctrl + {1-9}`                           | Preselect the ratio                                        |
-| `super + ctrl + space`                           | Cancel the preselection for the focused node               |
-| `super + ctrl + shift + space`                   | Cancel the preselection for the focused desktop            |
-| `super + v`                                      | Balance desktop's nodes                                    |
-| `super + alt + {i,o}`                            | Increase/decrease window size                              |
-| `super + alt + shift + {u,i,o,p}`                | Hover window to left/down/up/right                         |
-| `super + alt + {h,j,k,l}`                        | Move floating window by 10px                               |
-| `super + alt + shift + {h,j,k,l}`                | Hover window to corner                                     |
-| `super + alt + {_,shift + } n`                   | Xdo resize (small/medium)                                  |
-| `super + ctrl + {_,shift + } n`                  | Xdo fixedscreen 1366x768 (fullscreen no visible borders)   |
-| `super + {_,shift + }n`                          | Xdo fixedscreen 1366x768 (min-max window)                  |
-| `super + shift + space`                          | Toggle polybar                                             |
-| `super + {_,shift +}y`                           | Move new node to receptacle automatically                  |
-| `super + shift + o`                              | Close all receptacle                                       |
-| `super + shift + i; {h,j,k,l}`                   | Insert receptacle                                          |
-| `super + shift + u`                              | Move to receptacle                                         |
-| `super + alt + control + {h,j,k,l} ; {0-9}`      | Resize west,south,north,east by 0-9 percentage range       |
-| `super + alt + control + p`                      | Toggle focus_follows_pointer                               |
-| `super + {Left,Down,Up,Right}`                   | Smart resize (Will always grow for floating nodes)         |
-| `super + shift + {Left,Down,Up,Right}`           | Smart resize (Will always shrink for floating nodes)       |
-| `super + XF86Audio{Raise,Lower}Volume`           | Increase/Decrease volume by 5%                             |
-| `XF86Audio{Raise,Lower}Volume`                   | Increase/Decrease volume by 2%                             |
-| `XF86AudioMute`                                  | (Un)mute audio                                             |
-| `XF86AudioMicMute`                               | (Un)mute microphone                                        |
-| `XF86MonBrightness{Down,Up}`                     | Increase/Decrease backlight by 0.1                         |
-| `super + XF86MonBrightness{Down,Up}`             | Increase/Decrease backlight by 2                           |
-| `shift + XF86MonBrightness{Down,Up}`             | Dimmer (requires xcalib)                                   |
-| `super + {F11,F12}`                              | Dmenu (u)mount android (requires simple-mtpfs)             |
-| `super + KP_{Right,Begin,Left}`                  | Chromium {next,play-pause,previous}                        |
-| `alt + KP_{Right,Begin,Left}`                    | Mpv {next,play-pause,previous}                             |
-| `alt + KP_{Down,Up}`                             | Mpv volume {Down, Up}                                      |
-| `KP_{Right,Begin,Left,Down,Up}`                  | Mpc {next,toggle,prev,volume -2,volume +2}                 |
-| `mod1 + XF86Audio{RaiseVolume,Mute,LowerVolume}` | Mpc {next,toggle,prev}                                     |
-| `{super,alt} + Print`                            | Screenshot {fullscreen, menu}                              |
-| `mod1 + ctrl + {1,2,3,4,5}`                      | Redshift                                                   |
-| `super + BackSpace`                              | Compositor wallpaper background                            |
-| `super + alt + BackSpace`                        | Compositor blur background                                 |
-| `super + ctrl + BackSpace`                       | Compositor keep background                                 |
-| `super + shift + BackSpace`                      | Compositor no shadow                                       |
-| `super + ctrl + {minus,equal}`                   | Compositor decrease/increase transparency                  |
-| `super + {_,shift,ctrl} + Next`                  | TextToSpeech the selected text                             |
-| `super + shift + b`                              | Open music player                                          |
-| `super + {_,shift +,alt +} p`                    | Dmenu launcher                                             |
-| `super + {_,shift +} r`                          | LF as {current user,root}                                  |
-| `super + {_,shift +} w`                          | Open google-chrome                                         |
-| `super + {_,shift +,alt +} p`                    | Dmenu launcher                                             |
-| `super + alt + ctrl + w`                         | Toggle terminal background between #0c0c0c #000000         |
-| `super + ctrl + {_, shift +} w`                  | Set a online {wallhaven,reddit} wallpaper (requires pywal) |
+| Keymap                                         | Description                                                |
+| ---------------------------------------------- | ---------------------------------------------------------- |
+| `super + Return`                               | Open wezterm                                               |
+| `ctrl + {_, shift} + Return`                   | Dunst close/reopen notification                            |
+| `super + Escape`                               | Stop cronbat                                               |
+| `super + shift + Escape`                       | Reload sxhkd configuration                                 |
+| `super + {_, shift} + x`                       | Close/kill window                                          |
+| `super + control + f; m`                       | Alternate between tiled and monocle layout                 |
+| `super + control + f; {q,r}`                   | Quit/restart bspwm                                         |
+| `super + control + f; {t,p,f,shift + f}`       | Set window state {tiled,pseudo-tiled,floating,fullscreen}  |
+| `super + control + f; {shift + m,l,s,p,h}`     | Set node flags {marked,locked,sticky,private,hidden}       |
+| `super + control + f; {plus}`                  | Show hidden nodes one by one                               |
+| `alt + Tab`                                    | Rofi alt-tab                                               |
+| `super + control + r; d`                       | Rofi drun (dmenu for .desktop apps)                        |
+| `super + control + r; {e, shift + e}`          | Rofi emoji                                                 |
+| `super + {_,shift} + {1-9,0,minus,equal}`      | Focus or send to the given desktop                         |
+| `super + {semicolon,grave}`                    | Focus the last node/desktop                                |
+| `super + shift + {semicolon,grave}`            | Swap the last node/desktop                                 |
+| `super + {_,shift} + c`                        | Focus the next/previous window in the current desktop      |
+| `super + {h,j,k,l}`                            | Focus node in given direction                              |
+| `super + shift + {h,j,k,l}`                    | Swap focused window in given direction                     |
+| `super + {s,f}`                                | Focus the next/previous desktop in the current monitor     |
+| `super + shift + {s,f}`                        | Swap the next/previous desktop in the current monitor      |
+| `super + control + s; shift + b`               | Swap current node and biggest window                       |
+| `super + control + s; {p,b,f,s}`               | focus the {parent,brother,first,second} node               |
+| `super + control + s; {minus,plus}`            | Increase/decrease gap size by 1                            |
+| `super + control + s; {o,n}`                   | Focus the older or newer node in the focus history         |
+| `super + control + s; {r, shift + r}`          | Rotate focused tree CCW/CW                                 |
+| `super + control + s; {Right, Left}`           | Rotate the current nodes parent                            |
+| `super + control + s; {Down, Up}`              | Rotate the current node focused                            |
+| `super + control + t; space`                   | Toggle polybar                                             |
+| `super + control + t; n`                       | Toggle node border (width 1)                               |
+| `super + control + t; shift + n`               | Toggle node border (width 2)                               |
+| `super + control + t; d`                       | Toggle desktop border (width 1)                            |
+| `super + control + t; shift + d`               | Toggle desktop border (width 2)                            |
+| `super + control + t; s`                       | Toggle singleton border                                    |
+| `super + control + t; g`                       | Toggle gaps (no border)                                    |
+| `super + control + t; 1`                       | Toggle gaps (border_width 1)                               |
+| `super + control + t; 2`                       | Toggle gaps (border_width 2)                               |
+| `super + control + w; b`                       | Balance desktop's nodes                                    |
+| `super + control + w; {minus,plus}`            | Increase/decrease window size                              |
+| `super + control + w; {h,j,k,l}`               | Hover window to left/down/up/right                         |
+| `super + control + w; shift + {h,j,k,l}`       | Move floating window by 10px                               |
+| `super + control + w; {Left, Down, Up, Right}` | Hover window to corner                                     |
+| `super + control + w; {s,m}`                   | Xdo resize (small/medium)                                  |
+| `super + control + w; {f, shift + f}`          | Xdo fixedscreen 1366x768 (fullscreen no visible borders)   |
+| `super + control + w; {m, shift + m}`          | Xdo fixedscreen 1366x768 (min-max window)                  |
+| `super + {Left,Down,Up,Right}`                 | Smart resize (Will always grow for floating nodes)         |
+| `super + shift + {Left,Down,Up,Right}`         | Smart resize (Will always shrink for floating nodes)       |
+| `super + XF86Audio{Raise,Lower}Volume`         | Increase/Decrease volume by 5%                             |
+| `XF86Audio{Raise,Lower}Volume`                 | Increase/Decrease volume by 2%                             |
+| `XF86AudioMute`                                | (Un)mute audio                                             |
+| `XF86AudioMicMute`                             | (Un)mute microphone                                        |
+| `XF86MonBrightness{Down,Up}`                   | Increase/Decrease backlight by 0.1                         |
+| `super + XF86MonBrightness{Down,Up}`           | Increase/Decrease backlight by 2                           |
+| `shift + XF86MonBrightness{Down,Up}`           | Dimmer (requires xcalib)                                   |
+| `super + {F11,F12}`                            | Dmenu (u)mount android (requires simple-mtpfs)             |
+| `super + KP_{Right,Begin,Left}`                | Chromium {next,play-pause,previous}                        |
+| `alt + KP_{Right,Begin,Left}`                  | Mpv {next,play-pause,previous}                             |
+| `alt + KP_{Down,Up}`                           | Mpv volume {Down, Up}                                      |
+| `KP_{Right,Begin,Left,Down,Up}`                | Mpc {next,toggle,prev,volume -2,volume +2}                 |
+| `{Print, super + Print}`                       | Screenshot {fullscreen, menu}                              |
+| `super + control + c; w`                       | Compositor wallpaper background                            |
+| `super + control + c; b`                       | Compositor blur background                                 |
+| `super + control + c; k`                       | Compositor keep background                                 |
+| `super + control + c; s`                       | Compositor no shadow                                       |
+| `super + control + c; {minus,plus}`            | Compositor decrease/increase transparency                  |
+| `super + control + r; {1,2,3,4,5}`             | Nighlight temperature                                      |
+| `super + control + p; t`                       | Toggle terminal background between #0c0c0c #000000         |
+| `super + control + p; o`                       | Set a offline wallpaper (requires pywal)                   |
+| `super + control + p; {w,r}`                   | Set a online {wallhaven,reddit} wallpaper (requires pywal) |
+| `super + {_,shift} + p`                        | Dmenu {launcher, launch inside wezterm}                    |
+| `super + {_,shift} + r`                        | open LF as {current user,root}                             |
+| `super + {_,shift} + w`                        | Open/close google-chrome                                   |
 
 </details>
 

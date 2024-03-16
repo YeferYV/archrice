@@ -1,9 +1,9 @@
 #
-# wm independent hotkeys
+# reopen/reload
 #
 
 # terminal emulator
-mod4 + {_, ctrl, ctrl + shift, ctrl + alt, shift, alt, shift + alt } + Return
+super + {_, ctrl, ctrl + shift, ctrl + alt, shift, alt, shift + alt } + Return
 	{ \
 		$TERMINAL; \
 	, bspc node -p west  -o 0.6 && $TERMINAL; \
@@ -13,10 +13,6 @@ mod4 + {_, ctrl, ctrl + shift, ctrl + alt, shift, alt, shift + alt } + Return
 	, bspc rule -a \* -o state=floating && wezterm --config initial_rows=34 --config initial_cols=135; \
   , wezterm --config window_background_opacity=0.0 --config text_background_opacity=0.3; \
 	}
-
-# terminal emulator
-mod1 + {_, shift, ctrl, shift + ctrl} + Return
-  {neovide, kitty, cool-retro-term -e tmux, alacritty -e tmux}
 
 # dunst close/reopen notification
 ctrl + {_, shift} + Return
@@ -34,184 +30,103 @@ super + shift + Escape
 # Tabbed windows
 #
 
-# add to tabbed container
-super + alt + {Left,Down,Up,Right}
-  tabc attach $(bspc query -N -n) {$(bspc query -N -n west),$(bspc query -N -n south),$(bspc query -N -n north),$(bspc query -N -n east)}
+# # add to tabbed container
+# super + control + b; {Left,Down,Up,Right}
+#   tabc attach $(bspc query -N -n) {$(bspc query -N -n west),$(bspc query -N -n south),$(bspc query -N -n north),$(bspc query -N -n east)}
+#
+# # create/remove from tabbed container
+# super + control + b; {c,r}
+#   id=$(bspc query -N -n); \
+#   [[ "$(tabc printclass $id)" == "tabbed" ]] \
+#   && tabc detach $id \
+#   || tabc create $id
+#
+# # toggle autoattach in tabbed container
+# super + control + b; a
+#   tabc autoattach $(bspc query -N -n)
 
-# create/remove from tabbed container
-super + z
-  id=$(bspc query -N -n); \
-  [[ "$(tabc printclass $id)" == "tabbed" ]] \
-  && tabc detach $id \
-  || tabc create $id
+# #
+# # preselect
+# #
+#
+# # preselect the ratio
+# super + control + e; {1-9}
+# 	bspc node -o 0.{1-9}
+#
+# # preselect the direction
+# super + control + e; {h,j,k,l}
+# 	bspc node -p {west,south,north,east}
+#
+# # cancel the preselection for the focused node/desktop
+# super + control + e; {c, shift + c}
+#   { \
+# 	  bspc node -p cancel \
+# 	, bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel \
+#   }
+#
+# # send the newest marked node to the newest preselected node
+# super + control + e; n
+# 	bspc node newest.marked.local -n newest.!automatic.local
 
-# toggle autoattach in tabbed container
-super + shift + z
-  tabc autoattach $(bspc query -N -n)
+# #
+# # Receptacles
+# #
+#
+# # Move new node to receptacle automatically
+# super + control + l; {m, shift + m}
+#   { $HOME/.config/bspwm/bspsubscribe, killall bspsubscribe }
+#
+# # Close all receptacle
+# super + control + l; c
+#   for win in `bspc query -N -n .leaf.\!window`; do bspc node $win -k ; done;
+#
+# # Insert receptacle
+# super + control + l; {h,j,k,l}
+#   bspc node --presel-dir {west,south,north,east} -i
+#
+# # Move to receptacle
+# super + control + l; m
+# 	ID=$(bspc query -N -n) \
+# 	bspc node $ID -n $(bspc query -N -n .leaf.\!window)
 
 #
-# bspwm hotkeys
+# windows flags/state
 #
 
-# quit/restart bspwm
-super + alt + {q,r}
-	bspc {quit,wm -r}
-
-# close and kill window
-super + {_,shift +} x
+# close/kill window
+super + {_, shift} + x
 	bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
-super + m
+super + control + f; m
 	bspc desktop -l next
 
-# send the newest marked node to the newest preselected node
-super + ctrl + u
-	bspc node newest.marked.local -n newest.!automatic.local
-
-# swap the current node and the biggest window
-super + g
-	bspc node -s biggest.window
-
-#
-# state/flags
-#
+# quit/restart bspwm
+super + control + f; {q,r}
+	bspc {quit,wm -r}
 
 # set the window state
-super + {t,shift + t,d,e}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + control + f; {t,p,f,shift+f}
+	bspc node -t {tiled,pseudo_tiled,fullscreen,floating}
 
 # set the node flags
-super + ctrl + {m,x,y,z,slash}
+super + control + f; {shift + m,l,s,p,h}
 	bspc node --flag {marked,locked,sticky,private,hidden}
 
 # show hidden nodes one by one
-super + ctrl + shift + slash
+super + control + f; {plus}
   bspc node $(bspc query -N -n .hidden.local.window | head -n1) --flag hidden=off
   # bspc node $(bspc query -N -n .hidden -d focused | head -n1) --flag hidden=off # show all hidden nodes
 
-# set/reset virtual monitor (to the left corner)
-super + ctrl + v
-  xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
-  { \
-    bspc wm --add-monitor eDP-2 $((W/2))x$((H))+0+0; \
-    bspc monitor eDP-1 --rectangle $((W/2))x$((H))+$((W/2))+0; \
-  , bspc monitor eDP-1 --rectangle $((W))x$((H))+0+0; \
-    bspc monitor eDP-2 --remove; \
-  }
-
 #
-# focus/swap
+# Rofi
 #
 
-# focus the node in the given direction
-super + {h,j,k,l}
-	{ DIR=west FALLBACK=prev; , DIR=south; , DIR=north; , DIR=east FALLBACK=next; } \
-	bspc node -f $DIR.!sticky.!hidden || bspc node -f $FALLBACK.leaf.!sticky.!hidden
-	# bspc node -f $DIR.!marked || bspc node -f $FALLBACK.leaf.!marked   # for manually marked windows
-	# bspc node -f $DIR.!private || bspc node -f $FALLBACK.leaf.!private # for floating windows
-	# bspc node -f $DIR || bspc node -f $FALLBACK.leaf
-	# bspc node -f $DIR || bspc node -f $FALLBACK.window
-
-# Swap focused window with the one in the given direction
-super + shift + {h,j,k,l}
-  $HOME/.config/bspwm/bspwm_smart_move {west,south,north,east}
-
-# focus the node for the given path jump
-super + ctrl + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
-
-# focus the next/previous window in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local.!hidden.window
-
-# focus the next/previous desktop in the current monitor
-super + {s,f}
-	bspc desktop -f {prev,next}.local
-
-# swap the next/previous desktop in the current monitor
-super + shift + {s,f}
-	bspc desktop -s {prev,next}.local
-
-# no/reset gaps size
-super + bracketleft
-	{ \
-		bspc config window_gap 0 & bspc config border_width 1; \
-	, bspc config window_gap 12 & bspc config border_width 1; \
-	}
-
-# no/reset gaps size
-super + bracketright
-	{ \
-		bspc config window_gap 0 & bspc config border_width 2; \
-	, bspc config window_gap 12 & bspc config border_width 2; \
-	}
-
-# Increase/descrease gap size
-super + shift + bracket{left,right}
-	bspc config window_gap $(($(bspc config window_gap) {+,-} 1))
-
-# Increase/descrease gap size
-super + ctrl + bracket{left,right}
-	bspc config window_gap $(($(bspc config window_gap) {+,-} 2))
-
-# toggle node border
-super + apostrophe
-	bspc config -n focused border_width {0,1}
-
-# toggle node border
-super + backslash
-	bspc config -n focused border_width {0,2}
-
-# toggle desktop border
-super + shift + apostrophe
-  bspc config -d focused border_width {0,1}
-
-# toggle desktop border
-super + shift + backslash
-  bspc config -d focused border_width {0,2}
-
-# toggle singleton border
-super + ctrl + apostrophe
-  bspc config borderless_singleton {true,false}
-
-# toggle gaps
-super + ctrl + backslash
-	{ \
-		bspc config window_gap -1 & bspc config border_width 1; \
-	, bspc config window_gap 12 & bspc config border_width 2; \
-	}
-
-
-# rofi drun (dmenu for .desktop apps)
-super + ctrl + d
-  A='rofimoji --action clipboard copy print --files fontawesome nerd_font gitmoji emojis latin-1'; \
-  COL=10 \
-  ICON=10% \
-  ENTRY=true \
-  SWITCHER=true \
-  rofi -modi "window,run,drun,emoji:$A,ssh" -show drun
-
-# rofi emoji
-super + {alt,ctrl} + e
-  rofimoji \
-    --action clipboard copy print \
-    { \
-      --selector-args="-theme ~/.config/rofi/unicode.rasi -theme-str 'window \{width:90%; height:50%;\}' " \
-      --files all \
-    , --selector-args="-theme ~/.config/rofi/unicode.rasi" \
-      --files fontawesome nerd_font gitmoji emojis latin-1 \
-    }
-
-# focus the last node
-{shift + space, super + semicolon}
-	bspc node -f last
-
-# fzf alt-tab
-super + alt + z
-  bspc rule -a \* -o state=floating && \
-  wezterm start --always-new-process -- bash -c \
-  'test=$(fzf < <((xdo id -D & xdo id -d) | xargs -I var xprop -id var _NET_WM_NAME | cut -d"\"" -f2)) && xdo activate $( xdo id -a "$test");'
+# # fzf alt-tab
+# super + tab
+#   bspc rule -a \* -o state=floating && \
+#   wezterm start --always-new-process -- bash -c \
+#   'test=$(fzf < <((xdo id -D & xdo id -d) | xargs -I var xprop -id var _NET_WM_NAME | cut -d"\"" -f2)) && xdo activate $( xdo id -a "$test");'
 
 # rofi alt-tab
 alt + Tab
@@ -228,79 +143,164 @@ alt + Tab
   xdotool keyup Tab;\
   xdotool key Tab;
 
+# rofi drun (dmenu for .desktop apps)
+super + control + r; d
+  A='rofimoji --action clipboard copy print --files fontawesome nerd_font gitmoji emojis latin-1'; \
+  COL=10 \
+  ICON=10% \
+  ENTRY=true \
+  SWITCHER=true \
+  rofi -modi "window,run,drun,emoji:$A,ssh" -show drun
+
+# rofi emoji
+super + control + r; {e, shift + e}
+  rofimoji \
+    --action clipboard copy print \
+    { \
+      --selector-args="-theme ~/.config/rofi/unicode.rasi" \
+      --files fontawesome nerd_font gitmoji emojis latin-1 \
+    , --selector-args="-theme ~/.config/rofi/unicode.rasi -theme-str 'window \{width:90%; height:50%;\}' " \
+      --files all \
+    }
+
+#
+# swap/focus window
+#
+
+# focus or send to the given desktop
+super + {_,shift} + {1-9,0,minus,equal}
+	bspc {desktop -f,node -d} '^{1-9,10,11,12}'
+
 # focus the last node/desktop
-super + {Tab,grave}
-	bspc {node,desktop} -f last
+super + {semicolon,grave}
+	bspc {node,desktop} --focus last
 
-# swap the last desktop
-super + shift + {Tab,grave}
-	bspc {node,desktop} -s last
+# swap the last node/desktop
+super + shift + {semicolon,grave}
+	bspc node --focus last && \
+	bspc {node,desktop} --swap last
 
-# swap the last node
-super + space
-	bspc node -f {last}.local.!hidden.window && \
-	bspc node -s last
-	# bspc node -s {last}.local.!hidden.window
+# focus the next/previous window in the current desktop
+super + {_, shift} + c
+	bspc node -f {next,prev}.local.!hidden.window
+
+# focus the node in the given direction
+super + {h,j,k,l}
+	{ DIR=west FALLBACK=prev; , DIR=south; , DIR=north; , DIR=east FALLBACK=next; } \
+	bspc node -f $DIR.!sticky.!hidden || bspc node -f $FALLBACK.leaf.!sticky.!hidden
+	# bspc node -f $DIR.!marked || bspc node -f $FALLBACK.leaf.!marked   # for manually marked windows
+	# bspc node -f $DIR.!private || bspc node -f $FALLBACK.leaf.!private # for floating windows
+	# bspc node -f $DIR || bspc node -f $FALLBACK.leaf
+	# bspc node -f $DIR || bspc node -f $FALLBACK.window
+
+# Swap focused window with the one in the given direction
+super + shift + {h,j,k,l}
+  $HOME/.config/bspwm/bspwm_smart_move {west,south,north,east}
+
+# focus the next/previous desktop in the current monitor
+super + {s,f}
+	bspc desktop -f {prev,next}.local
+
+# swap the next/previous desktop in the current monitor
+super + shift + {s,f}
+	bspc desktop -s {prev,next}.local
+
+# swap the current node and the biggest window
+super + control + s; shift + b
+	bspc node -s biggest.window
+
+# focus the node for the given path jump
+super + control + s; {p,b,f,s}
+	bspc node -f @{parent,brother,first,second}
+
+# Increase/descrease gap size
+super + control + s; {minus,plus}
+	bspc config window_gap $(($(bspc config window_gap) {-,+} 1))
 
 # focus the older or newer node in the focus history
-super + {o,i}
+super + control + s; {o,n}
 	bspc wm -h off; \
 	bspc node {older,newer} -f; \
 	bspc wm -h on
 
-# focus or send to the given desktop
-super + {_,shift + }{1-9,0,minus,equal}
-	bspc {desktop -f,node -d} '^{1-9,10,11,12}'
-
 # rotate focused tree CCW/CW
-super + control + {_,shift +} r
+super + control + s; {r, shift + r}
 	bspc node @focused:/ -C {forward,backward}
 
-# Rotate the current nodes parent
-super + control + {Right, Left}
+# Rotate the current parent nodes
+super + control + s; {Right, Left}
 	bspc node @parent --rotate {90,270}
 
-# rotate the current node focused
-super + control + {Down, Up}
+# Rotate the current focused nodes
+super + control + s; {Down, Up}
 	bspc node @focused:/ -R {90,270}
 
 #
-# preselect
+# Toggles
 #
 
-# preselect the direction
-super + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
+# toggle polybar
+super + control + t; space
+	polybar-msg cmd toggle; bspc config top_padding {0,18}
 
-# preselect the ratio
-super + ctrl + {1-9}
-	bspc node -o 0.{1-9}
+# toggle node border (width 1)
+super + control + t; n
+	bspc config -n focused border_width {0,1}
 
-# cancel the preselection for the focused node
-super + ctrl + space
-	bspc node -p cancel
+# toggle node border (width 2)
+super + control + t; shift + n
+	bspc config -n focused border_width {0,2}
 
-# cancel the preselection for the focused desktop
-super + ctrl + shift + space
-	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+# toggle desktop border (width 1)
+super + control + t; d
+  bspc config -d focused border_width {0,1}
+
+# toggle desktop border (width 2)
+super + control + t; shift + d
+  bspc config -d focused border_width {0,2}
+
+# toggle singleton border
+super + control + t; s
+  bspc config borderless_singleton {true,false}
+
+# toggle gaps (no border)
+super + control + t; g
+	{ \
+		bspc config window_gap -1 & bspc config border_width 1; \
+	, bspc config window_gap 12 & bspc config border_width 2; \
+	}
+
+# toggle gaps (border_width 1)
+super + control + t; 1
+	{ \
+		bspc config window_gap 0 & bspc config border_width 1; \
+	, bspc config window_gap 12 & bspc config border_width 1; \
+	}
+
+# toggle gaps (border_width 1)
+super + control + t; 2
+	{ \
+		bspc config window_gap 0 & bspc config border_width 2; \
+	, bspc config window_gap 12 & bspc config border_width 2; \
+	}
 
 #
-# move/resize
+# move/resize windows
 #
 
 # balance desktop's nodes
-super + v
+super + control + w; b
   bspc node @/ -B
 
 # increase/decrease window size (zoom in/out)
-super + alt + {i,o}
+super + control + w; {minus,plus}
 	{ \
 	  xdotool getactivewindow windowmove --relative -- -50 -25 ; xdo resize -w +100 -h +50; \
 	, xdotool getactivewindow windowmove --relative -- +50 +25 ; xdo resize -w -100 -h -50; \
 	}
 
 # hover window to left/down/up/right
-super + alt + shift + {u,i,o,p}
+super + control + w; {h,j,k,l}
   POLYBAR=18; \
   BORDER=4; \
 	bspc config -n focused border_width 2; \
@@ -314,19 +314,19 @@ super + alt + shift + {u,i,o,p}
   xdo move -x $x -y $y; xdo resize -w $w -h $h
 
 # move floating window by 10px
-super + alt + {h,j,k,l}
+super + control + w; shift + {h,j,k,l}
 	bspc node -v {-10 0,0 10,0 -10,10 0}
 
 # hover window to corner
-super + alt + shift + {h,j,k,l}
+super + control + w; {Left, Down, Up, Right}
   hover {left,down,up,right}
 
 # xdo resize (small/medium)
-super + alt + {_,shift + } n
+super + control + w; {s,m}
   xdo resize {-w 800 -h 600, -w 681 -h 382}
 
 # xdo fixedscreen 1366x768 (fullscreen no visible borders)
-super + ctrl + {_,shift + } n
+super + control + w; {f, shift + f}
 	bspc config -n focused border_width 0; \
   xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
 	{ \
@@ -336,7 +336,7 @@ super + ctrl + {_,shift + } n
 	xdo move -x $x -y $y; xdo resize -w $w -h $h;
 
 # xdo fixedscreen 1366x768 (min-max window)
-super + {_,shift + }n
+super + control + w; {m, shift + m}
 	bspc config -n focused border_width 2; \
   xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
 	{ \
@@ -346,45 +346,8 @@ super + {_,shift + }n
 	xdo move -x $x -y $y; xdo resize -w $w -h $h;
 
 #
-# status bar
+# Smart resize
 #
-
-# toggle polybar
-super + shift + space
-	polybar-msg cmd toggle; bspc config top_padding {0,18}
-
-#
-# receptacles
-#
-
-# Move new node to receptacle automatically
-super + {_,shift +}y
-  { $HOME/.config/bspwm/bspsubscribe, killall bspsubscribe }
-
-# Close all receptacle
-super + shift + o
-  for win in `bspc query -N -n .leaf.\!window`; do bspc node $win -k ; done;
-
-# Insert receptacle
-super + shift + i; {h,j,k,l}
-  bspc node --presel-dir {west,south,north,east} -i
-
-# Move to receptacle
-super + shift + u
-	ID=$(bspc query -N -n) \
-	bspc node $ID -n $(bspc query -N -n .leaf.\!window)
-
-#
-# sxhkd wiki
-#
-
-# resize west,south,north,east by 0-9 percentage range
-super + alt + control + {h,j,k,l} ; {0-9}
-	bspc node @{west,south,north,east} -r 0.{0-9}
-
-# toggle focus_follows_pointer
-super + alt + control + p
-	bspc config focus_follows_pointer {true,false}
 
 # Smart resize, will grow or shrink depending on location.
 # Will always grow for floating nodes.
@@ -412,10 +375,6 @@ super + shift + {Left,Down,Up,Right}
 ########################################
 ###      alphabetic_hotkeys          ###
 #######################################
-
-# signs
-#F{1,2,3,4,5,6,7,8,9,10}
-#	xdotool key {exclam,at,numbersign,dollar,percent,asciicircum,ampersand,asterisk,parenleft,parenright}
 
 # super volume
 super + XF86Audio{Raise,Lower}Volume
@@ -454,11 +413,11 @@ super + KP_{Right,Begin,Left}
   playerctl --player=chromium {next,play-pause,previous}
 
 # mpv next-toggle-prev
-mod1 + KP_{Right,Begin,Left}
+alt + KP_{Right,Begin,Left}
   playerctl --player=mpv {next,play-pause,previous}
 
 # mpv vol (down,up)
-mod1 + KP_{Down,Up}
+alt + KP_{Down,Up}
 	{ \
 	  playerctl --player=mpv volume 0.1-; \
 	, [[ "$(playerctl -p mpv volume)" < 1 ]]&& playerctl --player=mpv volume 0.1+; \
@@ -468,20 +427,12 @@ mod1 + KP_{Down,Up}
 KP_{Right,Begin,Left,Down,Up}
   mpc --port=6601 {next,toggle,prev,volume -2,volume +2}
 
-# mpc next-toggle-prev
-mod1 + XF86Audio{RaiseVolume,Mute,LowerVolume}
-  mpc --port=6601 {next,toggle,prev}
-
 # screenshot (fullscreen,_)
-{super,alt} + Print
+{Print, super + Print}
 	maimpick {fullscreen,_}
 
-# redshift
-mod1 + ctrl + {1,2,3,4,5}
-  redshift {-x, -O 2222, -O 3333, -O 4444, -O 5555}
-
 # compositor wallpaper background
-super + BackSpace
+super + control + c; w
 	{\
 		picom --transparent-clipping \
 		      --shadow-radius=10 \
@@ -499,7 +450,7 @@ super + BackSpace
 	}
 
 # compositor blur background
-super + alt + BackSpace
+super + control + c; b
 	{ \
 	  picom --blur-method="dual_kawase" \
 	        --backend="glx" \
@@ -512,57 +463,55 @@ super + alt + BackSpace
 	}
 
 # compositor keep background
-super + ctrl + BackSpace
+super + control + c; k
 	{picom --fade-delta=0, killall picom}
 
 # compositor no shadow
-super + shift + BackSpace
+super + control + c; s
 	{picom --shadow-opacity=0 --transparent-clipping --fade-delta=0, killall picom}
 
 # compositor decrease/increase transparency (picom-trans requires xorg-xwininfo)
-super + ctrl + {minus,equal}
+super + control + c; {minus,plus}
   xdo id -d -c | xargs -I id -n 1 picom-trans -w id {-2,+4}
   # bspc query -N -d | xargs -I id -n 1 picom-trans -w id {-2,+4}
   # xdo pid $ID  		# xdotool getactivewindow getwindowpid
   # xdo id -p $PID  # xdotool getactivewindow
 
-# TextToSpeech
-super + {_,shift,ctrl} + Next
-  {xclip -o | mimic, xsel -b | festival --tts, killall mimic festival}
+# Nightlight temperature
+super + control + n; {1,2,3,4,5}
+  redshift {-x, -O 2222, -O 3333, -O 4444, -O 5555}
 
-# browser media
-super + shift + b
-  wezterm start ncmpcpp
-
-# dmenu launcher
-super + {_,shift +,alt +} p
-	{ \
-		dmenu_run; \
-	, wezterm start $(dmenu_path | dmenu); \
-  , source $HOME/.config/shell/aliasrc && \
-		alias | dmenu -i -l 10 | awk -F'=' '\{print $2\}' | xargs -I_ wezterm start -- bash -c "_"; \
-	}
-
-# lf user/root
-super + {_,shift +} r
-	{LF_CD=true wezterm, sudo -i LF_CD=true LS_COLORS="" $TERMINAL}
-
-# browser
-super + {_,shift +} w
-  { google-chrome-stable --process-per-tab || google-chrome --process-per-tab, killall chrome}
-  # { google-chrome-stable --process-per-site, killall chrome}
-
-# toggle background
-super + alt + ctrl + w
+# toggle terminal background
+super + control + p; t
   (printf "\x1b]11;{#0c0c0c,#000000}\x1b\\\\") > $(find /dev/pts -iname '[0-9]')
 
 # pywal offline wallpaper
-super + alt + {_, shift +} w
+super + control + p; o
   wal --cols16 -s -e -i { "$HOME/bgs/bgi/eyelust/eyelust", "/tmp/pywal" } -o ~/.config/wal/postrun
 
 # pywal online wallpaper
-super + ctrl + {_, shift +} w
+super + control + p; {w,r}
   { curl -s "https://wallhaven.cc/api/v1/search?sorting=toplist&page=$(shuf --head-count=1 --input-range=1-10)" | jq ".data[$(shuf --head-count=1 --input-range=1-24)].path" | xargs curl -LO --output-dir /tmp/pywal --create-dirs;\
   , curl -H "User-agent: 'your bot 0.1'" "https://www.reddit.com/r/wallpaper.json?limit=100" | jq ".data.children[$(shuf --head-count=1 --input-range=1-100)].data.url_overridden_by_dest" | xargs curl -LO --output-dir /tmp/pywal --create-dirs;\
   } wal --iterative --cols16 -s -i /tmp/pywal;
-  # curl -s "https://wallhaven.cc/api/v1/search?sorting=random&q=4k" | jq '.data[0].path' | xargs curl -LO --output-dir /tmp/pywal --create-dirs; \
+  # curl -s "https://wallhaven.cc/api/v1/search?sorting=random&q=4k" | jq '.data[0].path' | xargs curl -LO --output-dir /tmp/pywal --create-dirs;
+
+# dmenu launcher
+super + {_, shift} + p
+	{ \
+		dmenu_run; \
+	, wezterm start $(dmenu_path | dmenu); \
+	}
+
+# lf user/root
+super + {_, shift} + r
+	{LF_CD=true wezterm, sudo -i LF_CD=true LS_COLORS="" $TERMINAL}
+
+# browser
+super + {_, shift} + w
+  { google-chrome --process-per-tab || google-chrome-stable --process-per-tab, killall chrome}
+  # { google-chrome-stable --process-per-site, killall chrome}
+
+# # TextToSpeech
+# super + control + x; {m,f}
+#   {xclip -o | mimic, xsel -b | festival --tts, killall mimic festival}
