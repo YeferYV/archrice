@@ -1,5 +1,4 @@
-<div align="center">
-    <img src="screenshot.png" alt="screenshot">
+<div align="center">    <img src="screenshot.png" alt="screenshot">
     <div align="left">
     <b> arch linux rice with: </b>
     <li> neovim text objects from A-Z based on <a href="https://github.com/LunarVim/Neovim-from-scratch">neovim-from-scratch</a> </li>
@@ -30,7 +29,7 @@
    - [Neovim text object that starts with a/i](#neovim-text-object-that-starts-with-ai)
    - [Neovim text object that starts with g](#neovim-text-object-that-starts-with-g)
    - [Neovim Motions and Operators](#neovim-motions-and-operators)
-   - [Neovim Space TextObjects/Motions](#neovim-textobject-motions)
+   - [Neovim Space TextObjects/Motions](#neovim-space-textobject-motions)
    - [Neovim Mini.brackets](#neovim-minibrackets)
 2. Neovim Goto
    - [Neovim Go to Previous](#neovim-go-to-previous)
@@ -50,7 +49,7 @@
 7. [BSPWM Window Manager](#bspwm-window-manager)
 8. [Touchcursor-like Keyboard Layout](#touchcursor-like-keyboard-layout)
 9. Installation
-   - [Dependencies Installation](#dependencies-installation)
+   - [Dependencies Installation](#installation)
    - [Treesitter Installation](#treesitter-installation)
 10. [Vim Cheatsheets](#vim-cheatsheets)
 11. [Related projects](#related-projects)
@@ -95,7 +94,7 @@
 |             `iQ`, `aQ`             |     `.`      |         yes          | @Class                 | inside of a class                                                                         | outer includes class declaration                                              |
 |             `ir`, `ar`             |     `.`      |                      | restOfIndentation      | lines down with same or higher indentation                                                | outer: restOfParagraph                                                        |
 |             `iR`, `aR`             |     `.`      |         yes          | @Return                | inside of a Return clause                                                                 | outer includes the `return                                                    |
-|             `is`, `as`             |     `.`      |                      | \_sentence             | inside mini.ai text object (todo: overwrite it with the original sentence textobj)        | outer line wise                                                               |
+|             `is`, `as`             |     `.`      |                      | \_sentence             | inside mini.ai text object (`vi.` for sentence textobj)                                   | outer line wise                                                               |
 |             `iS`, `aS`             |     `.`      |                      | subword                | like `iw`, but treating `-`, `_`, and `.` as word delimiters _and_ only part of camelCase | outer includes trailing `_`,`-`, or space                                     |
 |             `it`, `at`             |     `.`      |         yes          | \_tag                  | inside of a html/jsx tag                                                                  | outer includes openning and closing tags                                      |
 |             `iu`, `au`             |     `.`      |         yes          | \_quotes               | inside of `` '' ""                                                                        | outer includes openning and closing quotes                                    |
@@ -105,7 +104,7 @@
 |             `iW`, `aW`             |     `.`      |                      | \_WORD                 | from cursor to end of WORD (includes punctuation)                                         | outer includes start of word                                                  |
 |             `ix`, `ax`             |     `.`      |         yes          | \_Hex                  | hexadecimal number or color                                                               | outer includes hash `#`                                                       |
 |             `iy`, `ay`             |     `.`      |                      | same_indent            | surrounding lines with only same indentation (delimited by blankspaces)                   | outer includes blankspaces                                                    |
-|             `iz`, `az`             |     `.`      |                      | fold                   | inside folds without line above neither below                                             | outer includes line above andd below                                          |
+|             `iz`, `az`             |     `.`      |                      | @fold                  | inside folds without line above neither below                                             | outer includes line above andd below                                          |
 |             `iZ`, `aZ`             |     `.`      |         yes          | closedFold             | closed fold                                                                               | outer includes one line after the last folded line                            |
 |             `i=`, `a=`             |     `.`      |         yes          | @Assignment.rhs-lhs    | assignmentt right and left without type keyword neither semicolons                        | inner: left assignment, outer: right assignment                               |
 |             `i#`, `a#`             |     `.`      |         yes          | @Number                | like `_number` but treesitter aware                                                       | inner and outer are the same (only pure digits)                               |
@@ -114,7 +113,7 @@
 |       `i[`, `i]`, `a[`, `a]`       |     `.`      |         yes          | `[` or `]`             | inside `[]`                                                                               | outer includes surroundings                                                   |
 |       `i{`, `i}`, `a{`, `a}`       |     `.`      |         yes          | `{` or `}`             | inside `{}`                                                                               | outer includes surroundings                                                   |
 |       `i<`, `i>`, `a<`, `a>`       |     `.`      |         yes          | `<` or `>`             | inside `<>`                                                                               | outer includes surroundings                                                   |
-|              i\`, a\`              |     `.`      |         yes          | apostrophe             | inside ``                                                                                 | outer includes surroundings                                                   |
+|         `` i` ``, `` a` ``         |     `.`      |         yes          | apostrophe             | inside `` ` ` ``                                                                          | outer includes surroundings                                                   |
 |             `i'`, `a'`             |     `.`      |         yes          | `'`                    | inside `''`                                                                               | outer includes surroundings                                                   |
 |             `i"`, `a"`             |     `.`      |         yes          | `"`                    | inside `""`                                                                               | outer includes surroundings                                                   |
 |             `i.`, `a.`             |     `.`      |         yes          | `.`                    | inside `..`                                                                               | outer includes surroundings                                                   |
@@ -328,8 +327,8 @@
 | `<space><space>{`  | `n`,`x`,`o` | Prev Blankline                             |                                               `;`forward `,`backward                                               |
 | `<space><space>)`  | `n`,`x`,`o` | Next Paragraph                             |                                               `;`forward `,`backward                                               |
 | `<space><space>(`  | `n`,`x`,`o` | Prev Paragraph                             |                                               `;`forward `,`backward                                               |
-| `<space><space>]`  | `n`,`x`,`o` | End Fold                                   |                                               `;`forward `,`backward                                               |
-| `<space><space>[`  | `n`,`x`,`o` | Start Fold                                 |                                               `;`forward `,`backward                                               |
+| `<space><space>]`  | `n`,`x`,`o` | @End_of_fold                               |                                               `;`forward `,`backward                                               |
+| `<space><space>[`  | `n`,`x`,`o` | @Start_of_fold                             |                                               `;`forward `,`backward                                               |
 | `<space><space>+`  | `n`,`x`,`o` | next startline                             |                                               `;`forward `,`backward                                               |
 | `<space><space>-`  | `n`,`x`,`o` | Prev StartLine                             |                                               `;`forward `,`backward                                               |
 | `<space><space>p`  |   `n`,`x`   | Paste after (secondary clipboard)          |                                                        `.`                                                         |
@@ -418,8 +417,6 @@
 | `gpan` | `n`,`o`,`x` | outer \_number        | `;`forward `,`backward |
 | `gpau` | `n`,`o`,`x` | outer \_quote         | `;`forward `,`backward |
 | `gpax` | `n`,`o`,`x` | outer \_Hex           | `;`forward `,`backward |
-| `gpz`  | `n`,`o`,`x` | Previous Start Fold   | `;`forward `,`backward |
-| `gpZ`  | `n`,`o`,`x` | Prev scope            | `;`forward `,`backward |
 | `gpiB` | `n`,`o`,`x` | @block.inner          | `;`forward `,`backward |
 | `gpiq` | `n`,`o`,`x` | @call.inner           | `;`forward `,`backward |
 | `gpiQ` | `n`,`o`,`x` | @class.inner          | `;`forward `,`backward |
@@ -465,8 +462,6 @@
 | `gnan` | `n`,`o`,`x` | outer \_number        | `;`forward `,`backward |
 | `gnau` | `n`,`o`,`x` | outer \_quote         | `;`forward `,`backward |
 | `gnax` | `n`,`o`,`x` | outer \_Hex           | `;`forward `,`backward |
-| `gnz`  | `n`,`o`,`x` | Next Start Fold       | `;`forward `,`backward |
-| `gnZ`  | `n`,`o`,`x` | Next scope            | `;`forward `,`backward |
 | `gniB` | `n`,`o`,`x` | @block.inner          | `;`forward `,`backward |
 | `gniq` | `n`,`o`,`x` | @call.inner           | `;`forward `,`backward |
 | `gniQ` | `n`,`o`,`x` | @class.inner          | `;`forward `,`backward |
@@ -616,7 +611,7 @@
 |       `R`        | refresh                                                       |
 |       `T`        | open_tabdrop_showbuffer                                       |
 |       `U`        | ueberzug_open_vertical                                        |
-|       `V`        | <function>                                                    |
+|       `V`        | open on horizontal split and close file explorer              |
 |       `Z`        | expand_all_nodes                                              |
 |       `[g`       | prev_git_modified                                             |
 |       `\`        | sixel_open_float                                              |
@@ -1052,11 +1047,16 @@ sudo ARCH_USER=user ./RiceArch                # to configure arch linux (change 
 
 <details open><summary></summary>
 
-Text objects that has `@` requires treesitter, archrice's neovim's configs installs by default treesitters for
+Text objects that has a `@` prefix requires a treesitter-grammar, archrice's neovim's configs installs by default treesitter-grammars for
 `python`, `bash`, `javascript`, `json`, `html`, `css`, `c`, `lua`.
-Install treesitter for your programming language with `:TSInstall <your programming language>`.
+Install treesitter-grammar for your programming language with `:TSInstall <your programming language>`.
 
-example: in normal mode type `:` to open vim-command-line then type `TSInstall cpp` (cpp requires a cpp compiler)
+example: in normal mode type `:` to open vim-command-line then type `TSInstall cpp` (cpp treesitter-grammar requires a cpp compiler)
+
+recommended: for new archrice releases update neovim extensions with `:Lazy update` then update all the treesitter-grammars with `:TSUpdate` then relaunch neovim
+(just in case you find warnings or text-object not working as previous release)
+
+tip: to make a clean neovim-extensions/tressitter-grammar installation remove the folder `rm -r -force ~/.local/share/nvim` and relaunch neovim
 
 </details>
 
@@ -1066,6 +1066,11 @@ example: in normal mode type `:` to open vim-command-line then type `TSInstall c
 
 - [devhints.io/vim](https://devhints.io/vim)
 - [viemu.com](http://www.viemu.com/a_vi_vim_graphical_cheat_sheet_tutorial.html)
+- [vscode with embedded neovim](https://www.youtube.com/watch?v=g4dXZ0RQWdw) youtube tutorial most of the keybindings are similar to archrice's neovim
+- [treesitter text-objects demo](https://www.youtube.com/watch?v=FuYQ7M73bC0) youtube tutorial the keybindings are similar to archrice's neovim
+- [treesitter text-objects extended](https://www.youtube.com/watch?v=CEMPq_r8UYQ) youtube tutorial the keybindings are similar to archrice's neovim
+- [text-objects from A-Z](https://www.youtube.com/watch?v=JnD9Uro_oqc) youtube tutorial the keybindings are similar to archrice's neovim
+- [motion-operators from A-Z](https://www.youtube.com/watch?v=HhZJ1kbzkj0) youtube tutorial the keybindings are the same as to archrice's neovim
 
 </details>
 
@@ -1074,7 +1079,7 @@ example: in normal mode type `:` to open vim-command-line then type `TSInstall c
 <details open><summary></summary>
 
 - [yeferyv/retronvim](https://github.com/yeferyv/retronvim) vscode extension with neovim text objects from A-Z + LSP whichkey + touchcursor keyboard layout
-- [yeferyv/archrice](https://github.com/yeferyv/sixelrice) arch linux rice with neovim text object from A-Z, based on [lazyvim](https://github.com/LazyVim/LazyVim)
+- [yeferyv/sixelrice](https://github.com/yeferyv/sixelrice) neovim text object from A-Z, based on [lazyvim](https://github.com/LazyVim/LazyVim)
 - [yeferyv/dotfiles](https://github.com/yeferyv/dotfiles) my dotfiles (minimal archrice + keybindings for managing windows in any desktop environment) with archlinux, debian and windows support/installer
 - [LukeSmithxyz/voidrice](https://github.com/LukeSmithxyz/voidrice) arch linux rice with dwm + lf [see dependencies](https://github.com/LukeSmithxyz/LARBS/blob/master/static/progs.csv)
 
