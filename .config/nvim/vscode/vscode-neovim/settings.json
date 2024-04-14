@@ -86,11 +86,12 @@
 
       // "editorCursor.background": "#555555",
       // "editorCursor.foreground": "#aaaaaa",
-      "editorGroup.border": "#55555555",
+      "editor.lineHighlightBackground": "#00000000",
       "editor.selectionBackground": "#55555555",
       "editor.selectionHighlightBackground": "#33333333", // references highlights
       "editor.wordHighlightStrongBackground": "#33333333",
       "editor.wordHighlightBackground": "#33333333",
+      "editorGroup.border": "#55555555",
       "editorLineNumber.foreground": "#55555555",
       "editorSuggestWidget.background": "#0a0b0a", // suggestion background including preview
       "editorSuggestWidget.border": "#181818", // suggestion border
@@ -124,6 +125,8 @@
       "terminal.ansiYellow": "#bbbb00"
     },
     "[Tokyo Night Dark][Poimandres Alternate]": {
+      "editor.lineHighlightBackground": "#00000000",
+      "editor.lineHighlightBorder": "#55555555",
       "editorGroup.border": "#252525",
       "editorOverviewRuler.border": "#252525",
       "editorSuggestWidget.selectedBackground": "#55555555", // suggestion selected
@@ -234,6 +237,8 @@
   "files.exclude": { "node_modules": true },
   "material-icon-theme.folders.color": "#A1A1A1",
   "material-icon-theme.folders.theme": "specific",
+  // "screencastMode.fontSize": 30,
+  // "screencastMode.keyboardOptions": { "showCommands": false },
   "scm.alwaysShowActions": true,
   "search.defaultViewMode": "tree",
   "security.workspace.trust.untrustedFiles": "open",
