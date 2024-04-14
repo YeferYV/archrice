@@ -161,7 +161,7 @@ local plugins = {
   -- { "godlygeek/tabular"},
   -- { 'nvim-treesitter/playground'},
   -- { "paraduxos/vim-indent-object", branch = "new_branch", event = "VeryLazy" }, -- incremental-repressing + respects-blanklines + vimrepeat + VisualRepeatable(e.g mini.comment is noVisualRepeable)
-  { "echasnovski/mini.nvim",             commit = "e8a413b1a29f05bb556a804ebee990eb54479586" },
+  { "echasnovski/mini.nvim",             commit = "5d841fcca666bc27ca777807a63381ce2cf6e2f9" },
   {
     "coderifous/textobj-word-column.vim", -- delimited by comments or indentation
     commit = "cb40e1459817a7fa23741ff6df05e4481bde5a33",
@@ -169,16 +169,17 @@ local plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    commit = "5a713474e38a3999b85c6cb3f5cac3248a16c7d0",
+    commit = "567a76780cd4f982dae1ec57e3dad6174bef3680",
+    build = ":TSUpdate", -- treesitter works with specific versions of language parsers
     dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "95933e762e28f9d38b572d65e7e4da9d2f4d90cb" },
+      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "d2a4ffc22d9d38d44edb73da007b3cf43451e9b4" },
       -- { "RRethy/nvim-treesitter-textsubjects",         commit = "b913508f503527ff540f7fe2dcf1bf1d1f259887" },
     }
   },
   {
     "chrisgrieser/nvim-various-textobjs",
-    commit = "c0aa3ff33eaf9e7bc827ea918f92ac47d6037118",
-    config = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
+    commit = "6cefba253d69306004a641a11c395381ae428903",
+    opts = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
   },
 
   -- TUI
@@ -259,8 +260,8 @@ local plugins = {
   },
   {
     "lewis6991/gitsigns.nvim",
-    commit = "372d5cb485f2062ac74abc5b33054abac21d8b58",
-    config = {
+    commit = "b45ff86f5618d1421a88c12d4feb286b80a1e2d3",
+    opts = {
       signs = {
         add          = { text = "│" },
         change       = { text = "│" },
@@ -275,7 +276,7 @@ local plugins = {
     "kevinhwang91/nvim-ufo",
     commit = "9e829d5cfa3de6a2ff561d86399772b0339ae49d",
     event = "VeryLazy",
-    config = {
+    opts = {
       provider_selector = function(bufnr, filetype, buftype)
         return { "treesitter", "indent" }
       end
