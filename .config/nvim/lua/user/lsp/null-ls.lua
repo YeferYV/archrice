@@ -9,9 +9,9 @@ if not null_ls_status_ok then
 end
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-local formatting = null_ls.builtins.formatting
+-- local formatting = null_ls.builtins.formatting
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-local diagnostics = null_ls.builtins.diagnostics
+-- local diagnostics = null_ls.builtins.diagnostics
 
 -- null_ls.setup {
 --   debug = false,
@@ -27,8 +27,8 @@ local diagnostics = null_ls.builtins.diagnostics
 
 -- https://github.com/williamboman/mason.nvim/discussions/40
 -- https://github.com/williamboman/mason.nvim/discussions/93
-local mason_registry = require "mason-registry"
-local Pkg = require "mason-core.package"
+-- local mason_registry = require "mason-registry"
+-- local Pkg = require "mason-core.package"
 local null_sources = {}
 
 -- _formatters_and_linters_autoconfig
@@ -76,5 +76,4 @@ null_ls.setup {
   -- end,
 }
 
-mason_null_ls.setup { automatic_setup = true }
-mason_null_ls.setup_handlers {} -- after null_ls.setup() if custom null_ls.setup()
+mason_null_ls.setup({ handlers = {} }) -- after null_ls.setup() if custom null_ls.setup()

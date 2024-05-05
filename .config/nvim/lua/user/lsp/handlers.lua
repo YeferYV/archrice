@@ -5,6 +5,7 @@ if not status_cmp_ok then
   return
 end
 
+-- add snippets capability to nvim-cmp
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
@@ -61,20 +62,21 @@ M.setup = function(diagnostic_status)
   })
 end
 
+-- replaced by vim-illuminate since lsp_highlight_document is triggered on every CursorMoved making it slow
 local function lsp_highlight_document(client)
-  -- Set autocommands conditional on server_capabilities
-  if client.server_capabilities.document_highlight then
-    vim.api.nvim_exec(
-      [[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-      false
-    )
-  end
+  -- -- Set highlighting references on server_capabilities
+  -- if client.server_capabilities.document_highlight then
+  --   vim.api.nvim_exec(
+  --     [[
+  --     augroup lsp_document_highlight
+  --       autocmd! * <buffer>
+  --       autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+  --       autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+  --     augroup END
+  --   ]],
+  --     false
+  --   )
+  -- end
 end
 
 local function lsp_keymaps(bufnr)

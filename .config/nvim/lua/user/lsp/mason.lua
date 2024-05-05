@@ -8,10 +8,10 @@ if not mason_lspconfig_status_ok then
   return
 end
 
-local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status_ok then
-  return
-end
+-- local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
+-- if not lspconfig_status_ok then
+--   return
+-- end
 
 mason.setup({
   ui = {
@@ -29,7 +29,17 @@ mason_lspconfig.setup_handlers({
   -- and will be called for each installed server that doesn't have
   -- a dedicated handler.
   function(server_name) -- default handler (optional)
-    require("lspconfig")[server_name].setup {}
+    local opts = {
+      on_attach = require("user.lsp.handlers").on_attach,
+      capabilities = require("user.lsp.handlers").capabilities,
+    }
+
+    local has_custom_opts, server_custom_opts = pcall(require, "user.lsp.settings." .. server_name)
+    if has_custom_opts then
+      opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
+    end
+
+    require("lspconfig")[server_name].setup(opts)
   end,
   -- -- Next, you can provide targeted overrides for specific servers.
   -- ["rust_analyzer"] = function ()
@@ -48,19 +58,19 @@ mason_lspconfig.setup_handlers({
   -- end,
 })
 
--- local server = vim.lsp.buf_get_clients()
-local servers = lspconfig.util.available_servers()
-for _, server in pairs(servers) do
-  local opts = {
-    on_attach = require("user.lsp.handlers").on_attach,
-    capabilities = require("user.lsp.handlers").capabilities,
-  }
-  local has_custom_opts, server_custom_opts = pcall(require, "user.lsp.settings." .. server)
-  if has_custom_opts then
-    opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
-  end
-  lspconfig[server].setup(opts)
-end
+-- -- local server = vim.lsp.buf_get_clients()
+-- local servers = lspconfig.util.available_servers()
+-- for _, server in pairs(servers) do
+--   local opts = {
+--     on_attach = require("user.lsp.handlers").on_attach,
+--     capabilities = require("user.lsp.handlers").capabilities,
+--   }
+--   local has_custom_opts, server_custom_opts = pcall(require, "user.lsp.settings." .. server)
+--   if has_custom_opts then
+--     opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
+--   end
+--   lspconfig[server].setup(opts)
+-- end
 
 -- -- _manually_lspconfig_setup_using_nix/system_package_manager
 -- -- to install lua-language-server version 3.5.3 run:

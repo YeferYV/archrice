@@ -123,19 +123,26 @@ local plugins = {
   -- { "github/copilot.vim" },
   {
     "Exafunction/codeium.vim",
-    commit = "1efe2a2cdf516094bdb211aa8a1d45ef01836207",
+    commit = "31dd2962c81759be007895db6ce089feec397c86",
     event = "InsertEnter"
   },
 
   -- LSP
-  { "neovim/nvim-lspconfig",             commit = "e683951a35ade60f9e1768ef770bb42ffcc1d2b7" }, -- enable LSP
-  { "nvimtools/none-ls.nvim",            commit = "ef09f14eab78ca6ce3bee1ddc73db5511f5cd953" }, -- for formatters and linters
-  { "b0o/SchemaStore.nvim",              commit = "a592fbe98959d13014b022ec1b1418498309019c" }, -- jsonls schema completions
-  { "RRethy/vim-illuminate",             commit = "a2907275a6899c570d16e95b9db5fd921c167502" },
-  { "williamboman/mason.nvim",           commit = "2311d9d883eb709ad9979a726a38c5ce1343b63c", config = true },
-  { "williamboman/mason-lspconfig.nvim", commit = "a8d5db8f227b9b236d1c54a9c6234bc033825ce7", config = true },
-  { "jay-babu/mason-null-ls.nvim",       commit = "a991e7697514f30126fac7c07a11c488c553e94f" }, -- autoconfigured formatters
-  { "jay-babu/mason-nvim-dap.nvim",      commit = "aa7f489903460f2c2e15a6a874c8b933722fe109" }, -- autoconfigured debuggers
+  {
+    "williamboman/mason.nvim", -- LSP/linter/formatter binary installer
+    commit = "751b1fcbf3d3b783fcf8d48865264a9bcd8f9b10",
+    dependencies = {
+      { "neovim/nvim-lspconfig",             commit = "cfa386fc4027e847156ee16141ea1f4c0bc2f0a4" }, -- default configurations for LSP
+      { "nvimtools/none-ls.nvim",            commit = "88821b67e6007041f43b802f58e3d9fa9bfce684" }, -- default configurations formatters and linters
+      { "jay-babu/mason-nvim-dap.nvim",      commit = "aa7f489903460f2c2e15a6a874c8b933722fe109" }, -- compatibility between mason and nvim-dap
+      { "williamboman/mason-lspconfig.nvim", commit = "1a14770dc8c7cb29643870ac79788eec6f7ce1f8" }, -- compatibility between mason and nvim-lspconfig
+      { "jay-babu/mason-null-ls.nvim",       commit = "de19726de7260c68d94691afb057fa73d3cc53e7" }, -- compatibility between mason and none-ls
+      { "nvim-lua/plenary.nvim",             commit = "5129a3693c482fcbc5ab99a7706ffc4360b995a0" }, -- lua modules required by none-ls
+      { "b0o/SchemaStore.nvim",              commit = "a592fbe98959d13014b022ec1b1418498309019c" }, -- jsonls schema completions
+      { "RRethy/vim-illuminate",             commit = "a2907275a6899c570d16e95b9db5fd921c167502" }, -- lsp references
+    },
+  },
+
   {
     "glepnir/lspsaga.nvim",
     commit = "199eb00822f65b811f43736ba65ab7e16501125d",
@@ -188,7 +195,7 @@ local plugins = {
     "nvim-telescope/telescope.nvim",
     commit = "942fe5faef47b21241e970551eba407bc10d9547",
     dependencies = {
-      { "nvim-lua/plenary.nvim",                      commit = "253d34830709d690f013daf2853a9d21ad7accab" },
+      { "nvim-lua/plenary.nvim",                      commit = "5129a3693c482fcbc5ab99a7706ffc4360b995a0" },
       { "nvim-telescope/telescope-fzf-native.nvim",   commit = "580b6c48651cabb63455e97d7e131ed557b8c7e2", build = "make" },
       { "nvim-telescope/telescope-file-browser.nvim", commit = "e0fcb12702ad0d2873544a31730f9aaef04fd032" },
       { "AckslD/nvim-neoclip.lua",                    commit = "5b9286a40ea2020352280caeb713515badb03d99", config = true },

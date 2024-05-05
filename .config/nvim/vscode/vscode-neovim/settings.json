@@ -214,7 +214,7 @@
   // "editor.suggest.preview": true, // lsp inline-preview/gosh-text
   "editor.cursorBlinking": "solid",
   "editor.cursorSurroundingLines": 4,
-  "editor.fontFamily": "'CaskaydiaCove Nerd Font','Bedstead','Font Awesome 6 Free Solid'",
+  // "editor.fontFamily": "'CaskaydiaCove Nerd Font','Bedstead','Font Awesome 6 Free Solid'",
   "editor.fontLigatures": true,
   "editor.fontSize": 13,
   "editor.fontWeight": 400,
