@@ -596,14 +596,14 @@ map(
 map(
   { "x", "o" },
   "iy",
-  ":<c-u> lua require('user.autocommands').select_same_indent(true)<cr>",
-  { silent = true, desc = "same_indent skip_blankline textobj" }
+  ":<c-u> lua require('user.autocommands').select_same_indent(true,true)<cr>",
+  { silent = true, desc = "same_indent textobj with skip_blank_line and skip_comment_line" }
 )
 map(
   { "x", "o" },
   "ay",
-  ":<c-u> lua require('user.autocommands').select_same_indent(false)<cr>",
-  { silent = true, desc = "same_indent with_blankline textobj" }
+  ":<c-u> lua require('user.autocommands').select_same_indent(true,false)<cr>",
+  { silent = true, desc = "same_indent textobj with skip_blank_line without skip_comment_line)" }
 )
 
 -- ╭──────────────────────────────────────────╮

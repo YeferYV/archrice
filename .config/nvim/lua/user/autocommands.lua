@@ -353,10 +353,12 @@ end
 
 -- https://thevaluable.dev/vim-create-text-objects
 -- select indent by the same level:
-M.select_same_indent = function(skip_blank_line)
+M.select_same_indent = function(skip_blank_line, skip_comment_line)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
+  local get_comment_regex = "^%s*" .. string.gsub(vim.bo.commentstring, "%%s", ".*") .. "%s*$"
 
   function is_blank_line(line) return string.match(vim.fn.getline(line), '^%s*$') end
+  function is_comment_line(line) return string.find(vim.fn.getline(line), get_comment_regex) end
 
   if skip_blank_line then
     match_blank_line = function(line) return false end
@@ -364,10 +366,9 @@ M.select_same_indent = function(skip_blank_line)
     match_blank_line = function(line) return is_blank_line(line) end
   end
 
+  -- go up while having the same indent
   local prev_line = vim.fn.line('.') - 1
   while vim.fn.indent(prev_line) == start_indent or match_blank_line(prev_line) do
-    vim.cmd('-')
-    prev_line = vim.fn.line('.') - 1
 
     -- exit loop if there's no indentation
     if skip_blank_line then
@@ -379,14 +380,24 @@ M.select_same_indent = function(skip_blank_line)
         break
       end
     end
+
+    -- exit loop if prev_line is a comment
+    if skip_comment_line then
+      if is_comment_line(prev_line) then
+        break
+      end
+    end
+
+    vim.cmd('-')
+    prev_line = vim.fn.line('.') - 1
+
   end
 
-  vim.cmd('normal! 0V')
+  vim.cmd('normal! V')
 
+  -- go down while having the same indent
   local next_line = vim.fn.line('.') + 1
   while vim.fn.indent(next_line) == start_indent or match_blank_line(next_line) do
-    vim.cmd('+')
-    next_line = vim.fn.line('.') + 1
 
     -- exit loop if there's no indentation
     if skip_blank_line then
@@ -394,10 +405,21 @@ M.select_same_indent = function(skip_blank_line)
         break
       end
     else
-      if vim.fn.indent(prev_line) < 0 then
+      if vim.fn.indent(next_line) < 0 then
         break
       end
     end
+
+    -- exit loop if next_line is a comment
+    if skip_comment_line then
+      if is_comment_line(next_line) then
+        break
+      end
+    end
+
+    vim.cmd('+')
+    next_line = vim.fn.line('.') + 1
+
   end
 end
 
