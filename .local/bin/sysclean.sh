@@ -19,21 +19,17 @@ cht.sh-git \
 cronie \
 dmenu \
 dosfstools \
-dragon-drop \
 dunst \
 efibootmgr \
 exfat-utils \
 eza \
 festival-us \
 fzf \
-ghostscript \
 gnome-keyring \
 grub \
 imagemagick \
 kanata-bin \
-kitty \
 lazygit \
-lf \
 libnotify \
 light \
 linux \
@@ -44,19 +40,15 @@ mpd \
 mpv-mpris \
 ncmpcpp \
 network-manager-applet \
-networkmanager \
 noto-fonts \
 noto-fonts-emoji \
 ntfs-3g \
-perl-file-mimeinfo \
 picom \
 pipewire-pulse \
-playerctl \
 polybar \
 redshift \
+ripdrag-git \
 ripgrep \
-rofi \
-rofimoji \
 siji-git \
 snapper \
 starship \
@@ -64,58 +56,32 @@ stow \
 sxhkd \
 sxiv \
 ttf-firacode-nerd \
-ttf-font-awesome \
 unclutter \
 wezterm \
 xclip \
-xdo \
-xdotool \
 xf86-input-synaptics \
 xorg-server \
 xorg-xinit \
 xorg-xsetroot \
-xorg-xwininfo \
 xwallpaper \
+yazi \
 zathura-pdf-poppler \
 zram-generator \
 zsh-autosuggestions \
 zsh-fast-syntax-highlighting
-
-# pywal-16-colors \
-# xorg-xwininfo \
-# polkit \
-# libertinus-font \
+# dragon-drop \
+# ghostscript \
+# kitty \
+# lf \
+# perl-file-mimeinfo \
+# playerctl \
+# rofi \
+# rofimoji \
 # ttf-font-awesome \
-# ttf-dejavu \
-# lf-git \
-# ueberzug \
-# bc \
-# xcompmgr \
-# xorg-xprop \
-# arandr \
-# calcurse \
-# nsxiv \
-# ffmpegthumbnailer \
-# python-qdarkstyle \
-# newsboat \
-# librewolf-bin \
-# arkenfox-user.js \
-# wireplumber \
-# pulsemixer \
-# sc-im \
-# maim \
-# abook \
-# lynx \
-# yt-dlp \
-# zathura \
-# zathura-pdf-mupdf \
-# atool \
-# xorg-xbacklight \
-# task-spooler \
-# simple-mtpfs \
-# mutt-wizard-git \
-# slock \
-# socat \
+# xdo \
+# xdotool \
+# xorg-xrdb \
+# xorg-xwininfo \
 
 # https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Removing_unused_packages_(orphans)
 sudo pacman -Rscn $(yay -Qtdq)

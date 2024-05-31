@@ -1,11 +1,7 @@
 .config/ipython/profile_default/*
 !.config/ipython/profile_default/ipython_config.py
-
 .config/lazygit/state.yml
 .config/mpv/playlists
-.config/ncmpcpp/lyrics/
-.config/ncmpcpp/error.log
-.config/zsh/.zcompdump
 
 .local/bin/*
 !.local/bin/cron/
@@ -18,7 +14,6 @@
 !.local/bin/imgpassthrough
 !.local/bin/lines_per_directory
 !.local/bin/maimpick
-!.local/bin/remaps
 !.local/bin/ResetArch
 !.local/bin/RiceArch
 !.local/bin/snapper-rollback

@@ -425,7 +425,7 @@ alt + KP_{Down,Up}
 
 # mpc next-toggle-prev-vol
 KP_{Right,Begin,Left,Down,Up}
-  mpc --port=6601 {next,toggle,prev,volume -2,volume +2}
+  mpc {next,toggle,prev,volume -2,volume +2}
 
 # screenshot (fullscreen,_)
 {Print, super + Print}
