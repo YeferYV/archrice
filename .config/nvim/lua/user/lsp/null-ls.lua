@@ -63,6 +63,7 @@ local null_sources = {}
 -- end
 
 null_ls.setup {
+  -- sources = { null_ls.builtins.completion.luasnip },
   sources = null_sources,
   -- on_attach = function(client)
   --   if client.resolved_capabilities.document_formatting then

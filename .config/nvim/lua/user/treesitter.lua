@@ -5,7 +5,7 @@ end
 
 configs.setup {
   -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
-  ensure_installed = { "python", "bash", "javascript", "json", "html", "css", "c", "lua" },
+  -- ensure_installed = { "python", "bash", "javascript", "json", "html", "css", "c", "lua" },
 
   autopairs = {
     enable = true,
@@ -16,10 +16,6 @@ configs.setup {
     additional_vim_regex_highlighting = true,
   },
   indent = { enable = true, disable = { "python", "yaml" } },
-  -- context_commentstring = {
-  --   enable = true,
-  --   enable_autocmd = false,
-  -- },
   incremental_selection = {
     enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
     disable = { "yaml" },
@@ -69,11 +65,6 @@ configs.setup {
     --     ['a+'] = '@assignment.outer',
     --     ['i+'] = '@assignment.inner',
     --   },
-    --   -- selection_modes = {
-    --   --   ['@parameter.outer'] = 'v', -- charwise
-    --   --   ['@function.outer'] = 'V', -- linewise
-    --   --   ['@class.outer'] = '<c-v>', -- blockwise
-    --   -- },
     -- },
     move = {
       enable = true,
@@ -218,18 +209,4 @@ configs.setup {
       },
     },
   },
-  -- textsubjects = {
-  --   enable = true,
-  --   prev_selection = 'Q',           -- (Optional) keymap to select the previous selection
-  --   keymaps = {
-  --     ['K'] = 'textsubjects-smart', -- useful for block of comments
-  --     ['aK'] = 'textsubjects-container-outer',
-  --     ['iK'] = 'textsubjects-container-inner',
-  --   },
-  -- },
 }
-
--- vim.api.nvim_exec([[
---     setlocal foldmethod=expr
---     setlocal foldexpr=nvim_treesitter#foldexpr()
--- ]], true)

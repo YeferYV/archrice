@@ -1,29 +1,10 @@
 -- vim:ft=lua:ts=2:sw=2:sts=2
-
 local M = {}
 local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-local create_command = vim.api.nvim_create_user_command
 
 ------------------------------------------------------------------------------------------------------------------------
 
 vim.cmd [[
-
-  " augroup _enable_terminal_insert_and_hide_terminal_statusline
-  "   autocmd!
-  "   autocmd BufEnter term://* startinsert
-  "   autocmd BufEnter        * if &filetype == 'vs-terminal' | set noruler laststatus=0 cmdheight=1 | endif
-  "   autocmd BufEnter        * if &filetype != 'vs-terminal' | set noruler laststatus=3 cmdheight=0 | endif
-  "   autocmd TermClose       * if &filetype != 'toggleterm'  | call feedkeys("i")                   | endif
-  " augroup end
-
-  " augroup _enable_terminal_insert_and_hide_terminal_statusline
-  "   autocmd!
-  "   autocmd BufEnter    term://* startinsert
-  "   autocmd TermOpen,TermEnter * lua require('lualine').hide()              vim.cmd('set nocursorline nonumber statusline=%< | startinsert')
-  "   autocmd TermLeave          * lua require('lualine').hide({unhide=true}) vim.cmd('set cursorline')
-  "   autocmd TermClose          * if &filetype != 'toggleterm' | call feedkeys("i") | endif
-  " augroup end
 
   augroup _filetype
     autocmd!
@@ -37,14 +18,14 @@ vim.cmd [[
     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
   augroup end
 
-  " augroup _hightlight_whitespaces
-  "   autocmd!
-  "   autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-  "   highlight ExtraWhitespace ctermbg=red guibg=red
-  "   autocmd InsertLeave * redraw!
-  "   match ExtraWhitespace /\s\+$\| \+\ze\t/
-  "   autocmd BufWritePre * :%s/\s\+$//e
-  " augroup end
+  augroup _hightlight_whitespaces
+    autocmd!
+    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+    highlight ExtraWhitespace ctermbg=red guibg=red
+    autocmd InsertLeave * redraw!
+    match ExtraWhitespace /\s\+$\| \+\ze\t/
+    autocmd BufWritePre * :%s/\s\+$//e
+  augroup end
 
   augroup _jump_to_last_position_on_reopen
     autocmd!
@@ -54,17 +35,6 @@ vim.cmd [[
   " augroup _lsp_autoformat
   "   autocmd!
   "   autocmd BufWritePre * silent! lua vim.lsp.buf.format()
-  " augroup end
-
-  augroup _lspsaga_highlights_overwrite
-    autocmd!
-    autocmd BufReadPost * hi LspSagaWinbarSep guifg=#495466
-  augroup end
-
-  " augroup _save_folding
-  "   autocmd!
-  "   autocmd BufWinLeave *.* mkview
-  "   autocmd BufWinEnter *.* silent loadview
   " augroup end
 
   augroup _stop_newlines_commented
@@ -98,9 +68,6 @@ vim.cmd [[
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- _enable_terminal_insert_and_hide_terminal_statusline
-local hide_terminal_statusline = augroup("_enable_terminal_insert_and_hide_terminal_statusline", { clear = true })
-
 -- autocmd({ "BufEnter", "Filetype" }, {
 --   group = hide_terminal_statusline,
 --   pattern = "term://*",
@@ -108,60 +75,41 @@ local hide_terminal_statusline = augroup("_enable_terminal_insert_and_hide_termi
 -- })
 
 autocmd({ "TermEnter", "TermOpen" }, {
-  group = hide_terminal_statusline,
   callback = function()
-    -- require('lualine').hide()
-    -- vim.cmd[[set nocursorline nonumber statusline=%< | startinsert]]
-    vim.cmd [[set nocursorline nonumber | startinsert]]
-    vim.cmd [[hi ExtraWhitespace guibg=none]]
-  end,
-})
+    vim.cmd [[ setlocal nocursorline ]]
+    vim.cmd [[ setlocal nonumber ]]
+    vim.cmd [[ setlocal signcolumn=no ]]
+    vim.cmd.startinsert()
+    vim.cmd.highlight("ExtraWhitespace guibg=none")
 
-------------------------------------------------------------------------------------------------------------------------
-
--- _show_alpha_if_close_last_tab-terminal + _autoclose_tab-terminal_if_last_window
-autocmd({ "TermClose" }, {
-  group = hide_terminal_statusline,
-  callback = function()
-    local type = vim.bo.filetype
-    if type == "sp-terminal" or type == "vs-terminal" or type == "buf-terminal" or type == "tab-terminal" then
-      -- if number of tabs is equal to 1 (last tab)
-      if #vim.api.nvim_list_tabpages() == 1 then
-        vim.cmd [[ Alpha ]]
-        vim.cmd [[ bd # ]]
-      else
-        -- if number of buffers of the current tab is equal to 1 (last window)
-        if #vim.fn.getbufinfo({ buflisted = 1 }) == 1 then
-          -- FeedKeysCorrectly("<esc><esc>:close<cr>")
-          vim.cmd [[ call feedkeys("\<Esc>\<Esc>:close\<CR>") ]]
-        end
-      end
-
-      -- confirm terminal-exit-code by pressing <esc>
-      vim.cmd [[ call feedkeys("") ]]
-
-      -- alternatively close the buffer instead of confirming
-      -- vim.cmd [[ execute 'bdelete! ' . expand('<abuf>') ]]
+    -- hide bufferline if `nvim -cterm`
+    if #vim.fn.getbufinfo({ buflisted = 1 }) == 1 then
+      vim.cmd("set showtabline=0")
+    else
+      vim.cmd("set showtabline=2")
     end
   end,
 })
 
 ------------------------------------------------------------------------------------------------------------------------
 
--- -- _json_to_jsonc
--- autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
---   -- pattern = "*.json",
---   -- command = "set ft=jsonc"
---   callback = function()
---     if vim.fn.expand('%:p:h:t') == "User" then
---       if vim.fn.expand('%:t') == "settings.json" or
---           vim.fn.expand('%:t') == "keybindings.json" or
---           vim.fn.expand('%:t') == "tasks.json" then
---         vim.bo.filetype = "jsonc"
---       end
---     end
---   end,
--- })
+-- https://github.com/neovim/neovim/issues/14986
+-- used by neotree open_image_with_sixel
+autocmd({ "TermClose", --[[ "BufWipeout" ]] }, {
+  callback = function()
+    vim.schedule(function()
+      -- if vim.bo.buftype == 'terminal' and vim.v.shell_error == 0 then
+      if vim.bo.filetype == 'terminal' then
+        vim.cmd [[ bp | bd! # ]]
+      end
+
+      -- required when exiting `nvim -cterm`
+      if vim.fn.bufname() == "" then
+        vim.cmd [[ quit ]]
+      end
+    end)
+  end,
+})
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -175,16 +123,12 @@ function EnableAutoNoHighlightSearch()
   end, vim.api.nvim_create_namespace "auto_hlsearch")
 end
 
-create_command("EnableAutoNoHighlightSearch", EnableAutoNoHighlightSearch, {})
-
 function DisableAutoNoHighlightSearch()
   -- :noh or ctrl+l(remapped to focus left window) to clear highlighting
   -- when search is highlighted and more than 2 treesitter are installed for the same language it makes h,j,k,l slow
   vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"])
   vim.opt.hlsearch = true
 end
-
-create_command("DisableAutoNoHighlightSearch", DisableAutoNoHighlightSearch, {})
 
 EnableAutoNoHighlightSearch() -- autostart
 
@@ -201,21 +145,6 @@ function GoToParentIndent()
   end
 end
 
-create_command("GoToParentIndent", GoToParentIndent, {})
-
-------------------------------------------------------------------------------------------------------------------------
-
-function ShowBufferline()
-  require("bufferline").setup({
-    options = {
-      offsets = { { filetype = "neo-tree", padding = 1 } },
-      show_close_icon = false,
-    },
-  })
-end
-
-create_command("ShowBufferline", ShowBufferline, {})
-
 ------------------------------------------------------------------------------------------------------------------------
 
 -- swap current window with the last visited window
@@ -230,81 +159,56 @@ function SwapWindow()
   vim.cmd("wincmd p")           -- go to previous window
 end
 
-create_command("SwapWindow", SwapWindow, {})
+------------------------------------------------------------------------------------------------------------------------
+
+function ChangeIndent()
+  local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")
+  if input_avail then
+    local indent = tonumber(input)
+    if not indent or indent == 0 then return end
+    vim.bo.expandtab = (indent > 0)
+    indent = math.abs(indent)
+    vim.bo.tabstop = indent
+    vim.bo.softtabstop = indent
+    vim.bo.shiftwidth = indent
+  end
+end
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function ToggleDiagnostics()
-  if vim.g.diagnostics_enabled then
-    vim.diagnostic.disable()
-    vim.g.diagnostics_enabled = false
-  else
-    vim.diagnostic.enable()
-    vim.g.diagnostics_enabled = true
-  end
-end
+----> REPLACED BY GotoTextObj (it may be useful if GotoTextObj doesn't work in some cases)
 
-create_command("ToggleDiagnostics", ToggleDiagnostics, {})
+-- ----> select from the start of text object to cursor position
+-- function _G.__to_start_of_textobj(motion)
+--   if motion == nil then
+--     vim.o.operatorfunc = "v:lua.__to_start_of_textobj"
+--     return "m'g@"
+--   end
+--
+--   if motion == "char" then
+--     vim.api.nvim_feedkeys("`[v`'", "n", true)
+--   elseif motion == "line" then
+--     vim.api.nvim_feedkeys("`[V`'", "n", true)
+--   elseif motion == "block" then
+--     vim.api.nvim_feedkeys("`[\22`'", "n", true)
+--   end
+-- end
 
-------------------------------------------------------------------------------------------------------------------------
-
-function ToggleVirtualText()
-  local function bool2str(bool) return bool and "on" or "off" end
-
-  if vim.g.diagnostics_enabled then
-    vim.g.diagnostics_enabled = false
-  else
-    vim.g.diagnostics_enabled = true
-  end
-
-  vim.diagnostic.config(require("user.lsp.handlers").setup(bool2str(vim.g.diagnostics_enabled)))
-end
-
-create_command("ToggleVirtualText", ToggleDiagnostics, {})
-
-------------------------------------------------------------------------------------------------------------------------
-
--- to support "<cmd>, <esc>..." (ctrl keys unsupported) alternatives:
--- vim.api.nvim_feedkeys() -- accepts escape sequences
--- vim.api.nvim_input() -- accepts ctrl keys and escape sequences
--- vim.api.nvim_buf_set_keys(0, 0, 0, 0, '<C-V>') -- send keys at especific location
-_G.FeedKeysCorrectly = function(keys)
-  local feedableKeys = vim.api.nvim_replace_termcodes(keys, true, false, true)
-  vim.api.nvim_feedkeys(feedableKeys, "n", true)
-end
-
-------------------------------------------------------------------------------------------------------------------------
--- select from the start of text object to cursor position
-function _G.__to_start_of_textobj(motion)
-  if motion == nil then
-    vim.o.operatorfunc = "v:lua.__to_start_of_textobj"
-    return "m'g@"
-  end
-
-  if motion == "char" then
-    vim.api.nvim_feedkeys("`[v`'", "n", true)
-  elseif motion == "line" then
-    vim.api.nvim_feedkeys("`[V`'", "n", true)
-  elseif motion == "block" then
-    vim.api.nvim_feedkeys("`[\22`'", "n", true)
-  end
-end
-
--- select from cursor position to rest of text object
-function _G.__to_end_of_textobj(motion)
-  if motion == nil then
-    vim.o.operatorfunc = "v:lua.__to_end_of_textobj"
-    return "m'g@"
-  end
-
-  if motion == "char" then
-    vim.api.nvim_feedkeys("`'v`]", "n", true)
-  elseif motion == "line" then
-    vim.api.nvim_feedkeys("`'V`]", "n", true)
-  elseif motion == "block" then
-    vim.api.nvim_feedkeys("`'\22`]", "n", true)
-  end
-end
+-- ----> select from cursor position to rest of text object
+-- function _G.__to_end_of_textobj(motion)
+--   if motion == nil then
+--     vim.o.operatorfunc = "v:lua.__to_end_of_textobj"
+--     return "m'g@"
+--   end
+--
+--   if motion == "char" then
+--     vim.api.nvim_feedkeys("`'v`]", "n", true)
+--   elseif motion == "line" then
+--     vim.api.nvim_feedkeys("`'V`]", "n", true)
+--   elseif motion == "block" then
+--     vim.api.nvim_feedkeys("`'\22`]", "n", true)
+--   end
+-- end
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -356,70 +260,27 @@ end
 M.select_same_indent = function(skip_blank_line, skip_comment_line)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
   local get_comment_regex = "^%s*" .. string.gsub(vim.bo.commentstring, "%%s", ".*") .. "%s*$"
-
-  function is_blank_line(line) return string.match(vim.fn.getline(line), '^%s*$') end
-  function is_comment_line(line) return string.find(vim.fn.getline(line), get_comment_regex) end
-
-  if skip_blank_line then
-    match_blank_line = function(line) return false end
-  else
-    match_blank_line = function(line) return is_blank_line(line) end
-  end
+  local is_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
+  local is_comment_line = function(line) return string.find(vim.fn.getline(line), get_comment_regex) end
 
   -- go up while having the same indent
   local prev_line = vim.fn.line('.') - 1
-  while vim.fn.indent(prev_line) == start_indent or match_blank_line(prev_line) do
-
-    -- exit loop if there's no indentation
-    if skip_blank_line then
-      if vim.fn.indent(prev_line) == 0 and is_blank_line(prev_line) then
-        break
-      end
-    else
-      if vim.fn.indent(prev_line) < 0 then
-        break
-      end
-    end
-
-    -- exit loop if prev_line is a comment
-    if skip_comment_line then
-      if is_comment_line(prev_line) then
-        break
-      end
-    end
-
+  while vim.fn.indent(prev_line) == start_indent or (is_blank_line(prev_line) and vim.fn.indent(prev_line) ~= -1) do
+    if skip_blank_line and is_blank_line(prev_line) then break end
+    if skip_comment_line and is_comment_line(prev_line) then break end
     vim.cmd('-')
-    prev_line = vim.fn.line('.') - 1
-
+    prev_line = prev_line - 1
   end
 
   vim.cmd('normal! V')
 
   -- go down while having the same indent
   local next_line = vim.fn.line('.') + 1
-  while vim.fn.indent(next_line) == start_indent or match_blank_line(next_line) do
-
-    -- exit loop if there's no indentation
-    if skip_blank_line then
-      if vim.fn.indent(next_line) == 0 and is_blank_line(next_line) then
-        break
-      end
-    else
-      if vim.fn.indent(next_line) < 0 then
-        break
-      end
-    end
-
-    -- exit loop if next_line is a comment
-    if skip_comment_line then
-      if is_comment_line(next_line) then
-        break
-      end
-    end
-
+  while vim.fn.indent(next_line) == start_indent or (is_blank_line(next_line) and vim.fn.indent(next_line) ~= -1) do
+    if skip_blank_line and is_blank_line(next_line) then break end
+    if skip_comment_line and is_comment_line(next_line) then break end
     vim.cmd('+')
-    next_line = vim.fn.line('.') + 1
-
+    next_line = next_line + 1
   end
 end
 
@@ -428,58 +289,215 @@ end
 -- goto next/prev same/different level indent:
 M.next_indent = function(next, level)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local current_line = vim.fn.line('.')
-  local next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
   local sign = next and '+' or '-'
+  local next_line = function() return next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1) end
+  local is_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
 
-  function is_blank_line(line) return string.match(vim.fn.getline(line), '^%s*$') end
-
-  -- scroll no_blanklines (indent = 0) when going down
-  if is_blank_line(current_line) == nil then
-    if sign == '+' then
-      while vim.fn.indent(next_line) == 0 and is_blank_line(next_line) == nil do
-        vim.cmd('+')
-        next_line = vim.fn.line('.') + 1
-      end
-    end
-  end
-
-  -- scroll same indentation (indent != 0)
-  if start_indent ~= 0 then
-    while vim.fn.indent(next_line) == start_indent do
-      vim.cmd(sign)
-      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
-    end
+  while vim.fn.indent(next_line()) == start_indent do
+    vim.cmd(sign)
+    -- vim.notify("scrolling the start_indent")
   end
 
   if level == "same_level" then
-    -- scroll differrent indentation (supports indent = 0, skip blacklines)
-    while vim.fn.indent(next_line) ~= -1 and (vim.fn.indent(next_line) ~= start_indent or is_blank_line(next_line)) do
+    while vim.fn.indent(next_line()) ~= start_indent and vim.fn.indent(next_line()) ~= -1 do
       vim.cmd(sign)
-      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
+      -- vim.notify("finding next start_indent")
     end
-  else -- level == "different_level"
-    -- scroll blanklines (indent = -1 is when line is 0 or line is last+1 )
-    while vim.fn.indent(next_line) == 0 and is_blank_line(next_line) do
+  else
+    while is_blank_line(next_line()) and vim.fn.indent(next_line()) ~= -1 do
       vim.cmd(sign)
-      next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
+      -- vim.notify("avoiding blanklines stops")
     end
   end
 
   -- scroll to next indentation
   vim.cmd(sign)
+end
 
-  -- scroll to top of indentation no_blanklines
-  start_indent = vim.fn.indent(vim.fn.line('.'))
-  next_line = next and (vim.fn.line('.') + 1) or (vim.fn.line('.') - 1)
-  if sign == '-' then
-    -- next_line indent is start_indent, next_line is no_blankline
-    while vim.fn.indent(next_line) == start_indent and is_blank_line(next_line) == nil do
-      vim.cmd('-')
-      next_line = vim.fn.line('.') - 1
+------------------------------------------------------------------------------------------------------------------------
+
+----> https://github.com/coderifous/textobj-word-column.vim
+local function find_boundary_col(start_line, stop_line, cursor_col, word_textobj)
+  local col_bounds = { 100, 0 }
+  local index = start_line
+
+  while index <= stop_line do
+    local select_word = "norm! " .. tostring(index) .. "gg" .. tostring(cursor_col) .. "|v" .. word_textobj .. "\\<esc>"
+    vim.cmd('exec "' .. select_word .. '"')
+
+    local start_col = vim.fn.col("'<")
+    local stop_col = vim.fn.col("'>")
+
+    if col_bounds[1] >= start_col then
+      col_bounds[1] = start_col
+    end
+
+    if col_bounds[2] <= stop_col then
+      col_bounds[2] = stop_col
+    end
+
+    index = index + 1
+  end
+
+  return col_bounds
+end
+
+local function find_boundary_row()
+  local start_indent = vim.fn.indent(vim.fn.line('.'))
+  local get_comment_regex = "^%s*" .. string.gsub(vim.bo.commentstring, "%%s", ".*") .. "%s*$"
+  local is_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
+  local is_comment_line = function(line) return string.find(vim.fn.getline(line), get_comment_regex) end
+
+  local prev_line = vim.fn.line('.') - 1
+  while vim.fn.indent(prev_line) == start_indent do
+    if is_comment_line(prev_line) or is_blank_line(prev_line) then break end
+    prev_line = prev_line - 1
+  end
+
+  local next_line = vim.fn.line('.') + 1
+  while vim.fn.indent(next_line) == start_indent do
+    if is_comment_line(next_line) or is_blank_line(next_line) then break end
+    next_line = next_line + 1
+  end
+
+  return { prev_line + 1, next_line - 1 }
+end
+
+M.ColumnWord = function(word_textobj)
+  vim.cmd [[ execute "normal \<esc>" ]] -- to exit visual mode
+  local cursor_col = vim.fn.col(".")
+  local row_bounds = find_boundary_row()
+  local col_bounds = find_boundary_col(row_bounds[1], row_bounds[2], cursor_col, word_textobj)
+  vim.cmd.normal {
+    tostring(row_bounds[1]) .. "gg" ..
+    tostring(col_bounds[1]) .. "|" ..
+    tostring(row_bounds[2]) .. "gg" ..
+    tostring(col_bounds[2]) .. "|",
+    bang = true
+  }
+  -- vim.print(row_bounds)
+  -- vim.print(col_bounds)
+end
+
+--------------------------------------------------------------------------------------------------------------------
+
+-- https://github.com/romgrk/columnMove.vim
+M.ColumnMove = function(direction)
+  local lnum = vim.fn.line('.')
+  local colnum = vim.fn.virtcol('.')
+  local remove_extraline = false
+  local pattern1, pattern2
+  local match_char = function(lnum, pattern) return vim.fn.getline(lnum):sub(colnum, colnum):match(pattern) end
+
+  if match_char(lnum, '%S') then
+    pattern1 = '^$'         -- pattern to stop at empty char
+    pattern2 = '%s'         -- pattern to stop at blankspace
+    lnum = lnum + direction -- continue (to the blankspace and emptychar conditional) when at end of line
+    remove_extraline = true
+    -- vim.notify("no_blankspace")
+  end
+
+  if match_char(lnum, '%s') then
+    pattern1 = '%S'
+    pattern2 = nil
+    remove_extraline = false
+    -- vim.notify("blankspace")
+  end
+
+  if match_char(lnum, '^$') then
+    pattern1 = '%S'
+    pattern2 = nil
+    remove_extraline = false
+    -- vim.notify("emptychar")
+  end
+
+  while lnum >= 0 and lnum <= vim.fn.line('$') do
+    if match_char(lnum, pattern1) then
+      break
+    end
+
+    if pattern2 then
+      if match_char(lnum, pattern2) then
+        break
+      end
+    end
+
+    lnum = lnum + direction
+  end
+
+  -- If the match was at the end of the line, return the previous line number and the current column number
+  if remove_extraline then
+    vim.cmd.normal(lnum - direction .. "gg" .. colnum .. "|")
+  else
+    vim.cmd.normal(lnum .. "gg" .. colnum .. "|")
+  end
+end
+
+--------------------------------------------------------------------------------------------------------------------
+
+-- https://www.reddit.com/r/neovim/comments/10bmy9w/lets_see_your_status_columns
+function ToggleFold()
+  local line = vim.fn.getmousepos().line
+
+  if vim.fn.foldlevel(line) > vim.fn.foldlevel(line - 1) then -- Only lines with the marks should be clickable
+    if vim.fn.foldclosed(line) == -1 then
+      vim.cmd(line .. 'foldclose')
+    else
+      vim.cmd(line .. 'foldopen')
     end
   end
 end
 
-------------------------------------------------------------------------------------------------------------------------
+-- https://www.reddit.com/r/neovim/comments/13u9brg/remove_the_fold_level_numbers_using_the_statusline_config
+local fcs = vim.opt.fillchars:get()
+local function get_fold(lnum)
+  if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return ' ' end
+  return vim.fn.foldclosed(lnum) == -1 and fcs.foldopen or fcs.foldclose
+end
+
+-- clickable fold markers
+_G.get_statuscol = function()
+  local lnum = vim.v.lnum
+  return '%@v:lua.ToggleFold@' .. get_fold(lnum) .. '%X%s%l '
+end
+
+-- https://github.com/neovim/neovim/pull/17446
+-- vim.o.statuscolumn = '%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "⏵") : " " }%s%l '
+vim.o.statuscolumn = '%!v:lua.get_statuscol()'
+
+--------------------------------------------------------------------------------------------------------------------
+
+-- https://www.reddit.com/r/neovim/comments/ww2oyu/toggle_terminal
+function ToggleTerminal()
+  local buf_exists = vim.fn.bufexists(te_buf) == 1
+  local win_exists = vim.fn.win_gotoid(te_win_id) == 1
+
+  if not buf_exists then
+    -- Terminal buffer doesn't exist, create it
+    vim.cmd("vsplit +term")
+    te_win_id = vim.fn.win_getid()
+    te_buf = vim.fn.bufnr()
+  elseif not win_exists then
+    -- Terminal buffer exists but not visible, show it
+    vim.cmd('vs | buffer' .. te_buf)
+    te_win_id = vim.fn.win_getid()
+  else
+    -- Terminal buffer exists and is visible, hide it
+    vim.cmd("hide")
+  end
+end
+
+function HideUnhideWindow()
+  if not Hidden then
+    Bufnr = vim.fn.bufnr()
+    vim.cmd('hide')
+    Hidden = true
+  else
+    vim.cmd('vs | buffer' .. Bufnr)
+    Hidden = false
+  end
+end
+
+--------------------------------------------------------------------------------------------------------------------
+
 return M

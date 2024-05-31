@@ -3,12 +3,12 @@ if not cmp_status_ok then
   return
 end
 
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then
-  return
-end
+-- local snip_status_ok, luasnip = pcall(require, "luasnip")
+-- if not snip_status_ok then
+--   return
+-- end
 
-require("luasnip/loaders/from_vscode").lazy_load()
+-- require("luasnip/loaders/from_vscode").lazy_load()
 
 local check_backspace = function()
   local col = vim.fn.col "." - 1
@@ -48,10 +48,11 @@ local kind_icons = {
 cmp.setup {
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body) -- For `luasnip` users.
+      -- luasnip.lsp_expand(args.body) -- For `luasnip` users.
       -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
       -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
     end,
   },
   mapping = {
@@ -100,10 +101,10 @@ cmp.setup {
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+        -- elseif luasnip.expandable() then
+        --   luasnip.expand()
+        -- elseif luasnip.expand_or_jumpable() then
+        --   luasnip.expand_or_jump()
       elseif check_backspace() then
         fallback()
       else
@@ -117,8 +118,8 @@ cmp.setup {
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+        -- elseif luasnip.jumpable(-1) then
+        --   luasnip.jump(-1)
       else
         fallback()
       end
@@ -131,8 +132,8 @@ cmp.setup {
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
-      -- tailwind previewer:
-      require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
+      -- tailwind previewer (replaced by nvim-colorizer.lua):
+      -- require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
 
       -- Kind icons
       vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
@@ -143,7 +144,8 @@ cmp.setup {
         -- ultisnips = "[Ult]",
         -- vsnip = "[Vsnip]",
         -- snippy = "[Snippy]",
-        luasnip = "[Snippet]",
+        -- luasnip = "[Snippet]",
+        snippets = "[Snippet]",
         buffer = "[Buffer]",
         path = "[Path]",
         spell = "[Spell]",
@@ -158,7 +160,8 @@ cmp.setup {
     -- { name = 'ultisnips' },
     -- { name = 'vsnip' },
     -- { name = 'snippy' },
-    { name = "luasnip" },
+    -- { name = "luasnip" },
+    { name = "snippets" },
     { name = "buffer" },
     { name = "path" },
     { name = 'spell' },

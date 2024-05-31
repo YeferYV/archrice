@@ -3,7 +3,7 @@
 local colorscheme = "tokyonight-night"
 
 local lushwal_path = "~/.cache/wal/colors.json"
-if not vim.loop.fs_stat(lushwal_path) then
+if not vim.uv.fs_stat(lushwal_path) then
   -- wal --cols16 -si .config/wallpaper_field_dawn.jpg
   black      = "#1c1712"
   red        = "#294e65"
