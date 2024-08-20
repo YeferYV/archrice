@@ -20,7 +20,7 @@ mini_ai.setup({
   -- Also use this to disable builtin textobjects. See |MiniAi.config|.
   custom_textobjects = {
 
-    B = spec_treesitter({ a = "@block.outer", i = "@block.inner" }),
+    K = spec_treesitter({ a = "@block.outer", i = "@block.inner" }),
     q = spec_treesitter({ a = "@call.outer", i = "@call.inner" }),
     Q = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
     g = spec_treesitter({ a = "@comment.outer", i = "@comment.inner" }),
@@ -60,7 +60,7 @@ mini_ai.setup({
 
     -- number/hexadecimalcolor textobj:
     -- the pattern %f[%d]%d+ ensures there is a %d before start matching (non %d before %d+)(useful to stop .*)
-    n = { "[-+]?()%f[%d]%d+()%.?%d*" }, -- %f[%d] to make jumping to next group of number instead of next digit
+    N = { "[-+]?()%f[%d]%d+()%.?%d*" }, -- %f[%d] to make jumping to next group of number instead of next digit
     x = { "#()%x%x%x%x%x%x()" },
 
     -- _whitespace_textobj:
@@ -79,89 +79,26 @@ mini_ai.setup({
     --   return { from = from, to = to }
     -- end,
   },
-
-  user_textobject_id = true,
-  -- Module mappings. Use `''` (empty string) to disable one.
-  mappings = {
-    -- Main textobject prefixes
-    around = "a",
-    inside = "i",
-
-    -- Next/last variants
-    around_next = "aN",
-    inside_next = "iN",
-    around_last = "al",
-    inside_last = "il",
-
-    -- Move cursor to corresponding edge of `a` textobject
-    goto_left = "g[",
-    goto_right = "g]",
-  },
-
-  -- Number of lines within which textobject is searched
-  n_lines = 50,
-
-  -- How to search for object (first inside current line, then inside
-  -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
-  -- 'cover_or_nearest', 'next', 'previous', 'nearest'.
-  search_method = "cover_or_next",
-
-  -- Whether to disable showing non-error feedback
-  silent = false,
-
+  n_lines = 500, -- search range and required by functions less than 500 LOC
 })
-
-require('mini.align').setup()
-require('mini.bracketed').setup()
-require('mini.comment').setup()
-require('mini.indentscope').setup({ symbol = '' })
--- require('mini.indentscope').setup({ draw = { animation = require('mini.indentscope').gen_animation.none() }, symbol = '│' })
-
-require('mini.operators').setup({
-  evaluate = {
-    prefix = '', -- 'g=',
-    func = nil,
-  },
-
-  exchange = {
-    prefix = 'gY',
-    reindent_linewise = true,
-  },
-  multiply = {
-    prefix = '', -- 'gm',
-    func = nil,
-  },
-  replace = {
-    prefix = 'gy',
-    reindent_linewise = true,
-  },
-  sort = {
-    prefix = 'gz',
-    func = nil,
-  }
-})
-
-require('mini.splitjoin').setup()
 
 require('mini.surround').setup({
-  custom_surroundings = nil,
-  highlight_duration = 500,
   mappings = {
-    add = 'gsa',            -- Add surrounding in Normal and Visual modes
-    delete = 'gsd',         -- Delete surrounding
-    find = 'gsf',           -- Find surrounding (to the right)
-    find_left = 'gsF',      -- Find surrounding (to the left)
-    highlight = 'gsh',      -- Highlight surrounding
-    replace = 'gsr',        -- Replace surrounding
-    update_n_lines = 'gsn', -- Update `n_lines`
-
-    suffix_last = 'l',      -- Suffix to search with "prev" method
-    suffix_next = 'N',      -- Suffix to search with "next" method
+    add = 'gza',            -- Add surrounding in Normal and Visual modes
+    delete = 'gzd',         -- Delete surrounding
+    find = 'gzf',           -- Find surrounding (to the right)
+    find_left = 'gzF',      -- Find surrounding (to the left)
+    highlight = 'gzh',      -- Highlight surrounding
+    replace = 'gzr',        -- Replace surrounding
+    update_n_lines = 'gzn', -- Update `n_lines`
   },
-  n_lines = 20,
-  respect_selection_type = false,
-  search_method = 'cover',
 })
+
+-- require('mini.indentscope').setup({ draw = { animation = require('mini.indentscope').gen_animation.none() }, symbol = '│' })
+require('mini.align').setup()
+require('mini.bracketed').setup()
+require('mini.operators').setup()
+require('mini.splitjoin').setup()
 
 if not vim.g.vscode then
   require('mini.map').setup({

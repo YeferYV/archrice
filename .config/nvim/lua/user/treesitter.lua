@@ -4,22 +4,18 @@ if not status_ok then
 end
 
 configs.setup {
-  -- ensure_installed can be "all" or a list of languages { "python", "javascript" }
   -- ensure_installed = { "python", "bash", "javascript", "json", "html", "css", "c", "lua" },
 
-  autopairs = {
-    enable = true,
-  },
-  highlight = {    -- enable highlighting for all file types
+  highlight = {    -- Windows requires zig, see: https://github.com/nvim-treesitter/nvim-treesitter/issues/5264
     enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
     use_languagetree = true,
     additional_vim_regex_highlighting = true,
   },
-  indent = { enable = true, disable = { "python", "yaml" } },
+  indent = { enable = true }, --  { enable = true, disable = { "python", "yaml" }} -- https://www.reddit.com/r/neovim/comments/14n6iiy/if_you_have_treesitter_make_sure_to_disable_smartindent
   incremental_selection = {
-    enable = true, -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
+    enable = true,            -- you can also use a table with list of langs here (e.g. { "python", "javascript" })
     disable = { "yaml" },
-    keymaps = {    -- mappings for incremental selection (visual mappings)
+    keymaps = {               -- mappings for incremental selection (visual mappings)
       -- init_selection = "gnn",         -- maps in normal mode to init the node/scope selection
       -- node_incremental = "grn",       -- increment to the upper named parent
       -- scope_incremental = "grc",      -- increment to the upper scope (as defined in locals.scm)
@@ -70,7 +66,7 @@ configs.setup {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_previous_start = {
-        ['gpaB'] = '@block.outer',
+        ['gpaK'] = '@block.outer',
         ['gpaq'] = '@call.outer',
         ['gpaQ'] = '@class.outer',
         ['gpag'] = '@comment.outer',
@@ -85,7 +81,7 @@ configs.setup {
         ["gpz"] = { query = "@fold", query_group = "folds", desc = "Previous Start Fold" },
         ["gpZ"] = { query = "@scope", query_group = "locals", desc = "Prev scope" },
 
-        ['gpiB'] = '@block.inner',
+        ['gpiK'] = '@block.inner',
         ['gpiq'] = '@call.inner',
         ['gpiQ'] = '@class.inner',
         ['gpig'] = '@comment.inner',
@@ -99,7 +95,7 @@ configs.setup {
         ['gpi#'] = '@number.inner',
       },
       goto_next_start = {
-        ['gnaB'] = '@block.outer',
+        ['gnaK'] = '@block.outer',
         ['gnaq'] = '@call.outer',
         ['gnaQ'] = '@class.outer',
         ['gnag'] = '@comment.outer',
@@ -114,7 +110,7 @@ configs.setup {
         ["gnz"] = { query = "@fold", query_group = "folds", desc = "Next Start Fold" },
         ["gnZ"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
 
-        ['gniB'] = '@block.inner',
+        ['gniK'] = '@block.inner',
         ['gniq'] = '@call.inner',
         ['gniQ'] = '@class.inner',
         ['gnig'] = '@comment.inner',
@@ -128,7 +124,7 @@ configs.setup {
         ['gni#'] = '@number.inner',
       },
       goto_previous_end = {
-        ['gpeaB'] = '@block.outer',
+        ['gpeaK'] = '@block.outer',
         ['gpeaq'] = '@call.outer',
         ['gpeaQ'] = '@class.outer',
         ['gpeag'] = '@comment.outer',
@@ -143,7 +139,7 @@ configs.setup {
         ["gpez"] = { query = "@fold", query_group = "folds", desc = "Previous End Fold" },
         ["gpeZ"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
 
-        ['gpeiB'] = '@block.inner',
+        ['gpeiK'] = '@block.inner',
         ['gpeiq'] = '@call.inner',
         ['gpeiQ'] = '@class.inner',
         ['gpeig'] = '@comment.inner',
@@ -157,7 +153,7 @@ configs.setup {
         ['gpei#'] = '@number.inner',
       },
       goto_next_end = {
-        ['gneaB'] = '@block.outer',
+        ['gneaK'] = '@block.outer',
         ['gneaq'] = '@call.outer',
         ['gneaQ'] = '@class.outer',
         ['gneag'] = '@comment.outer',
@@ -172,7 +168,7 @@ configs.setup {
         ["gnez"] = { query = "@fold", query_group = "folds", desc = "Next End Fold" },
         ["gneZ"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
 
-        ['gneiB'] = '@block.inner',
+        ['gneiK'] = '@block.inner',
         ['gneiq'] = '@call.inner',
         ['gneiQ'] = '@class.inner',
         ['gneig'] = '@comment.inner',
