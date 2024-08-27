@@ -35,6 +35,11 @@ local plugins = {
 
   -- Automation
   {
+    "xiyaowong/fast-cursor-move.nvim",
+    commit = "9ab80d0184861be18833647e983086725b9905f9",
+    event = "BufReadPre"
+  },
+  {
     "windwp/nvim-ts-autotag", -- To autoclose and autorename tags
     commit = "dc5e1687ab76ee02e0f11c5ce137f530b36e98b3",
     event = "BufReadPre",

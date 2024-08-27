@@ -179,6 +179,7 @@ if not vim.g.vscode then
   require('mini.misc').setup_auto_root()
   require('mini.notify').setup()
   require('mini.pairs').setup()
+  -- require('mini.pick').setup()
   require('mini.statusline').setup()
   require('mini.starter').setup()
   require('mini.tabline').setup()
@@ -303,6 +304,7 @@ if not vim.g.vscode then
       -- base0F = "#f7768e", -- punctuation, indentscope, tag signs
 
     },
+    use_cterm = true, -- required if `vi -c 'Pick files'`
   })
 
   -- poimandres custom treesitter colors
