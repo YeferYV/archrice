@@ -18,8 +18,3 @@
 !.local/bin/RiceArch
 !.local/bin/snapper-rollback
 !.local/bin/sysclean.sh
-
-# symlinks for neovim
-colors
-lua
-init.lua
