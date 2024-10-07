@@ -48,54 +48,50 @@ local plugins = {
 
   -- Completion
   -- {
-  --   'luozhiya/fittencode.nvim',
+  --   "Exafunction/codeium.vim", -- run `:Codeium Auth` then `:Codeium Enable` see: https://github.com/Exafunction/codeium.vim/issues/376
+  --   version = "v1.12.0",
   --   event = "InsertEnter",
-  --   opts = {},
+  --   config = function() vim.g.codeium_log_file = "~/.codeium/codeium.log" end,
   --   keys = {
+  --     {
+  --       "<A-j>",
+  --       function()
+  --         return vim.fn["codeium#CycleCompletions"](1)
+  --       end,
+  --       expr = true,
+  --       silent = true,
+  --       mode = "i"
+  --     },
+  --     {
+  --       "<A-k>",
+  --       function()
+  --         return vim.fn["codeium#CycleCompletions"](-1)
+  --       end,
+  --       expr = true,
+  --       silent = true,
+  --       mode = "i"
+  --     },
   --     {
   --       "<A-l>",
   --       function()
-  --         require("fittencode").accept_all_suggestions()
+  --         return vim.fn["codeium#Accept"]()
   --       end,
+  --       expr = true,
   --       silent = true,
-  --       mode = "i",
+  --       mode = "i"
   --     },
-  --   }
+  --   },
   -- },
   {
-    "Exafunction/codeium.vim", -- run `:Codeium Auth` then `:Codeium Enable` see: https://github.com/Exafunction/codeium.vim/issues/376
-    version = "v1.12.0",
+    "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
-    config = function() vim.g.codeium_log_file = "~/.codeium/codeium.log" end,
-    keys = {
-      {
-        "<A-j>",
-        function()
-          return vim.fn["codeium#CycleCompletions"](1)
-        end,
-        expr = true,
-        silent = true,
-        mode = "i"
-      },
-      {
-        "<A-k>",
-        function()
-          return vim.fn["codeium#CycleCompletions"](-1)
-        end,
-        expr = true,
-        silent = true,
-        mode = "i"
-      },
-      {
-        "<A-l>",
-        function()
-          return vim.fn["codeium#Accept"]()
-        end,
-        expr = true,
-        silent = true,
-        mode = "i"
-      },
-    },
+    opts = {
+      keymaps = {
+        accept_suggestion = "<A-l>",
+        clear_suggestion = "<A-k>",
+        accept_word = "<A-j>",
+      }
+    }
   },
   {
     "hrsh7th/nvim-cmp", -- completion engine
