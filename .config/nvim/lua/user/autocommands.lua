@@ -68,6 +68,14 @@ vim.cmd [[
 
 ------------------------------------------------------------------------------------------------------------------------
 
+autocmd({ "InsertLeave" }, {
+  callback = function()
+    if vim.snippet._session then vim.snippet.stop() end
+  end
+})
+
+------------------------------------------------------------------------------------------------------------------------
+
 -- autocmd({ "BufEnter", "Filetype" }, {
 --   group = hide_terminal_statusline,
 --   pattern = "term://*",

@@ -3,12 +3,43 @@ if not cmp_status_ok then
   return
 end
 
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then
-  return
+local M = {}
+
+-- https://github.com/LazyVim/LazyVim/commit/97862f425997bf89f581e6aeceed9aac85d90432
+-- https://github.com/LazyVim/LazyVim/commit/1b86d7b2ade1dc934165fb1de8e5a3b211bc5ee0
+function M.snippet_replace(snippet, fn)
+  return snippet:gsub("%$%b{}", function(m)
+    local n, name = m:match("^%${(%d+):(.+)}$")
+    return n and fn({ n = n, text = name }) or m
+  end) or snippet
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
+-- This function resolves nested placeholders in a snippet.
+function M.snippet_preview(snippet)
+  local ok, parsed = pcall(function()
+    return vim.lsp._snippet_grammar.parse(snippet)
+  end)
+  return ok and tostring(parsed)
+      or M.snippet_replace(snippet, function(placeholder)
+        return M.snippet_preview(placeholder.text)
+      end):gsub("%$0", "")
+end
+
+-- This function replaces nested placeholders in a snippet with LSP placeholders.
+function M.snippet_fix(snippet)
+  local texts = {}
+  return M.snippet_replace(snippet, function(placeholder)
+    texts[placeholder.n] = texts[placeholder.n] or M.snippet_preview(placeholder.text)
+    return "${" .. placeholder.n .. ":" .. texts[placeholder.n] .. "}"
+  end)
+end
+
+-- local snip_status_ok, luasnip = pcall(require, "luasnip")
+-- if not snip_status_ok then
+--   return
+-- end
+
+-- require("luasnip/loaders/from_vscode").lazy_load()
 
 local check_backspace = function()
   local col = vim.fn.col "." - 1
@@ -48,11 +79,14 @@ local kind_icons = {
 cmp.setup {
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body) -- For `luasnip` users.
+      -- luasnip.lsp_expand(args.body) -- For `luasnip` users.
       -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
       -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
       -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+
+      local fixed = M.snippet_fix(args.body)
+      vim.snippet.expand(fixed)
     end,
   },
   mapping = {
@@ -90,29 +124,9 @@ cmp.setup {
         end
       end,
     }),
-
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
-    -- ["<CR>"] = cmp.mapping.confirm { select = true }, -- requires cmp_luasnip for snippets
-
-    -- it doesn't require cmp_luasnip but if same snippet found will choose the first one (e.g. `rfce` in .tsx files, workaround: rename the snippet)
-    ["<CR>"] = cmp.mapping(function(fallback)
-      if luasnip.expandable() then
-        luasnip.expand()
-      elseif cmp.visible() then
-        cmp.confirm()
-        vim.schedule(function() -- to prevent race condition
-          if luasnip.expandable() then
-            luasnip.expand()
-          end
-        end)
-      else
-        fallback()
-      end
-    end, {
-      "i",
-    }),
-
+    ["<CR>"] = cmp.mapping.confirm { select = true },
     ["<C-l>"] = cmp.mapping(cmp.mapping.confirm { select = true }, { "i", "c" }),
     -- ['<CR>'] = cmp.mapping.confirm({
     --   behavior = cmp.ConfirmBehavior.Replace,
@@ -121,10 +135,10 @@ cmp.setup {
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+        -- elseif luasnip.expandable() then
+        --   luasnip.expand()
+        -- elseif luasnip.expand_or_jumpable() then
+        --   luasnip.expand_or_jump()
       elseif check_backspace() then
         fallback()
       else
@@ -138,8 +152,8 @@ cmp.setup {
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+        -- elseif luasnip.jumpable(-1) then
+        --   luasnip.jump(-1)
       else
         fallback()
       end
@@ -164,8 +178,8 @@ cmp.setup {
         -- ultisnips = "[Ult]",
         -- vsnip = "[Vsnip]",
         -- snippy = "[Snippy]",
-        luasnip = "[Snippet]",
-        -- snippets = "[Snippet]",
+        -- luasnip = "[Snippet]",
+        snippets = "[Snippet]",
         buffer = "[Buffer]",
         path = "[Path]",
         spell = "[Spell]",
@@ -180,8 +194,8 @@ cmp.setup {
     -- { name = 'ultisnips' },
     -- { name = 'vsnip' },
     -- { name = 'snippy' },
-    { name = "luasnip" },
-    -- { name = "snippets" },
+    -- { name = "luasnip" },
+    { name = "snippets" },
     { name = "buffer" },
     { name = "path" },
     { name = 'spell' },

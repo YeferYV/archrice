@@ -29,7 +29,7 @@ end
 -- https://github.com/williamboman/mason.nvim/discussions/93
 -- local mason_registry = require "mason-registry"
 -- local Pkg = require "mason-core.package"
-local null_sources = { null_ls.builtins.completion.luasnip }
+local null_sources = {}
 
 -- _formatters_and_linters_autoconfig
 -- for _, package in ipairs(mason_registry.get_installed_packages()) do
