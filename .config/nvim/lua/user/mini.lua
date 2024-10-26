@@ -101,13 +101,13 @@ require('mini.operators').setup()
 require('mini.splitjoin').setup()
 
 if not vim.g.vscode then
-  require('mini.map').setup({
-    integrations = {
-      require('mini.map').gen_integration.builtin_search(),
-      require('mini.map').gen_integration.diagnostic(),
-      require('mini.map').gen_integration.gitsigns(),
-    },
-  })
+  -- require('mini.map').setup({
+  --   integrations = {
+  --     require('mini.map').gen_integration.builtin_search(),
+  --     require('mini.map').gen_integration.diagnostic(),
+  --     require('mini.map').gen_integration.gitsigns(),
+  --   },
+  -- })
 
   require('mini.clue').setup({
     triggers = {
@@ -172,20 +172,6 @@ if not vim.g.vscode then
       width_preview = 60,
     },
   })
-
-  require('mini.completion').setup({ delay = { completion = 10 ^ 7, info = 100, signature = 50 } })
-  require('mini.cursorword').setup()
-  require('mini.icons').setup()
-  require('mini.misc').setup_auto_root()
-  require('mini.notify').setup()
-  require('mini.pairs').setup()
-  -- require('mini.pick').setup()
-  require('mini.statusline').setup()
-  require('mini.starter').setup()
-  require('mini.tabline').setup()
-  MiniIcons.mock_nvim_web_devicons()
-  vim.notify = MiniNotify.make_notify() -- `vim.print = MiniNotify.make_notify()` conflicts with `:=vim.opt.number`
-  vim.opt.laststatus = 3                -- it has to be after mini.statusline
 
   require('mini.base16').setup({
     -- `:Inspect` and `:hi <@treesitter>` to reverse engineering a colorscheme
@@ -328,8 +314,59 @@ if not vim.g.vscode then
   vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
   vim.api.nvim_set_hl(0, "Statusline", { bg = "NONE" })
   vim.api.nvim_set_hl(0, "StatuslineNC", { bg = "NONE" })
-  vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#1abc9c" })
-  vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#3c3cff" })
-  vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#880000" })
+  vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#009900" })
+  vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#3C3CFf" })
+  vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#990000" })
   vim.api.nvim_set_hl(0, "PmenuSel", { fg = "NONE", bg = "#2c2c2c" })
+
+  -- TODO: remove it when mini.snippets available
+  local H = {}
+
+  -- extracted from https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/completion.lua
+  H.table_get = function(t, id)
+    if type(id) ~= 'table' then return H.table_get(t, { id }) end
+    local success, res = true, t
+    for _, i in ipairs(id) do
+      success, res = pcall(function() return res[i] end)
+      if not success or res == nil then return end
+    end
+    return res
+  end
+
+  -- Completion word (textEdit.newText > insertText > label)
+  H.get_completion_word = function(item)
+    return H.table_get(item, { 'textEdit', 'newText' }) or item.insertText or item.label or ''
+  end
+
+  -- skip snippets filter
+  -- press <c-x><c-o> if snippet not showing (e.g using lua-ls when configured with `require('mini.completion').setup()` )
+  require('mini.completion').setup({
+    lsp_completion = {
+      process_items = function(items, base)
+        local res = vim.tbl_filter(function(item)
+          -- Keep items which match the base
+          local text = item.filterText or H.get_completion_word(item)
+          return vim.startswith(text, base)
+        end, items)
+
+        table.sort(res, function(a, b) return (a.sortText or a.label) < (b.sortText or b.label) end)
+        return res
+      end,
+    },
+  })
+
+  require('mini.cursorword').setup()
+  require('mini.icons').setup()
+  require('mini.misc').setup_auto_root()
+  require('mini.notify').setup()
+  require('mini.pairs').setup()
+  -- require('mini.pick').setup()
+  require('mini.statusline').setup()
+  require('mini.starter').setup()
+  require('mini.tabline').setup()
+  MiniIcons.mock_nvim_web_devicons()
+  MiniIcons.tweak_lsp_kind( --[[ "replace" ]])
+  vim.notify = MiniNotify.make_notify() -- `vim.print = MiniNotify.make_notify()` conflicts with `:=vim.opt.number`
+  vim.opt.completeopt:append('fuzzy')   -- it should be after require("mini.completion").setup())
+  vim.opt.laststatus = 3                -- it has to be after mini.statusline
 end

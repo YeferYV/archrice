@@ -8,7 +8,7 @@ end
 local number_of_lines = function(state)
   local node = state.tree:get_node()
   local wc = vim.print(vim.api.nvim_exec2(string.format("!cat '%s' | wc -l", node.path), { output = true }))
-  local wc_digit = wc.output:match("(%d+)")
+  local wc_digit = wc.output:match("(%d+\n)")
   vim.notify(" " .. wc_digit)
 end
 

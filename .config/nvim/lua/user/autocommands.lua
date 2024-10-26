@@ -68,13 +68,6 @@ vim.cmd [[
 
 ------------------------------------------------------------------------------------------------------------------------
 
-autocmd({ "InsertLeave" }, {
-  callback = function()
-    if vim.snippet._session then vim.snippet.stop() end
-  end
-})
-
-------------------------------------------------------------------------------------------------------------------------
 
 -- autocmd({ "BufEnter", "Filetype" }, {
 --   group = hide_terminal_statusline,
@@ -507,5 +500,77 @@ function HideUnhideWindow()
 end
 
 --------------------------------------------------------------------------------------------------------------------
+
+-- https://www.reddit.com/r/neovim/comments/1d7j0c1/a_small_gist_to_use_the_new_builtin_completion/
+-- https://www.reddit.com/r/neovim/comments/rddugs/snipcomplua_luasnip_companion_plugin_for_omni/
+local _, luasnip = pcall(require, "luasnip")
+local map = vim.keymap.set
+
+---For replacing certain <C-x>... keymaps.
+---@param keys string
+local function feedkeys(keys)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), 'n', true)
+end
+
+---Is the completion menu open?
+local function pumvisible()
+  return tonumber(vim.fn.pumvisible()) ~= 0
+end
+
+vim.api.nvim_create_autocmd('LspAttach', {
+
+  callback = function(args)
+    vim.lsp.completion.enable(true, args.data.client_id, args.buf, { autotrigger = true })
+
+    -- Use enter to expand snippet or accept completions.
+    map('i', '<cr>', function()
+      if luasnip.expandable() then
+        luasnip.expand()
+      elseif pumvisible() then
+        feedkeys '<C-y>'
+      else
+        feedkeys '<cr>'
+      end
+    end)
+
+    -- complete placeholder (if selecting snippet expand it with <cr>)
+    map('i', '<down>', function()
+      if pumvisible() then
+        feedkeys '<C-n>'
+      else
+        feedkeys '<down>'
+      end
+    end)
+    map('i', '<up>', function()
+      if pumvisible() then
+        feedkeys '<C-p>'
+      else
+        feedkeys '<up>'
+      end
+    end)
+
+    -- to navigate between completion list or snippet tabstops,
+    map({ 'i', 's' }, '<Tab>', function()
+      if pumvisible() then
+        feedkeys '<C-n>'
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        feedkeys '<Tab>'
+      end
+    end)
+    map({ 'i', 's' }, '<S-Tab>', function()
+      if pumvisible() then
+        feedkeys '<C-p>'
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        feedkeys '<S-Tab>'
+      end
+    end)
+  end
+})
+
+------------------------------------------------------------------------------------------------------------------------
 
 return M

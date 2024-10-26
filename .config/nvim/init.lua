@@ -1,7 +1,7 @@
 -- require "user.colorscheme"
 require "user.options"
-require "user.autocommands"
 require "user.lazy"
+require "user.autocommands"
 require "user.lsp"
 require "user.mini"
 require "user.whichkey"

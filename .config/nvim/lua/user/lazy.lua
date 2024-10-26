@@ -34,11 +34,11 @@ local opts = {
 local plugins = {
 
   -- Automation
-  {
-    "xiyaowong/fast-cursor-move.nvim",
-    commit = "9ab80d0184861be18833647e983086725b9905f9",
-    event = "BufReadPre"
-  },
+  -- {
+  --   "xiyaowong/fast-cursor-move.nvim",
+  --   commit = "9ab80d0184861be18833647e983086725b9905f9",
+  --   event = "BufReadPre"
+  -- },
   {
     "windwp/nvim-ts-autotag", -- To autoclose and autorename tags
     commit = "dc5e1687ab76ee02e0f11c5ce137f530b36e98b3",
@@ -93,81 +93,91 @@ local plugins = {
       }
     }
   },
-  {
-    "hrsh7th/nvim-cmp", -- completion engine
-    commit = "ae644feb7b67bf1ce4260c231d1d4300b19c6f30",
-    event = { "InsertEnter", "CmdlineEnter" },
-    dependencies = {
-      { "hrsh7th/cmp-buffer",   commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }, -- buffer completions
-      { "hrsh7th/cmp-path",     commit = "91ff86cd9c29299a64f968ebb45846c485725f23" }, -- path completions
-      { "hrsh7th/cmp-cmdline",  commit = "d250c63aa13ead745e3a40f61fdd3470efde3923" }, -- cmdline completions
-      { "hrsh7th/cmp-nvim-lsp", commit = "39e2eda76828d88b773cc27a3f61d2ad782c922d" }, -- lsp completions
-      -- { "saadparwaiz1/cmp_luasnip",     commit = "05a9ab28b53f71d1aece421ef32fee2cb857a843" }, -- snippet source
-      -- { "L3MON4D3/LuaSnip",             tag = "v2.0.0" },                                      --snippet engine
-      -- {
-      --   "roobert/tailwindcss-colorizer-cmp.nvim",
-      --   commit = "3d3cd95e4a4135c250faf83dd5ed61b8e5502b86",
-      --   config = function()
-      --     require("tailwindcss-colorizer-cmp").setup({ color_square_width = 3 })
-      --   end,
-      -- },
-    },
-    config = function() require("user.cmp") end
-  },
+  -- {
+  --   "hrsh7th/nvim-cmp", -- completion engine
+  --   commit = "29fb4854573355792df9e156cb779f0d31308796",
+  --   event = { "InsertEnter", "CmdlineEnter" },
+  --   dependencies = {
+  --     { "hrsh7th/cmp-buffer",   commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }, -- buffer completions
+  --     { "hrsh7th/cmp-path",     commit = "91ff86cd9c29299a64f968ebb45846c485725f23" }, -- path completions
+  --     { "hrsh7th/cmp-cmdline",  commit = "d250c63aa13ead745e3a40f61fdd3470efde3923" }, -- cmdline completions
+  --     { "hrsh7th/cmp-nvim-lsp", commit = "39e2eda76828d88b773cc27a3f61d2ad782c922d" }, -- lsp completions
+  --     -- { "saadparwaiz1/cmp_luasnip",     commit = "05a9ab28b53f71d1aece421ef32fee2cb857a843" }, -- snippet source
+  --     -- { "L3MON4D3/LuaSnip",             tag = "v2.0.0" },                                      --snippet engine
+  --     -- {
+  --     --   "roobert/tailwindcss-colorizer-cmp.nvim",
+  --     --   commit = "3d3cd95e4a4135c250faf83dd5ed61b8e5502b86",
+  --     --   config = function()
+  --     --     require("tailwindcss-colorizer-cmp").setup({ color_square_width = 3 })
+  --     --   end,
+  --     -- },
+  --   },
+  --   config = function() require("user.cmp") end
+  -- },
 
   -- Snippets
   {
-    "garymjr/nvim-snippets",
-    commit = "56b4052f71220144689caaa2e5b66222ba5661eb",
-    event = { "InsertEnter", "CmdlineEnter" },
+    "L3MON4D3/LuaSnip", --snippet engine
+    tag = "v2.0.0",
+    event = { "InsertEnter" },
     dependencies = {
       { "rafamadriz/friendly-snippets", commit = "00ebcaa159e817150bd83bfe2d51fa3b3377d5c4" }, -- a bunch of snippets to use
     },
-    opts = { friendly_snippets = true, },
-    keys = {
-      {
-        "<Tab>",
-        function()
-          if vim.snippet.active({ direction = 1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(1)
-            end)
-            return
-          end
-          return "<Tab>"
-        end,
-        expr = true,
-        silent = true,
-        mode = "i",
-      },
-      {
-        "<Tab>",
-        function()
-          vim.schedule(function()
-            vim.snippet.jump(1)
-          end)
-        end,
-        expr = true,
-        silent = true,
-        mode = "s",
-      },
-      {
-        "<S-Tab>",
-        function()
-          if vim.snippet.active({ direction = -1 }) then
-            vim.schedule(function()
-              vim.snippet.jump(-1)
-            end)
-            return
-          end
-          return "<S-Tab>"
-        end,
-        expr = true,
-        silent = true,
-        mode = { "i", "s" },
-      },
-    },
+    config = function() require("luasnip.loaders.from_vscode").lazy_load() end
   },
+
+  -- {
+  --   "garymjr/nvim-snippets",
+  --   commit = "56b4052f71220144689caaa2e5b66222ba5661eb",
+  --   event = { "InsertEnter", "CmdlineEnter" },
+  --   dependencies = {
+  --     { "rafamadriz/friendly-snippets", commit = "00ebcaa159e817150bd83bfe2d51fa3b3377d5c4" }, -- a bunch of snippets to use
+  --   },
+  --   opts = { friendly_snippets = true, },
+  --   keys = {
+  --     {
+  --       "<Tab>",
+  --       function()
+  --         if vim.snippet.active({ direction = 1 }) then
+  --           vim.schedule(function()
+  --             vim.snippet.jump(1)
+  --           end)
+  --           return
+  --         end
+  --         return "<Tab>"
+  --       end,
+  --       expr = true,
+  --       silent = true,
+  --       mode = "i",
+  --     },
+  --     {
+  --       "<Tab>",
+  --       function()
+  --         vim.schedule(function()
+  --           vim.snippet.jump(1)
+  --         end)
+  --       end,
+  --       expr = true,
+  --       silent = true,
+  --       mode = "s",
+  --     },
+  --     {
+  --       "<S-Tab>",
+  --       function()
+  --         if vim.snippet.active({ direction = -1 }) then
+  --           vim.schedule(function()
+  --             vim.snippet.jump(-1)
+  --           end)
+  --           return
+  --         end
+  --         return "<S-Tab>"
+  --       end,
+  --       expr = true,
+  --       silent = true,
+  --       mode = { "i", "s" },
+  --     },
+  --   },
+  -- },
 
   -- LSP
   {
