@@ -54,41 +54,29 @@ map("x", "<leader><leader>Y", 'g_"*y', { desc = "Yank forward (second_clip)" })
 -- │ Operator / Motions │
 -- ╰────────────────────╯
 
--- map("n", "gb", "<Plug>(VM-Find-Under)", { desc = "add virtual cursor (select and find)(n to add forward)" })
--- map("n", "gB", "v<Plug>(VM-Visual-Find)", { desc = "add virtual cursor (find selected)(N to add backward)" })
--- map("n", "go", "<Plug>(VM-Add-Cursor-Down)", { desc = "add virtual cursor down (tab to visual/cursor mode)" })
--- map("n", "gO", "<Plug>(VM-Add-Cursor-Up)", { desc = "add virtual cursor up (tab to visual/cursor mode)" })
--- map("x", "gb", "<esc><Plug>(VM-Find-Under)", { desc = "add virtual cursor (select and find)(n to add forward)" })
--- map("x", "gB", "<Plug>(VM-Find-Subword-Under)", { desc = "add virtual cursor (find selected)(N to add backward)" })
--- map("x", "go", "<Plug>(VM-Visual-Add)", { desc = "visual select to virtual cursor (n to add forward)" })
--- map("x", "gO", "<Plug>(VM-Visual-Add)", { desc = "visual select to virtual cursor (N to add backward)" })
--- map("n", "mc", "<Plug>(VM-Add-Cursor-At-Pos)", { desc = "create cursor (\\\\<space> to toggle cursor keymaps)" })
--- map("x", "mc", "<Plug>(VM-Visual-Cursors)", { desc = "create cursor (\\\\<space> to toggle cursor keymaps)" })
--- map(
---   { "n", "x" },
---   "gW",
---   function()
---     require('user.autocommands').columnword()
---     vim.cmd([[ execute "normal \<Plug>(VM-Visual-Cursors)siw" ]])
---   end,
---   { silent = true, desc = "word-column multicursor (requires vim-visual-multi)" }
--- )
+-- https://vi.stackexchange.com/questions/22570/is-there-a-way-to-move-to-the-beginning-of-the-next-text-object
+_G.GoStartNormal = function() vim.cmd('normal! `[') end
+_G.GoEndNormal = function() vim.cmd('normal! `]') end
+_G.GoStartVisual = function() vim.api.nvim_feedkeys("`[v`'", "n", true) end
+_G.GoEndVisual = function() vim.api.nvim_feedkeys("`'v`]", "n", true) end
 
--- map("n", "vg<", _G.__to_start_of_textobj, { expr = true, desc = "Select from startOf TextObj" })
--- map("n", "vg>", _G.__to_end_of_textobj, { expr = true, desc = "Selcect to endOf TextObj" })
 map(
   { "n", "x" },
-  "g<",
-  -- function() return GotoTextObj("`[", "`[v``", "`[V``", "`[\x16`'") end,
-  function() return GotoTextObj("`<", "`<v`'", "`<V`'", "`<\22`'") end,
-  { expr = true, silent = true, desc = "StartOf TextObj (dot to repeat)" }
+  'g<',
+  function()
+    vim.o.operatorfunc = vim.fn.mode() == 'n' and 'v:lua.GoStartNormal' or 'v:lua.GoStartVisual'
+    return "<esc>m'g@"
+  end,
+  { expr = true, desc = "StartOf TextObj (dot to repeat)" }
 )
 map(
   { "n", "x" },
-  "g>",
-  -- function() return GotoTextObj("`]", "``v`]", "``V`]", "`'\x16`]") end,
-  function() return GotoTextObj("`>", "`'v`>", "`'V`>", "`'\22`>") end,
-  { expr = true, silent = true, desc = "EndOf TextObj (dot to repeat)" }
+  'g>',
+  function()
+    vim.o.operatorfunc = vim.fn.mode() == 'n' and 'v:lua.GoEndNormal' or 'v:lua.GoEndVisual'
+    return "<esc>m'g@"
+  end,
+  { expr = true, desc = "EndOf TextObj (dot to repeat)" }
 )
 
 map({ "n", "x", "o" }, "s", function() flash.jump() end, { desc = "Flash" })
