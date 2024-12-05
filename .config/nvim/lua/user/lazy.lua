@@ -39,12 +39,12 @@ local plugins = {
   --   commit = "9ab80d0184861be18833647e983086725b9905f9",
   --   event = "BufReadPre"
   -- },
-  {
-    "windwp/nvim-ts-autotag", -- To autoclose and autorename tags
-    commit = "dc5e1687ab76ee02e0f11c5ce137f530b36e98b3",
-    event = "BufReadPre",
-    opts = {}
-  },
+  -- { -- replaced by emmet-language-server which can expand tailwind classes (eg. `.text-white`)
+  --   "windwp/nvim-ts-autotag", -- To autoclose and autorename tags
+  --   commit = "dc5e1687ab76ee02e0f11c5ce137f530b36e98b3",
+  --   event = "BufReadPre",
+  --   opts = {}
+  -- },
 
   -- Completion
   -- {
@@ -216,7 +216,12 @@ local plugins = {
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects", commit = "ad8f0a472148c3e0ae9851e26a722ee4e29b1595" },
     },
-    config = function() require("user.treesitter") end
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        indent = { enable = true },    -- https://www.reddit.com/r/neovim/comments/14n6iiy/if_you_have_treesitter_make_sure_to_disable_smartindent
+        highlight = { enable = true }, -- https://github.com/nvim-treesitter/nvim-treesitter/issues/5264
+      })
+    end
   },
   {
     "chrisgrieser/nvim-various-textobjs",
