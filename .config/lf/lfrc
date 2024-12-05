@@ -144,7 +144,7 @@ cmd delete ${{
 
 cmd fzf_preview ${{
     # fzf with lf images preview like keybinding
-    export FZF_DEFAULT_COMMAND='rg --files -g "!.git/" --hidden'
+    export FZF_DEFAULT_COMMAND='rg --files -g "!.git/" --hidden | sort --ignore-case --reverse'
     export FZF_PREVIEWER="$HOME/.config/lf/${1}"
     fzf --bind='alt-j:down+execute-silent(                 (tput sc; tput cup 2 $(tput cols) ;              wezterm imgcat --width $(   tput cols    ) {}; tput rc;    read) >/dev/tty)'\
         --bind='alt-k:up+execute-silent(                   (tput sc; tput cup 2 $(tput cols) ;              wezterm imgcat --width $(   tput cols    ) {}; tput rc;    read) >/dev/tty)'\
@@ -166,7 +166,7 @@ cmd fzf_preview ${{
         --bind='ctrl-p:execute(less -f {} < /dev/tty > /dev/tty)'\
         --bind='?:toggle-preview'\
         --preview='$FZF_PREVIEWER {}'\
-        --preview-window 'right,50%,border-left' \
+        --preview-window 'right,60%,border-left' \
     | xargs -I_ lf -remote "send $id select '_'"
   }}
 
