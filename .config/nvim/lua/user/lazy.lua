@@ -185,7 +185,7 @@ local plugins = {
     commit = "e2f7f9044ec30067bc11800a9e266664b88cda22",
     dependencies = {
       { "neovim/nvim-lspconfig",             commit = "6c505d4220b521f3b0e7b645f6ce45fa914d0eed" }, -- default configurations for LSP
-      { "nvimtools/none-ls.nvim",            commit = "cfa65d86e21eeb60544d5e823f6db43941322a53" }, -- default configurations formatters and linters
+      { "nvimtools/none-ls.nvim",            commit = "96ec99437a80a9aae1634d0a20151529a67a0977" }, -- default configurations formatters and linters
       { "williamboman/mason-lspconfig.nvim", commit = "62360f061d45177dda8afc1b0fd1327328540301" }, -- compatibility between mason and nvim-lspconfig
       { "jay-babu/mason-null-ls.nvim",       commit = "de19726de7260c68d94691afb057fa73d3cc53e7" }, -- compatibility between mason and none-ls
       { "nvim-lua/plenary.nvim",             commit = "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" }, -- lua modules required by none-ls
@@ -207,14 +207,14 @@ local plugins = {
   },
 
   -- Text-Objects
-  { "echasnovski/mini.nvim", commit = "d8faae693d266ee4f3a2bf1fb7ca4bc81314c3e9" },
+  { "echasnovski/mini.nvim", commit = "c6eede272cfdb9b804e40dc43bb9bff53f38ed8a" },
   {
     "nvim-treesitter/nvim-treesitter",
-    commit = "a8535b2329a082c7f4e0b11b91b1792770425eaa",
+    commit = "69170c93149ddb71a22bd954514806395c430c02",
     event = "VeryLazy",
     build = ":TSUpdate", -- treesitter works with specific versions of language parsers (required if upgrading treesitter)
     dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "33a17515b79ddb10d750320fa994098bdc3e93ef" },
+      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "ad8f0a472148c3e0ae9851e26a722ee4e29b1595" },
     },
     config = function() require("user.treesitter") end
   },
@@ -280,20 +280,20 @@ local plugins = {
       show_current_context = true,            -- not supported on version 3
     }
   },
-  {
-    "NvChad/nvim-colorizer.lua",
-    commit = "194ec600488f7c7229668d0e80bd197f3a2b84ff",
-    event = "BufReadPre",
-    opts = {
-      user_default_options = {
-        RRGGBBAA = true,     -- #RRGGBBAA hex codes
-        css = true,          -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true,       -- Enable all CSS *functions*: rgb_fn, hsl_fn
-        tailwind = true,     -- Enable tailwind colors
-        always_update = true -- for cmp_menu and cmp_docs (replaces tailwindcss-colorizer-cmp.nvim)
-      },
-    }
-  },
+  -- {
+  --   "NvChad/nvim-colorizer.lua",
+  --   commit = "194ec600488f7c7229668d0e80bd197f3a2b84ff",
+  --   event = "BufReadPre",
+  --   opts = {
+  --     user_default_options = {
+  --       RRGGBBAA = true,     -- #RRGGBBAA hex codes
+  --       css = true,          -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+  --       css_fn = true,       -- Enable all CSS *functions*: rgb_fn, hsl_fn
+  --       tailwind = true,     -- Enable tailwind colors
+  --       always_update = true -- for cmp_menu and cmp_docs (replaces tailwindcss-colorizer-cmp.nvim)
+  --     },
+  --   }
+  -- },
   {
     "lewis6991/gitsigns.nvim",
     version = "0.9.0",
