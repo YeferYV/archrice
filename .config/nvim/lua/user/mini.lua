@@ -3,7 +3,7 @@ if not mini_status_ok then return end
 local spec_treesitter = mini_ai.gen_spec.treesitter
 local mini_clue = require("mini.clue")
 
---- local gen_ai_spec = require('mini.extra').gen_ai_spec
+local gen_ai_spec = require('mini.extra').gen_ai_spec
 ---   require('mini.ai').setup({
 ---     custom_textobjects = {
 ---       B = gen_ai_spec.buffer(),
@@ -48,6 +48,9 @@ mini_ai.setup({
     -- Tweak function call to not detect dot in function name
     -- f = mini.ai.gen_spec.function_call({ name_pattern = '[%w_]' }),
 
+    d = gen_ai_spec.diagnostic(),
+    e = gen_ai_spec.line(),
+
     -- html/jsx attribute (first {regex} captures tag, second {regex,regex,regex} filters)
     -- h = { '%f[%s]%s+[^%s<>=]+=[^%s<>]+', '^%s+().*()$' }, -- broked at whitespaces -- https://github.com/echasnovski/mini.nvim/issues/151
     -- h = { { '(%w+=").-(")' }, '^.().*().$' }, -- Pattern in single curly bracket makes the double curly bracket with catpuring group `(some caputure)` work
@@ -60,11 +63,15 @@ mini_ai.setup({
 
     -- number/hexadecimalcolor textobj:
     -- the pattern %f[%d]%d+ ensures there is a %d before start matching (non %d before %d+)(useful to stop .*)
-    N = { "[-+]?()%f[%d]%d+()%.?%d*" }, -- %f[%d] to make jumping to next group of number instead of next digit
+    -- N = { "[-+]?()%f[%d]%d+()%.?%d*" }, -- %f[%d] to make jumping to next group of number instead of next digit
+    N = gen_ai_spec.number(),
     x = { "#()%x%x%x%x%x%x()" },
 
     -- _whitespace_textobj:
     o = { "%S()%s+()%S" },
+
+    -- sub word textobj https://github.com/echasnovski/mini.nvim/blob/main/doc/mini-ai.txt
+    S = { { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]', }, '^().*()$' },
 
     -- quotes/uotes:
     u = { { "%b''", '%b""', "%b``" }, "^.().*().$" }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
@@ -94,7 +101,6 @@ require('mini.surround').setup({
   },
 })
 
--- require('mini.indentscope').setup({ draw = { animation = require('mini.indentscope').gen_animation.none() }, symbol = '│' })
 require('mini.align').setup()
 require('mini.bracketed').setup()
 require('mini.operators').setup()
@@ -357,6 +363,7 @@ if not vim.g.vscode then
 
   require('mini.cursorword').setup()
   require('mini.icons').setup()
+  require('mini.indentscope').setup({ options = { indent_at_cursor = false, }, symbol = '' }) -- draw = { animation = require('mini.indentscope').gen_animation.none() }
   require('mini.misc').setup_auto_root()
   require('mini.notify').setup()
   require('mini.pairs').setup()

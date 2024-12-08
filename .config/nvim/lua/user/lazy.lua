@@ -223,11 +223,11 @@ local plugins = {
       })
     end
   },
-  {
-    "chrisgrieser/nvim-various-textobjs",
-    commit = "52343c70e2487095cafd4a5000d0465a2b992b03",
-    opts = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
-  },
+  -- {
+  --   "chrisgrieser/nvim-various-textobjs",
+  --   commit = "52343c70e2487095cafd4a5000d0465a2b992b03",
+  --   opts = { useDefaultKeymaps = false, lookForwardSmall = 30, lookForwardBig = 30 },
+  -- },
 
   -- TUI
   {

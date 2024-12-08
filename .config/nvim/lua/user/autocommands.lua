@@ -195,27 +195,34 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 
 -- https://thevaluable.dev/vim-create-text-objects
--- select indent by the same level:
-M.select_same_indent = function(skip_blank_line, skip_comment_line)
+-- select indent by the same or mayor level:
+M.select_indent = function(skip_blank_line, skip_comment_line, same_indent, visual_mode)
   local start_indent = vim.fn.indent(vim.fn.line('.'))
   local get_comment_regex = "^%s*" .. string.gsub(vim.bo.commentstring, "%%s", ".*") .. "%s*$"
   local is_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
   local is_comment_line = function(line) return string.find(vim.fn.getline(line), get_comment_regex) end
+  local is_not_out_of_range = function(line) return vim.fn.indent(line) ~= -1 end
+  local has_not_same_indent = function(line) return vim.fn.indent(line) ~= start_indent end
+  local has_mayor_indent = function(line) return vim.fn.indent(line) >= start_indent end
 
-  -- go up while having the same indent
+  vim.cmd [[ execute "normal \<esc>" ]] -- to exit visual mode
+
+  -- go up while having a same or mayor indent
   local prev_line = vim.fn.line('.') - 1
-  while vim.fn.indent(prev_line) == start_indent or (is_blank_line(prev_line) and vim.fn.indent(prev_line) ~= -1) do
+  while has_mayor_indent(prev_line) or (is_blank_line(prev_line) and is_not_out_of_range(prev_line)) do
+    if same_indent and has_not_same_indent(prev_line) and (not is_blank_line(prev_line)) then break end
     if skip_blank_line and is_blank_line(prev_line) then break end
     if skip_comment_line and is_comment_line(prev_line) then break end
     vim.cmd('-')
     prev_line = prev_line - 1
   end
 
-  vim.cmd('normal! V')
+  vim.cmd('normal! ' .. visual_mode)
 
-  -- go down while having the same indent
+  -- go down while having a same or mayor indent
   local next_line = vim.fn.line('.') + 1
-  while vim.fn.indent(next_line) == start_indent or (is_blank_line(next_line) and vim.fn.indent(next_line) ~= -1) do
+  while has_mayor_indent(next_line) or (is_blank_line(next_line) and is_not_out_of_range(next_line)) do
+    if same_indent and has_not_same_indent(next_line) and (not is_blank_line(next_line)) then break end
     if skip_blank_line and is_blank_line(next_line) then break end
     if skip_comment_line and is_comment_line(next_line) then break end
     vim.cmd('+')
