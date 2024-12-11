@@ -41,6 +41,7 @@ mason_lspconfig.setup_handlers({
 
     require("lspconfig")[server_name].setup(opts)
   end,
+
   -- -- Next, you can provide targeted overrides for specific servers.
   -- ["rust_analyzer"] = function ()
   --     require("rust-tools").setup {}
@@ -56,6 +57,30 @@ mason_lspconfig.setup_handlers({
   --         }
   --     }
   -- end,
+
+
+  -- https://github.com/creativenull/efmls-configs-nvim/tree/v1.9.0/lua/efmls-configs/formatters
+  -- https://github.com/creativenull/efmls-configs-nvim/tree/v1.9.0/lua/efmls-configs/linters
+  ["efm"] = function()
+    require("lspconfig").efm.setup {
+      init_options = { documentFormatting = true },
+      settings = {
+        rootMarkers = { ".git/" },
+        languages = {
+          python = { { formatCommand = "black -", formatStdin = true } },
+          javascript = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          javascriptreact = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          typescript = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          typescriptreact = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          css = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          html = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          json = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          markdown = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+          yaml = { { formatCommand = "prettier --stdin-filepath '${INPUT}'", formatStdin = true } },
+        }
+      }
+    }
+  end,
 })
 
 -- -- local server = vim.lsp.buf_get_clients()
@@ -94,3 +119,32 @@ mason_lspconfig.setup_handlers({
 --   end
 --   handle:close()
 -- end
+
+
+
+-- local languages = require('efmls-configs.defaults').languages()
+-- languages = vim.tbl_extend('force', languages, {
+--   python = {
+--     -- require('efmls-configs.formatters.ruff'),
+--     require('efmls-configs.formatters.black'),
+--   },
+-- })
+--
+-- local efmls_config = {
+--   filetypes = vim.tbl_keys(languages),
+--   settings = {
+--     rootMarkers = { '.git/' },
+--     languages = languages,
+--   },
+--   init_options = {
+--     documentFormatting = true,
+--     documentRangeFormatting = true,
+--   },
+-- }
+--
+-- require('lspconfig').efm.setup(vim.tbl_extend('force', efmls_config, {
+--   -- Pass your cutom config below like on_attach and capabilities
+--   --
+--   -- on_attach = on_attach,
+--   -- capabilities = capabilities,
+-- }))

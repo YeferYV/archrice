@@ -448,7 +448,7 @@ end
 
 -- https://www.reddit.com/r/neovim/comments/1d7j0c1/a_small_gist_to_use_the_new_builtin_completion/
 -- https://www.reddit.com/r/neovim/comments/rddugs/snipcomplua_luasnip_companion_plugin_for_omni/
-local _, luasnip = pcall(require, "luasnip")
+-- local _, luasnip = pcall(require, "luasnip")
 local map = vim.keymap.set
 
 ---For replacing certain <C-x>... keymaps.
@@ -465,13 +465,13 @@ end
 vim.api.nvim_create_autocmd('LspAttach', {
 
   callback = function(args)
+    -- vim.cmd [[ LspStart ]] -- the `vi` zsh alias doesn't autostart lsp
     vim.lsp.completion.enable(true, args.data.client_id, args.buf, { autotrigger = true })
 
     -- Use enter to expand snippet or accept completions.
     map('i', '<cr>', function()
-      if luasnip.expandable() then
-        luasnip.expand()
-      elseif pumvisible() then
+      -- if luasnip.expandable() then luasnip.expand()
+      if pumvisible() then
         feedkeys '<C-y>'
       else
         feedkeys '<cr>'
@@ -498,8 +498,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map({ 'i', 's' }, '<Tab>', function()
       if pumvisible() then
         feedkeys '<C-n>'
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+        --  elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+      elseif vim.snippets.active { direction = 1 } then
+        vim.snippet.jump(1)
       else
         feedkeys '<Tab>'
       end
@@ -507,8 +508,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map({ 'i', 's' }, '<S-Tab>', function()
       if pumvisible() then
         feedkeys '<C-p>'
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+        -- elseif luasnip.jumpable(-1) then luasnip.jump(-1)
+      elseif vim.snippets.active { direction = -1 } then
+        vim.snippet.jump(-1)
       else
         feedkeys '<S-Tab>'
       end

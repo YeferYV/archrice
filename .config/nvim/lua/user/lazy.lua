@@ -84,6 +84,7 @@ local plugins = {
   -- },
   {
     "supermaven-inc/supermaven-nvim",
+    commit = "07d20fce48a5629686aefb0a7cd4b25e33947d50",
     event = "InsertEnter",
     opts = {
       keymaps = {
@@ -116,15 +117,15 @@ local plugins = {
   -- },
 
   -- Snippets
-  {
-    "L3MON4D3/LuaSnip", --snippet engine
-    tag = "v2.0.0",
-    event = { "InsertEnter" },
-    dependencies = {
-      { "rafamadriz/friendly-snippets", commit = "00ebcaa159e817150bd83bfe2d51fa3b3377d5c4" }, -- a bunch of snippets to use
-    },
-    config = function() require("luasnip.loaders.from_vscode").lazy_load() end
-  },
+  -- {
+  --   "L3MON4D3/LuaSnip", --snippet engine
+  --   tag = "v2.0.0",
+  --   event = { "InsertEnter" },
+  --   dependencies = {
+  --     { "rafamadriz/friendly-snippets", commit = "00ebcaa159e817150bd83bfe2d51fa3b3377d5c4" }, -- a bunch of snippets to use
+  --   },
+  --   config = function() require("luasnip.loaders.from_vscode").lazy_load() end
+  -- },
 
   -- {
   --   "garymjr/nvim-snippets",
@@ -182,14 +183,14 @@ local plugins = {
   -- LSP
   {
     "williamboman/mason.nvim", -- LSP/linter/formatter binary installer
-    commit = "e2f7f9044ec30067bc11800a9e266664b88cda22",
+    version = "v1.10.0",
     dependencies = {
-      { "neovim/nvim-lspconfig",             commit = "6c505d4220b521f3b0e7b645f6ce45fa914d0eed" }, -- default configurations for LSP
-      { "nvimtools/none-ls.nvim",            commit = "96ec99437a80a9aae1634d0a20151529a67a0977" }, -- default configurations formatters and linters
-      { "williamboman/mason-lspconfig.nvim", commit = "62360f061d45177dda8afc1b0fd1327328540301" }, -- compatibility between mason and nvim-lspconfig
-      { "jay-babu/mason-null-ls.nvim",       commit = "de19726de7260c68d94691afb057fa73d3cc53e7" }, -- compatibility between mason and none-ls
-      { "nvim-lua/plenary.nvim",             commit = "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" }, -- lua modules required by none-ls
+      { "neovim/nvim-lspconfig",             version = "v1.0.0" },                                     -- default configurations for LSP
+      { "williamboman/mason-lspconfig.nvim", version = "v1.31.0" },                                    -- compatibility between mason and nvim-lspconfig
+      -- { "nvimtools/none-ls.nvim",            commit = "96ec99437a80a9aae1634d0a20151529a67a0977" }, -- default configurations formatters and linters
+      -- { "jay-babu/mason-null-ls.nvim",       commit = "de19726de7260c68d94691afb057fa73d3cc53e7" }, -- compatibility between mason and none-ls
       -- { "b0o/SchemaStore.nvim",              commit = "218a9887085b81b3eb0ee8f1e2d20c4a7fd7b1c9" }, -- jsonls schema completions
+      -- { "creativenull/efmls-configs-nvim",   version = "v1.9.0" },                                  -- preconfigured formatters and linterss for efm-language-server
     },
   },
 
@@ -210,7 +211,7 @@ local plugins = {
   { "echasnovski/mini.nvim", commit = "c6eede272cfdb9b804e40dc43bb9bff53f38ed8a" },
   {
     "nvim-treesitter/nvim-treesitter",
-    commit = "69170c93149ddb71a22bd954514806395c430c02",
+    version = "v0.9.3",
     event = "VeryLazy",
     build = ":TSUpdate", -- treesitter works with specific versions of language parsers (required if upgrading treesitter)
     dependencies = {
@@ -250,7 +251,8 @@ local plugins = {
     tag = "3.26",
     cmd = "Neotree",
     dependencies = {
-      { "MunifTanjim/nui.nvim", commit = "61574ce6e60c815b0a0c4b5655b8486ba58089a1" },
+      { "MunifTanjim/nui.nvim",  commit = "61574ce6e60c815b0a0c4b5655b8486ba58089a1" },
+      { "nvim-lua/plenary.nvim", commit = "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
       -- {
       --   "3rd/image.nvim",
       --   commit = "61c76515cfc3cdac8123ece9e9761b20c3dc1315",
