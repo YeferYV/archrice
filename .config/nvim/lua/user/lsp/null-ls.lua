@@ -8,6 +8,8 @@ if not null_ls_status_ok then
   return
 end
 
+------------------------------------------------------------------------------------------------------------------------
+
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
 -- local formatting = null_ls.builtins.formatting
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
@@ -25,6 +27,8 @@ end
 --   },
 -- }
 
+------------------------------------------------------------------------------------------------------------------------
+
 -- https://github.com/williamboman/mason.nvim/discussions/40
 -- https://github.com/williamboman/mason.nvim/discussions/93
 -- local mason_registry = require "mason-registry"
@@ -40,6 +44,8 @@ local null_sources = { require('null-ls').builtins.completion.luasnip }
 --     table.insert(null_sources, null_ls.builtins.diagnostics[package.name])
 --   end
 -- end
+
+------------------------------------------------------------------------------------------------------------------------
 
 -- -- _stylua_config_if_installed
 -- for _, package in ipairs(mason_registry.get_installed_packages()) do
@@ -62,6 +68,8 @@ local null_sources = { require('null-ls').builtins.completion.luasnip }
 --   end
 -- end
 
+------------------------------------------------------------------------------------------------------------------------
+
 null_ls.setup {
   -- sources = { null_ls.builtins.completion.luasnip },
   sources = null_sources,
@@ -78,3 +86,5 @@ null_ls.setup {
 }
 
 mason_null_ls.setup({ handlers = {} }) -- after null_ls.setup() if custom null_ls.setup()
+
+------------------------------------------------------------------------------------------------------------------------

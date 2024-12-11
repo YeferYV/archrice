@@ -185,8 +185,8 @@ local plugins = {
     "williamboman/mason.nvim", -- LSP/linter/formatter binary installer
     version = "v1.10.0",
     dependencies = {
-      { "neovim/nvim-lspconfig",             version = "v1.0.0" },                                     -- default configurations for LSP
-      { "williamboman/mason-lspconfig.nvim", version = "v1.31.0" },                                    -- compatibility between mason and nvim-lspconfig
+      { "neovim/nvim-lspconfig", version = "v1.0.0" }, -- default configurations for LSP
+      -- { "williamboman/mason-lspconfig.nvim", version = "v1.31.0" },                                 -- compatibility between mason and nvim-lspconfig
       -- { "nvimtools/none-ls.nvim",            commit = "96ec99437a80a9aae1634d0a20151529a67a0977" }, -- default configurations formatters and linters
       -- { "jay-babu/mason-null-ls.nvim",       commit = "de19726de7260c68d94691afb057fa73d3cc53e7" }, -- compatibility between mason and none-ls
       -- { "b0o/SchemaStore.nvim",              commit = "218a9887085b81b3eb0ee8f1e2d20c4a7fd7b1c9" }, -- jsonls schema completions
