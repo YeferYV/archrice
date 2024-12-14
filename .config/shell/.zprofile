@@ -16,6 +16,8 @@ export TERM="xterm-256color" # inside docker TERM is xterm which makes tmux 8 co
 export BAT_THEME="base16"
 export BROWSER="google-chrome-stable"
 export EDITOR="nvim"
+export EDITOR_FZF="nvim -c 'Telescope find_files'"
+export EDITOR_RIPGREP="nvim -c 'Telescope live_grep'",
 export DRAG_ON_DROP="dragon-drop"
 export EXA_COLORS="reset:uu=0:ur=0:uw=0:ux=0:ue=0:gu=0:gr=0:gw=0:gx=0:tr=0:tw=0:tx=0:da=0:sn=0:di=34"
 export OPENER="gio open" #"xdg-open"
