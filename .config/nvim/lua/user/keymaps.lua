@@ -82,7 +82,7 @@ map("x", "<leader><leader>Y", 'g_"*y', { desc = "Yank forward (second_clip)" })
 -- https://vi.stackexchange.com/questions/22570/is-there-a-way-to-move-to-the-beginning-of-the-next-text-object
 map(
   { "n", "x" },
-  "g<",
+  "gh",
   function()
     local ok1, tobj_id1 = pcall(vim.fn.getcharstr)
     local ok2, tobj_id2 = pcall(vim.fn.getcharstr)
@@ -98,7 +98,7 @@ map(
 )
 map(
   { "n", "x" },
-  "g>",
+  "gl",
   function()
     local ok1, tobj_id1 = pcall(vim.fn.getcharstr)
     local ok2, tobj_id2 = pcall(vim.fn.getcharstr)
@@ -150,7 +150,7 @@ map({ "n" }, "vgc", "<cmd>lua require('mini.comment').textobject()<cr>", { desc 
 map({ "o", "x" }, "gC", ":<c-u>lua require('mini.comment').textobject()<cr>", { desc = "BlockComment textobj" })
 map({ "o", "x" }, "gf", "gn", { desc = "Next find textobj" })
 map({ "o", "x" }, "gF", "gN", { desc = "Prev find textobj" })
-map({ "o", "x" }, "gh", ":<c-u>Gitsigns select_hunk<cr>", { desc = "Git hunk textobj" })
+map({ "o", "x" }, "gH", ":<c-u>Gitsigns select_hunk<cr>", { desc = "Git hunk textobj" })
 -- map({ "o", "x" }, "gd", function() textobjs.diagnostic() end, { desc = "Diagnostic textobj" })
 -- map({ "o", "x" }, "gK", function() textobjs.column() end, { desc = "ColumnDown textobj" })
 -- map({ "o", "x" }, "gl", function() textobjs.lastChange() end, { desc = "last modified/yank/paste (noRepeaterKey)" }) -- `vgm` and `dgm` works. `cgm` and `ygm` doesn't work but it notifies
@@ -168,8 +168,6 @@ map({ "o", "x" }, "gh", ":<c-u>Gitsigns select_hunk<cr>", { desc = "Git hunk tex
 -- map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { silent = true, desc = "MiniIndentscope bordersless with_blankline" })
 -- map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { silent = true, desc = "MiniIndentscope borders with_blankline" })
 -- map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders with_blankline" })
--- map({ "o", "x" }, "iI", "<Cmd>lua MiniIndentscope.textobject(false)<CR>", { silent = true, desc = "MiniIndentscope bordersless skip_blankline" })
--- map({ "o", "x" }, "aI", "<Cmd>lua MiniIndentscope.textobject(true)<CR>", { silent = true, desc = "MiniIndentscope borders skip_blankline" })
 
 map({ "o", "x" }, "ac", function() commands.ColumnWord('aw') end, { desc = "ColumnWord" })
 map({ "o", "x" }, "ic", function() commands.ColumnWord('iw') end, { desc = "ColumnWord" })
@@ -194,8 +192,8 @@ map({ "o", "x" }, "ic", function() commands.ColumnWord('iw') end, { desc = "Colu
 -- map({ "o", "x" }, "aU", function() textobjs.pyTripleQuotes('outer') end, { desc = "pyTrippleQuotes" })
 -- map({ "o", "x" }, "iU", function() textobjs.pyTripleQuotes('inner') end, { desc = "pyTrippleQuotes" })
 
--- map({ "x", "o" }, "iI", function() commands.select_indent(false, false, false, "V") end, { desc = "indent blank" })
--- map({ "x", "o" }, "aI", function() commands.select_indent(false, false, false, "kV") end, { desc = "indent blank" })
+map({ "o", "x" }, "iI", function() require("mini.indentscope").textobject(false) end, { desc = "indent blank" })
+map({ "o", "x" }, "aI", function() require("mini.indentscope").textobject(true) end, { desc = "indent blank" })
 map({ "x", "o" }, "ii", function() commands.select_indent(true, true, false, "V") end, { desc = "indent" })
 map({ "x", "o" }, "ai", function() commands.select_indent(true, true, false, "kV") end, { desc = "indent" })
 map({ "x", "o" }, "iy", function() commands.select_indent(true, true, true, "V") end, { desc = "same_indent" })
@@ -249,10 +247,12 @@ local next_fold, prev_fold = ts_repeat_move.make_repeatable_move_pair(
 map({ "n", "x", "o" }, "gnf", next_fold, { silent = true, desc = "Fold ending" })
 map({ "n", "x", "o" }, "gpf", prev_fold, { silent = true, desc = "Fold beginning" })
 
-local gs = require("gitsigns")
-local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
-map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { silent = true, desc = "Next GitHunk" })
-map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { silent = true, desc = "Prev GitHunk" })
+if not vim.g.vscode then
+  local gs = require("gitsigns")
+  local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
+  map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { silent = true, desc = "Next GitHunk" })
+  map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { silent = true, desc = "Prev GitHunk" })
+end
 
 local next_different_indent, prev_different_indent = ts_repeat_move.make_repeatable_move_pair(
   function() commands.next_indent(true, "different_level") end,

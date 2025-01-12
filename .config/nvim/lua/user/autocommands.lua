@@ -6,65 +6,49 @@ local autocmd = vim.api.nvim_create_autocmd
 
 vim.cmd [[
 
-  augroup _filetype
-    autocmd!
-    autocmd FileType gitcommit           setlocal spell
-    autocmd FileType markdown            setlocal spell
-    autocmd FileType qf                  set      nobuflisted
-    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-  augroup end
-
-  augroup _hightlight_yank
-    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
-  augroup end
-
-  augroup _hightlight_whitespaces
-    autocmd!
-    autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-    highlight ExtraWhitespace ctermbg=red guibg=red
-    autocmd InsertLeave * redraw!
-    match ExtraWhitespace /\s\+$\| \+\ze\t/
-    autocmd BufWritePre * :%s/\s\+$//e
-  augroup end
-
-  augroup _jump_to_last_position_on_reopen
-    autocmd!
-    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-  augroup end
-
-  " augroup _lsp_autoformat
-  "   autocmd!
-  "   autocmd BufWritePre * silent! lua vim.lsp.buf.format()
-  " augroup end
-
-  augroup _stop_newlines_commented
-    autocmd!
-    " au BufWinEnter * :set formatoptions-=cro
-    " au FileType * set fo-=c fo-=r fo-=o
-    au BufEnter * set fo-=c fo-=r fo-=o
-  augroup end
-
   augroup _mouse_menu
-    aunmenu PopUp
+    "aunmenu PopUp
     vnoremenu PopUp.Cut                         "+x
     vnoremenu PopUp.Copy                        "+y
-    anoremenu PopUp.Paste                       "+gP
-    vnoremenu PopUp.Paste                       "+P
     vnoremenu PopUp.Delete                      "_x
+    vnoremenu PopUp.Paste                       "+P
+    anoremenu PopUp.Paste                       "+gP
     anoremenu PopUp.Search\ Word                *#
     anoremenu PopUp.Undo                        <esc><esc>:silent undo<cr>
     anoremenu PopUp.Write                       :write<cr>
     anoremenu PopUp.Quit                        :quit!<cr>
     anoremenu PopUp.Definition                  :Telescope lsp_definitions<cr>
-    anoremenu PopUp.Peek\ Definition            :Lspsaga peek_definition<cr>
     anoremenu PopUp.Explorer                    :Neotree<cr>
-    anoremenu PopUp.Toggle\ Scroller            :lua MiniMap.toggle()<cr>
     " anoremenu PopUp.-1-                         <Nop>
     " anoremenu PopUp.How-to\ disable\ mouse      <Cmd>help disable-mouse<CR>
     " anoremenu PopMenu.Hello                     :popup PopUp<cr>
   augroup end
 
 ]]
+
+-- stop comment prefix on new lines
+autocmd({ "BufEnter" }, { command = "set formatoptions-=cro" })
+
+-- remember last position when re-opening a file
+autocmd({ "BufReadPost" }, { command = "normal! g'\"" })
+
+-- briefly highlight yanked text
+autocmd("TextYankPost", { callback = function() vim.highlight.on_yank({ higroup = "Visual", timeout = 200 }) end })
+
+-- Highlight trailing whitespace
+vim.api.nvim_set_hl(0, "ExtraWhitespace", { ctermbg = "red", bg = "red" })
+
+-- Ensure the highlight exists after a colorscheme change
+autocmd({ "ColorScheme" }, { command = "highlight ExtraWhitespace ctermbg=red guibg=red" })
+
+-- Refresh highlighting after leaving insert mode
+autocmd("InsertLeave", { command = "redraw!", })
+
+-- Apply the highlight to trailing spaces
+vim.fn.matchadd("ExtraWhitespace", [[\s\+$\| \+\ze\t]])
+
+-- Remove trailing spaces on save
+autocmd("BufWritePre", { command = [[%s/\s\+$//e]], })
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -132,19 +116,6 @@ function DisableAutoNoHighlightSearch()
 end
 
 EnableAutoNoHighlightSearch() -- autostart
-
-------------------------------------------------------------------------------------------------------------------------
-
-function GoToParentIndent()
-  local ok, start = require("indent_blankline.utils").get_current_context(
-    vim.g.indent_blankline_context_patterns,
-    vim.g.indent_blankline_use_treesitter_scope
-  )
-  if ok then
-    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-    vim.cmd [[normal! _]]
-  end
-end
 
 ------------------------------------------------------------------------------------------------------------------------
 

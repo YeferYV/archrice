@@ -4,15 +4,6 @@ local spec_treesitter = mini_ai.gen_spec.treesitter
 local mini_clue = require("mini.clue")
 
 local gen_ai_spec = require('mini.extra').gen_ai_spec
----   require('mini.ai').setup({
----     custom_textobjects = {
----       B = gen_ai_spec.buffer(),
----       D = gen_ai_spec.diagnostic(),
----       I = gen_ai_spec.indent(),
----       L = gen_ai_spec.line(),
----       N = gen_ai_spec.number(),
----     },
----   })
 
 mini_ai.setup({
 
@@ -102,7 +93,7 @@ require('mini.surround').setup({
 })
 
 require('mini.align').setup()
-require('mini.bracketed').setup()
+require('mini.bracketed').setup({ undo = { suffix = '' } })
 require('mini.operators').setup()
 require('mini.splitjoin').setup()
 
@@ -373,9 +364,9 @@ if not vim.g.vscode then
   require('mini.tabline').setup()
   MiniIcons.mock_nvim_web_devicons()
   MiniIcons.tweak_lsp_kind( --[[ "replace" ]])
-  vim.notify = MiniNotify.make_notify() -- `vim.print = MiniNotify.make_notify()` conflicts with `:=vim.opt.number`
-  vim.opt.completeopt:append('fuzzy')   -- it should be after require("mini.completion").setup())
-  vim.opt.laststatus = 3                -- it has to be after mini.statusline
+  vim.notify = MiniNotify.make_notify()                                        -- `vim.print = MiniNotify.make_notify()` conflicts with `:=vim.opt.number`
+  if vim.fn.has('nvim-0.11') == 1 then vim.opt.completeopt:append('fuzzy') end -- it should be after require("mini.completion").setup())
+  vim.opt.laststatus = 3                                                       -- it has to be after mini.statusline
 end
 
 local M = {}

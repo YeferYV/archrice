@@ -69,8 +69,8 @@ local mappings = {
   -- ["du"] = { function() WhichkeyRepeat("lua require'dapui'.toggle()") end, "Toggle Debugger UI" },
 
   ["f"] = { ":Telescope find_files previewer=false theme=get_dropdown<cr>", "Find Files" },
-  ["m"] = { ":lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>", "mini files (current file)" },
-  ["M"] = { ":lua require('mini.files').open(vim.loop.cwd(), true)<cr>", "mini files (cwd)" },
+  ["m"] = { ":lua require('mini.files').open(vim.loop.cwd(), true)<cr>", "mini files (cwd)" },
+  ["M"] = { ":lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>", "mini files (current file)" },
   ["e"] = { ":lua _G.neotree_blend=false<cr><cmd>Neotree toggle last left<cr>", "Neotree Toggle" },
   ["o"] = { ":lua _G.neotree_blend=true<cr><cmd>Neotree focus last <cr>", "Neotree focus" },
   ["O"] = { ":lua _G.neotree_blend=true<cr><cmd>Neotree filesystem reveal float <cr>", "Neotree float" },
@@ -178,7 +178,6 @@ local mappings = {
   ["uP"] = { function() vim.opt.paste = not vim.opt.paste:get() end, "Toggle Paste Mode" },
   ["us"] = { ":lua vim.opt.laststatus = (vim.opt.laststatus:get() == 0) and 2 or (vim.opt.laststatus:get() == 2 and 3 or 0)<cr>", "Toggle StatusBar" },
   ["uu"] = { HideUnhideWindow, "Hide/Unhide window (useful for terminal)" },
-  ["uU"] = { GoToParentIndent, "Go to parent indent" },
   -- ["ut"] = { ":windo if &buftype == 'terminal' | hide | endif <cr>", "Hide window terminal" },
   -- ["uT"] = { ":execute &buftype == 'terminal' ? 'hide' : 'sbuffer term'<cr>", "toggle window terminal (unfocus opens other terminal)" },
   ["u;"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
