@@ -1,7 +1,7 @@
 [manager]
-cwd           = { fg = "blue" }
+cwd           = { fg = "#6c6c6c" }
 border_symbol = " "
-# hovered     = { bg = "#3c3c3c" }
+hovered     = { bg = "#3c3c3c" }
 
 [filetype]
 
@@ -29,7 +29,7 @@ rules = [
 	{ name = "*", is = "exec"  , fg = "green" },
 
   # Directory (should be after special files otherwise will override it)
-	# { mime = "inode/*", fg = "#6c6c6c" },
+	{ mime = "inode/*", fg = "#6c6c6c" },
 
 	# Fallback
 	{ name = "*/", fg = "blue" },
