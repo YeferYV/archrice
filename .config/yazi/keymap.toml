@@ -58,7 +58,6 @@ prepend_keymap = [
 	{ on = [ "s", "n" ], run = """ shell 'nvim "$@"' --block --confirm """,                                                           desc = "Neovim open selected (unix)" },
 	{ on = [ "s", "N" ], run = """ shell 'nvim %*' --block --confirm """,                                                             desc = "Neovim open selected (windows)" },
 	{ on = [ "s", "p" ], run = """ shell '$SWALLOWER zathura "$@" 2>/dev/null || zathura "$@"' --block --confirm """,                 desc = "Swallow zathura (linux)" },
-	{ on = [ "s", "r" ], run = "plugin fzf-rg",                                                                                       desc = "Ripgrep fzf" },
 	{ on = [ "s", "R" ], run = """ shell 'ripdrag "$@" -x 2>/dev/null &' --confirm """,                                               desc = "Ripdrag (linux)" },
 	{ on = [ "s", "s" ], run = """ shell "zsh" --block --confirm """,                                                                 desc = "Open zsh (zle unsupported)" },
 	{ on = [ "s", "S" ], run = """ shell "powershell" --block --confirm """,                                                          desc = "Open powershell" },
@@ -74,3 +73,20 @@ prepend_keymap = [
 	{ on = [ "'" ], run = "plugin bookmarks --args=jump",   desc = "bookmark jump" },
 	{ on = [ '"' ], run = "plugin bookmarks --args=delete", desc = "bookmark delete" },
 ]
+
+[[manager.append_keymap]]
+on = [ "s", "r" ]
+run = '''
+  shell
+  '
+    rg "" --color=always \
+          --line-number |
+      fzf --ansi \
+          --delimiter : \
+          --preview "bat --color=always {1} --highlight-line {2}" \
+          --preview-window "up,60%,+{2}" \
+          --bind "enter:become(ya emit reveal {1}; nvim {1} +{2})"
+  '
+  --block
+'''
+desc = "Ripgrep fzf"
