@@ -76,6 +76,51 @@ mini_ai.setup({
     --   }
     --   return { from = from, to = to }
     -- end,
+
+    -- https://thevaluable.dev/vim-create-text-objects
+    -- select indent by the same or mayor level delimited by blank-lines
+    i = function()
+      local start_indent = vim.fn.indent(vim.fn.line('.'))
+
+      local prev_line = vim.fn.line('.') - 1
+      while vim.fn.indent(prev_line) >= start_indent do
+        prev_line = prev_line - 1
+      end
+
+      local next_line = vim.fn.line('.') + 1
+      while vim.fn.indent(next_line) >= start_indent do
+        next_line = next_line + 1
+      end
+
+      return { from = { line = prev_line + 1, col = 1 }, to = { line = next_line - 1, col = 100 }, vis_mode = 'V' }
+    end,
+
+    -- select indent by the same level delimited by comment-lines (outer: includes blank-lines)
+    y = function()
+      local start_indent = vim.fn.indent(vim.fn.line('.'))
+      local get_comment_regex = "^%s*" .. string.gsub(vim.bo.commentstring, "%%s", ".*") .. "%s*$"
+      local is_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
+      local is_comment_line = function(line) return string.find(vim.fn.getline(line), get_comment_regex) end
+      local is_out_of_range = function(line) return vim.fn.indent(line) == -1 end
+
+      local prev_line = vim.fn.line('.') - 1
+      while vim.fn.indent(prev_line) == start_indent or is_blank_line(prev_line) do
+        if is_out_of_range(prev_line) then break end
+        if is_comment_line(prev_line) then break end
+        if is_blank_line(prev_line) and _G.skip_blank_line then break end
+        prev_line = prev_line - 1
+      end
+
+      local next_line = vim.fn.line('.') + 1
+      while vim.fn.indent(next_line) == start_indent or is_blank_line(next_line) do
+        if is_out_of_range(next_line) then break end
+        if is_comment_line(next_line) then break end
+        if is_blank_line(next_line) and _G.skip_blank_line then break end
+        next_line = next_line + 1
+      end
+
+      return { from = { line = prev_line + 1, col = 1 }, to = { line = next_line - 1, col = 100 }, vis_mode = 'V' }
+    end
   },
   n_lines = 500, -- search range and required by functions less than 500 LOC
 })

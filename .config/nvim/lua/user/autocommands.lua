@@ -96,6 +96,39 @@ autocmd({ "TermClose", --[[ "BufWipeout" ]] }, {
   end,
 })
 
+--------------------------------------------------------------------------------------------------------------------
+
+-- https://www.reddit.com/r/neovim/comments/ww2oyu/toggle_terminal
+function ToggleTerminal()
+  local buf_exists = vim.fn.bufexists(te_buf) == 1
+  local win_exists = vim.fn.win_gotoid(te_win_id) == 1
+
+  if not buf_exists then
+    -- Terminal buffer doesn't exist, create it
+    vim.cmd("vsplit +term")
+    te_win_id = vim.fn.win_getid()
+    te_buf = vim.fn.bufnr()
+  elseif not win_exists then
+    -- Terminal buffer exists but not visible, show it
+    vim.cmd('vs | buffer' .. te_buf)
+    te_win_id = vim.fn.win_getid()
+  else
+    -- Terminal buffer exists and is visible, hide it
+    vim.cmd("hide")
+  end
+end
+
+function HideUnhideWindow()
+  if not Hidden then
+    Bufnr = vim.fn.bufnr()
+    vim.cmd('hide')
+    Hidden = true
+  else
+    vim.cmd('vs | buffer' .. Bufnr)
+    Hidden = false
+  end
+end
+
 ------------------------------------------------------------------------------------------------------------------------
 
 -- swap current window with the last visited window
@@ -140,44 +173,6 @@ _G.WhichkeyRepeat = function(firstcmd, secondcmd, thirdcmd)
   vim.g.dotthirdcmd = thirdcmd
   vim.o.operatorfunc = 'v:lua.WhichKeyRepeat_Callback'
   vim.cmd.normal { "g@l", bang = true }
-end
-
-------------------------------------------------------------------------------------------------------------------------
-
--- https://thevaluable.dev/vim-create-text-objects
--- select indent by the same or mayor level:
-M.select_indent = function(skip_blank_line, skip_comment_line, same_indent, visual_mode)
-  local start_indent = vim.fn.indent(vim.fn.line('.'))
-  local get_comment_regex = "^%s*" .. string.gsub(vim.bo.commentstring, "%%s", ".*") .. "%s*$"
-  local is_blank_line = function(line) return string.match(vim.fn.getline(line), '^%s*$') end
-  local is_comment_line = function(line) return string.find(vim.fn.getline(line), get_comment_regex) end
-  local is_not_out_of_range = function(line) return vim.fn.indent(line) ~= -1 end
-  local has_not_same_indent = function(line) return vim.fn.indent(line) ~= start_indent end
-  local has_mayor_indent = function(line) return vim.fn.indent(line) >= start_indent end
-
-  vim.cmd [[ execute "normal \<esc>" ]] -- to exit visual mode
-
-  -- go up while having a same or mayor indent
-  local prev_line = vim.fn.line('.') - 1
-  while has_mayor_indent(prev_line) or (is_blank_line(prev_line) and is_not_out_of_range(prev_line)) do
-    if same_indent and has_not_same_indent(prev_line) and (not is_blank_line(prev_line)) then break end
-    if skip_blank_line and is_blank_line(prev_line) then break end
-    if skip_comment_line and is_comment_line(prev_line) then break end
-    vim.cmd('-')
-    prev_line = prev_line - 1
-  end
-
-  vim.cmd('normal! ' .. visual_mode)
-
-  -- go down while having a same or mayor indent
-  local next_line = vim.fn.line('.') + 1
-  while has_mayor_indent(next_line) or (is_blank_line(next_line) and is_not_out_of_range(next_line)) do
-    if same_indent and has_not_same_indent(next_line) and (not is_blank_line(next_line)) then break end
-    if skip_blank_line and is_blank_line(next_line) then break end
-    if skip_comment_line and is_comment_line(next_line) then break end
-    vim.cmd('+')
-    next_line = next_line + 1
-  end
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -363,39 +358,6 @@ vim.o.statuscolumn = '%!v:lua.get_statuscol()'
 
 --------------------------------------------------------------------------------------------------------------------
 
--- https://www.reddit.com/r/neovim/comments/ww2oyu/toggle_terminal
-function ToggleTerminal()
-  local buf_exists = vim.fn.bufexists(te_buf) == 1
-  local win_exists = vim.fn.win_gotoid(te_win_id) == 1
-
-  if not buf_exists then
-    -- Terminal buffer doesn't exist, create it
-    vim.cmd("vsplit +term")
-    te_win_id = vim.fn.win_getid()
-    te_buf = vim.fn.bufnr()
-  elseif not win_exists then
-    -- Terminal buffer exists but not visible, show it
-    vim.cmd('vs | buffer' .. te_buf)
-    te_win_id = vim.fn.win_getid()
-  else
-    -- Terminal buffer exists and is visible, hide it
-    vim.cmd("hide")
-  end
-end
-
-function HideUnhideWindow()
-  if not Hidden then
-    Bufnr = vim.fn.bufnr()
-    vim.cmd('hide')
-    Hidden = true
-  else
-    vim.cmd('vs | buffer' .. Bufnr)
-    Hidden = false
-  end
-end
-
---------------------------------------------------------------------------------------------------------------------
-
 -- https://www.reddit.com/r/neovim/comments/1d7j0c1/a_small_gist_to_use_the_new_builtin_completion/
 -- https://www.reddit.com/r/neovim/comments/rddugs/snipcomplua_luasnip_companion_plugin_for_omni/
 -- local _, luasnip = pcall(require, "luasnip")
@@ -449,7 +411,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       if pumvisible() then
         feedkeys '<C-n>'
         --  elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
-      elseif vim.snippets.active { direction = 1 } then
+      elseif vim.snippet.active { direction = 1 } then
         vim.snippet.jump(1)
       else
         feedkeys '<Tab>'
@@ -459,7 +421,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       if pumvisible() then
         feedkeys '<C-p>'
         -- elseif luasnip.jumpable(-1) then luasnip.jump(-1)
-      elseif vim.snippets.active { direction = -1 } then
+      elseif vim.snippet.active { direction = -1 } then
         vim.snippet.jump(-1)
       else
         feedkeys '<S-Tab>'

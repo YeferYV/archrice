@@ -195,10 +195,26 @@ map({ "o", "x" }, "ic", function() commands.ColumnWord('iw') end, { desc = "Colu
 
 map({ "o", "x" }, "iI", function() require("mini.indentscope").textobject(false) end, { desc = "indent blank" })
 map({ "o", "x" }, "aI", function() require("mini.indentscope").textobject(true) end, { desc = "indent blank" })
-map({ "x", "o" }, "ii", function() commands.select_indent(true, true, false, "V") end, { desc = "indent" })
-map({ "x", "o" }, "ai", function() commands.select_indent(true, true, false, "kV") end, { desc = "indent" })
-map({ "x", "o" }, "iy", function() commands.select_indent(true, true, true, "V") end, { desc = "same_indent" })
-map({ "x", "o" }, "ay", function() commands.select_indent(false, false, true, "V") end, { desc = "same_indent blank" })
+map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i", "i") end, { desc = "indent" })
+map({ "o", "x" }, "ai", ":normal Viik<cr>", { desc = "indent" })
+map(
+  { "o", "x" },
+  "iy",
+  function()
+    _G.skip_blank_line = true
+    require("mini.ai").select_textobject("i", "y")
+  end,
+  { desc = "same_indent" }
+)
+map(
+  { "o", "x" },
+  "ay",
+  function()
+    _G.skip_blank_line = false
+    require("mini.ai").select_textobject("i", "y")
+  end,
+  { desc = "same_indent" }
+)
 -- map({ "o", "x" }, "aZ", function() textobjs.closedFold('outer') end, { desc = "ClosedFold" })
 -- map({ "o", "x" }, "iZ", function() textobjs.closedFold('inner') end, { desc = "ClosedFold" })
 
