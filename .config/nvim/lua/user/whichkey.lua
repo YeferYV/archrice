@@ -166,8 +166,6 @@ local mappings = {
   ["uc"] = { ":lua vim.opt.cmdheight = (vim.opt.cmdheight:get() == 0) and 1 or 0 <cr>", "Disable AutoNoHighlightSearch" },
   ["uC"] = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
   ["ud"] = { function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, "Toggle Diagnostics" },
-  ["uh"] = { EnableAutoNoHighlightSearch, "Enable AutoNoHighlightSearch" },
-  ["uH"] = { DisableAutoNoHighlightSearch, "Disable AutoNoHighlightSearch" },
   ["ui"] = { ChangeIndent, "Change Indent" },
   ["uI"] = { "<cmd>IndentBlanklineToggle<cr>", "Toggle IndentBlankline" },
   ["ul"] = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },

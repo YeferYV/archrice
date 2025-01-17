@@ -98,27 +98,6 @@ autocmd({ "TermClose", --[[ "BufWipeout" ]] }, {
 
 ------------------------------------------------------------------------------------------------------------------------
 
-function EnableAutoNoHighlightSearch()
-  vim.on_key(function(char)
-    if vim.fn.mode() == "n" then
-      local new_hlsearch = vim.tbl_contains({ "<Up>", "<Down>", "<CR>", "n", "N", "*", "#", "?", "/" },
-        vim.fn.keytrans(char))
-      if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
-    end
-  end, vim.api.nvim_create_namespace "auto_hlsearch")
-end
-
-function DisableAutoNoHighlightSearch()
-  -- :noh or ctrl+l(remapped to focus left window) to clear highlighting
-  -- when search is highlighted and more than 2 treesitter are installed for the same language it makes h,j,k,l slow
-  vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"])
-  vim.opt.hlsearch = true
-end
-
-EnableAutoNoHighlightSearch() -- autostart
-
-------------------------------------------------------------------------------------------------------------------------
-
 -- swap current window with the last visited window
 function SwapWindow()
   local thiswin = vim.fn.winnr()
