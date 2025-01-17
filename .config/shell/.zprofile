@@ -1,73 +1,33 @@
 #!/bin/env zsh
 
-# export PATH="$PATH:$HOME/.local/appimage:$HOME/.local/bin"
-# export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-# export PATH="$PATH:$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':')"
-export PATH="$(du "$HOME/.local/bin" | cut -f2 | paste -sd ':'):$HOME/.local/share/npm/bin:$PATH"
-
-# unsetopt PROMPT_SP
-# export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
-# export PROMPT_COMMAND='echo -ne "\033]0;$(TMP=${PWD/#$HOME/\~};echo ${TMP##*/})\007"'
-# export PS1="[\w]\$ "
-
-#-- Default programs:
-# export NEOVIDE_MULTIGRID=true
-export TERM="xterm-256color" # inside docker TERM is xterm which makes tmux 8 colors
+# export FZF_DEFAULT_COMMAND='rg --color=always --line-number ""'
+# export FZF_DEFAULT_OPTS='--ansi --delimiter : --preview "bat --color=always {1} --highlight-line {2}"  --preview-window "up,60%,+{2}" --bind "enter:become(echo {1}; nvim -u $HOME/.vscode/extensions/yeferyv.retronvim/nvim/init.lua {1} +{2} >/dev/tty)"'
 export BAT_THEME="base16"
 export BROWSER="google-chrome-stable"
-export EDITOR="nvim"
-export EDITOR_FZF="nvim -c 'Telescope find_files'"
-export EDITOR_RIPGREP="nvim -c 'Telescope live_grep'",
-export DRAG_ON_DROP="dragon-drop"
-export EXA_COLORS="reset:uu=0:ur=0:uw=0:ux=0:ue=0:gu=0:gr=0:gw=0:gx=0:tr=0:tw=0:tx=0:da=0:sn=0:di=34"
-export OPENER="gio open" #"xdg-open"
-export PAGER="less"
-export SHELL="$(which zsh)"
-export SURFRAW_graphical=no
-export SURFRAW_text_browser='w3m -sixel'
-export SWALLOWER="bspswap"
-export TERMINAL="wezterm"
-export VISUAL="nvim"
-
-#-- ~/Clean-up:
-# export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-# export DRI_PRIME=1 #Dedicated GPU as default
-# export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
-# export GPG_TTY=$(tty)
-# export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
-# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-# export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/.xinitrc"
-# export XSERVERRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/.xserverrc"
-# export ZSH_COMPDUMP="$HOME/.cache/zsh/.zcompdump"
-# export IPYTHONDIR="${XDG_CONFIG_HOME:-$HOME/.config}/ipython"
-# export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
-# export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
-# export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export CHTSH_CONF="${XDG_CONFIG_HOME:-$HOME/.config}/cht.sh/cht.sh.conf"
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+export EDITOR="nvim"
+export EDITOR_FZF="nvim -c 'lua Snacks.picker.files'"
+export EDITOR_RIPGREP="nvim -c 'lua Snacks.picker.grep'",
+export EXA_COLORS="reset:uu=0:ur=0:uw=0:ux=0:ue=0:gu=0:gr=0:gw=0:gx=0:tr=0:tw=0:tx=0:da=0:sn=0:di=34"
+export FZF_DEFAULT_OPTS='--preview "bat --color=always {}" --preview-window "hidden" --bind "?:toggle-preview"'
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+export HISTFILE="$HOME/.cache/.zsh_history"
+export LANG=en_US.UTF-8
+export LC_ALL=C.UTF-8 # `locale` lists all user's locale https://wiki.archlinux.org/title/Locale
 export LESSHISTFILE="-"
-export LESSKEYIN="${XDG_CONFIG_HOME:-$HOME/.config}/shell/lesskey"
+export LESSKEYIN="$HOME/.config/shell/lesskey"
 export NPM_CONFIG_PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/npm"
-export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export PATH="$HOME/.pixi/bin:$HOME/.local/share/pnpm:$HOME/.local/share/npm/bin:$HOME/.local/bin:$PATH"
+export PNPM_HOME=$HOME/.local/share/pnpm
+export SAVEHIST=10000
 export STARSHIP_CONFIG="$HOME/.config/zsh/starship.toml"
-export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
+export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+export SWALLOWER="bspswap"
+export TERM="xterm-256color" # inside docker terminal
+export VISUAL="code"
 export XDG_DATA_HOME="$HOME/.local/share"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#555555"
-
-#-- Other program settings:
-# export FZF_DEFAULT_OPTS="--layout=reverse --height 40% --border"
-# export LOCALE_ARCHIVE="/lib/locale/locale-archive" # nix locale
-export DEBIAN_FRONTEND=noninteractive
-export FZF_DEFAULT_OPTS="--multi --color='hl:#cccc00,hl+:#cccc00'"
-export QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
-export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 
 # export MANPAGER="less -R --use-color -Dd+r -Du+b"
 export MANROFFOPT="-P -c"
@@ -99,16 +59,6 @@ di=94:\ #blue
 ow=95:\ #magenta
 ln=96:\ #cyan
 fi=97"  #white
-
-export LF_ICONS="\
-tw=󰉋:\
-or=:\
-ex=:\
-bd=:\
-di=󰉋:\
-ow=󰉋:\
-ln=:\
-fi="
 
 if [ -e /.dockerenv ]; then export APPIMAGE_EXTRACT_AND_RUN=1; fi
 if [ -e /.dockerenv ]; then sudo chown $USER:$USER /run/user/1000; fi
