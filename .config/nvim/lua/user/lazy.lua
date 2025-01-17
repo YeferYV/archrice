@@ -39,6 +39,7 @@ local plugins = {
   -- { "vim-utils/vim-vertical-move", event = "BufReadPre" },
   {
     "echasnovski/mini.nvim",
+    -- version = "v0.14.0",
     commit = "3a3178419ce9947f55708966dabf030eca40735a",
   },
   {
@@ -95,16 +96,6 @@ local plugins = {
   -- { "metakirby5/codi.vim" },
   -- { "sphamba/smear-cursor.nvim", lazy = false, opts = {} },
   {
-    "folke/snacks.nvim",
-    lazy = false,
-    version = "v2.12.0",
-    cond = not vim.g.vscode,
-    opts = {
-      -- scope = { enabled = true }
-      indent = { enabled = true },
-    }
-  },
-  {
     "lewis6991/gitsigns.nvim",
     version = "0.9.0",
     cond = not vim.g.vscode,
@@ -131,16 +122,15 @@ local plugins = {
     config = function() require("user.neo-tree") end
   },
   {
-    "nvim-telescope/telescope.nvim",
-    version = "v0.1.8",
+    "folke/snacks.nvim",
+    lazy = false,
+    -- version = "v2.12.0",
+    commit = "706b1abc1697ca050314dc667e0900d53cad8aa4",
     cond = not vim.g.vscode,
-    cmd = "Telescope",
     opts = {
-      -- defaults = {
-      --   -- Telescope ignores `.gitignore` files when using `live_grep`, `grep_string` and `find_files`
-      --   -- `:Telescope find_files hidden=true` searches `.git/` directory even if `file_ignore_patterns = { "!.git/"}` is configure
-      --   file_ignore_patterns = { "node_modules", "!.git/", },
-      -- }
+      -- scope = { enabled = true }
+      indent = { enabled = true },
+      picker = { enabled = true },
     }
   },
 }

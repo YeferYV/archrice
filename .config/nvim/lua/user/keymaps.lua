@@ -40,7 +40,7 @@ map({ "t", "n" }, "<C-;>", "<C-\\><C-n><C-6>", { desc = "go to last buffer" })
 map({ "n" }, "<right>", ":bnext<CR>", { desc = "next buffer" })
 map({ "n" }, "<left>", ":bprevious<CR>", { desc = "prev buffer" })
 map({ "n" }, "<leader>x", ":bp | bd! #<CR>", { desc = "Close Buffer" }) -- `bd!` forces closing terminal buffer
-map({ "n" }, "<leader>X", ":tabclose<CR>", { desc = "Close Tab" })
+map({ "n" }, "<leader>;", ":buffer #<cr>", { desc = "Recent buffer" })
 
 -- ╭────────────────╮
 -- │ leader keymaps │
