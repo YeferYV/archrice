@@ -59,7 +59,7 @@ zle -N zle-line-init                   # overwriting zle-line-init
 zle -N zle-keymap-select               # overwriting zle-keymap-select
 
 # retronvim's neovim
-vi() { eval $EDITOR $@; }
+vi() { nvim -u $HOME/.vscode/extensions/yeferyv.retronvim/nvim/init.lua $@; }
 
 # yazi cd on exit (then moves the cursor up and clear until end of line)
 y() { yazi --cwd-file=$HOME/.yazi $@; cd "$(cat $HOME/.yazi)"; printf "\x1b[A\x1b[K"; }
