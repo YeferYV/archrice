@@ -5,17 +5,17 @@
 # terminal emulator
 super + {_, ctrl, ctrl + shift, ctrl + alt, shift, alt, shift + alt } + Return
 	{ \
-		$TERMINAL; \
-	, bspc node -p west  -o 0.6 && $TERMINAL; \
-	, bspc node -p north -o 0.6 && $TERMINAL; \
-	, bspc node -p south -o 0.4 && $TERMINAL; \
-	, bspc rule -a \* -o state=floating && $TERMINAL; \
+		wezterm; \
+	, bspc node -p west  -o 0.6 && wezterm; \
+	, bspc node -p north -o 0.6 && wezterm; \
+	, bspc node -p south -o 0.4 && wezterm; \
+	, bspc rule -a \* -o state=floating && wezterm; \
 	, bspc rule -a \* -o state=floating && wezterm --config initial_rows=34 --config initial_cols=135; \
   , wezterm --config window_background_opacity=0.0 --config text_background_opacity=0.3; \
 	}
 
 # dunst close/reopen notification
-ctrl + {_, shift} + Return
+ctrl + {_, shift} + Escape
 	dunstctl {close, history-pop}
 
 # stop cronbat
@@ -502,10 +502,6 @@ super + {_, shift} + p
 		dmenu_run; \
 	, wezterm start $(dmenu_path | dmenu); \
 	}
-
-# lf user/root
-super + {_, shift} + r
-	{LF_CD=true wezterm, sudo -i LF_CD=true LS_COLORS="" $TERMINAL}
 
 # browser
 super + {_, shift} + w

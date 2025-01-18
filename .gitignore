@@ -6,7 +6,6 @@
 .local/bin/*
 !.local/bin/cron/
 !.local/bin/bspswap
-!.local/bin/compiler
 !.local/bin/dmenumount
 !.local/bin/dmenupass
 !.local/bin/flix
