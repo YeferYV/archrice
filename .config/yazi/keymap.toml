@@ -84,7 +84,7 @@ run = '''
       fzf --ansi \
           --delimiter : \
           --preview "bat --color=always {1} --highlight-line {2}" \
-          --preview-window "up,60%,+{2}" \
+          --preview-window "up,60%,+{2},nohidden" \
           --bind "enter:become(ya emit reveal {1}; nvim {1} +{2})"
   '
   --block
