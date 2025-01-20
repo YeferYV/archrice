@@ -17,8 +17,7 @@ vim.cmd [[
     anoremenu PopUp.Undo                        <esc><esc>:silent undo<cr>
     anoremenu PopUp.Write                       :write<cr>
     anoremenu PopUp.Quit                        :quit!<cr>
-    anoremenu PopUp.Definition                  :Telescope lsp_definitions<cr>
-    anoremenu PopUp.Explorer                    :Neotree<cr>
+    anoremenu PopUp.Nvimtree                    :NvimTreeFindFileToggle<cr>
     " anoremenu PopUp.-1-                         <Nop>
     " anoremenu PopUp.How-to\ disable\ mouse      <Cmd>help disable-mouse<CR>
     " anoremenu PopMenu.Hello                     :popup PopUp<cr>
@@ -49,6 +48,12 @@ vim.fn.matchadd("ExtraWhitespace", [[\s\+$\| \+\ze\t]])
 
 -- Remove trailing spaces on save
 autocmd("BufWritePre", { command = [[%s/\s\+$//e]], })
+
+
+-- Disable mini.completion for a certain filetype (extracted from `:help mini.nvim`)
+local f = function(args) vim.b[args.buf].minicompletion_disable = true end
+vim.api.nvim_create_autocmd('Filetype', { pattern = 'snacks_picker_input', callback = f })
+vim.api.nvim_create_autocmd('Filetype', { pattern = 'snacks_input', callback = f })
 
 ------------------------------------------------------------------------------------------------------------------------
 

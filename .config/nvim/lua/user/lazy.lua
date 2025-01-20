@@ -76,6 +76,7 @@ local plugins = {
         clear_suggestion = "<A-k>",
         accept_word = "<A-j>",
       }
+      -- ignore_filetypes = { "NvimTree", "prompt", "snacks_input", "snacks_picker_input" }
     }
   },
   {
@@ -111,26 +112,102 @@ local plugins = {
     }
   },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    tag = "3.26",
-    cond = not vim.g.vscode,
-    cmd = "Neotree",
-    dependencies = {
-      { "MunifTanjim/nui.nvim",  commit = "61574ce6e60c815b0a0c4b5655b8486ba58089a1" },
-      { "nvim-lua/plenary.nvim", commit = "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
-    },
-    config = function() require("user.neo-tree") end
+    "nvim-tree/nvim-tree.lua",
+    version = "v1.10.0",
+    cmd = "NvimTreeFindFileToggle",
+    config = function()
+      require("nvim-tree").setup {
+        renderer = {
+          indent_markers = {
+            enable = true,
+            icons = {
+              corner = "│",
+              none = "│"
+            },
+          },
+        },
+        on_attach = function(bufnr)
+          local map = vim.keymap.set
+          local opts = function(desc) return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true } end
+          local api = require("nvim-tree.api")
+
+          api.config.mappings.default_on_attach(bufnr) -- default mappings
+
+          local function getparent_closenode()
+            local node = api.tree.get_node_under_cursor()
+            -- vim.notify(vim.inspect(node))
+
+            -- if focused node is a folder and it's expanded
+            if node.nodes and node.open then
+              -- close node
+              api.node.open.edit()
+            else
+              api.node.navigate.parent()
+            end
+          end
+
+          local function getchild_open()
+            local node = api.tree.get_node_under_cursor()
+
+            -- if focused node is a folder
+            if node.nodes then
+              if not node.open then
+                -- open folder
+                api.node.open.edit()
+              else
+                -- navigate to children node
+                vim.cmd.normal("j")
+              end
+            else
+              -- open file
+              api.node.open.edit()
+            end
+          end
+
+          map("n", "h", getparent_closenode, opts("Parent or collapse"))
+          map("n", "l", getchild_open, opts("Open file or folder"))
+          map("n", "L",
+            function()
+              api.node.open.edit()
+              api.tree.close()
+            end,
+            opts("quit on open")
+          )
+          map("n", "o",
+            function()
+              api.node.open.edit()
+              api.tree.focus()
+            end,
+            opts("open unfocus")
+          )
+        end
+      }
+
+      -- -- virtualedit adds extra whitespace to nvim-tree input
+      -- local api = require("nvim-tree.api")
+      -- local Event = api.events.Event
+      -- api.events.subscribe(Event.TreeOpen, function() vim.opt.virtualedit = "none" end)
+      -- api.events.subscribe(Event.TreeClose, function() vim.opt.virtualedit = "all" end)
+    end,
   },
   {
     "folke/snacks.nvim",
     lazy = false,
-    -- version = "v2.12.0",
-    commit = "706b1abc1697ca050314dc667e0900d53cad8aa4",
+    version = "v2.14.0",
     cond = not vim.g.vscode,
     opts = {
-      -- scope = { enabled = true }
       indent = { enabled = true },
       picker = { enabled = true },
+      input = { enabled = true, },
+      styles = {
+        input = {
+          title_pos = "left",
+          relative = "cursor",
+          row = 1,
+          col = -1,
+          width = 30,
+        },
+      },
     }
   },
 }
