@@ -423,7 +423,7 @@ return {
     -- Tab shortcut
     { key = "t",          mods = "CTRL|SHIFT", action = wezterm.action { SpawnCommandInNewTab = { cwd = "" } } },
     { key = "t",          mods = "CTRL",       action = wezterm.action { SpawnTab = "CurrentPaneDomain" } },
-    { key = ";",          mods = "ALT",        action = wezterm.action.ActivateLastTab },
+    -- { key = ";",          mods = "CTRL",       action = wezterm.action.ActivateLastTab },
     { key = "s",          mods = "ALT",        action = wezterm.action.ActivateTabRelative(-1) },
     { key = "f",          mods = "ALT",        action = wezterm.action.ActivateTabRelative(1) },
     { key = 's',          mods = 'SHIFT|ALT',  action = wezterm.action.MoveTabRelative(-1) },

@@ -466,3 +466,75 @@ require("mini.hipatterns").setup({
     }
   }
 })
+
+-- local out = vim.api.nvim_exec2(
+--   string.format("! rg --files '%s'/.vscode/extensions | rg '.code-snippets' ", vim.env.HOME),
+--   { output = true }
+-- )
+--
+-- local words = {}
+--
+-- local extract_paths = function()
+--   local out_nofirstline = out.output:gsub(".*\r\n\n", "")
+--   local out_array = out_nofirstline:gsub("\n", ";")
+--
+--   -- https://stackoverflow.com/questions/19907916/split-a-string-using-string-gmatch-in-lua
+--   for w in out_array:gmatch("([^;]*);") do
+--     table.insert(words, w)
+--   end
+-- end
+-- extract_paths()
+
+-- local gens = {}
+local gen_loader = require('mini.snippets').gen_loader
+--
+-- for _, value in pairs(files) do
+--   local gen = gen_loader.from_file(value)
+--   table.insert(gens, gen)
+-- end
+
+-- local runtime_path = vim.opt.rtp:get()
+-- table.insert(runtime_path, files)
+-- vim.notify(vim.inspect(runtime_path))
+-- vim.opt.rtp = runtime_path
+
+local function add_vscode_snippets_to_rtp()
+  local extensions_dir = vim.fs.joinpath(vim.env.HOME, '.vscode', 'extensions')
+
+  -- Get all snippet directories using glob
+  local snippet_dirs = vim.fn.globpath(
+    extensions_dir,
+    '*/snippets', -- Matches any extension/snippets directory
+    true,         -- recursive
+    true          -- return as list
+  )
+
+  -- Add to runtimepath (with nil checks)
+  for _, dir in ipairs(snippet_dirs) do
+    if vim.fn.isdirectory(dir) == 1 then
+      -- Normalize the path to handle OS-specific separators
+      local normalized_dir = vim.fs.normalize(dir)
+
+      local parent_dir = normalized_dir:gsub("/snippets$", "")
+      -- ~/.vscode/extensions/emranweb.daisyui-snippet-1.0.3/snippets/snippetshtml.code-snippets no contains a valid JSON object
+      -- ~/.vscode/extensions/imgildev.vscode-nextjs-generator-2.6.0/snippets/trpc.code-snippets no contains a valid JSON object
+      vim.opt.rtp:append(parent_dir)
+    end
+  end
+end
+
+
+add_vscode_snippets_to_rtp()
+
+-- vim.opt.rtp:prepend("~/.vscode/extensions/emranweb.daisyui-snippet-1.0.3")
+-- vim.opt.rtp:prepend("~/.vscode/extensions/*/snippets")
+require('mini.snippets').setup({
+  -- snippets = { gen_loader.from_file('~/.vscode/extensions/emranweb.daisyui-snippet-1.0.3/snippets/snippets.code-snippets'), },
+  -- snippets = gens,
+  snippets = { gen_loader.from_runtime("*") },
+  mappings = {
+    expand = '<a-;>',
+    jump_next = '<a-;>',
+    jump_prev = '<a-,>',
+  }
+})
