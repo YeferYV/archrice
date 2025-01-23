@@ -360,6 +360,8 @@ if not vim.g.vscode then
   vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#3C3CFf" })
   vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#990000" })
   vim.api.nvim_set_hl(0, "PmenuSel", { fg = "NONE", bg = "#2c2c2c" })
+  vim.api.nvim_set_hl(0, "Search", { fg = "#c0caf5", bg = "#3d59a1" })
+  vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#c0caf5", bg = "#FF007C" })
 
   -- TODO: remove it when mini.snippets available
   local H = {}
