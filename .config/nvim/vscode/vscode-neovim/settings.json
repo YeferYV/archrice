@@ -267,5 +267,18 @@
   // "workbench.startupEditor": "none",
   "workbench.colorTheme": "Hacker",
   "workbench.editor.empty.hint": "hidden",
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "material-icon-theme"
+
+  // "terminal.integrated.detectLocale": "on",
+  // "terminal.integrated.experimental.windowsUseConptyDll": true,
+  // "terminal.integrated.profiles.windows": { "zsh (MSYS2)": { "path": "msys2.cmd", "args": [ "-shell", "zsh", "-full-path" ], "env": { "HOME": "${env:USERPROFILE}" } } },
+  // "terminal.integrated.defaultProfile.windows": "zsh (MSYS2)",
+  // "terminal.integrated.profiles.windows": { "Git Bash": { "path": "${env:USERPROFILE}/scoop/apps/git/current/usr/bin/zsh.exe", "args": [ "-l" ] }},
+  // "terminal.integrated.profiles.windows": {
+  //     "zsh (MSYS2)": {
+  //         "path": "${env:USERPROFILE}/scoop/apps/msys2/current/usr/bin/zsh.exe",
+  //         "args": [ "--login", "-i" ],
+  //         "env": { "CHERE_INVOKING": "1", "MSYS2_PATH_TYPE": "inherit", "HOME": "${env:USERPROFILE}" }
+  //     }
+  // },
 }
