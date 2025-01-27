@@ -1,9 +1,6 @@
 [submodule ".config/mpv/plugins/mpv-gallery-view"]
 	path = .config/mpv/plugins/mpv-gallery-view
 	url = https://github.com/occivink/mpv-gallery-view
-[submodule ".config/mpv/plugins/mpv-pdf"]
-	path = .config/mpv/plugins/mpv-pdf
-	url = https://github.com/jgreco/mpv-pdf
 
 [submodule ".config/yazi/plugins/bookmarks.yazi"]
 	path = .config/yazi/plugins/bookmarks.yazi
