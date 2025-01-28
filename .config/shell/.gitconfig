@@ -1,5 +1,12 @@
 [user]
 	email = yucrayeff36@gmail.com
 	name = Yefer YV
+
+# https://www.youtube.com/watch?v=Wk-IK2uJt28
+# `git difftool`
 [diff]
 	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false

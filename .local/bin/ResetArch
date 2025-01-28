@@ -105,6 +105,7 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.4.2/yay_12.4.2_
   zathura-pdf-poppler \
   zram-generator \
   && true | yay -Scc || ( printf "$(tput -T ansi setaf 1) Installing GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
+  # github-cli
   # perl-file-mimeinfo \
   # playerctl \
   # rofi \
