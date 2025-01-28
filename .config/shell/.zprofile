@@ -22,6 +22,7 @@ export SAVEHIST=10000
 export STARSHIP_CONFIG="$HOME/.config/zsh/starship.toml"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 export SWALLOWER="bspswap"
+export RETRONVIM_INIT="$HOME/.config/nvim/init.lua" # used in yazi/keymap.toml
 export TERM="xterm-256color" # inside docker terminal
 export VISUAL="code"
 export XDG_DATA_HOME="$HOME/.local/share"
