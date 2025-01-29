@@ -2,7 +2,7 @@
     <div align="left">
     <b> arch linux rice with: </b>
     <li> neovim text objects from A-Z based on <a href="https://github.com/LunarVim/Neovim-from-scratch">neovim-from-scratch</a> </li>
-    <li> preview/play/open images/videos/pdf/text inside terminal/GUI using <a href="https://github.com/gokcehan/lf">lf</a> </li>
+    <li> preview/play/open images/videos/pdf/text inside terminal/GUI using <a href="https://github.com/sxyazi/yazi">yazi</a> </li>
     <li> touchcursor-like keyboard layout using <a href="https://github.com/jtroo/kanata">kanata</a> </li>
     <li> <a href="https://github.com/baskerville/bspwm">bspwm</a> window manager </li>
     </div>
@@ -35,7 +35,6 @@
    - [Neovim Mini.bracketed](#neovim-minibracketed)
    - [Native neovim ctrl keys](#native-neovim-ctrl-keys)
 3. Neovim keymaps.lua
-   - [Neovim Neotree File Explorer](#neovim-neotree-file-explorer)
    - [Neovim Editor keymaps](#neovim-editor-keymaps)
    - [Neovim Suggestion keymaps](#neovim-suggestion-keymaps)
 4. Terminal
@@ -366,78 +365,6 @@
 
 </details>
 
-## Neovim Neotree File Explorer
-
-<details><summary></summary>
-
-| Key Combination  | Description                                                   |
-| :--------------: | :------------------------------------------------------------ |
-|       `#`        | fuzzy_sorter                                                  |
-|       `.`        | set_root                                                      |
-|       `/`        | fuzzy_finder                                                  |
-|       `0`        | focus_preview                                                 |
-| `<double-click>` | open                                                          |
-|   `backspace`    | navigate_up                                                   |
-|     `ctrl+x`     | clear_filter                                                  |
-|     `enter`      | Open                                                          |
-|      `Down`      | navigate down                                                 |
-|       `Up`       | navigate up                                                   |
-|      `esc`       | revert_preview                                                |
-|       `<`        | prev_source ▕▏ 󰉓 File ▕▏ 󰈚 Bufs ▕▏ 󰊢 Git ▕▏                   |
-|       `>`        | next_source ▕▏ 󰉓 File ▕▏ 󰈚 Bufs ▕▏ 󰊢 Git ▕▏                   |
-|       `?`        | show keymaps▕▏ 󰉓 File ▕▏ 󰈚 Bufs ▕▏ 󰊢 Git ▕▏                   |
-|       `A`        | Create new folder (`path/to/somewhere` creates 3 folders)     |
-|       `C`        | close_node                                                    |
-|       `D`        | fuzzy_finder_directory                                        |
-|       `F`        | filter_on_submit                                              |
-|       `G`        | focus last file                                               |
-|       `H`        | toggle_hidden                                                 |
-|       `I`        | show file details                                             |
-|       `J`        | Move focus down 10 times in list view                         |
-|       `K`        | Move focus up 10 times in list view                           |
-|       `L`        | quit_on_open                                                  |
-|       `O`        | system_open                                                   |
-|       `P`        | toggle_preview                                                |
-|       `R`        | refresh                                                       |
-|       `V`        | open on horizontal split and close file explorer              |
-|       `[g`       | prev_git_modified                                             |
-|       `\|`       | sixel_open_float                                              |
-|       `]g`       | next_git_modified                                             |
-|       `a`        | Create new file (`path/to/file` creates 2 folders and 1 file) |
-|       `c`        | copy_to                                                       |
-|       `d`        | delete                                                        |
-|       `e`        | toggle_auto_expand_width                                      |
-|   `f<letter>`    | find (by first `<letter>` of file/folder) and jump            |
-|       `ga`       | git_add_file (only when inside ▕▏ 󰊢 Git ▕▏)                   |
-|       `gc`       | git_commit (only when inside ▕▏ 󰊢 Git ▕▏)                     |
-|       `gg`       | git_commit_and_push (only when inside ▕▏ 󰊢 Git ▕▏)            |
-|       `gp`       | git_push (only when inside ▕▏ 󰊢 Git ▕▏)                       |
-|       `gr`       | git_revert_file (only when inside ▕▏ 󰊢 Git ▕▏)                |
-|       `gu`       | git_unstage_file (only when inside ▕▏ 󰊢 Git ▕▏)               |
-|       `gg`       | focus first file                                              |
-|       `gj`       | next_git_modified                                             |
-|       `gk`       | prev_git_modified                                             |
-|       `h`        | Collapse file tree                                            |
-|       `i`        | print_path                                                    |
-|       `j`        | Move down                                                     |
-|       `k`        | Move up                                                       |
-|  `l` or `enter`  | open directory/file (passing focus)                           |
-|       `m`        | move_to                                                       |
-|       `o`        | open_unfocus                                                  |
-|       `p`        | paste_from_clipboard                                          |
-|       `q`        | close_window                                                  |
-|       `r`        | rename                                                        |
-|       `t`        | open on new tab and show buffer                               |
-|       `v`        | open on vertical split and close file explorer                |
-|       `w`        | open image with imgcat on wezterm vertical pane               |
-|       `x`        | cut_to_clipboard                                              |
-|       `y`        | copy_to_clipboard                                             |
-|       `zc`       | close_node                                                    |
-|       `zC`       | close_all_nodes                                               |
-|       `zO`       | expand_all_nodes                                              |
-
-</details>
-
 ## Neovim Editor keymaps
 
 <details><summary></summary>
@@ -449,8 +376,7 @@
 |       `<esc><esc>`       |   `t`   | terminal normal-mode (when inside neovim's terminal)      |
 |           `i`            |   `t`   | terminal exit normal-mode (when inside neovim's terminal) |
 |        `<space>`         |   `n`   | Show whichkey menu                                        |
-|   `<space><backspace>`   |   `n`   | Show more whichkey entries                                |
-|       `<space>o?`        |   `n`   | open file explorer (neotree) and show keybindings         |
+|       `<space>g?`        |   `n`   | open file explorer (nvim-tree) and show keybindings       |
 |           `jk`           |   `i`   | send Escape                                               |
 |         `alt+h`          | `i`,`x` | Send Escape                                               |
 |        `shift+h`         |   `n`   | Type `10h`                                                |
@@ -474,14 +400,17 @@
 
 <details><summary></summary>
 
-| Key Combination | mode | Description                                |
-| :-------------: | :--: | :----------------------------------------- |
-|  `ctrl+space`   | `i`  | Toggle suggestion widget                   |
-|     `alt+j`     | `i`  | Show next inline suggestion                |
-|     `alt+k`     | `i`  | Show previous inline suggestion            |
-|     `alt+l`     | `i`  | Commit inline suggestion                   |
-|      `tab`      | `i`  | go to next snippet stop or next suggestion |
-|   `shift+tab`   | `i`  | go to prev snippet stop or prev suggestion |
+|     Key Combination      | mode | Description                                |
+| :----------------------: | :--: | :----------------------------------------- |
+|       `ctrl+space`       | `i`  | open suggestion menu                       |
+|         `alt+j`          | `i`  | inline suggestion accept next word         |
+|         `alt+k`          | `i`  | inline suggestion accept next line         |
+|         `alt+l`          | `i`  | Commit inline suggestion                   |
+|   `tab` or `downarrow`   | `i`  | go to next snippet stop or next suggestion |
+| `shift+tab` or `uparrow` | `i`  | go to prev snippet stop or prev suggestion |
+|         `alt+;`          | `i`  | expand or next snippet stop                |
+|         `alt+,`          | `i`  | previous snippet stop                      |
+|         `ctrl+c`         | `i`  | exit snippet session                       |
 
 </details>
 
@@ -494,7 +423,7 @@
 |         Key Combination          | Description                                  |
 | :------------------------------: | :------------------------------------------- |
 |       `<show all keymaps>`       | run `wezterm --show-keys`                    |
-|  `alt+space` or `ctrl+shift+x`   | enter vim mode (`/` to search,`v` to select) |
+| `shift+space` or `ctrl+shift+x`  | enter vim mode (`/` to search,`v` to select) |
 |          `alt+shift+f`           | enter search mode (`n`,`p` like vim mode)    |
 |    `alt+c` or `ctrl+shift+c`     | copy selection in terminal                   |
 |    `alt+v` or `ctrl+shift+v`     | paste in terminal                            |
@@ -578,7 +507,7 @@
 | Keymap                                         | Description                                                |
 | ---------------------------------------------- | ---------------------------------------------------------- |
 | `super + Return`                               | Open wezterm                                               |
-| `ctrl + {_, shift} + Escape`                   | Dunst close/reopen notification                            |
+| `super + {_, shift} + Escape`                  | Dunst close/reopen notification                            |
 | `super + Escape`                               | Stop cronbat                                               |
 | `super + shift + Escape`                       | Reload sxhkd configuration                                 |
 | `super + {_, shift} + x`                       | Close/kill window                                          |
