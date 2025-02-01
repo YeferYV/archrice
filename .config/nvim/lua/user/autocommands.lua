@@ -17,7 +17,7 @@ vim.cmd [[
     anoremenu PopUp.Undo                        <esc><esc>:silent undo<cr>
     anoremenu PopUp.Write                       :write<cr>
     anoremenu PopUp.Quit                        :quit!<cr>
-    anoremenu PopUp.Nvimtree                    :NvimTreeFindFileToggle<cr>
+    anoremenu PopUp.Explorer                    :lua Snacks.explorer()<cr>
     " anoremenu PopUp.-1-                         <Nop>
     " anoremenu PopUp.How-to\ disable\ mouse      <Cmd>help disable-mouse<CR>
     " anoremenu PopMenu.Hello                     :popup PopUp<cr>

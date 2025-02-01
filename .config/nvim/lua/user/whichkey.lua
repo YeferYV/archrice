@@ -52,7 +52,8 @@ local mappings = {
 
   ["m"] = { ":lua require('mini.files').open(vim.loop.cwd(), true)<cr>", "mini files (cwd)" },
   ["M"] = { ":lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>", "mini files (current file)" },
-  ["o"] = { ":NvimTreeFindFileToggle<cr>", "Nvimtree Toggle" },
+  ["e"] = { ":lua Snacks.explorer()<cr>", "Toggle Explorer" },
+  ["o"] = { ":lua Snacks.explorer.open({ auto_close = true, layout = { preset = 'default', preview = true }})<cr>", "Explorer with preview" },
 
   ["g"] = { "", "+Git" },
   ["gg"] = { "<cmd>term lazygit<cr><cmd>set filetype=terminal<cr>", "Tab Lazygit" },
