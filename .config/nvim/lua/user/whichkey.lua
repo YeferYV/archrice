@@ -37,7 +37,7 @@ local mappings = {
   ["fc"] = { function() require("snacks").picker.colorschemes() end, "colorschemes" },
   ["fk"] = { function() require("snacks").picker.keymaps() end, "keymaps" },
   ["ff"] = { function() require("snacks").picker.files() end, "find files" },
-  ["fg"] = { function() require("snacks").picker.grep() end, "ripgrep" },
+  ["fg"] = { function() require("snacks").picker.grep({ layout = "ivy_split", filter = { cwd = true }, }) end, "ripgrep" },
   ["fG"] = { function() require("snacks").picker.grep_word() end, "grep word/selection" },
   ["fn"] = { "<cmd>lua MiniNotify.show_history()<cr>", "Notify history" },
   ["fp"] = { function() require("snacks").picker.projects() end, "projects" },
@@ -57,15 +57,28 @@ local mappings = {
 
   ["g"] = { "", "+Git" },
   ["gg"] = { "<cmd>term lazygit<cr><cmd>set filetype=terminal<cr>", "Tab Lazygit" },
-  ["gj"] = { function() WhichkeyRepeat("lua require 'gitsigns'.next_hunk()") end, "Next Hunk" },
-  ["gk"] = { function() WhichkeyRepeat("lua require 'gitsigns'.prev_hunk()") end, "Prev Hunk" },
-  ["gl"] = { function() WhichkeyRepeat("lua require 'gitsigns'.blame_line()") end, "Blame" },
-  ["gp"] = { function() WhichkeyRepeat("lua require 'gitsigns'.preview_hunk()") end, "Preview Hunk" },
-  ["gr"] = { function() WhichkeyRepeat("lua require 'gitsigns'.reset_hunk()") end, "Reset Hunk" },
-  ["gR"] = { function() WhichkeyRepeat("lua require 'gitsigns'.reset_buffer()") end, "Reset Buffer" },
-  ["gs"] = { function() WhichkeyRepeat("lua require 'gitsigns'.stage_hunk()") end, "Stage Hunk" },
-  ["gS"] = { function() WhichkeyRepeat("lua require 'gitsigns'.undo_stage_hunk()") end, "Undo Stage Hunk" },
-  ["go"] = { function() WhichkeyRepeat("Gitsigns diffthis HEAD") end, "Open Diff (file changes)" },
+  ["gd"] = { ":diffthis | vertical new | diffthis | read !git show HEAD^:#<cr>", "git difftool -t nvimdiff" },
+  ["gp"] = {
+    function()
+      -- local curr_file = vim.fs.basename(vim.api.nvim_buf_get_name(0))
+      local curr_file = vim.fn.expand('%')
+      Snacks.picker.git_diff({
+        on_show = function(picker)
+          for i, item in ipairs(picker:items()) do
+            if item.text:match(curr_file) then
+              picker.list:view(i)
+              break -- break at first match
+            end
+          end
+          vim.cmd('stopinsert') -- starts normal mode
+        end,
+      })
+    end,
+    "Preview Hunk"
+  },
+  ["gP"] = { function() WhichkeyRepeat("lua Snacks.picker.git_status()") end, "Preview Diff" },
+  ["gr"] = { ":lua MiniDiff.textobject() vim.cmd.normal('gH')<cr>", "Reset Hunk" },
+  ["gs"] = { ":lua MiniDiff.textobject() vim.cmd.normal('gh')<cr>", "Stage Hunk" },
 
   ["l"] = { "", "+LSP" },
   ["lA"] = { function() WhichkeyRepeat("lua vim.lsp.buf.code_action()") end, "Code Action" },
@@ -82,8 +95,8 @@ local mappings = {
   ["lI"] = { function() require("snacks").picker.lsp_implementations() end, "Pick Implementation" },
   ["ll"] = { function() WhichkeyRepeat("lua vim.lsp.codelens.refresh()") end, "CodeLens refresh" },
   ["lL"] = { function() WhichkeyRepeat("lua vim.lsp.codelens.run()") end, "CodeLens run" },
-  ["pm"] = { "<cmd>Mason<cr>", "Mason" },
-  ["pM"] = { "<cmd>LspInfo<cr>", "LspInfo" },
+  ["lm"] = { "<cmd>Mason<cr>", "Mason" },
+  ["lM"] = { "<cmd>LspInfo<cr>", "LspInfo" },
   ["ln"] = { function() WhichkeyRepeat("lua vim.diagnostic.jump({ count = 1, float = true })") end, "Next Diagnostic", },
   ["lo"] = { function() WhichkeyRepeat("lua vim.diagnostic.open_float()") end, "Open Diagnostic" },
   ["lO"] = { function() require("snacks").picker.diagnostics() end, "Pick Diagnostics" },

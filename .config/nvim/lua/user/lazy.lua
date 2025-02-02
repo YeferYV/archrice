@@ -96,29 +96,19 @@ local plugins = {
   -- { "metakirby5/codi.vim" },
   -- { "sphamba/smear-cursor.nvim", lazy = false, opts = {} },
   {
-    "lewis6991/gitsigns.nvim",
-    version = "0.9.0",
-    cond = not vim.g.vscode,
-    opts = {
-      signs = {
-        add          = { text = "│" },
-        change       = { text = "│" },
-        delete       = { text = "│" },
-        topdelete    = { text = "" },
-        changedelete = { text = "~" },
-        untracked    = { text = '┆' },
-      },
-    }
-  },
-  {
     "folke/snacks.nvim",
-    -- version = "v2.17.0",
-    commit = "4da7bdb82ea929d682c8e4cc83fa5add66a03bc4",
+    version = "v2.18.0",
     lazy = false,
     cond = not vim.g.vscode,
     opts = {
       indent = { enabled = true },
-      picker = { enabled = true },
+      picker = {
+        previewers = {
+          git = {
+            native = true
+          },
+        },
+      },
       explorer = { enabled = true },
       input = { enabled = true, },
       styles = {
