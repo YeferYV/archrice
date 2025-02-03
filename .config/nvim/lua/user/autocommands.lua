@@ -379,7 +379,7 @@ local function pumvisible()
   return tonumber(vim.fn.pumvisible()) ~= 0
 end
 
-vim.api.nvim_create_autocmd('LspAttach', {
+autocmd('LspAttach', {
 
   callback = function(args)
     -- vim.cmd [[ LspStart ]] -- the `vi` zsh alias doesn't autostart lsp

@@ -35,7 +35,7 @@ vim.opt.tabstop = 2               -- insert 2 spaces for a tab
 vim.opt.timeoutlen = 500          -- time to wait for a mapped sequence to complete (in milliseconds)
 vim.opt.wrap = false              -- display lines as one long line
 vim.opt.shortmess:append "c"      -- don't give |ins-completion-menu| messages
-vim.opt.iskeyword:append "-"      -- hyphenated words recognized by searches
+-- vim.opt.iskeyword:append "-"      -- hyphenated words recognized by searches
 
 if not vim.g.vscode then
   vim.opt.cmdheight = 0                               -- more space in the neovim command line for displaying messages

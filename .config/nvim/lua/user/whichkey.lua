@@ -96,7 +96,6 @@ local mappings = {
   ["ll"] = { function() WhichkeyRepeat("lua vim.lsp.codelens.refresh()") end, "CodeLens refresh" },
   ["lL"] = { function() WhichkeyRepeat("lua vim.lsp.codelens.run()") end, "CodeLens run" },
   ["lm"] = { "<cmd>Mason<cr>", "Mason" },
-  ["lM"] = { "<cmd>LspInfo<cr>", "LspInfo" },
   ["ln"] = { function() WhichkeyRepeat("lua vim.diagnostic.jump({ count = 1, float = true })") end, "Next Diagnostic", },
   ["lo"] = { function() WhichkeyRepeat("lua vim.diagnostic.open_float()") end, "Open Diagnostic" },
   ["lO"] = { function() require("snacks").picker.diagnostics() end, "Pick Diagnostics" },

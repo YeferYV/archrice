@@ -153,14 +153,6 @@ map({ "n" }, "vgc", "<cmd>lua require('mini.comment').textobject()<cr>", { desc 
 map({ "o", "x" }, "gC", ":<c-u>lua require('mini.comment').textobject()<cr>", { desc = "BlockComment textobj" })
 map({ "n", "o", "x" }, "g>", "gn", { desc = "Next find textobj" })
 map({ "n", "o", "x" }, "g<", "gN", { desc = "Prev find textobj" })
--- map({ "o", "x" }, "gd", function() textobjs.diagnostic() end, { desc = "Diagnostic textobj" })
--- map({ "o", "x" }, "gK", function() textobjs.column() end, { desc = "ColumnDown textobj" })
--- map({ "o", "x" }, "gl", function() textobjs.lastChange() end, { desc = "last modified/yank/paste (noRepeaterKey)" }) -- `vgm` and `dgm` works. `cgm` and `ygm` doesn't work but it notifies
--- map({ "o", "x" }, "gL", function() textobjs.url() end, { desc = "Url textobj" })
--- map({ "o", "x" }, "go", function() textobjs.restOfWindow() end, { desc = "RestOfWindow textobj" })
--- map({ "o", "x" }, "gO", function() textobjs.visibleInWindow() end, { desc = "VisibleWindow textobj" })
--- map({ "o", "x" }, "gt", function() textobjs.toNextQuotationMark() end, { desc = "toNextQuotationMark textobj" })
--- map({ "o", "x" }, "gT", function() textobjs.toNextClosingBracket() end, { desc = "toNextClosingBracket textobj" })
 
 -- ╭───────────────────────────────────────╮
 -- │ Text Objects with a/i (dot to repeat) │
@@ -173,27 +165,6 @@ map({ "n", "o", "x" }, "g<", "gN", { desc = "Prev find textobj" })
 
 map({ "o", "x" }, "ac", function() commands.ColumnWord('aw') end, { desc = "ColumnWord" })
 map({ "o", "x" }, "ic", function() commands.ColumnWord('iw') end, { desc = "ColumnWord" })
--- map({ "o", "x" }, "ad", function() textobjs.greedyOuterIndentation('outer') end, { desc = "greddyOuterIndent" })
--- map({ "o", "x" }, "id", function() textobjs.greedyOuterIndentation('inner') end, { desc = "greddyOuterIndent" })
--- map({ "o", "x" }, "ie", function() textobjs.nearEoL() end, { desc = "nearEndOfLine textobj" })
--- map({ "o", "x" }, "ae", function() textobjs.lineCharacterwise('inner') end, { desc = "lineCharacterwise" })
--- map({ "o", "x" }, "ii", function() textobjs.indentation("inner", "inner", "noBlanks") end, { desc = "indent" })
--- map({ "o", "x" }, "ai", function() textobjs.indentation("outer", "outer", "noBlanks") end, { desc = "indent" })
--- map({ "o", "x" }, "iI", function() textobjs.indentation("inner", "inner") end, { desc = "Indent blanklines" })
--- map({ "o", "x" }, "aI", function() textobjs.indentation("outer", "outer") end, { desc = "Indent blanklines" })
--- map({ "o", "x" }, "aj", function() textobjs.cssSelector('outer') end, { desc = "cssSelector" })
--- map({ "o", "x" }, "ij", function() textobjs.cssSelector('inner') end, { desc = "cssSelector" })
--- map({ "o", "x" }, "am", function() textobjs.chainMember('outer') end, { desc = "chainMember" })
--- map({ "o", "x" }, "im", function() textobjs.chainMember('inner') end, { desc = "chainMember" })
--- map({ "o", "x" }, "aM", function() textobjs.mdFencedCodeBlock('outer') end, { desc = "mdFencedCodeBlock" })
--- map({ "o", "x" }, "iM", function() textobjs.mdFencedCodeBlock('inner') end, { desc = "mdFencedCodeBlock" })
--- map({ "o", "x" }, "ir", function() textobjs.restOfParagraph() end, { desc = "RestOfParagraph" })
--- map({ "o", "x" }, "ar", function() textobjs.restOfIndentation() end, { desc = "restOfIndentation" })
--- map({ "o", "x" }, "aS", function() textobjs.subword('outer') end, { desc = "Subword" })
--- map({ "o", "x" }, "iS", function() textobjs.subword('inner') end, { desc = "Subword" })
--- map({ "o", "x" }, "aU", function() textobjs.pyTripleQuotes('outer') end, { desc = "pyTrippleQuotes" })
--- map({ "o", "x" }, "iU", function() textobjs.pyTripleQuotes('inner') end, { desc = "pyTrippleQuotes" })
-
 map({ "o", "x" }, "iI", function() require("mini.indentscope").textobject(false) end, { desc = "indent blank" })
 map({ "o", "x" }, "aI", function() require("mini.indentscope").textobject(true) end, { desc = "indent blank" })
 map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i", "i") end, { desc = "indent" })
@@ -216,8 +187,6 @@ map(
   end,
   { desc = "same_indent" }
 )
--- map({ "o", "x" }, "aZ", function() textobjs.closedFold('outer') end, { desc = "ClosedFold" })
--- map({ "o", "x" }, "iZ", function() textobjs.closedFold('inner') end, { desc = "ClosedFold" })
 
 -- https://superuser.com/questions/578432/can-vim-treat-a-folded-section-as-a-motion
 map({ "x" }, "iz", ":<c-u>normal! [zjV]zk<cr>", { desc = "inner fold" })
