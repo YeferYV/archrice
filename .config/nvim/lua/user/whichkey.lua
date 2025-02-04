@@ -22,13 +22,13 @@ local mappings = {
   -- [";;"] = { "<cmd>tabnext #<cr>", "Recent Tab" },
 
   -- ["b"] = { "", "+Buffer" },
-  -- ["b<TAB>"] = { ":setlocal nobuflisted | :bprevious  | :tabe # <cr>", "buffer to Tab" },
-  -- ["bT"] = { ":bufdo | :setlocal nobuflisted | :b# | :tabe # <cr>", "buffers to Tab" },
+  -- ["b<TAB>"] = { "<cmd>setlocal nobuflisted | :bprevious  | :tabe # <cr>", "buffer to Tab" },
+  -- ["bT"] = { "<cmd>bufdo | :setlocal nobuflisted | :b# | :tabe # <cr>", "buffers to Tab" },
   -- ["bv"] = { "<cmd>vertical ball<cr>", "Buffers to vertical windows" },
   -- ["bV"] = { "<cmd>belowright ball<cr>", "Buffers to horizontal windows" },
   -- ["bC"] = { "<cmd>%bd|e#|bd#<cr>", "Close others Buffers" },
   -- ["bt"] = { "<cmd>enew<cr>", "New buffer" },
-  -- ["bx"] = { "<cmd>:bp | bd #<cr>", "Close Buffer" }, --mapped to <space>x
+  -- ["bx"] = { "<cmd>bp | bd #<cr>", "Close Buffer" }, --mapped to <space>x
   -- ["b;"] = { "<cmd>buffer #<cr>", "Recent buffer" },
 
   ["f"] = { "", "+Find" },
@@ -50,14 +50,14 @@ local mappings = {
   ["f."] = { function() require("snacks").picker.resume() end, "resume" },
 
 
-  ["m"] = { ":lua require('mini.files').open(vim.loop.cwd(), true)<cr>", "mini files (cwd)" },
-  ["M"] = { ":lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>", "mini files (current file)" },
-  ["e"] = { ":lua Snacks.explorer()<cr>", "Toggle Explorer" },
-  ["o"] = { ":lua Snacks.explorer.open({ auto_close = true, layout = { preset = 'default', preview = true }})<cr>", "Explorer with preview" },
+  ["m"] = { "<cmd>lua require('mini.files').open(vim.loop.cwd(), true)<cr>", "mini files (cwd)" },
+  ["M"] = { "<cmd>lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>", "mini files (current file)" },
+  ["e"] = { "<cmd>lua Snacks.explorer()<cr>", "Toggle Explorer" },
+  ["o"] = { "<cmd>lua Snacks.explorer.open({ auto_close = true, layout = { preset = 'default', preview = true }})<cr>", "Explorer with preview" },
 
   ["g"] = { "", "+Git" },
   ["gg"] = { "<cmd>term lazygit<cr><cmd>set filetype=terminal<cr>", "Tab Lazygit" },
-  ["gd"] = { ":diffthis | vertical new | diffthis | read !git show HEAD^:#<cr>", "git difftool -t nvimdiff" },
+  ["gd"] = { "<cmd>diffthis | vertical new | diffthis | read !git show HEAD^:#<cr>", "git difftool -t nvimdiff" },
   ["gp"] = {
     function()
       -- local curr_file = vim.fs.basename(vim.api.nvim_buf_get_name(0))
@@ -77,8 +77,8 @@ local mappings = {
     "Preview Hunk"
   },
   ["gP"] = { function() WhichkeyRepeat("lua Snacks.picker.git_status()") end, "Preview Diff" },
-  ["gr"] = { ":lua MiniDiff.textobject() vim.cmd.normal('gH')<cr>", "Reset Hunk" },
-  ["gs"] = { ":lua MiniDiff.textobject() vim.cmd.normal('gh')<cr>", "Stage Hunk" },
+  ["gr"] = { "<cmd>lua MiniDiff.textobject() vim.cmd.normal('gH')<cr>", "Reset Hunk" },
+  ["gs"] = { "<cmd>lua MiniDiff.textobject() vim.cmd.normal('gh')<cr>", "Stage Hunk" },
 
   ["l"] = { "", "+LSP" },
   ["lA"] = { function() WhichkeyRepeat("lua vim.lsp.buf.code_action()") end, "Code Action" },
@@ -123,22 +123,22 @@ local mappings = {
   ["u"] = { "", "+UI Toggle" },
   -- ["uc"] = { "<cmd>Codi<cr>", "Codi Start"},
   -- ["uC"] = { "<cmd>Codi!<cr>", "Codi Stop" },
-  -- ["um"] = { ":lua MiniMap.toggle()<cr>", "Toggle MiniMap" },
-  -- ["ut"] = { ":windo if &buftype == 'terminal' | hide | endif <cr>", "Hide window terminal" },
-  -- ["uT"] = { ":execute &buftype == 'terminal' ? 'hide' : 'sbuffer term'<cr>", "toggle window terminal (unfocus opens other terminal)" },
+  -- ["um"] = { "<cmd>lua require('mini.map').toggle()<cr>", "Toggle MiniMap" },
+  -- ["ut"] = { "<cmd>windo if &buftype == 'terminal' | hide | endif <cr>", "Hide window terminal" },
+  -- ["uT"] = { "<cmd>execute &buftype == 'terminal' ? 'hide' : 'sbuffer term'<cr>", "toggle window terminal (unfocus opens other terminal)" },
   ["u0"] = { "<cmd>set showtabline=0<cr>", "Buffer Hide" },
   ["u2"] = { "<cmd>set showtabline=2<cr>", "Buffer Show" },
-  ["uc"] = { ":lua vim.opt.cmdheight = (vim.opt.cmdheight:get() == 0) and 1 or 0 <cr>", "Disable AutoNoHighlightSearch" },
+  ["uc"] = { "<cmd>lua vim.opt.cmdheight = (vim.opt.cmdheight:get() == 0) and 1 or 0 <cr>", "Disable AutoNoHighlightSearch" },
   ["ud"] = { function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, "Toggle Diagnostics" },
   ["ui"] = { ChangeIndent, "Change Indent" },
-  ["ul"] = { ":set cursorline!<cr>", "Toggle Cursorline" },
-  ["uL"] = { ":setlocal cursorline!<cr>", "Toggle Local Cursorline" },
-  ["un"] = { ":noh<cr>", "NoHighlight" },
-  ["up"] = { ":popup PopUp<cr>", "Toggle Mouse PopUp" },
+  ["ul"] = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
+  ["uL"] = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
+  ["un"] = { "<cmd>noh<cr>", "NoHighlight" },
+  ["up"] = { "<cmd>popup PopUp<cr>", "Toggle Mouse PopUp" },
   ["uP"] = { function() vim.opt.paste = not vim.opt.paste:get() end, "Toggle Paste Mode" },
-  ["us"] = { ":lua vim.opt.laststatus = (vim.opt.laststatus:get() == 0) and 2 or (vim.opt.laststatus:get() == 2 and 3 or 0)<cr>", "Toggle StatusBar" },
+  ["us"] = { "<cmd>lua vim.opt.laststatus = (vim.opt.laststatus:get() == 0) and 2 or (vim.opt.laststatus:get() == 2 and 3 or 0)<cr>", "Toggle StatusBar" },
   ["uu"] = { HideUnhideWindow, "Hide/Unhide window (useful for terminal)" },
-  ["u;"] = { ":clearjumps<cr>:normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
+  ["u;"] = { "<cmd>clearjumps<cr><cmd>normal m'<cr>", "Clear and Add jump" }, -- Reset JumpList
 
   ["w"] = { "", "+Window" },
   ["wb"] = { SwapWindow, "SwapWindow (last visited node)" },
@@ -393,7 +393,7 @@ local g_operator_motion = {
 }
 
 for key, value in pairs(mappings) do
-  vim.keymap.set("n", "<Space>" .. key, value[1], { desc = value[2] })
+  vim.keymap.set("n", "<Space>" .. key, value[1], { --[[ silent = true, ]] desc = value[2] })
 end
 
 for key, value in pairs(ai_textobj) do

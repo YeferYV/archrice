@@ -1,5 +1,5 @@
+-- `:help <cmd>`
 local flash = require("flash")
--- local textobjs = require("various-textobjs")
 local commands = require('user.autocommands')
 local map = vim.keymap.set
 vim.g.mapleader = " "
@@ -39,10 +39,10 @@ map({ "t", "n" }, "<C-k>", "<C-\\><C-n><C-w>k", { desc = "right window" })
 map({ "t", "n" }, "<C-l>", "<C-\\><C-n><C-w>l", { desc = "right window" })
 map({ "t", "n" }, "<C-\\>", ToggleTerminal, { desc = "toggle window terminal" })
 map({ "t", "n" }, "<C-;>", "<C-\\><C-n><C-6>", { desc = "go to last buffer" })
-map({ "n" }, "<right>", ":bnext<CR>", { desc = "next buffer" })
-map({ "n" }, "<left>", ":bprevious<CR>", { desc = "prev buffer" })
-map({ "n" }, "<leader>x", ":bp | bd! #<CR>", { desc = "Close Buffer" }) -- `bd!` forces closing terminal buffer
-map({ "n" }, "<leader>;", ":buffer #<cr>", { desc = "Recent buffer" })
+map({ "n" }, "<right>", "<cmd>bnext<CR>", { desc = "next buffer" })
+map({ "n" }, "<left>", "<cmd>bprevious<CR>", { desc = "prev buffer" })
+map({ "n" }, "<leader>x", "<cmd>bp | bd! #<CR>", { desc = "Close Buffer" }) -- `bd!` forces closing terminal buffer
+map({ "n" }, "<leader>;", "<cmd>buffer #<cr>", { desc = "Recent buffer" })
 
 -- ╭────────────────╮
 -- │ leader keymaps │
@@ -142,15 +142,15 @@ map({ "n", "x" }, "g-", "<C-x>", { desc = "Decrement number (dot to repeat)" })
 -- https://www.reddit.com/r/vim/comments/xnuaxs/last_change_text_object
 -- map("v", 'gm', '<Esc>u<C-r>vgi', opts)            -- <left> unsupported
 -- map("v", 'gm', '<Esc>u<C-r>v`^<Left>', opts)      -- new-lines unsupported
--- map("o", "gm", "<cmd>normal! `[v`]<cr>", { silent = true, desc = "Last change textobj" })
--- map("x", "gm", "`[o`]", { silent = true, desc = "Last change textobj" })
+-- map("o", "gm", "<cmd>normal! `[v`]<cr>", { desc = "Last change textobj" })
+-- map("x", "gm", "`[o`]", { desc = "Last change textobj" })
 
 -- _mini_comment_(not_showing_desc)_(next/prev_autojump_unsupported)
--- map({ "o" }, 'gC', '<cmd>lua require("mini.comment").textobject()<cr>', { silent = true, desc = "RestOfComment textobj" })
+-- map({ "o" }, 'gC', '<cmd>lua require("mini.comment").textobject()<cr>', { desc = "RestOfComment textobj" })
 -- map({ "x" }, 'gC', ':<c-u>normal "zygCgv<cr>', { silent = true, desc = "RestOfComment textobj" })
 
 map({ "n" }, "vgc", "<cmd>lua require('mini.comment').textobject()<cr>", { desc = "select BlockComment" })
-map({ "o", "x" }, "gC", ":<c-u>lua require('mini.comment').textobject()<cr>", { desc = "BlockComment textobj" })
+map({ "o", "x" }, "gC", "<cmd>lua require('mini.comment').textobject()<cr>", { desc = "BlockComment textobj" })
 map({ "n", "o", "x" }, "g>", "gn", { desc = "Next find textobj" })
 map({ "n", "o", "x" }, "g<", "gN", { desc = "Prev find textobj" })
 
@@ -159,14 +159,14 @@ map({ "n", "o", "x" }, "g<", "gN", { desc = "Prev find textobj" })
 -- ╰───────────────────────────────────────╯
 
 -- -- Mini Indent Scope textobj:
--- map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { silent = true, desc = "MiniIndentscope bordersless with_blankline" })
--- map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { silent = true, desc = "MiniIndentscope borders with_blankline" })
+-- map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i","i") end, { desc = "MiniIndentscope bordersless with_blankline" })
+-- map({ "x" }, "ai", function() require("mini.ai").select_textobject("i","i") vim.cmd [[ normal koj ]] end, { desc = "MiniIndentscope borders with_blankline" })
 -- map({ "o" }, 'ai', ':<C-u>normal vai<cr>', { silent = true, desc = "MiniIndentscope borders with_blankline" })
 
 map({ "o", "x" }, "ac", function() commands.ColumnWord('aw') end, { desc = "ColumnWord" })
 map({ "o", "x" }, "ic", function() commands.ColumnWord('iw') end, { desc = "ColumnWord" })
 map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i", "i") end, { desc = "indent" })
-map({ "o", "x" }, "ai", ":normal Viik<cr>", { desc = "indent" })
+map({ "o", "x" }, "ai", "<cmd>normal Viik<cr>", { desc = "indent" })
 map(
   { "o", "x" },
   "iy",
@@ -187,25 +187,25 @@ map(
 )
 
 -- https://superuser.com/questions/578432/can-vim-treat-a-folded-section-as-a-motion
-map({ "x" }, "iz", ":<c-u>normal! [zjV]zk<cr>", { desc = "inner fold" })
-map({ "o" }, "iz", ":normal Viz<CR>", { desc = "inner fold" })
-map({ "x" }, "az", ":<c-u>normal! [zV]z<cr>", { desc = "outer fold" })
-map({ "o" }, "az", ":normal Vaz<cr>", { desc = "outer fold" })
+map({ "x" }, "iz", ":<c-u>normal! [zjV]z<cr>", { silent = true, desc = "inner fold" })
+map({ "o" }, "iz", ":normal Viz<CR>", { silent = true, desc = "inner fold" })
+map({ "x" }, "az", ":<c-u>normal! [zV]z<cr>", { silent = true, desc = "outer fold" })
+map({ "o" }, "az", ":normal Vaz<cr>", { silent = true, desc = "outer fold" })
 
 -- ╭──────────────────────────────────────────╮
 -- │ Repeatable Pair - motions using <leader> │
 -- ╰──────────────────────────────────────────╯
 
 local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { silent = true, desc = "Next TS textobj" })
-map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { silent = true, desc = "Prev TS textobj" })
+map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { desc = "Next TS textobj" })
+map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { desc = "Prev TS textobj" })
 
 local next_columnmove, prev_columnmove = ts_repeat_move.make_repeatable_move_pair(
   function() commands.ColumnMove(1) end,
   function() commands.ColumnMove(-1) end
 )
-map({ "n", "x", "o" }, "<leader><leader>j", next_columnmove, { silent = true, desc = "Next ColumnMove" })
-map({ "n", "x", "o" }, "<leader><leader>k", prev_columnmove, { silent = true, desc = "Prev ColumnMove" })
+map({ "n", "x", "o" }, "<leader><leader>j", next_columnmove, { desc = "Next ColumnMove" })
+map({ "n", "x", "o" }, "<leader><leader>k", prev_columnmove, { desc = "Prev ColumnMove" })
 
 -- ╭──────────────────────────────────────────────────╮
 -- │ Repeatable Pair - textobj navigation using gn/gp │
@@ -215,45 +215,45 @@ local next_comment, prev_comment = ts_repeat_move.make_repeatable_move_pair(
   function() require("mini.bracketed").comment("forward") end,
   function() require("mini.bracketed").comment("backward") end
 )
-map({ "n", "x", "o" }, "gnc", next_comment, { silent = true, desc = "Next Comment" })
-map({ "n", "x", "o" }, "gpc", prev_comment, { silent = true, desc = "Prev Comment" })
+map({ "n", "x", "o" }, "gnc", next_comment, { desc = "Next Comment" })
+map({ "n", "x", "o" }, "gpc", prev_comment, { desc = "Prev Comment" })
 
 local next_diagnostic, prev_diagnostic = ts_repeat_move.make_repeatable_move_pair(
   function() vim.diagnostic.jump({ count = 1, float = true }) end,
   function() vim.diagnostic.jump({ count = -1, float = true }) end
 )
-map({ "n", "x", "o" }, "gnd", next_diagnostic, { silent = true, desc = "Next Diagnostic" })
-map({ "n", "x", "o" }, "gpd", prev_diagnostic, { silent = true, desc = "Prev Diagnostic" })
+map({ "n", "x", "o" }, "gnd", next_diagnostic, { desc = "Next Diagnostic" })
+map({ "n", "x", "o" }, "gpd", prev_diagnostic, { desc = "Prev Diagnostic" })
 
 local next_fold, prev_fold = ts_repeat_move.make_repeatable_move_pair(
   function() vim.cmd([[ normal ]z ]]) end,
   function() vim.cmd([[ normal [z ]]) end
 )
-map({ "n", "x", "o" }, "gnf", next_fold, { silent = true, desc = "Fold ending" })
-map({ "n", "x", "o" }, "gpf", prev_fold, { silent = true, desc = "Fold beginning" })
+map({ "n", "x", "o" }, "gnf", next_fold, { desc = "Fold ending" })
+map({ "n", "x", "o" }, "gpf", prev_fold, { desc = "Fold beginning" })
 
 if not vim.g.vscode then
   local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(
     function() require("mini.diff").goto_hunk('next') end,
     function() require("mini.diff").goto_hunk('prev') end
   )
-  map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { silent = true, desc = "Next GitHunk" })
-  map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { silent = true, desc = "Prev GitHunk" })
+  map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { desc = "Next GitHunk" })
+  map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { desc = "Prev GitHunk" })
 end
 
 local next_different_indent, prev_different_indent = ts_repeat_move.make_repeatable_move_pair(
   function() commands.next_indent(true, "different_level") end,
   function() commands.next_indent(false, "different_level") end
 )
-map({ "n", "x", "o" }, "gnI", next_different_indent, { silent = true, desc = "next different_indent" })
-map({ "n", "x", "o" }, "gpI", prev_different_indent, { silent = true, desc = "prev different_indent" })
+map({ "n", "x", "o" }, "gnI", next_different_indent, { desc = "next different_indent" })
+map({ "n", "x", "o" }, "gpI", prev_different_indent, { desc = "prev different_indent" })
 
 local next_same_indent, prev_same_indent = ts_repeat_move.make_repeatable_move_pair(
   function() commands.next_indent(true, "same_level") end,
   function() commands.next_indent(false, "same_level") end
 )
-map({ "n", "x", "o" }, "gny", next_same_indent, { silent = true, desc = "next same_indent" })
-map({ "n", "x", "o" }, "gpy", prev_same_indent, { silent = true, desc = "prev same_indent" })
+map({ "n", "x", "o" }, "gny", next_same_indent, { desc = "next same_indent" })
+map({ "n", "x", "o" }, "gpy", prev_same_indent, { desc = "prev same_indent" })
 
 local repeat_mini_ai = function(inner_or_around, key, desc)
   local next, prev = ts_repeat_move.make_repeatable_move_pair(
