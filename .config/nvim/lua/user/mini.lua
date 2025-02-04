@@ -125,6 +125,15 @@ mini_ai.setup({
   n_lines = 500, -- search range and required by functions less than 500 LOC
 })
 
+require('mini.indentscope').setup({
+  options = { indent_at_cursor = false, },
+  mappings = {
+    object_scope = 'iI',
+    object_scope_with_border = 'aI',
+  },
+  symbol = '',
+})
+
 require('mini.surround').setup({
   mappings = {
     add = 'gza',            -- Add surrounding in Normal and Visual modes
@@ -413,7 +422,6 @@ if not vim.g.vscode then
 
   require('mini.cursorword').setup()
   require('mini.icons').setup()
-  require('mini.indentscope').setup({ options = { indent_at_cursor = false, }, symbol = '' }) -- draw = { animation = require('mini.indentscope').gen_animation.none() }
   require('mini.misc').setup_auto_root()
   require('mini.notify').setup()
   require('mini.pairs').setup()

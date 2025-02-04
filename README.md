@@ -376,7 +376,7 @@
 |       `<esc><esc>`       |   `t`   | terminal normal-mode (when inside neovim's terminal)      |
 |           `i`            |   `t`   | terminal exit normal-mode (when inside neovim's terminal) |
 |        `<space>`         |   `n`   | Show whichkey menu                                        |
-|       `<space>g?`        |   `n`   | open file explorer (nvim-tree) and show keybindings       |
+|       `<space>e?`        |   `n`   | open file explorer (Snacks.explorer) and show keybindings |
 |           `jk`           |   `i`   | send Escape                                               |
 |         `alt+h`          | `i`,`x` | Send Escape                                               |
 |        `shift+h`         |   `n`   | Type `10h`                                                |

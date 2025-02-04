@@ -165,8 +165,6 @@ map({ "n", "o", "x" }, "g<", "gN", { desc = "Prev find textobj" })
 
 map({ "o", "x" }, "ac", function() commands.ColumnWord('aw') end, { desc = "ColumnWord" })
 map({ "o", "x" }, "ic", function() commands.ColumnWord('iw') end, { desc = "ColumnWord" })
-map({ "o", "x" }, "iI", function() require("mini.indentscope").textobject(false) end, { desc = "indent blank" })
-map({ "o", "x" }, "aI", function() require("mini.indentscope").textobject(true) end, { desc = "indent blank" })
 map({ "o", "x" }, "ii", function() require("mini.ai").select_textobject("i", "i") end, { desc = "indent" })
 map({ "o", "x" }, "ai", ":normal Viik<cr>", { desc = "indent" })
 map(
