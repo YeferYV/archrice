@@ -38,17 +38,17 @@ vim.opt.shortmess:append "c"      -- don't give |ins-completion-menu| messages
 -- vim.opt.iskeyword:append "-"      -- hyphenated words recognized by searches
 
 if not vim.g.vscode then
-  vim.opt.cmdheight = 0                               -- more space in the neovim command line for displaying messages
-  vim.opt.laststatus = 3                              -- laststatus=3 global status line (line between splits)
-  vim.opt.number = true                               -- set numbered lines
-  vim.opt.scrolloff = 8                               -- vertical scrolloff
-  vim.opt.sidescrolloff = 8                           -- horizontal scrolloff
-  vim.opt.virtualedit = "all"                         -- allow cursor bypass end of line
-  vim.g.mapleader = " "                               -- <leader> key
-  vim.o.foldcolumn = '1'                              -- if '1' will show clickable fold signs
-  vim.o.foldlevel = 99                                -- Disable folding at startup
-  vim.o.foldmethod = "expr"                           -- expr = specify an expression to define folds
-  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- folding using treesitter (grammar required)
+  vim.opt.cmdheight = 0                       -- more space in the neovim command line for displaying messages
+  vim.opt.laststatus = 3                      -- laststatus=3 global status line (line between splits)
+  vim.opt.number = true                       -- set numbered lines
+  vim.opt.scrolloff = 8                       -- vertical scrolloff
+  vim.opt.sidescrolloff = 8                   -- horizontal scrolloff
+  vim.opt.virtualedit = "all"                 -- allow cursor bypass end of line
+  vim.g.mapleader = " "                       -- <leader> key
+  vim.o.foldcolumn = '1'                      -- if '1' will show clickable fold signs
+  vim.o.foldlevel = 99                        -- Disable folding at startup
+  vim.o.foldmethod = "expr"                   -- expr = specify an expression to define folds
+  vim.o.foldexpr = 'v:lua.vim.lsp.foldexpr()' -- if folding using treesitter then 'v:lua.vim.treesitter.foldexpr()'
   vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
   vim.o.statuscolumn =
   '%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : " " }%s%l '

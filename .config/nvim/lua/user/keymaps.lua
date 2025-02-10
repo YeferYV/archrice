@@ -196,13 +196,51 @@ map({ "o" }, "az", ":normal Vaz<cr>", { silent = true, desc = "outer fold" })
 -- │ Repeatable Pair - motions using <leader> │
 -- ╰──────────────────────────────────────────╯
 
-local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { desc = "Next TS textobj" })
-map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { desc = "Prev TS textobj" })
+local _, vscode = pcall(require, "vscode-neovim")
+local M = {}
+M.ColumnMove = require("user.autocommands").ColumnMove
+M.last_move = {}
 
-local next_columnmove, prev_columnmove = ts_repeat_move.make_repeatable_move_pair(
-  function() commands.ColumnMove(1) end,
-  function() commands.ColumnMove(-1) end
+-- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/lua/nvim-treesitter/textobjects/repeatable_move.lua
+M.repeat_last_move = function(opts_extend)
+  if M.last_move then
+    local opts = vim.tbl_deep_extend("force", {}, M.last_move.opts, opts_extend)
+    M.last_move.func(opts, unpack(M.last_move.additional_args))
+  end
+end
+
+map({ "n", "x", "o" }, ";", function() M.repeat_last_move { forward = true } end, { desc = "Next TS textobj" })
+map({ "n", "x", "o" }, ",", function() M.repeat_last_move { forward = false } end, { desc = "Prev TS textobj" })
+
+M.make_repeatable_move_pair = function(forward_move_fn, backward_move_fn)
+  local set_last_move = function(move_fn, opts, ...)
+    M.last_move = { func = move_fn, opts = vim.deepcopy(opts), additional_args = { ... } }
+  end
+
+  local general_repeatable_move_fn = function(opts, ...)
+    if opts.forward then
+      forward_move_fn(...)
+    else
+      backward_move_fn(...)
+    end
+  end
+
+  local repeatable_forward_move_fn = function(...)
+    set_last_move(general_repeatable_move_fn, { forward = true }, ...)
+    forward_move_fn(...)
+  end
+
+  local repeatable_backward_move_fn = function(...)
+    set_last_move(general_repeatable_move_fn, { forward = false }, ...)
+    backward_move_fn(...)
+  end
+
+  return repeatable_forward_move_fn, repeatable_backward_move_fn
+end
+
+local next_columnmove, prev_columnmove = M.make_repeatable_move_pair(
+  function() M.ColumnMove(1) end,
+  function() M.ColumnMove(-1) end
 )
 map({ "n", "x", "o" }, "<leader><leader>j", next_columnmove, { desc = "Next ColumnMove" })
 map({ "n", "x", "o" }, "<leader><leader>k", prev_columnmove, { desc = "Prev ColumnMove" })
@@ -211,44 +249,67 @@ map({ "n", "x", "o" }, "<leader><leader>k", prev_columnmove, { desc = "Prev Colu
 -- │ Repeatable Pair - textobj navigation using gn/gp │
 -- ╰──────────────────────────────────────────────────╯
 
-local next_comment, prev_comment = ts_repeat_move.make_repeatable_move_pair(
+if vim.g.vscode then
+  local next_diagnostic, prev_diagnostic = M.make_repeatable_move_pair(
+    function() vscode.call("editor.action.marker.next") end,
+    function() vscode.call("editor.action.marker.prev") end
+  )
+  map({ "n", "x", "o" }, "gnd", next_diagnostic, { desc = "Diagnostic" })
+  map({ "n", "x", "o" }, "gpd", prev_diagnostic, { desc = "Diagnostic" })
+
+  local next_hunk_repeat, prev_hunk_repeat = M.make_repeatable_move_pair(
+    function() vscode.call("workbench.action.editor.nextChange") end,
+    function() vscode.call("workbench.action.editor.previousChange") end
+  )
+  map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { desc = "GitHunk" })
+  map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { desc = "GitHunk" })
+  map({ "n", "x", "o" }, "gnH", next_hunk_repeat, { desc = "GitHunk" })
+  map({ "n", "x", "o" }, "gpH", prev_hunk_repeat, { desc = "GitHunk" })
+
+  local next_reference, prev_reference = M.make_repeatable_move_pair(
+    function() vscode.call("editor.action.wordHighlight.next") end,
+    function() vscode.call("editor.action.wordHighlight.prev") end
+  )
+  map({ "n", "x", "o" }, "gnr", next_reference, { desc = "Reference (vscode only)" })
+  map({ "n", "x", "o" }, "gpr", prev_reference, { desc = "Reference (vscode only)" })
+else
+  local next_diagnostic, prev_diagnostic = M.make_repeatable_move_pair(
+    function() vim.diagnostic.jump({ count = 1, float = true }) end,
+    function() vim.diagnostic.jump({ count = -1, float = true }) end
+  )
+  map({ "n", "x", "o" }, "gnd", next_diagnostic, { desc = "Diagnostic" })
+  map({ "n", "x", "o" }, "gpd", prev_diagnostic, { desc = "Diagnostic" })
+
+  local next_hunk_repeat, prev_hunk_repeat = M.make_repeatable_move_pair(
+    function() require("mini.diff").goto_hunk('next') end,
+    function() require("mini.diff").goto_hunk('prev') end
+  )
+  map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { desc = "GitHunk" })
+  map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { desc = "GitHunk" })
+end
+
+local next_comment, prev_comment = M.make_repeatable_move_pair(
   function() require("mini.bracketed").comment("forward") end,
   function() require("mini.bracketed").comment("backward") end
 )
-map({ "n", "x", "o" }, "gnc", next_comment, { desc = "Next Comment" })
-map({ "n", "x", "o" }, "gpc", prev_comment, { desc = "Prev Comment" })
+map({ "n", "x", "o" }, "gnc", next_comment, { desc = "Comment" })
+map({ "n", "x", "o" }, "gpc", prev_comment, { desc = "Comment" })
 
-local next_diagnostic, prev_diagnostic = ts_repeat_move.make_repeatable_move_pair(
-  function() vim.diagnostic.jump({ count = 1, float = true }) end,
-  function() vim.diagnostic.jump({ count = -1, float = true }) end
-)
-map({ "n", "x", "o" }, "gnd", next_diagnostic, { desc = "Next Diagnostic" })
-map({ "n", "x", "o" }, "gpd", prev_diagnostic, { desc = "Prev Diagnostic" })
-
-local next_fold, prev_fold = ts_repeat_move.make_repeatable_move_pair(
+local next_fold, prev_fold = M.make_repeatable_move_pair(
   function() vim.cmd([[ normal ]z ]]) end,
   function() vim.cmd([[ normal [z ]]) end
 )
 map({ "n", "x", "o" }, "gnf", next_fold, { desc = "Fold ending" })
 map({ "n", "x", "o" }, "gpf", prev_fold, { desc = "Fold beginning" })
 
-if not vim.g.vscode then
-  local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(
-    function() require("mini.diff").goto_hunk('next') end,
-    function() require("mini.diff").goto_hunk('prev') end
-  )
-  map({ "n", "x", "o" }, "gnh", next_hunk_repeat, { desc = "Next GitHunk" })
-  map({ "n", "x", "o" }, "gph", prev_hunk_repeat, { desc = "Prev GitHunk" })
-end
-
-local next_different_indent, prev_different_indent = ts_repeat_move.make_repeatable_move_pair(
+local next_different_indent, prev_different_indent = M.make_repeatable_move_pair(
   function() commands.next_indent(true, "different_level") end,
   function() commands.next_indent(false, "different_level") end
 )
 map({ "n", "x", "o" }, "gnI", next_different_indent, { desc = "next different_indent" })
 map({ "n", "x", "o" }, "gpI", prev_different_indent, { desc = "prev different_indent" })
 
-local next_same_indent, prev_same_indent = ts_repeat_move.make_repeatable_move_pair(
+local next_same_indent, prev_same_indent = M.make_repeatable_move_pair(
   function() commands.next_indent(true, "same_level") end,
   function() commands.next_indent(false, "same_level") end
 )
@@ -256,7 +317,7 @@ map({ "n", "x", "o" }, "gny", next_same_indent, { desc = "next same_indent" })
 map({ "n", "x", "o" }, "gpy", prev_same_indent, { desc = "prev same_indent" })
 
 local repeat_mini_ai = function(inner_or_around, key, desc)
-  local next, prev = ts_repeat_move.make_repeatable_move_pair(
+  local next, prev = M.make_repeatable_move_pair(
     function() require("mini.ai").move_cursor("left", inner_or_around, key, { search_method = "next" }) end,
     function() require("mini.ai").move_cursor("left", inner_or_around, key, { search_method = "prev" }) end
   )
@@ -264,39 +325,29 @@ local repeat_mini_ai = function(inner_or_around, key, desc)
   map({ "n", "x", "o" }, "gp" .. inner_or_around .. key, prev, { desc = desc })
 end
 
-repeat_mini_ai("i", "f", "function call")
-repeat_mini_ai("a", "f", "function call")
-repeat_mini_ai("i", "h", "html atrib")
-repeat_mini_ai("a", "h", "html atrib")
+repeat_mini_ai("i", "a", "argument")
+repeat_mini_ai("a", "a", "argument")
+repeat_mini_ai("i", "b", "brace")
+repeat_mini_ai("a", "b", "brace")
+repeat_mini_ai("i", "f", "func_call")
+repeat_mini_ai("a", "f", "func_call")
+repeat_mini_ai("i", "h", "html_atrib")
+repeat_mini_ai("a", "h", "html_atrib")
 repeat_mini_ai("i", "k", "key")
 repeat_mini_ai("a", "k", "key")
-repeat_mini_ai("i", "n", "number")
-repeat_mini_ai("a", "n", "number")
-repeat_mini_ai("i", "u", "quote")
-repeat_mini_ai("a", "u", "quote")
+repeat_mini_ai("i", "m", "number")
+repeat_mini_ai("a", "m", "number")
+repeat_mini_ai("i", "o", "whitespace")
+repeat_mini_ai("a", "o", "whitespace")
+repeat_mini_ai("i", "q", "quote")
+repeat_mini_ai("a", "q", "quote")
+repeat_mini_ai("i", "t", "tag")
+repeat_mini_ai("a", "t", "tag")
+repeat_mini_ai("i", "u", "subword")
+repeat_mini_ai("a", "u", "subword")
 repeat_mini_ai("i", "v", "value")
 repeat_mini_ai("a", "v", "value")
 repeat_mini_ai("i", "x", "hexadecimal")
 repeat_mini_ai("a", "x", "hexadecimal")
-repeat_mini_ai("i", "K", "@block.outer")
-repeat_mini_ai("a", "K", "@block.inner")
-repeat_mini_ai("i", "Q", "@call.outer")
-repeat_mini_ai("a", "Q", "@call.inner")
-repeat_mini_ai("i", "g", "@comment.outer")
-repeat_mini_ai("a", "g", "@comment.inner")
-repeat_mini_ai("i", "G", "@conditional.outer")
-repeat_mini_ai("a", "G", "@conditional.inner")
-repeat_mini_ai("i", "F", "@function.outer")
-repeat_mini_ai("a", "F", "@function.inner")
-repeat_mini_ai("i", "L", "@loop.outer")
-repeat_mini_ai("a", "L", "@loop.inner")
-repeat_mini_ai("i", "P", "@parameter.outer")
-repeat_mini_ai("a", "P", "@parameter.inner")
-repeat_mini_ai("i", "R", "@return.outer")
-repeat_mini_ai("a", "R", "@return.inner")
-repeat_mini_ai("i", "A", "@assignment.outer")
-repeat_mini_ai("a", "A", "@assignment.inner")
-repeat_mini_ai("i", "=", "@assignment.rhs")
-repeat_mini_ai("a", "=", "@assignment.lhs")
-repeat_mini_ai("i", "#", "@number.outer")
-repeat_mini_ai("a", "#", "@number.inner")
+repeat_mini_ai("i", "?", "user_prompt")
+repeat_mini_ai("a", "?", "user_prompt")

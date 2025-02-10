@@ -26,15 +26,20 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 
 -- https://neovim.io/doc/user/lsp.html#_quickstart
 vim.lsp.config('*', {
-  -- capabilities = {
-  --   textDocument = {
-  --     completion = {
-  --       completionItem = {
-  --         snippetSupport = true,
-  --       }
-  --     }
-  --   }
-  -- },
+  -- https://www.reddit.com/r/neovim/comments/1ao6c5a/how_to_make_the_lsp_aware_of_changes_made_to/
+  -- `:=vim.lsp.protocol.make_client_capabilities()`
+  capabilities = {
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true, -- TODO: still not working/implemented (required by `next dev --turbo`)
+      }
+    },
+    textDocument = {
+      semanticTokens = {
+        multilineTokenSupport = true, -- better semantic highlighting?
+      }
+    }
+  },
   root_markers = { '.git' },
 })
 

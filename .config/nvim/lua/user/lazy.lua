@@ -47,21 +47,21 @@ local plugins = {
     event = "VeryLazy",
     opts = { modes = { search = { enabled = true } } },
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    version = "v0.9.3",
-    event = "VeryLazy",
-    build = ":TSUpdate", -- treesitter works with specific versions of language parsers (required if upgrading treesitter)
-    dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects", commit = "ad8f0a472148c3e0ae9851e26a722ee4e29b1595" },
-    },
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        indent = { enable = true },    -- https://www.reddit.com/r/neovim/comments/14n6iiy/if_you_have_treesitter_make_sure_to_disable_smartindent
-        highlight = { enable = true }, -- https://github.com/nvim-treesitter/nvim-treesitter/issues/5264
-      })
-    end
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   version = "v0.9.3",
+  --   event = "VeryLazy",
+  --   build = ":TSUpdate", -- treesitter works with specific versions of language parsers (required if upgrading treesitter)
+  --   dependencies = {
+  --     { "nvim-treesitter/nvim-treesitter-textobjects", commit = "ad8f0a472148c3e0ae9851e26a722ee4e29b1595" },
+  --   },
+  --   config = function()
+  --     require("nvim-treesitter.configs").setup({
+  --       indent = { enable = true },    -- https://www.reddit.com/r/neovim/comments/14n6iiy/if_you_have_treesitter_make_sure_to_disable_smartindent
+  --       highlight = { enable = true }, -- https://github.com/nvim-treesitter/nvim-treesitter/issues/5264
+  --     })
+  --   end
+  -- },
 
   -- Completion
   {

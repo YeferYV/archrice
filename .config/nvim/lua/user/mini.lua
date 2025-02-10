@@ -4,6 +4,7 @@ local spec_treesitter = mini_ai.gen_spec.treesitter
 local mini_clue = require("mini.clue")
 
 local gen_ai_spec = require('mini.extra').gen_ai_spec
+-- local gen_spec = require('mini.ai').gen_spec
 
 mini_ai.setup({
 
@@ -11,18 +12,18 @@ mini_ai.setup({
   -- Also use this to disable builtin textobjects. See |MiniAi.config|.
   custom_textobjects = {
 
-    K = spec_treesitter({ a = "@block.outer", i = "@block.inner" }),
-    q = spec_treesitter({ a = "@call.outer", i = "@call.inner" }),
-    Q = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
-    g = spec_treesitter({ a = "@comment.outer", i = "@comment.inner" }),
-    G = spec_treesitter({ a = "@conditional.outer", i = "@conditional.inner" }),
-    F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
-    L = spec_treesitter({ a = "@loop.outer", i = "@loop.inner" }),
-    P = spec_treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
-    R = spec_treesitter({ a = "@return.outer", i = "@return.inner" }),
-    ["A"] = spec_treesitter({ a = "@assignment.outer", i = "@assignment.inner" }),
-    ["="] = spec_treesitter({ a = "@assignment.rhs", i = "@assignment.lhs" }),
-    ["#"] = spec_treesitter({ a = "@number.outer", i = "@number.inner" }),
+    -- K = spec_treesitter({ a = "@block.outer", i = "@block.inner" }),
+    -- q = spec_treesitter({ a = "@call.outer", i = "@call.inner" }),
+    -- Q = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
+    -- g = spec_treesitter({ a = "@comment.outer", i = "@comment.inner" }),
+    -- G = spec_treesitter({ a = "@conditional.outer", i = "@conditional.inner" }),
+    -- F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
+    -- L = spec_treesitter({ a = "@loop.outer", i = "@loop.inner" }),
+    -- P = spec_treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
+    -- R = spec_treesitter({ a = "@return.outer", i = "@return.inner" }),
+    -- ["A"] = spec_treesitter({ a = "@assignment.outer", i = "@assignment.inner" }),
+    -- ["="] = spec_treesitter({ a = "@assignment.rhs", i = "@assignment.lhs" }),
+    -- ["#"] = spec_treesitter({ a = "@number.outer", i = "@number.inner" }),
 
     -- pair text object
     -- ['_'] = mini.ai.gen_spec.pair('_', '_', { type = 'greedy' }),
@@ -55,17 +56,20 @@ mini_ai.setup({
     -- number/hexadecimalcolor textobj:
     -- the pattern %f[%d]%d+ ensures there is a %d before start matching (non %d before %d+)(useful to stop .*)
     -- N = { "[-+]?()%f[%d]%d+()%.?%d*" }, -- %f[%d] to make jumping to next group of number instead of next digit
-    N = gen_ai_spec.number(),
+    m = gen_ai_spec.number(),
     x = { "#()%x%x%x%x%x%x()" },
 
     -- _whitespace_textobj:
     o = { "%S()%s+()%S" },
 
+    -- parameter textobj (between commans gets skipped)
+    -- p = { { '%b()', '%b[]', '%b{}' }, { '%b(,', '%b[,', '%b{,', '%b,,', '%b,}', '%b,]', '%b,)' }, '^.().*().$' },
+
     -- sub word textobj https://github.com/echasnovski/mini.nvim/blob/main/doc/mini-ai.txt
-    S = { { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]', }, '^().*()$' },
+    u = { { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]', }, '^().*()$' },
 
     -- quotes/uotes:
-    u = { { "%b''", '%b""', "%b``" }, "^.().*().$" }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
+    -- u = { { "%b''", '%b""', "%b``" }, "^.().*().$" }, -- Pattern in single curly bracket equals filter the double-bracket/left-side
 
     -- -- Whole buffer:
     -- ["+"] = function()
@@ -348,11 +352,11 @@ if not vim.g.vscode then
   -- vim.api.nvim_set_hl(0, "Identifier", { fg = "#2ac3de" })
   -- vim.api.nvim_set_hl(0, "Search", { fg = "#c0caf5", bg = "#3d59a1" })
   -- vim.api.nvim_set_hl(0, "IncSearch", { fg = "#15161e", bg = "#ff9e64" })
-  vim.api.nvim_set_hl(0, "@property", { fg = "#7aa2f7" })
-  vim.api.nvim_set_hl(0, "@field", { fg = "#7aa2f7" })
+  -- vim.api.nvim_set_hl(0, "@property", { fg = "#7aa2f7" })
+  -- vim.api.nvim_set_hl(0, "@field", { fg = "#7aa2f7" })
   -- vim.api.nvim_set_hl(0, "@function.call", { fg = "#7aa2f7" })
-  vim.api.nvim_set_hl(0, "@keyword", { fg = "#9d7cd8" })
-  vim.api.nvim_set_hl(0, "@keyword.function", { fg = "#6e51a2" })
+  -- vim.api.nvim_set_hl(0, "@keyword", { fg = "#9d7cd8" })
+  -- vim.api.nvim_set_hl(0, "@keyword.function", { fg = "#6e51a2" })
 
   -- adding tokyonight transparency
   vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
@@ -368,6 +372,13 @@ if not vim.g.vscode then
   vim.api.nvim_set_hl(0, "MiniDiffSignAdd", { fg = "#009900" })
   vim.api.nvim_set_hl(0, "MiniDiffSignChange", { fg = "#3C3CFf" })
   vim.api.nvim_set_hl(0, "MiniDiffSignDelete", { fg = "#990000" })
+  vim.api.nvim_set_hl(0, "diffAdded", { fg = "#009900" })
+  vim.api.nvim_set_hl(0, "diffChanged", { fg = "#3C3CFf" })
+  vim.api.nvim_set_hl(0, "diffRemoved", { fg = "#ff0000" })
+  vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#009900" })
+  vim.api.nvim_set_hl(0, "DiffChange", { fg = "#3C3CFf" })
+  vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#990000" })
+  vim.api.nvim_set_hl(0, "DiffText", { bg = "#3C3CFf", fg = "#ffffff" })
   vim.api.nvim_set_hl(0, "DiagnosticError", { fg = "#db4b4b" })
   vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = "#1abc9c" })
   vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = "#0db9d7" })
