@@ -91,20 +91,28 @@ local plugins = {
   -- { "sphamba/smear-cursor.nvim", lazy = false, opts = {} },
   {
     "folke/snacks.nvim",
-    version = "v2.18.0",
+    -- version = "v2.21.0",
+    commit = "f3cdd02620bd5075e453be7451a260dbbee68cab",
     lazy = false,
     cond = not vim.g.vscode,
     opts = {
-      indent = { enabled = true },
+      explorer = { replace_netrw = true },
+      image = {},
+      indent = {},
+      input = {},
       picker = {
-        previewers = {
-          git = {
-            native = true
-          },
+        -- previewers = { git = { native = true } },
+        sources = {
+          -- files = { hidden = true, ignored = true },
+          -- grep = { hidden = true, ignored = true },
+          explorer = { hidden = true },
         },
       },
-      explorer = { enabled = true },
-      input = { enabled = true, },
+      -- statuscolumn = {              -- fold open-sign not showing when using typescript-language-server
+      --   left = { "fold", "git" },   -- priority of signs on the left (high to low)
+      --   right = { "mark", "sign" }, -- priority of signs on the right (high to low)
+      --   folds = { open = true, git_hl = true },
+      -- },
       styles = {
         input = {
           title_pos = "left",

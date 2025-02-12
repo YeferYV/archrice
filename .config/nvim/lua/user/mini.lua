@@ -154,6 +154,7 @@ require('mini.align').setup()
 require('mini.bracketed').setup({ undo = { suffix = '' } })
 require('mini.operators').setup()
 require('mini.splitjoin').setup()
+require('mini.trailspace').setup()
 
 if not vim.g.vscode then
   -- require('mini.map').setup({
@@ -218,15 +219,15 @@ if not vim.g.vscode then
     },
   })
 
-  require("mini.files").setup({
-    windows = {
-      max_number = math.huge,
-      preview = true,
-      width_focus = 30,
-      width_nofocus = 15,
-      width_preview = 60,
-    },
-  })
+  -- require("mini.files").setup({
+  --   windows = {
+  --     max_number = math.huge,
+  --     preview = true,
+  --     width_focus = 30,
+  --     width_nofocus = 15,
+  --     width_preview = 60,
+  --   },
+  -- })
 
   require('mini.base16').setup({
     -- `:Inspect` and `:hi <@treesitter>` to reverse engineering a colorscheme
@@ -434,9 +435,9 @@ if not vim.g.vscode then
   require('mini.cursorword').setup()
   require('mini.icons').setup()
   require('mini.misc').setup_auto_root()
+  require('mini.misc').setup_restore_cursor()
   require('mini.notify').setup()
   require('mini.pairs').setup()
-  -- require('mini.pick').setup()
   require('mini.statusline').setup()
   require('mini.starter').setup()
   require('mini.tabline').setup()

@@ -28,27 +28,8 @@ vim.cmd [[
 -- stop comment prefix on new lines
 autocmd({ "BufEnter" }, { command = "set formatoptions-=cro" })
 
--- remember last position when re-opening a file
-autocmd({ "BufReadPost" }, { command = "normal! g'\"" })
-
 -- briefly highlight yanked text
 autocmd("TextYankPost", { callback = function() vim.highlight.on_yank({ higroup = "Visual", timeout = 200 }) end })
-
--- Highlight trailing whitespace
-vim.api.nvim_set_hl(0, "ExtraWhitespace", { ctermbg = "red", bg = "red" })
-
--- Ensure the highlight exists after a colorscheme change
-autocmd({ "ColorScheme" }, { command = "highlight ExtraWhitespace ctermbg=red guibg=red" })
-
--- Refresh highlighting after leaving insert mode
-autocmd("InsertLeave", { command = "redraw!", })
-
--- Apply the highlight to trailing spaces
-vim.fn.matchadd("ExtraWhitespace", [[\s\+$\| \+\ze\t]])
-
--- Remove trailing spaces on save
-autocmd("BufWritePre", { command = [[%s/\s\+$//e]], })
-
 
 -- Disable mini.completion for a certain filetype (extracted from `:help mini.nvim`)
 local f = function(args) vim.b[args.buf].minicompletion_disable = true end
@@ -66,17 +47,13 @@ vim.api.nvim_create_autocmd('Filetype', { pattern = 'snacks_input', callback = f
 
 autocmd({ "TermEnter", "TermOpen" }, {
   callback = function()
-    vim.cmd [[ setlocal nocursorline ]]
-    vim.cmd [[ setlocal nonumber ]]
-    vim.cmd [[ setlocal signcolumn=no ]]
     vim.cmd.startinsert()
-    vim.cmd.highlight("ExtraWhitespace guibg=none")
 
     -- hide bufferline if `nvim -cterm`
     if #vim.fn.getbufinfo({ buflisted = 1 }) == 1 then
-      vim.cmd("set showtabline=0")
+      vim.opt.showtabline = 0
     else
-      vim.cmd("set showtabline=2")
+      vim.opt.showtabline = 2
     end
   end,
 })
@@ -281,8 +258,7 @@ end
 M.ColumnMove = function(direction)
   local lnum = vim.fn.line('.')
   local colnum = vim.fn.virtcol('.')
-  local remove_extraline = false
-  local pattern1, pattern2
+  local pattern1, pattern2, remove_extraline
   local match_char = function(lnum, pattern) return vim.fn.getline(lnum):sub(colnum, colnum):match(pattern) end
 
   if match_char(lnum, '%S') then
@@ -308,58 +284,15 @@ M.ColumnMove = function(direction)
   end
 
   while lnum >= 0 and lnum <= vim.fn.line('$') do
-    if match_char(lnum, pattern1) then
-      break
-    end
-
-    if pattern2 then
-      if match_char(lnum, pattern2) then
-        break
-      end
-    end
+    if pattern1 and match_char(lnum, pattern1) then break end
+    if pattern2 and match_char(lnum, pattern2) then break end
 
     lnum = lnum + direction
   end
 
-  -- If the match was at the end of the line, return the previous line number and the current column number
-  if remove_extraline then
-    vim.cmd.normal(lnum - direction .. "gg" .. colnum .. "|")
-  else
-    vim.cmd.normal(lnum .. "gg" .. colnum .. "|")
-  end
+  -- If the match was at the end of the line, return the previous line number
+  vim.fn.cursor(remove_extraline and lnum - direction or lnum, colnum)
 end
-
---------------------------------------------------------------------------------------------------------------------
-
--- https://www.reddit.com/r/neovim/comments/10bmy9w/lets_see_your_status_columns
-function ToggleFold()
-  local line = vim.fn.getmousepos().line
-
-  if vim.fn.foldlevel(line) > vim.fn.foldlevel(line - 1) then -- Only lines with the marks should be clickable
-    if vim.fn.foldclosed(line) == -1 then
-      vim.cmd(line .. 'foldclose')
-    else
-      vim.cmd(line .. 'foldopen')
-    end
-  end
-end
-
--- https://www.reddit.com/r/neovim/comments/13u9brg/remove_the_fold_level_numbers_using_the_statusline_config
-local fcs = vim.opt.fillchars:get()
-local function get_fold(lnum)
-  if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return ' ' end
-  return vim.fn.foldclosed(lnum) == -1 and fcs.foldopen or fcs.foldclose
-end
-
--- clickable fold markers
-_G.get_statuscol = function()
-  local lnum = vim.v.lnum
-  return '%@v:lua.ToggleFold@' .. get_fold(lnum) .. '%X%s%l '
-end
-
--- https://github.com/neovim/neovim/pull/17446
--- vim.o.statuscolumn = '%{foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "▼" : "⏵") : " " }%s%l '
-vim.o.statuscolumn = '%!v:lua.get_statuscol()'
 
 --------------------------------------------------------------------------------------------------------------------
 

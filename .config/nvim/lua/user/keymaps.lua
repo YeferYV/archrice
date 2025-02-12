@@ -19,7 +19,7 @@ map({ "v" }, "Y", "g_y", { desc = "Yank forward" })
 map({ "v" }, "P", "g_P", { desc = "Paste forward" }) -- "P" doesn't change register
 map({ "v" }, "p", '"_c<c-r>+<esc>', { desc = "Paste (dot repeat)(register unchanged)" })
 map({ "n" }, "Q", "<cmd>lua vim.cmd('quit')<cr>")
-map({ "n" }, "R", "<cmd>lua vim.lsp.buf.format({ timeout_ms = 5000 }) vim.cmd('silent write') <cr>")
+map({ "n" }, "R", "<cmd>lua vim.lsp.buf.format({ timeout_ms = 5000 }) MiniTrailspace.trim() vim.cmd('silent write') <cr>")
 map({ "n" }, "U", "@:", { desc = "repeat last command" })
 map({ "v" }, "<", "<gv", { desc = "continious indent" })
 map({ "v" }, ">", ">gv", { desc = "continious indent" })

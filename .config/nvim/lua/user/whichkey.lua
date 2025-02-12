@@ -50,8 +50,8 @@ local mappings = {
   ["f."] = { function() require("snacks").picker.resume() end, "resume" },
 
 
-  ["m"] = { "<cmd>lua require('mini.files').open(vim.loop.cwd(), true)<cr>", "mini files (cwd)" },
-  ["M"] = { "<cmd>lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>", "mini files (current file)" },
+  -- ["m"] = { "<cmd>lua require('mini.files').open(vim.loop.cwd(), true)<cr>", "mini files (cwd)" },
+  -- ["M"] = { "<cmd>lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>", "mini files (current file)" },
   ["e"] = { "<cmd>lua Snacks.explorer()<cr>", "Toggle Explorer" },
   ["o"] = { "<cmd>lua Snacks.explorer.open({ auto_close = true, layout = { preset = 'default', preview = true }})<cr>", "Explorer with preview" },
 
@@ -130,6 +130,8 @@ local mappings = {
   ["u2"] = { "<cmd>set showtabline=2<cr>", "Buffer Show" },
   ["uc"] = { "<cmd>lua vim.opt.cmdheight = (vim.opt.cmdheight:get() == 0) and 1 or 0 <cr>", "Disable AutoNoHighlightSearch" },
   ["ud"] = { function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, "Toggle Diagnostics" },
+  ["uf"] = { "<cmd>lua vim.o.foldmethod='indent'<cr>", "fold by indent" },
+  ["uF"] = { "<cmd>lua vim.o.foldmethod='expr'<cr>", "fold by lsp" },
   ["ui"] = { ChangeIndent, "Change Indent" },
   ["ul"] = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
   ["uL"] = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
