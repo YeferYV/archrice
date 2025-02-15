@@ -4,6 +4,7 @@
 # export FZF_DEFAULT_OPTS='--ansi --delimiter : --preview "bat --color=always {1} --highlight-line {2}"  --preview-window "up,60%,+{2}" --bind "enter:become(echo {1}; nvim -u $HOME/.vscode/extensions/yeferyv.retronvim/nvim/init.lua {1} +{2} >/dev/tty)"'
 # export LANG=en_US.UTF-8
 # export LC_ALL=C.UTF-8 # `locale` lists all user's locale https://wiki.archlinux.org/title/Locale
+# export NVIM_APPNAME="retronvim"
 # export VISUAL="code"
 export BAT_THEME="base16"
 export BROWSER="google-chrome-stable"

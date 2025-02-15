@@ -136,6 +136,8 @@ local mappings = {
   ["ul"] = { "<cmd>set cursorline!<cr>", "Toggle Cursorline" },
   ["uL"] = { "<cmd>setlocal cursorline!<cr>", "Toggle Local Cursorline" },
   ["un"] = { "<cmd>noh<cr>", "NoHighlight" },
+  ["um"] = { "<cmd>lua require('supermaven-nvim.api').stop()<cr>", "Supermaven stop" },
+  ["uM"] = { "<cmd>lua require('supermaven-nvim.api').start()<cr>", "Supermaven start" },
   ["up"] = { "<cmd>popup PopUp<cr>", "Toggle Mouse PopUp" },
   ["uP"] = { function() vim.opt.paste = not vim.opt.paste:get() end, "Toggle Paste Mode" },
   ["us"] = { "<cmd>lua vim.opt.laststatus = (vim.opt.laststatus:get() == 0) and 2 or (vim.opt.laststatus:get() == 2 and 3 or 0)<cr>", "Toggle StatusBar" },

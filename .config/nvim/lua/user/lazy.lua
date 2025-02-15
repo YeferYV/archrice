@@ -105,7 +105,7 @@ local plugins = {
         sources = {
           -- files = { hidden = true, ignored = true },
           -- grep = { hidden = true, ignored = true },
-          explorer = { hidden = true },
+          explorer = { hidden = true, --[[ ignored = true ]] },
         },
       },
       -- statuscolumn = {              -- fold open-sign not showing when using typescript-language-server

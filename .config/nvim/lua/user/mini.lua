@@ -567,7 +567,7 @@ require('mini.snippets').setup({
   -- snippets = gens,
   snippets = { gen_loader.from_runtime("*") },
   mappings = {
-    expand = '<a-;>',
+    expand = '<a-.>',
     jump_next = '<a-;>',
     jump_prev = '<a-,>',
   }
