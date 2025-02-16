@@ -4,7 +4,7 @@
 # export FZF_DEFAULT_OPTS='--ansi --delimiter : --preview "bat --color=always {1} --highlight-line {2}"  --preview-window "up,60%,+{2}" --bind "enter:become(echo {1}; nvim -u $HOME/.vscode/extensions/yeferyv.retronvim/nvim/init.lua {1} +{2} >/dev/tty)"'
 # export LANG=en_US.UTF-8
 # export LC_ALL=C.UTF-8 # `locale` lists all user's locale https://wiki.archlinux.org/title/Locale
-# export NVIM_APPNAME="retronvim"
+# export NVIM_APPNAME="sixelrice"
 # export VISUAL="code"
 export BAT_THEME="base16"
 export BROWSER="google-chrome-stable"
@@ -16,7 +16,7 @@ export FZF_DEFAULT_OPTS='--color "hl:-1:reverse,hl+:-1:reverse" --preview "bat -
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export HISTFILE="$HOME/.cache/.zsh_history"
 export LESSHISTFILE="-"
-export LESSKEYIN="$HOME/.config/shell/lesskey"
+export LESSKEYIN="$HOME/.config/yazi/lesskey"
 export NPM_CONFIG_PREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/npm"
 export PATH="$HOME/.pixi/bin:$HOME/.local/share/pnpm:$HOME/.local/share/npm/bin:$HOME/.local/bin:$HOME/.console-ninja/.bin:$PATH"
 export PNPM_HOME=$HOME/.local/share/pnpm
@@ -27,6 +27,9 @@ export SWALLOWER="bspswap"
 export TERM="xterm-256color" # inside docker terminal
 export XDG_DATA_HOME="$HOME/.local/share"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+
+## To activate tab completion support for cht.sh if `nix-env -iA nixpkgs.cht-sh`
+fpath=(~/.nix-profile/share/zsh/site-functions/ $fpath)
 
 # export MANPAGER="less -R --use-color -Dd+r -Du+b"
 export MANROFFOPT="-P -c"
@@ -67,3 +70,12 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 
 # Start graphical server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
+
+# alias youtubeaudiowebm="youtube-dl --add-metadata --ignore-errors --write-thumbnail --format bestaudio " \
+# alias youtubeaudioopus="youtube-dl --add-metadata --ignore-errors --write-thumbnail --extract-audio --format bestaudio/best " \
+# alias youtubevidaudiosub="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 'bestvideo+bestaudio' " \
+# alias youtubevidsub720="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 'bestvideo[height<=720]+bestaudio' " \
+# alias youtubevidsub480="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 'bestvideo[height<=480]+bestaudio' " \
+# alias youtubevidsub360="youtube-dl --add-metadata --ignore-errors --write-auto-sub --write-sub --format 'bestvideo[height<=360]+bestaudio' " \
+# alias youtubevid720="yt-dlp --add-metadata --format 'bestvideo[height<=720]+bestaudio' " \
+# alias youtubearia2c="yt-dlp --add-metadata --external-downloader aria2c --external-downloader-args '-c -j 5 -x 5 -s 5 -k 1M'" \
