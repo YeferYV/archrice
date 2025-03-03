@@ -370,7 +370,7 @@ return {
     -- Copy Mode
     {
       key = " ",
-      mods = "ALT",
+      mods = "SHIFT",
       action = act.Multiple {
         act.CopyMode("ClearPattern"),
         act.CopyMode("Close"),

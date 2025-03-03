@@ -150,6 +150,7 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # blackarch-mirrorlist
 # blueman
 # brave-bin
+# broadcom-bt-firmware
 # bsp-layout
 # bsptab-git
 # cheat-git

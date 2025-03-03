@@ -264,10 +264,10 @@ super + control + t; s
   bspc config borderless_singleton {true,false}
 
 # toggle gaps (no border)
-super + control + t; g
+super + control + t; 0
 	{ \
 		bspc config window_gap -1 & bspc config border_width 1; \
-	, bspc config window_gap 12 & bspc config border_width 2; \
+	, bspc config window_gap 12 & bspc config border_width 1; \
 	}
 
 # toggle gaps (border_width 1)
@@ -277,7 +277,7 @@ super + control + t; 1
 	, bspc config window_gap 12 & bspc config border_width 1; \
 	}
 
-# toggle gaps (border_width 1)
+# toggle gaps (border_width 2)
 super + control + t; 2
 	{ \
 		bspc config window_gap 0 & bspc config border_width 2; \
@@ -302,8 +302,8 @@ super + control + w; {minus,plus}
 # hover window to left/down/up/right
 super + control + w; {h,j,k,l}
   POLYBAR=18; \
-  BORDER=4; \
-	bspc config -n focused border_width 2; \
+  BORDER=2; \
+	bspc config -n focused border_width 1; \
   xdotool getdisplaygeometry | awk '\{print $1" "$2\}' | read W H; \
 	{ \
 	  x=0;         y=$POLYBAR;  w=$((W/2 - BORDER));  h=$((H   - BORDER - POLYBAR)); \

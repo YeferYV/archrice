@@ -1,1 +1,1 @@
-../plugins/mpv-gallery-view/script-modules/gallery.lua
+../../_gitmodules/mpv-gallery-view/script-modules/gallery.lua
