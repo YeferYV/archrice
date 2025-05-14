@@ -314,7 +314,7 @@ super + control + w; {h,j,k,l}
   xdo move -x $x -y $y; xdo resize -w $w -h $h
 
 # move floating window by 10px
-super + control + w; shift + {h,j,k,l}
+super + control + {Left, Down, Up, Right}
 	bspc node -v {-10 0,0 10,0 -10,10 0}
 
 # hover window to corner
@@ -471,7 +471,7 @@ super + control + c; s
 	{picom --shadow-opacity=0 --transparent-clipping --fade-delta=0, killall picom}
 
 # compositor decrease/increase transparency (picom-trans requires xorg-xwininfo)
-super + control + c; {minus,plus}
+super + control + {minus,plus}
   xdo id -d -c | xargs -I id -n 1 picom-trans -w id {-2,+4}
   # bspc query -N -d | xargs -I id -n 1 picom-trans -w id {-2,+4}
   # xdo pid $ID  		# xdotool getactivewindow getwindowpid

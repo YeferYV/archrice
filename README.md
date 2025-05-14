@@ -362,7 +362,7 @@
 | `super + control + w; b`                       | Balance desktop's nodes                                    |
 | `super + control + w; {minus,plus}`            | Increase/decrease window size                              |
 | `super + control + w; {h,j,k,l}`               | Hover window to left/down/up/right                         |
-| `super + control + w; shift + {h,j,k,l}`       | Move floating window by 10px                               |
+| `super + control + {Left, Down, Up, Right}`    | Move floating window by 10px                               |
 | `super + control + w; {Left, Down, Up, Right}` | Hover window to corner                                     |
 | `super + control + w; {s,m}`                   | Xdo resize (small/medium)                                  |
 | `super + control + w; {f, shift + f}`          | Xdo fixedscreen 1366x768 (fullscreen no visible borders)   |
@@ -386,7 +386,7 @@
 | `super + control + c; b`                       | Compositor blur background                                 |
 | `super + control + c; k`                       | Compositor keep background                                 |
 | `super + control + c; s`                       | Compositor no shadow                                       |
-| `super + control + c; {minus,plus}`            | Compositor decrease/increase transparency                  |
+| `super + control + {minus,plus}`               | Compositor decrease/increase transparency                  |
 | `super + control + r; {1,2,3,4,5}`             | Nighlight temperature                                      |
 | `super + control + p; t`                       | Toggle terminal background between #0c0c0c #000000         |
 | `super + control + p; o`                       | Set a offline wallpaper (requires pywal)                   |

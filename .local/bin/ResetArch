@@ -148,7 +148,7 @@ echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 # binfmt-qemu-static
 # blackarch-keyring
 # blackarch-mirrorlist
-# blueman
+# blueman # systemctl start bluetooth
 # brave-bin
 # broadcom-bt-firmware
 # bsp-layout

@@ -27,6 +27,7 @@ export SWALLOWER="bspswap"
 export TERM="xterm-256color" # inside docker terminal
 export XDG_DATA_HOME="$HOME/.local/share"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export _JAVA_AWT_WM_NONREPARENTING=1 # Fix white screen on Java applications in window managers https://wiki.archlinux.org/title/Java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing
 
 ## To activate tab completion support for cht.sh if `nix-env -iA nixpkgs.cht-sh`
 fpath=(~/.nix-profile/share/zsh/site-functions/ $fpath)
@@ -66,7 +67,6 @@ if [ -e /.dockerenv ]; then export APPIMAGE_EXTRACT_AND_RUN=1; fi
 if [ -e /.dockerenv ]; then sudo chown $USER:$USER /run/user/1000; fi
 if [ -e /.dockerenv ]; then alias mpv="XDG_RUNTIME_DIR=/run/user/1000 mpv"; fi
 if [ -e /.dockerenv ] && [ -e /bin/sshd ]; then sudo ssh-keygen -A && sudo /bin/sshd; fi
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 # Start graphical server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
