@@ -41,7 +41,8 @@ $SUDO pacman -Sy --noconfirm --needed base-devel lazygit ||
 $SUDO curl -Lo /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage && $SUDO chmod +x /usr/local/bin/nvim
 
 # AUR:
-$SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.4.2/yay_12.4.2_x86_64.tar.gz | $SUDO tar -xzf- --strip-components=1 --directory="/usr/local/bin" "yay_12.3.5_x86_64/yay"
+version=$(curl -s https://api.github.com/repos/Jguer/yay/releases/latest | grep tag_name | cut --delimiter='"' --fields=4 | cut --delimiter='v' --fields=2)
+curl -L https://github.com/Jguer/yay/releases/download/v${version}/yay_${version}_x86_64.tar.gz | $SUDO tar -xzf- --strip-components=1 --directory="/usr/local/bin" "yay_${version}_x86_64/yay"
 
 # pacman -S --noconfirm --needed gtk3 wget xdg-user-dirs
 # curl -L https://raw.githubusercontent.com/ivan-hc/AM-Application-Manager/main/APP-MANAGER -o ~/.local/bin/appman && chmod +x ~/.local/bin/appman && mkdir -p ~/.config/appman && echo ".local/appimage" > ~/.config/appman/appman-config
@@ -68,7 +69,6 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.4.2/yay_12.4.2_
   yes | yay -S --noconfirm ripdrag-git                           &&
   yes | yay -S --noconfirm siji-git                              &&
   yes | $SUDO pacman -S --noconfirm --needed \
-  bat \
   broadcom-wl \
   btrfs-progs \
   cronie \
@@ -76,7 +76,6 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.4.2/yay_12.4.2_
   dmenu \
   dunst \
   exfat-utils \
-  eza \
   festival-us \
   gnome-keyring \
   libnotify \
@@ -88,7 +87,6 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.4.2/yay_12.4.2_
   noto-fonts \
   noto-fonts-emoji \
   ntfs-3g \
-  picom \
   polybar \
   redshift \
   snapper \
@@ -107,6 +105,7 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.4.2/yay_12.4.2_
   && true | yay -Scc || ( printf "$(tput -T ansi setaf 1) Installing GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
   # github-cli
   # perl-file-mimeinfo \
+  # picom \
   # playerctl \
   # rofi \
   # rofimoji \
@@ -120,21 +119,23 @@ $SUDO curl -L https://github.com/Jguer/yay/releases/download/v12.4.2/yay_12.4.2_
 # Non GUI dependencies:
 $SUDO pacman -S --noconfirm --needed \
   bat \
+  eza \
   fzf \
   imagemagick \
   mpv-mpris \
   pipewire-pulse \
+  poppler \
   ripgrep \
   starship \
   stow \
   xclip \
   yazi \
+  zsh \
   && true | $SUDO pacman -Scc || ( printf "$(tput -T ansi setaf 1) Installing Non GUI deps failed! $(tput -T ansi sgr0)" && exit 1 )
   # ghostscript \
   # kitty \
   # lf \
   # libsixel \
-  # poppler \
 
 echo "$(tput -T ansi setaf 3) Installing Packages... Done! $(tput -T ansi sgr0)"
 

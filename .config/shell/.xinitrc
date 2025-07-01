@@ -42,7 +42,7 @@ xsetroot -cursor_name left_ptr &
 # hsetroot -solid "#080808" &
 # ( wal -R && gio trash "$HOME"/.cache/wal/wezterm-wal.toml ) || wal --cols16 -s -i "$HOME/.local/share/bg" -o $HOME/.config/wal/postrun &
 xwallpaper --zoom "$HOME/.local/share/bg" &
-picom --transparent-clipping &
+# picom --transparent-clipping &
 
 ## vncserver
 # x0vncserver -rfbauth ~/.vnc/passwd &
@@ -72,6 +72,8 @@ mkdir -p "$HOME"/.local/share/keyrings
 # see https://bbs.archlinux.org/viewtopic.php?id=273011
 # exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & disown
 ###############################################################################
+
+echo "$(dirname $(realpath $0))/.zprofile" > log
 
 ## window-manager (exec for logout)
 # exec i3

@@ -322,7 +322,8 @@
 
 | Keymap                                         | Description                                                |
 | ---------------------------------------------- | ---------------------------------------------------------- |
-| `super + Return`                               | Open wezterm                                               |
+| `super + Enter`                                | Open wezterm (with background image)                       |
+| `super + shift + Enter`                        | Open wezterm (with picom transparency)                     |
 | `super + {_, shift} + Escape`                  | Dunst close/reopen notification                            |
 | `super + Escape`                               | Stop cronbat                                               |
 | `super + shift + Escape`                       | Reload sxhkd configuration                                 |
@@ -489,7 +490,7 @@ sudo ARCH_USER=user ./RiceArch                # to configure arch linux (change 
 
 - [yeferyv/retronvim](https://github.com/yeferyv/retronvim) (minimal archrice for vscode) vscode extension with neovim text objects from A-Z + LSP whichkey + touchcursor keyboard layout
 - [yeferyv/sixelrice](https://github.com/yeferyv/sixelrice) (minimal archrice for terminal/text interface) neovim text object from A-Z, based on [lazyvim](https://github.com/LazyVim/LazyVim)
-- [yeferyv/dotfiles](https://github.com/yeferyv/dotfiles) (minimal archrice + keybindings for managing windows in any desktop environment) my dotfiles with archlinux, debian and windows support/installer
+- [yeferyv/dotfiles](https://github.com/yeferyv/dotfiles) sway + retronvim
 - [LukeSmithxyz/voidrice](https://github.com/LukeSmithxyz/voidrice) arch linux rice with dwm + lf [see dependencies](https://github.com/LukeSmithxyz/LARBS/blob/master/static/progs.csv)
 
 </details>

@@ -5,10 +5,3 @@
 [submodule ".config/_gitmodules/retronvim"]
 	path = .config/_gitmodules/retronvim
 	url = https://github.com/yeferyv/retronvim
-
-[submodule ".config/_gitmodules/fast-syntax-highlighting"]
-	path = .config/_gitmodules/fast-syntax-highlighting
-	url = https://github.com/zdharma-continuum/fast-syntax-highlighting
-[submodule ".config/_gitmodules/zsh-autosuggestions"]
-	path = .config/_gitmodules/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions

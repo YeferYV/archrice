@@ -3,15 +3,14 @@
 #
 
 # terminal emulator
-super + {_, ctrl, ctrl + shift, ctrl + alt, shift, alt, shift + alt } + Return
+super + {_, shift } + Return
 	{ \
-		wezterm; \
-	, bspc node -p west  -o 0.6 && wezterm; \
-	, bspc node -p north -o 0.6 && wezterm; \
-	, bspc node -p south -o 0.4 && wezterm; \
-	, bspc rule -a \* -o state=floating && wezterm; \
-	, bspc rule -a \* -o state=floating && wezterm --config initial_rows=34 --config initial_cols=135; \
-  , wezterm --config window_background_opacity=0.0 --config text_background_opacity=0.3; \
+    wezterm --config "window_background_image_hsb = \{ brightness = 0.10 \}"; \
+	, wezterm --config "window_background_opacity=0.7" --config "window_background_image=''" & picom \
+	# , bspc rule -a \* -o state=floating && wezterm; \
+	# , bspc node -p west  -o 0.6 && wezterm; \
+	# , bspc node -p north -o 0.6 && wezterm; \
+	# , bspc node -p south -o 0.4 && wezterm; \
 	}
 
 # dunst close/reopen notification

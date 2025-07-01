@@ -25,8 +25,8 @@ export STARSHIP_CONFIG="$HOME/.config/zsh/starship.toml"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 export SWALLOWER="bspswap"
 export TERM="xterm-256color" # inside docker terminal
-export XDG_DATA_HOME="$HOME/.local/share"
-export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export WEZTERM_CONFIG_FILE="$(dirname $(dirname $(realpath .zprofile)))/_gitmodules/retronvim/zsh/wezterm.lua"
+export XINITRC="$(dirname $(realpath .zprofile))/.xinitrc"
 export _JAVA_AWT_WM_NONREPARENTING=1 # Fix white screen on Java applications in window managers https://wiki.archlinux.org/title/Java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing
 
 ## To activate tab completion support for cht.sh if `nix-env -iA nixpkgs.cht-sh`
